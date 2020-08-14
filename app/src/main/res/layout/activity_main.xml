@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.advertisement.MainActivity">
+   <include layout="@layout/toolbar"
+       android:id="@+id/toolbar"
+       ></include>
+
+
+   <FrameLayout
+       android:id="@+id/navContainer"
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       app:layout_constraintBottom_toTopOf="@+id/navBottm"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.0"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/toolbar"
+       app:layout_constraintVertical_bias="0.505"
+       tools:ignore="MissingConstraints" />
+
+   <com.google.android.material.bottomnavigation.BottomNavigationView
+       android:id="@+id/navBottm"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:menu="@menu/bottom_nav"
+       android:background="#ffffff"
+       app:itemIconTint="@drawable/item_selected_nav_bottom"
+       app:itemTextColor="@drawable/item_selected_nav_bottom"
+       tools:ignore="MissingConstraints">
+
+   </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

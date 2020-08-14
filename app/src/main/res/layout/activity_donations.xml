@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#e6ecff"
+    tools:context=".activity.advertisement.Donations">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center"
+                android:text="Help us make a bigger impact"
+                android:textColor="#8c8c8c"
+                android:textSize="22sp"></TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center"
+                android:text="Be a part of our family "
+                android:textStyle="bold|italic"
+                android:textSize="16sp"></TextView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="9dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ffffff"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginBottom="6dp"
+                        android:gravity="center"
+                        android:text="Your name"
+                        android:textColor="#a6a6a6"
+                        android:textSize="16sp"></TextView>
+
+                    <EditText
+                        android:id="@+id/donationName"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="20dp"
+                        android:textSize="20sp"
+                        android:inputType="textPersonName"></EditText>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginBottom="6dp"
+                        android:gravity="center"
+                        android:text="Email address"
+                        android:textColor="#a6a6a6"
+                        android:textSize="16sp"></TextView>
+
+                    <EditText
+                        android:id="@+id/donationEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="20dp"
+                        android:importantForAutofill="no"
+                        android:textSize="20sp"
+                        android:inputType="textEmailAddress"></EditText>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginBottom="6dp"
+                        android:gravity="center"
+                        android:text="Contact number"
+                        android:textColor="#a6a6a6"
+                        android:textSize="16sp"></TextView>
+
+                    <EditText
+                        android:id="@+id/donationNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="20dp"
+                        android:importantForAutofill="no"
+                        android:textSize="20sp"
+                        android:inputType="number"></EditText>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginBottom="6dp"
+                        android:gravity="center"
+                        android:text="Donation amount(LKR)"
+                        android:textColor="#a6a6a6"
+                        android:textSize="16sp"></TextView>
+
+                    <EditText
+                        android:id="@+id/donationAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="20dp"
+                        android:importantForAutofill="no"
+                        android:textSize="20sp"
+                        android:inputType="phone"></EditText>
+
+                    <TextView
+                        android:id="@+id/donateSuccess"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center"
+                        android:textStyle="italic|bold"
+                        android:background="@color/colorWarning"
+                        android:padding="6dp"
+                        android:visibility="gone"
+                        android:textSize="16sp"></TextView>
+
+                    <Button
+                        android:id="@+id/donateBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#3399ff"
+                        android:gravity="center"
+                        android:text="Donate Now"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"></Button>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

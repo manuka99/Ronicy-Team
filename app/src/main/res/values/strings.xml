@@ -1,0 +1,37 @@
+<resources>
+
+    <string name="app_name">Ad Easy</string>
+
+    <!-- Manuka -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="continueBtn">Continue</string>
+
+    <!-- advertisement -->
+    <string name="newImage">Add new Image</string>
+    <string name="adCall">Contact Seller</string>
+    <string name="adChat">Chat Seller</string>
+    <string name="adDescription">Description</string>
+    <string name="adLocation">Location: </string>
+    <string name="adLocationText"> Sri Lanka</string>
+    <string name="adPosted">Posted:</string>
+    <string name="adCategory">Category: </string>
+    <string name="adCondition">Condition: </string>
+    <string name="adForSale">For sale by member</string>
+
+
+
+    <!-- Order -->
+    <string name="orderStepHeader">Complete your purchase in 3 simple steps</string>
+    <string name="orderDeliveryHeader">Delivery Summary</string>
+    <string name="orderName">Name </string>
+    <string name="orderPhone">Phone number </string>
+    <string name="orderEmail">Address for delivery </string>
+    <string name="orderAddress">Delivery address </string>
+    <!-- Divya -->
+
+
+    <!-- Ravindu -->
+
+
+    <!-- Ashan -->
+</resources>

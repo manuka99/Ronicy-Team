@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:maxHeight="360dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="9dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/adMenuImage"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:scaleType="fitXY" />
+
+                <TextView
+                    android:id="@+id/adMenuBuyNow"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/adMenuImage"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="-0dp"
+                    android:layout_marginEnd="0dp"
+                    android:background="@color/colorGreen"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:paddingLeft="4dp"
+                    android:text="Buy Now"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"
+                    android:textStyle="bold"></TextView>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/adMenuTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="sans-serif"
+                android:paddingLeft="4dp"
+                android:text="ABCD"
+                android:textColor="#000000"
+                android:textSize="18sp"></TextView>
+
+            <TextView
+                android:id="@+id/adMenuPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:text="ABCD"
+                android:textSize="16sp"></TextView>
+
+
+            <TextView
+                android:id="@+id/adMenuDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="ABCD"
+                android:textSize="14sp"></TextView>
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

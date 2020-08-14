@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="40dp"
+    tools:context=".activity.athentication.register">
+
+    <TextView
+        android:id="@+id/regMessage"
+        android:layout_width="match_parent"
+        android:layout_marginTop="40dp"
+        android:background="@color/colorWarning"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:textSize="24dp"
+        android:layout_height="wrap_content">
+    </TextView>
+
+    <EditText
+        android:id="@+id/regName"
+        android:layout_width="match_parent"
+        android:layout_marginTop="40dp"
+        android:textSize="24dp"
+        android:layout_height="wrap_content">
+    </EditText>
+
+    <EditText
+        android:id="@+id/regEmail"
+        android:layout_width="match_parent"
+        android:layout_marginTop="40dp"
+        android:textSize="24dp"
+        android:layout_height="wrap_content">
+    </EditText>
+
+    <EditText
+        android:id="@+id/regPass"
+        android:layout_width="match_parent"
+        android:layout_marginTop="40dp"
+        android:textSize="24dp"
+        android:layout_height="wrap_content">
+    </EditText>
+
+    <Button
+        android:id="@+id/regRegister"
+        android:layout_marginTop="40dp"
+        android:requiresFadingEdge="vertical"
+        android:padding="20dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGreen"
+        android:textSize="18sp"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:text="Register">
+    </Button>
+
+</LinearLayout>
