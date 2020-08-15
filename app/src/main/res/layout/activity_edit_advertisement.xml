@@ -19,7 +19,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
@@ -43,7 +43,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/ic_baseline_camera_alt_24"
-                        android:contentDescription="TODO"></ImageView>
+                        android:contentDescription="@string/image"></ImageView>
 
                     <Button
                         android:id="@+id/editAdChangeImageBtn"
@@ -55,7 +55,7 @@
                         android:layout_marginBottom="20dp"
                         android:background="#3399ff"
                         android:gravity="center"
-                        android:text="Change Image"
+                        android:text="@string/post_choose_image_btn"
                         android:textColor="#ffffff"
                         android:textSize="16sp"></Button>
 
@@ -69,7 +69,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="sans-serif-black"
                 android:gravity="center"
-                android:text="Advertisement Details"
+                android:text="@string/post_details"
                 android:textColor="#8c8c8c"
                 android:textSize="28sp"></TextView>
 
@@ -93,35 +93,38 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:layout_marginBottom="6dp"
                         android:gravity="center"
-                        android:text="Ad Title"
+                        android:text="@string/post_title"
                         android:textColor="#a6a6a6"
+                        android:labelFor="@id/editAdTitle"
                         android:textSize="16sp"></TextView>
 
                     <EditText
                         android:id="@+id/editAdTitle"
-                        android:layout_width="300dp"
-                        android:layout_height="40dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="40dp"
                         android:textSize="20sp"
-                        android:inputType="textPersonName"></EditText>
+                        android:inputType="textPersonName"
+                        android:importantForAutofill="no"></EditText>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:layout_marginBottom="6dp"
                         android:gravity="center"
-                        android:text="Ad Condition"
+                        android:text="@string/post_condition"
                         android:textColor="#a6a6a6"
+                        android:labelFor="@id/editAdSubject"
                         android:textSize="16sp"></TextView>
 
                     <EditText
                         android:id="@+id/editAdSubject"
-                        android:layout_width="300dp"
-                        android:layout_height="40dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="40dp"
                         android:importantForAutofill="no"
                         android:textSize="20sp"
@@ -130,19 +133,20 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:layout_marginBottom="6dp"
                         android:gravity="center"
-                        android:text="Ad Description"
+                        android:text="@string/post_description"
                         android:textColor="#a6a6a6"
+                        android:labelFor="@id/editAdDescription"
                         android:textSize="16sp"></TextView>
 
                     <EditText
                         android:id="@+id/editAdDescription"
-                        android:layout_width="300dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="40dp"
-                        android:gravity="top|left"
+                        android:gravity="top|start"
                         android:importantForAutofill="no"
                         android:inputType="textMultiLine"
                         android:lines="4"
@@ -154,21 +158,22 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:layout_marginBottom="6dp"
                         android:gravity="center"
-                        android:text="Item Price"
+                        android:text="@string/post_price"
                         android:textColor="#a6a6a6"
+                        android:labelFor="@id/editAdPrice"
                         android:textSize="16sp"></TextView>
 
                     <EditText
                         android:id="@+id/editAdPrice"
                         android:layout_width="300dp"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="40dp"
                         android:importantForAutofill="no"
                         android:textSize="20sp"
-                        android:inputType="phone"></EditText>
+                        android:inputType="number"></EditText>
 
                     <Button
                         android:id="@+id/editAdUpdateBtn"
@@ -176,7 +181,7 @@
                         android:layout_height="wrap_content"
                         android:background="#3399ff"
                         android:gravity="center"
-                        android:text="Update ad"
+                        android:text="@string/post_update_btn"
                         android:textColor="#ffffff"
                         android:textSize="18sp"></Button>
 

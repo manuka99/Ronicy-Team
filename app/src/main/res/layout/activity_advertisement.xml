@@ -15,12 +15,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <ImageView
@@ -28,7 +28,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="40dp"
-                android:layout_marginBottom="40dp"></ImageView>
+                android:layout_marginBottom="40dp"
+                android:contentDescription="@string/image"></ImageView>
 
 
             <LinearLayout
@@ -42,12 +43,11 @@
                     android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/adMenuImage"
                     android:layout_marginEnd="0dp"
                     android:background="@color/colorGreen"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:text="Buy Now"
+                    android:text="@string/adBuynow"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
                     android:textStyle="bold"></Button>
@@ -243,7 +243,7 @@
             android:id="@+id/adCallNow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="6dp"
+            android:layout_marginEnd="6dp"
             android:layout_weight="1"
             android:background="@color/colorGreen"
             android:text="@string/adCall"
@@ -254,7 +254,7 @@
             android:id="@+id/adChatNow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
             android:layout_weight="1"
             android:background="@color/colorGreen"
             android:text="@string/adChat"

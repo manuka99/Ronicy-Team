@@ -19,6 +19,18 @@
     <string name="menu_category">category</string>
     <string name="menu_filter">filter</string>
 
+    <!-- advertisement new/ edit -->
+    <string name="post_details">Advertisement Details</string>
+    <string name="post_title">Ad Title</string>
+    <string name="post_condition">Ad Condition</string>
+    <string name="post_description">Ad Description</string>
+    <string name="post_price">Item Price</string>
+    <string name="post_update_btn">Update ad</string>
+    <string name="post_new_btn">Post ad</string>
+    <string name="post_choose_image_btn">Change Image</string>
+    <string name="post_add_image_btn">Add a Image</string>
+    <string name="post_add_1_image">* Add at least one Image</string>
+
     <!-- advertisement -->
     <string name="newImage">Add new Image</string>
     <string name="adCall">Contact Seller</string>
@@ -30,7 +42,7 @@
     <string name="adCategory">Category: </string>
     <string name="adCondition">Condition: </string>
     <string name="adForSale">For sale by member</string>
-
+    <string name="adBuynow">Buy Now </string>
 
     <!-- Order -->
     <string name="orderStepHeader">Complete your purchase in 3 simple steps</string>

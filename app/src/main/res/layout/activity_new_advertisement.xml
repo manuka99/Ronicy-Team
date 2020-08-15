@@ -17,7 +17,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="#e6ecff"
             android:orientation="vertical">
 
@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:gravity="center_horizontal"
-                android:text="* Add at least one Image"
+                android:text="@string/post_add_1_image"
                 android:textColor="#ff471a"
                 android:textSize="18sp"></TextView>
 
@@ -51,7 +51,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/ic_baseline_camera_alt_24"
-                        android:contentDescription="TODO"></ImageView>
+                        android:contentDescription="@string/image"></ImageView>
 
                     <Button
                         android:id="@+id/adNewImageBtn"
@@ -63,7 +63,7 @@
                         android:layout_marginBottom="20dp"
                         android:background="#3399ff"
                         android:gravity="center"
-                        android:text="Add a Image"
+                        android:text="@string/post_add_image_btn"
                         android:textColor="#ffffff"
                         android:textSize="16sp"></Button>
 
@@ -77,7 +77,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="sans-serif-black"
                 android:gravity="center"
-                android:text="Advertisement Details"
+                android:text="@string/post_details"
                 android:textColor="#8c8c8c"
                 android:textSize="28sp"></TextView>
 
@@ -101,11 +101,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:layout_marginBottom="6dp"
                         android:gravity="center"
-                        android:text="Ad Title"
+                        android:text="@string/post_title"
                         android:textColor="#a6a6a6"
+                        android:labelFor="@+id/newAdTitle"
                         android:textSize="16sp"></TextView>
 
                     <EditText
@@ -114,15 +115,17 @@
                         android:layout_height="40dp"
                         android:layout_marginBottom="40dp"
                         android:textSize="20sp"
-                        android:inputType="textPersonName"></EditText>
+                        android:inputType="textPersonName"
+                        android:importantForAutofill="no"></EditText>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:layout_marginBottom="6dp"
                         android:gravity="center"
-                        android:text="Ad Condition"
+                        android:text="@string/post_condition"
+                        android:labelFor="@+id/newAdSubject"
                         android:textColor="#a6a6a6"
                         android:textSize="16sp"></TextView>
 
@@ -138,10 +141,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:layout_marginBottom="6dp"
                         android:gravity="center"
-                        android:text="Ad Description"
+                        android:text="@string/post_description"
+                        android:labelFor="@+id/newAdDescription"
                         android:textColor="#a6a6a6"
                         android:textSize="16sp"></TextView>
 
@@ -150,7 +154,7 @@
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="40dp"
-                        android:gravity="top|left"
+                        android:gravity="top|start"
                         android:importantForAutofill="no"
                         android:inputType="textMultiLine"
                         android:lines="4"
@@ -162,10 +166,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:layout_marginBottom="6dp"
                         android:gravity="center"
-                        android:text="Item Price"
+                        android:text="@string/post_price"
+                        android:labelFor="@+id/newAdPrice"
                         android:textColor="#a6a6a6"
                         android:textSize="16sp"></TextView>
 
@@ -184,7 +189,7 @@
                         android:layout_height="wrap_content"
                         android:background="#3399ff"
                         android:gravity="center"
-                        android:text="Post ad"
+                        android:text="@string/post_new_btn"
                         android:textColor="#ffffff"
                         android:textSize="18sp"></Button>
 
