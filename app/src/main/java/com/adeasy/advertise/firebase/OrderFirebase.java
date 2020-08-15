@@ -18,4 +18,5 @@ public interface OrderFirebase {
     public Query viewOrders(String uid);
     public Query viewOrdersAll();
     public DocumentReference getOrderByID(String id);
+    public String getDocumentNextID();
 }

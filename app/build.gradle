@@ -70,6 +70,7 @@ dependencies {
     //implementation 'com.google.firebase:firebase-admin:6.11.0'
 
     implementation 'com.github.baoyachi:StepView:1.9'
+    implementation 'com.github.Omega-R:OmegaCenterIconButton:0.0.4@aar'
 
 }
 

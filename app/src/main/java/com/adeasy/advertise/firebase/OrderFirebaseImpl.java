@@ -187,4 +187,9 @@ public class OrderFirebaseImpl implements OrderFirebase {
     public DocumentReference getOrderByID(String id) {
         return null;
     }
+
+    @Override
+    public String getDocumentNextID() {
+        return db.collection("Order").document().getId();
+    }
 }

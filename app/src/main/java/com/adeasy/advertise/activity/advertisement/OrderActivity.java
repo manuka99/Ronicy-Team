@@ -39,7 +39,7 @@ public class OrderActivity extends AppCompatActivity {
 
         customer.setName("asasasa");
         customer.setEmail("sasasa");
-        customer.setPhone("sasasas");
+        customer.setPhone(5454545);
         order.setCustomer(customer);
 
         orderFirebase.insertOrder(order, getApplicationContext());

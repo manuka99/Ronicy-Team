@@ -17,6 +17,9 @@ public class Order {
         this.time = new Date();
         this.avalability = true;
         this.orderStatus = "Processing";
+        this.customer = new Order_Customer();
+        this.payment = new Order_Payment();
+        this.item = new Order_Item();
     }
 
     public String getId() {

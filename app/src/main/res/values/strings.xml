@@ -2,6 +2,9 @@
 
     <string name="app_name">Ad Easy</string>
 
+    <string name="PAYHERE_MERCHANTID">1214373</string>
+    <string name="PAYHERE_SECRET">8bIpNGLREQb4UobgTUm9Dj49Z3dIeUkau4DrwsH4olA0</string>
+
     <!-- Manuka -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="continueBtn">Continue</string>
@@ -19,14 +22,24 @@
     <string name="adForSale">For sale by member</string>
 
 
-
     <!-- Order -->
     <string name="orderStepHeader">Complete your purchase in 3 simple steps</string>
     <string name="orderDeliveryHeader">Delivery Summary</string>
     <string name="orderName">Name </string>
     <string name="orderPhone">Phone number </string>
-    <string name="orderEmail">Address for delivery </string>
+    <string name="orderEmail">Email </string>
     <string name="orderAddress">Delivery address </string>
+
+    <string name="orderItemPrice">Item price </string>
+    <string name="orderItemDelivery">Delivery fee </string>
+    <string name="orderItemDeliveryFee">Free </string>
+
+    <string name="orderItemPaymentTotal">Total </string>
+    <string name="orderItemPayment">Select a payment method</string>
+    <string name="orderItemPaymentCredit">Credit/Debit card</string>
+    <string name="orderItemPaymentCOD">Pay on Delivery</string>
+
+    <string name="orderItemPaymentInfo">Use our secure online payment tool to pay now and get your order delivered faster</string>
     <!-- Divya -->
 
 

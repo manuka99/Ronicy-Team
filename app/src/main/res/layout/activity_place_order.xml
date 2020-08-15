@@ -15,6 +15,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
+        android:layout_weight="1"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -24,7 +25,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="40dp"
                 android:background="@color/colorWhite"
@@ -38,45 +39,55 @@
                     android:text="@string/orderStepHeader"
                     android:textSize="18sp"></TextView>
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    app:cardCornerRadius="20dp"
+                    android:layout_below="@+id/steperHeader"
+                    app:cardUseCompatPadding="true"
+                    android:layout_height="wrap_content">
+
                 <com.baoyachi.stepview.HorizontalStepView
                     android:id="@+id/step_view"
+                    android:background="#CC03A9F4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/steperHeader"
+                    android:paddingBottom="20dp"
                     android:layout_centerInParent="true" />
 
+                </androidx.cardview.widget.CardView>
             </RelativeLayout>
 
 
             <FrameLayout
-                android:id="@+id/orderStepOne"
+                android:id="@+id/orderStepContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
             </FrameLayout>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
-                android:background="@color/colorWhite"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorGreen"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="@string/continueBtn"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="24sp"
-                    android:textStyle="bold"></Button>
-            </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/continueOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGreen"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/continueBtn"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="24sp"
+            android:textStyle="bold"></Button>
+    </LinearLayout>
+
 </LinearLayout>

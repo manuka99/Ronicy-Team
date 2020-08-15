@@ -198,7 +198,7 @@ public class Advertisement extends AppCompatActivity {
 
         FirebaseUser user =  auth.getCurrentUser();
 
-        if(user == null){
+        if(user != null){
 
             AlertDialog alertDialog = new AlertDialog.Builder(Advertisement.this)
 
@@ -233,10 +233,11 @@ public class Advertisement extends AppCompatActivity {
                     .show();
 
 
-        }else{
-
-            startActivity(new Intent(Advertisement.this, OrderActivity.class));
-
+        }else {
+            Intent intent = new Intent(Advertisement.this, PlaceOrder.class);
+            intent.putExtra("aID", advertisement.getId());
+            intent.putExtra("cID", category.getId());
+            startActivity(intent);
         }
 
     }

@@ -4,8 +4,9 @@ public class Order_Customer {
 
     private String uid;
     private String name;
-    private String phone;
+    private long phone;
     private String email;
+    private String address;
 
     public Order_Customer() {
     }
@@ -26,11 +27,11 @@ public class Order_Customer {
         this.name = name;
     }
 
-    public String getPhone() {
+    public long getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(long phone) {
         this.phone = phone;
     }
 
@@ -40,6 +41,14 @@ public class Order_Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 }
