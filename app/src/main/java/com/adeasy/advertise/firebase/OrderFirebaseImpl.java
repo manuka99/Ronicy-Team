@@ -192,4 +192,19 @@ public class OrderFirebaseImpl implements OrderFirebase {
     public String getDocumentNextID() {
         return db.collection("Order").document().getId();
     }
+
+    @Override
+    public DocumentReference getInsertQueryOrder(String id) {
+
+        DocumentReference refStore;
+
+        if (id == null) {
+            refStore =  db.collection("Order").document();
+            id = refStore.getId();
+        }
+
+            refStore =  db.collection("Order").document(id);
+
+        return refStore;
+    }
 }

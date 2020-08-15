@@ -23,20 +23,19 @@
                 android:padding="32dp"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                android:contentDescription="@string/image" />
 
             <TextView
                 android:id="@+id/gridCatTitleSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_marginBottom="4dp"
                 android:fontFamily="sans-serif-medium"
-                android:paddingLeft="4dp"
-                android:text="ABCD"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
                 android:textColor="#000000"
                 android:textSize="14sp"></TextView>
 

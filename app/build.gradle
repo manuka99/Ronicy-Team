@@ -71,6 +71,7 @@ dependencies {
 
     implementation 'com.github.baoyachi:StepView:1.9'
     implementation 'com.github.Omega-R:OmegaCenterIconButton:0.0.4@aar'
+    implementation 'com.shuhart.stepview:stepview:1.5.1'
 
 }
 

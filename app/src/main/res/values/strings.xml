@@ -2,12 +2,22 @@
 
     <string name="app_name">Ad Easy</string>
 
+    <!-- common -->
+    <string name="image">image view</string>
+    <string name="company_phone">01122223344 </string>
+
+    <!-- payhere -->
     <string name="PAYHERE_MERCHANTID">1214373</string>
     <string name="PAYHERE_SECRET">8bIpNGLREQb4UobgTUm9Dj49Z3dIeUkau4DrwsH4olA0</string>
 
     <!-- Manuka -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="continueBtn">Continue</string>
+
+    <!-- menu -->
+    <string name="menu_location">location</string>
+    <string name="menu_category">category</string>
+    <string name="menu_filter">filter</string>
 
     <!-- advertisement -->
     <string name="newImage">Add new Image</string>
@@ -40,6 +50,41 @@
     <string name="orderItemPaymentCOD">Pay on Delivery</string>
 
     <string name="orderItemPaymentInfo">Use our secure online payment tool to pay now and get your order delivered faster</string>
+
+    <!-- order completed -->
+    <string name="orderIDText">OrderID: </string>
+    <string name="orderThankyou">Thank you for placing  your order!</string>
+    <string name="orderContactYou">We will contact you during working hours to confirm your details and arrange for delivery</string>
+    <string name="orderHelp">Need help or want to cancel your order? </string>
+    <string name="orderCallus">Call GanuDenu.lk </string>
+
+
+    <!-- donations -->
+    <string name="donate_header">Help us make a bigger impact</string>
+    <string name="donate_sub_header">Be a part of our family</string>
+    <string name="donate_name">Your name </string>
+    <string name="donate_email">Email address</string>
+    <string name="donate_phone">Contact number</string>
+    <string name="donate_amount">Donation amount(LKR)</string>
+    <string name="btn_donate_Now">Donate Now</string>
+
+    <!-- Account tab -->
+    <string name="account_getStarted">Get started with ikman</string>
+    <string name="account_myads">My Ads</string>
+    <string name="account_membership">My membership</string>
+    <string name="account_fav">Favourites</string>
+    <string name="account_profile">My profile</string>
+    <string name="account_safe">Stay safe</string>
+    <string name="account_faq">FAQ</string>
+    <string name="account_howto">How to sell fast</string>
+    <string name="account_donate">Donate us</string>
+    <string name="account_logout">Log out</string>
+
+
+    <!-- Authentication -->
+    <string name="register_btn">Register</string>
+    <string name="login_btn">Login</string>
+
     <!-- Divya -->
 
 

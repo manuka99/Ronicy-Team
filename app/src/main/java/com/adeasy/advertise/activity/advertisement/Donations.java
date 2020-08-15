@@ -31,7 +31,8 @@ public class Donations extends AppCompatActivity {
     TextView donateSuccess;
     Button donateBtn;
     String userName, userEmail;
-    Integer userPhone, userAmount;
+    Integer userPhone;
+    double userAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +73,7 @@ public class Donations extends AppCompatActivity {
                 }
 
                 try{
-                    userAmount = Integer.parseInt(amount.getText().toString());
+                    userAmount = Double.parseDouble(amount.getText().toString());
                 }catch (Exception e){
                     userAmount = 0;
                 }

@@ -16,7 +16,7 @@
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
         android:visibility="gone"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:layout_height="wrap_content">
     </TextView>
 
@@ -24,24 +24,30 @@
         android:id="@+id/regName"
         android:layout_width="match_parent"
         android:layout_marginTop="40dp"
-        android:textSize="24dp"
-        android:layout_height="wrap_content">
+        android:textSize="24sp"
+        android:inputType="textPersonName"
+        android:layout_height="wrap_content"
+        android:importantForAutofill="no">
     </EditText>
 
     <EditText
         android:id="@+id/regEmail"
         android:layout_width="match_parent"
         android:layout_marginTop="40dp"
-        android:textSize="24dp"
-        android:layout_height="wrap_content">
+        android:textSize="24sp"
+        android:inputType="textEmailAddress"
+        android:layout_height="wrap_content"
+        android:importantForAutofill="no">
     </EditText>
 
     <EditText
         android:id="@+id/regPass"
         android:layout_width="match_parent"
         android:layout_marginTop="40dp"
-        android:textSize="24dp"
-        android:layout_height="wrap_content">
+        android:textSize="24sp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:importantForAutofill="no">
     </EditText>
 
     <Button
@@ -56,7 +62,7 @@
         android:textSize="18sp"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
-        android:text="Register">
+        android:text="@string/register_btn">
     </Button>
 
 </LinearLayout>

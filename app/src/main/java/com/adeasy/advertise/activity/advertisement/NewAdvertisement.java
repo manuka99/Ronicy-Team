@@ -110,9 +110,15 @@ public class NewAdvertisement extends AppCompatActivity {
                 String title = newAddTitle.getText().toString();
                 String condition = newAdCondition.getText().toString();
                 String description = newAdDescription.getText().toString();
-                String price = newAdPrice.getText().toString();
+                Double price = 0.00;
 
-                if (uri != null && !title.isEmpty() && !condition.isEmpty() && !description.isEmpty() && !price.isEmpty()) {
+                try {
+                    price = Double.parseDouble(newAdPrice.getText().toString());
+                }catch (Exception e){
+                    price = 0.00;
+                }
+
+                if (uri != null && !title.isEmpty() && !condition.isEmpty() && !description.isEmpty() && price > 0) {
 
                     Advertisement advertisement = new Advertisement();
                     advertisement.setTitle(title);

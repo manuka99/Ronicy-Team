@@ -16,7 +16,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,14 +30,15 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@drawable/ic_baseline_location_on_24"></ImageView>
+                android:background="@drawable/ic_baseline_location_on_24"
+                android:contentDescription="@string/image"></ImageView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:fontFamily="serif"
-                android:text="location"
+                android:text="@string/menu_location"
                 android:textColor="#000000"
                 android:textSize="18sp"></TextView>
 
@@ -48,27 +50,28 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <View
+            <TextView
                 android:layout_width="1dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_height="34dp"
-                android:background="#FF0000FF" ></View>
+                android:background="#66000000" ></TextView>
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
+                android:contentDescription="@string/image"
                 android:background="@drawable/ic_baseline_label_24"></ImageView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:fontFamily="serif"
                 android:gravity="center"
-                android:text="category"
+                android:text="@string/menu_category"
                 android:textColor="#000000"
                 android:textSize="18sp"></TextView>
 
@@ -79,17 +82,18 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <View
+            <TextView
                 android:layout_width="1dp"
                 android:layout_gravity="center_vertical"
                 android:layout_height="34dp"
-                android:layout_marginRight="20dp"
-                android:background="#FF0000FF" />
+                android:layout_marginEnd="20dp"
+                android:background="#66000000" />
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
+                android:contentDescription="@string/image"
                 android:background="@drawable/ic_baseline_filter_list_24"
                 android:gravity="center"></ImageView>
 
@@ -97,10 +101,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:fontFamily="serif"
                 android:gravity="center"
-                android:text="filter"
+                android:text="@string/menu_filter"
                 android:textColor="#000000"
                 android:textSize="18sp"></TextView>
 

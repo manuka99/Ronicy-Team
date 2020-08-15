@@ -14,23 +14,23 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:fontFamily="sans-serif-black"
                 android:gravity="center"
-                android:text="Help us make a bigger impact"
+                android:text="@string/donate_header"
                 android:textColor="#8c8c8c"
-                android:textSize="22sp"></TextView>
+                android:textSize="26sp"></TextView>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,23 +38,21 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="sans-serif-black"
                 android:gravity="center"
-                android:text="Be a part of our family "
+                android:text="@string/donate_sub_header"
                 android:textStyle="bold|italic"
-                android:textSize="16sp"></TextView>
+                android:textSize="20sp"></TextView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_margin="24dp"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="9dp"
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="#ffffff"
                     android:orientation="vertical"
                     android:padding="24dp">
@@ -62,55 +60,59 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:layout_marginBottom="6dp"
                         android:gravity="center"
-                        android:text="Your name"
+                        android:text="@string/donate_name"
                         android:textColor="#a6a6a6"
+                        android:labelFor="@+id/donationName"
                         android:textSize="16sp"></TextView>
 
                     <EditText
                         android:id="@+id/donationName"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="30dp"
                         android:textSize="20sp"
-                        android:inputType="textPersonName"></EditText>
+                        android:inputType="textPersonName"
+                        android:importantForAutofill="no"></EditText>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:layout_marginBottom="6dp"
                         android:gravity="center"
-                        android:text="Email address"
+                        android:text="@string/donate_email"
                         android:textColor="#a6a6a6"
+                        android:labelFor="@+id/donationEmail"
                         android:textSize="16sp"></TextView>
 
                     <EditText
                         android:id="@+id/donationEmail"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="30dp"
                         android:importantForAutofill="no"
-                        android:textSize="20sp"
-                        android:inputType="textEmailAddress"></EditText>
+                        android:inputType="textEmailAddress"
+                        android:textSize="20sp"></EditText>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:layout_marginBottom="6dp"
                         android:gravity="center"
-                        android:text="Contact number"
+                        android:text="@string/donate_phone"
                         android:textColor="#a6a6a6"
+                        android:labelFor="@+id/donationNumber"
                         android:textSize="16sp"></TextView>
 
                     <EditText
                         android:id="@+id/donationNumber"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="30dp"
                         android:importantForAutofill="no"
                         android:textSize="20sp"
                         android:inputType="number"></EditText>
@@ -118,18 +120,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:layout_marginBottom="6dp"
                         android:gravity="center"
-                        android:text="Donation amount(LKR)"
+                        android:text="@string/donate_amount"
                         android:textColor="#a6a6a6"
+                        android:labelFor="@+id/donationAmount"
                         android:textSize="16sp"></TextView>
 
                     <EditText
                         android:id="@+id/donationAmount"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="30dp"
                         android:importantForAutofill="no"
                         android:textSize="20sp"
                         android:inputType="phone"></EditText>
@@ -138,7 +141,7 @@
                         android:id="@+id/donateSuccess"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:layout_marginBottom="20dp"
                         android:gravity="center"
                         android:textStyle="italic|bold"
@@ -153,7 +156,7 @@
                         android:layout_height="wrap_content"
                         android:background="#3399ff"
                         android:gravity="center"
-                        android:text="Donate Now"
+                        android:text="@string/btn_donate_Now"
                         android:textColor="#ffffff"
                         android:textSize="18sp"></Button>
 

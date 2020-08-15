@@ -19,4 +19,5 @@ public interface OrderFirebase {
     public Query viewOrdersAll();
     public DocumentReference getOrderByID(String id);
     public String getDocumentNextID();
+    public DocumentReference getInsertQueryOrder(String id);
 }

@@ -112,7 +112,7 @@ public class EditAdvertisement extends AppCompatActivity {
                         editAdTitle.setText(advertisement.getTitle());
                         editAdCondition.setText(advertisement.getCondition());
                         editAdDescription.setText(advertisement.getDescription());
-                        editAdPrice.setText(advertisement.getPrice());
+                        editAdPrice.setText(String.valueOf(advertisement.getPrice()));
                         Picasso.get().load(advertisement.getImageUrl()).into(image);
                         image.setBackgroundColor(000000);
 
@@ -207,7 +207,7 @@ public class EditAdvertisement extends AppCompatActivity {
         advertisement.setTitle(editAdTitle.getText().toString());
         advertisement.setCondition(editAdCondition.getText().toString());
         advertisement.setDescription(editAdDescription.getText().toString());
-        advertisement.setPrice(editAdPrice.getText().toString());
+        advertisement.setPrice(Double.parseDouble(editAdPrice.getText().toString()));
         advertisement.setPlacedDate(new Date());
 
         advertisement.setAvailability(true);

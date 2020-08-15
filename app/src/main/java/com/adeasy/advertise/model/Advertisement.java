@@ -15,7 +15,7 @@ public class Advertisement {
     private String condition;
     private String description;
     private String imageUrl;
-    private String price;
+    private double price;
     private Date placedDate;
     private boolean availability;
     private boolean approved;
@@ -67,11 +67,11 @@ public class Advertisement {
         this.description = description;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
