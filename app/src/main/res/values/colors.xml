@@ -10,4 +10,13 @@
     <color name="colorWarning">#ffe066</color>
     <color name="colorHome">#e6ecff</color>
     <color name="colorGreen">#00a884</color>
+
+    <!--Ravindu Wataketiya -->
+
+    <color name="btnColor1">#f85959</color>
+    <color name="darkBlueBtn">#0e153a</color>
+    <color name="custom_background_color2"> #22d1ee</color>
+    <color name="custom_background_color">#e2f3f5</color>
+    <color name="btnColor2">#2f89fc</color>
+
 </resources>

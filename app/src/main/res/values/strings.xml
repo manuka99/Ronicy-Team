@@ -88,7 +88,7 @@
     <string name="account_fav">Favourites</string>
     <string name="account_profile">My profile</string>
     <string name="account_safe">Stay safe</string>
-    <string name="account_faq">FAQ</string>
+    <string name="account_faq">Get In Touch</string>
     <string name="account_howto">How to sell fast</string>
     <string name="account_donate">Donate us</string>
     <string name="account_logout">Log out</string>
@@ -102,6 +102,44 @@
 
 
     <!-- Ravindu -->
+
+
+    <string name="ReportBugString">App has bugs?</string>
+    <string name="BugReportButtonText">Report Bugs</string>
+    <string name="HaveSuggestionsString">Have Suggestions?</string>
+    <string name="suggestionsBtn">Write to Us</string>
+    <string name="aboutUsString">About Us</string>
+    <string name="AboutUsText">About Us</string>
+    <string name="wantToKnowMoreText">Want to know more?</string>
+    <string name="BugIdTextStirng">101</string>
+    <string name="ViewBugBtnText">View</string>
+    <string name="BugDescriptionText">There was a bug where pressing the button to contact seller was not working.</string>
+    <string name="filedDateString">"Filed Date: "</string>
+    <string name="IdString">"Id: "</string>
+    <string name="staticDateString">2020-08-12</string>
+    <string name="descriptionText">Description:</string>
+    <string name="TextForEditBugBtn">Edit</string>
+    <string name="textForDeleteBugBtn">Delete</string>
+    <string name="bugStatusTopicText">Status:</string>
+    <string name="BugStatusTopicText">Status:</string>
+    <string name="BugStatusStaticText">Acknowledged</string>
+    <string name="viewBugsButtonText">View the bugs you have filed</string>
+    <string name="addBugsBtnText">File a new bug</string>
+    <string name="DescribeBugText">Please describe the issue below</string>
+    <string name="submitButtonText">Submit</string>
+    <string name="editText">Edit the details below</string>
+    <string name="saveChangesBtnTxt">Save Changes</string>
+    <string name="enterSuggestionHeader">Please enter your suggestions</string>
+    <string name="AppDescription">This is an application where we facillitate a seamless addvertising expeience to our users. We help advertisers to reach a vast audience through our platform. We are commited to supply a continued and improving service to our users.</string>
+    <string name="email">adzbiz@weekend.com</string>
+    <string name="EmailString">"Email: "</string>
+    <string name="PhoneNumberTopic">"Phone Number: "</string>
+    <string name="PhoneNumber">0712803772</string>
+    <string name="AppGivingTroubleString">App giving trouble?</string>
+    <string name="getInTouchString">Get In Touch</string>
+    <string name="bugs">Bugs</string>
+
+
 
 
     <!-- Ashan -->

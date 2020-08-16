@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "877425664170-2lslnis7hnigej6ft6rc575qbj6hiosj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.adeasy.advertise",
+            "certificate_hash": "4080b563fd622b7ef0a46e2b5a8cf336704b84b5"
+          }
+        },
+        {
           "client_id": "877425664170-a9fiq64qo8g6lb4nq0bfsf7j0dm3de70.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

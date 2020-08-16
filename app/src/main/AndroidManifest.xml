@@ -9,6 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!--Ravindu -->
+        <activity android:name=".activity.getintouch.GetInTouchActivity"></activity>
+        <activity android:name=".activity.getintouch.AboutUsActivity"></activity>
+        <activity android:name=".activity.getintouch.AddNewBugActivity"></activity>
+        <activity android:name=".activity.getintouch.AddNewSuggestionActivity"></activity>
+        <activity android:name=".activity.getintouch.BugsActionsActivity"></activity>
+        <activity android:name=".activity.getintouch.BugsActivity"></activity>
+        <activity android:name=".activity.getintouch.EditBugActivity"></activity>
+        <activity android:name=".activity.getintouch.ViewBugActivity"></activity>
+
+
         <activity android:name=".activity.advertisement.PlaceOrder" />
         <activity android:name=".activity.athentication.register" />
         <activity android:name=".activity.athentication.login" />

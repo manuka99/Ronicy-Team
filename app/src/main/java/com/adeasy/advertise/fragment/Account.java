@@ -19,6 +19,7 @@ import com.adeasy.advertise.activity.advertisement.Donations;
 import com.adeasy.advertise.activity.advertisement.MainActivity;
 import com.adeasy.advertise.activity.advertisement.Myadds;
 import com.adeasy.advertise.activity.athentication.login;
+import com.adeasy.advertise.activity.getintouch.GetInTouchActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -151,6 +152,13 @@ public class Account extends Fragment {
                 }
 
                 startActivity(new Intent(getContext(), MainActivity.class));
+            }
+        });
+
+        faq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), com.adeasy.advertise.activity.getintouch.GetInTouchActivity.class));
             }
         });
 
