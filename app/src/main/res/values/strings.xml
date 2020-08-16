@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">Ad Easy</string>
+    <string name="app_name">Ronicy</string>
 
     <!-- common -->
     <string name="image">image view</string>
@@ -68,7 +68,7 @@
     <string name="orderThankyou">Thank you for placing  your order!</string>
     <string name="orderContactYou">We will contact you during working hours to confirm your details and arrange for delivery</string>
     <string name="orderHelp">Need help or want to cancel your order? </string>
-    <string name="orderCallus">Call GanuDenu.lk </string>
+    <string name="orderCallus">Call Ronici.lk </string>
 
 
     <!-- donations -->
@@ -81,6 +81,7 @@
     <string name="btn_donate_Now">Donate Now</string>
 
     <!-- Account tab -->
+    <string name="account">Account</string>
     <string name="account_getStarted">Get started with ikman</string>
     <string name="account_myads">My Ads</string>
     <string name="account_membership">My membership</string>

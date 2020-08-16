@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.activity.athentication.login;
-import com.adeasy.advertise.activity.athentication.register;
 import com.adeasy.advertise.firebase.AdvertisementFirebase;
 import com.adeasy.advertise.firebase.AdvertisementFirebaseImpl;
 import com.adeasy.advertise.firebase.CategoryFirebase;
@@ -198,13 +197,13 @@ public class Advertisement extends AppCompatActivity {
 
         FirebaseUser user =  auth.getCurrentUser();
 
-        if(user != null){
+        if(user == null){
 
             AlertDialog alertDialog = new AlertDialog.Builder(Advertisement.this)
 
                     .setIcon(android.R.drawable.ic_dialog_alert)
 
-                    .setTitle("You must be log in to place orders")
+                    .setTitle("You are not logged in")
 
                     .setMessage("If you already have a account you can log in else register")
 
@@ -217,10 +216,10 @@ public class Advertisement extends AppCompatActivity {
                         }
                     })
 
-                    .setNegativeButton("Register", new DialogInterface.OnClickListener() {
+                    .setNegativeButton("Proceed as a guest", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            startActivity(new Intent(Advertisement.this, register.class));
+                            startActivity(new Intent(Advertisement.this, PlaceOrder.class));
                         }
                     })
 

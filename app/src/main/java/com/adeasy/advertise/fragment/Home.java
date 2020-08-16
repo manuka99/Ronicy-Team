@@ -101,7 +101,7 @@ public class Home extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("ganuDenu");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.app_name);
 
         mSwipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
         recyclerView = view.findViewById(R.id.adMenuRecyclerView);

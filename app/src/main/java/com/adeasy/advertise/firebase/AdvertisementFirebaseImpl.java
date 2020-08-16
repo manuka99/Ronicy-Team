@@ -97,7 +97,8 @@ public class AdvertisementFirebaseImpl implements AdvertisementFirebase {
             final StorageReference ref = storageReference.child(imageID);
 
             progressDialog = new ProgressDialog(context);
-            progressDialog.setTitle("Uploading Image...");
+            progressDialog.setTitle("Publishing your advertisement...");
+            progressDialog.setMessage("Your advertisement will be live after we approve it.");
             progressDialog.show();
 
             storageTask = ref.putBytes(data);

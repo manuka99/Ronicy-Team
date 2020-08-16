@@ -18,12 +18,13 @@
             android:id="@+id/myaddsImage"
             android:layout_width="140dp"
             android:layout_height="140dp"
+            android:layout_gravity="center_vertical"
             app:srcCompat="@mipmap/ic_launcher"
             android:contentDescription="@string/image" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="8dp">
 
