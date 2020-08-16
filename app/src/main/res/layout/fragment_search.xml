@@ -8,7 +8,9 @@
     android:orientation="vertical"
     tools:context=".fragment.Search">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <!-- Manuka -->
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/gridSwipeCat"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

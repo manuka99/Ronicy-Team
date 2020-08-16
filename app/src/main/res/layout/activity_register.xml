@@ -8,6 +8,8 @@
     android:padding="40dp"
     tools:context=".activity.athentication.register">
 
+    <!-- Manuka -->
+
     <TextView
         android:id="@+id/regMessage"
         android:layout_width="match_parent"

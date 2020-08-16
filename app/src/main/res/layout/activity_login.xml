@@ -8,6 +8,8 @@
     android:padding="40dp"
     tools:context=".activity.athentication.login">
 
+    <!-- Manuka -->
+
     <TextView
         android:id="@+id/loginMessage"
         android:layout_width="match_parent"

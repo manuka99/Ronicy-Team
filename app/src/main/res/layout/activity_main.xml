@@ -9,6 +9,7 @@
        android:id="@+id/toolbar"
        ></include>
 
+   <!-- Manuka -->
 
    <FrameLayout
        android:id="@+id/navContainer"
