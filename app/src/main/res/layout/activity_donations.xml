@@ -8,6 +8,8 @@
     android:background="#e6ecff"
     tools:context=".activity.advertisement.Donations">
 
+    <!-- Manuka -->
+
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar"></include>

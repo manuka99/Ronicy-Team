@@ -9,6 +9,8 @@
     tools:context=".activity.advertisement.PlaceOrder"
     tools:ignore="LabelFor">
 
+    <!-- Manuka -->
+
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar"></include>

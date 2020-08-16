@@ -1,4 +1,7 @@
 <resources>
+
+    <!-- Manuka -->
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -12,5 +15,13 @@
         <item name="android:layout_height">1dp</item>
         <item name="android:background">?android:attr/listDivider</item>
     </style>
+
+    <!-- Divya -->
+
+
+    <!-- Ravindu -->
+
+
+    <!-- Ashan -->
 
 </resources>

@@ -8,6 +8,8 @@
     android:orientation="vertical"
     tools:context=".activity.advertisement.Myadds">
 
+    <!-- Manuka -->
+
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar"
         ></include>
