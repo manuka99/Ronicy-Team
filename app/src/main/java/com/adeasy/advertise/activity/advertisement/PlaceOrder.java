@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.Fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,13 +19,10 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
-import com.adeasy.advertise.activity.athentication.login;
-import com.adeasy.advertise.activity.athentication.register;
 import com.adeasy.advertise.firebase.AdvertisementFirebase;
 import com.adeasy.advertise.firebase.AdvertisementFirebaseImpl;
 import com.adeasy.advertise.firebase.CategoryFirebase;
@@ -36,17 +32,12 @@ import com.adeasy.advertise.firebase.OrderFirebaseImpl;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.model.Order;
-import com.adeasy.advertise.model.Order_Customer;
-import com.adeasy.advertise.model.Order_Item;
 import com.adeasy.advertise.model.Order_Payment;
-import com.baoyachi.stepview.HorizontalStepView;
-import com.baoyachi.stepview.bean.StepBean;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.shuhart.stepview.StepView;
@@ -54,7 +45,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
 
 import lk.payhere.androidsdk.PHConfigs;
 import lk.payhere.androidsdk.PHConstants;
