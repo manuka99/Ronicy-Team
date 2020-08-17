@@ -19,6 +19,7 @@ import com.adeasy.advertise.activity.advertisement.Donations;
 import com.adeasy.advertise.activity.advertisement.MainActivity;
 import com.adeasy.advertise.activity.advertisement.Myadds;
 import com.adeasy.advertise.activity.athentication.login;
+import com.adeasy.advertise.activity.favaourite.divya_MActivity;
 import com.adeasy.advertise.activity.getintouch.GetInTouchActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -162,6 +163,12 @@ public class Account extends Fragment {
             }
         });
 
+        favaourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), divya_MActivity.class));
+            }
+        });
 
     }
 }

@@ -9,18 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <!--Ravindu -->
-        <activity android:name=".activity.getintouch.GetInTouchActivity"></activity>
-        <activity android:name=".activity.getintouch.AboutUsActivity"></activity>
-        <activity android:name=".activity.getintouch.AddNewBugActivity"></activity>
-        <activity android:name=".activity.getintouch.AddNewSuggestionActivity"></activity>
-        <activity android:name=".activity.getintouch.BugsActionsActivity"></activity>
-        <activity android:name=".activity.getintouch.BugsActivity"></activity>
-        <activity android:name=".activity.getintouch.EditBugActivity"></activity>
-        <activity android:name=".activity.getintouch.ViewBugActivity"></activity>
-
-
+        <activity android:name=".activity.favaourite.divya_Edit"></activity>
+        <activity android:name=".activity.favaourite.divya_MActivity" /> <!-- Ravindu -->
+        <activity android:name=".activity.getintouch.GetInTouchActivity" />
+        <activity android:name=".activity.getintouch.AboutUsActivity" />
+        <activity android:name=".activity.getintouch.AddNewBugActivity" />
+        <activity android:name=".activity.getintouch.AddNewSuggestionActivity" />
+        <activity android:name=".activity.getintouch.BugsActionsActivity" />
+        <activity android:name=".activity.getintouch.BugsActivity" />
+        <activity android:name=".activity.getintouch.EditBugActivity" />
+        <activity android:name=".activity.getintouch.ViewBugActivity" />
         <activity android:name=".activity.advertisement.PlaceOrder" />
         <activity android:name=".activity.athentication.register" />
         <activity android:name=".activity.athentication.login" />
