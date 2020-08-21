@@ -25,6 +25,7 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
+import com.adeasy.advertise.util.ImageQualityReducer;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
@@ -191,12 +192,7 @@ public class EditAdvertisement extends AppCompatActivity implements Advertisemen
         if (imageURI != null) {
             image.setDrawingCacheEnabled(true);
             image.buildDrawingCache();
-            Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] data = baos.toByteArray();
-
-            advertisementManager.uploadImage(advertisement, data);
+            advertisementManager.uploadImage(advertisement, ImageQualityReducer.reduceQuality(image.getDrawable()));
         } else
             advertisementManager.insertAdvertisement(advertisement);
 

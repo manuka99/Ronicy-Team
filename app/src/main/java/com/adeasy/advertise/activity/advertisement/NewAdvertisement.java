@@ -24,6 +24,7 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
+import com.adeasy.advertise.util.ImageQualityReducer;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -128,12 +129,8 @@ public class NewAdvertisement extends AppCompatActivity implements Advertisement
 
             imageView.setDrawingCacheEnabled(true);
             imageView.buildDrawingCache();
-            Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] data = baos.toByteArray();
 
-            advertisementManager.uploadImage(advertisement, data);
+            advertisementManager.uploadImage(advertisement, ImageQualityReducer.reduceQuality(imageView.getDrawable()));
 
         }
     }
