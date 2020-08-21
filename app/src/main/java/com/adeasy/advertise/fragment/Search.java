@@ -17,12 +17,14 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
-import com.adeasy.advertise.firebase.CategoryFirebase;
-import com.adeasy.advertise.firebase.CategoryFirebaseImpl;
+import com.adeasy.advertise.callback.CategoryCallback;
 import com.adeasy.advertise.helper.ViewHolderCatGrid;
+import com.adeasy.advertise.manager.CategoryManager;
 import com.adeasy.advertise.model.Category;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -30,7 +32,7 @@ import com.squareup.picasso.Picasso;
  * Use the {@link Search#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Search extends Fragment {
+public class Search extends Fragment implements CategoryCallback {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,7 +44,7 @@ public class Search extends Fragment {
     private String mParam2;
 
     RecyclerView recyclerView;
-    CategoryFirebase categoryFirebase = new CategoryFirebaseImpl();
+    CategoryManager categoryManager;
     FirestorePagingAdapter<Category, ViewHolderCatGrid> firestorePagingAdapter;
     SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -89,7 +91,7 @@ public class Search extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Search Category");
-
+        categoryManager = new CategoryManager(this);
         mSwipeRefreshLayout = view.findViewById(R.id.gridSwipeCat);
         recyclerView = view.findViewById(R.id.GridCategoryRecycle);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
@@ -114,7 +116,7 @@ public class Search extends Fragment {
 
         FirestorePagingOptions<Category> options = new FirestorePagingOptions.Builder<Category>()
                 .setLifecycleOwner(this)
-                .setQuery(categoryFirebase.viewCats(), config, Category.class)
+                .setQuery(categoryManager.viewCategoryAll(), config, Category.class)
                 .build();
 
         firestorePagingAdapter =
@@ -203,5 +205,15 @@ public class Search extends Fragment {
         firestorePagingAdapter.stopListening();
     }
 
+    @Override
+    public void getCategoryByID(@NonNull Task<DocumentSnapshot> task) {
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        categoryManager.destroy();
+    }
 
 }

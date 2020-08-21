@@ -21,32 +21,31 @@ import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.activity.athentication.login;
-import com.adeasy.advertise.firebase.AdvertisementFirebase;
-import com.adeasy.advertise.firebase.AdvertisementFirebaseImpl;
-import com.adeasy.advertise.firebase.CategoryFirebase;
-import com.adeasy.advertise.firebase.CategoryFirebaseImpl;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.adeasy.advertise.callback.AdvertisementCallback;
+import com.adeasy.advertise.callback.CategoryCallback;
+import com.adeasy.advertise.manager.AdvertisementManager;
+import com.adeasy.advertise.manager.CategoryManager;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
-public class Advertisement extends AppCompatActivity {
+public class Advertisement extends AppCompatActivity implements AdvertisementCallback, CategoryCallback, View.OnClickListener {
 
     TextView AdTitle, AdCondition, AdDescription, AdPrice, adTime, adCatName;
     ImageView image;
     String adID, adCID;
-    AdvertisementFirebase advertisementFirebase;
-    CategoryFirebase categoryFirebase;
-    private static final String TAG = "EditAdvertisement";
-    private com.adeasy.advertise.model.Advertisement advertisement;
-    private com.adeasy.advertise.model.Category category;
-    final private int requestCodeImage = 1456;
     Button callText, chatText, adBuyNow;
     Uri imageURI;
     Context context;
     FirebaseAuth auth;
+    AdvertisementManager advertisementManager;
+    CategoryManager categoryManager;
+    com.adeasy.advertise.model.Advertisement advertisement;
+    com.adeasy.advertise.model.Category category;
+    private static final int requestCodeImage = 1456;
+    private static final String TAG = "EditAdvertisement";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +55,9 @@ public class Advertisement extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         context = this;
 
+        advertisementManager = new AdvertisementManager(this);
+        categoryManager = new CategoryManager(this);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Details");
@@ -64,14 +66,9 @@ public class Advertisement extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 finish();
-
             }
         });
-
-        advertisementFirebase = new AdvertisementFirebaseImpl();
-        categoryFirebase = new CategoryFirebaseImpl();
 
         image = findViewById(R.id.adDetailsImage);
 
@@ -89,82 +86,14 @@ public class Advertisement extends AppCompatActivity {
         adID = getIntent().getStringExtra("adID");
         adCID = getIntent().getStringExtra("adCID");
 
+        advertisementManager.getAddbyID(adID);
+        categoryManager.getCategorybyID(adCID);
 
-        advertisementFirebase.getAddbyID(adID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        advertisement = new com.adeasy.advertise.model.Advertisement();
-                        advertisement = document.toObject(com.adeasy.advertise.model.Advertisement.class);
+    }
 
-                        adTime.setText(advertisement.getPreetyTime());
-                        AdTitle.setText(advertisement.getTitle());
-                        AdCondition.setText(advertisement.getCondition());
-                        AdDescription.setText(advertisement.getDescription());
-                        AdPrice.setText("Rs. " + advertisement.getPrice());
-                        Picasso.get().load(advertisement.getImageUrl()).into(image);
-
-                        if(advertisement.isBuynow())
-                            adBuyNow.setVisibility(View.VISIBLE);
-
-                        else
-                            adBuyNow.setVisibility(View.GONE);
-
-                    } else {
-                        Log.d(TAG, "No such document");
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
-
-        categoryFirebase.getCatbyID(adCID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        category = new com.adeasy.advertise.model.Category();
-                        category = document.toObject(com.adeasy.advertise.model.Category.class);
-
-                        adCatName.setText(category.getName());
-
-                    } else {
-                        Log.d(TAG, "No such document");
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
-
-        chatText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-
-        callText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel: 212145425"));
-                startActivity(intent);
-            }
-        });
-
-        adBuyNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                initBuyNow();
-            }
-        });
-
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override
@@ -193,11 +122,11 @@ public class Advertisement extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initBuyNow(){
+    private void initBuyNow() {
 
-        FirebaseUser user =  auth.getCurrentUser();
+        FirebaseUser user = auth.getCurrentUser();
 
-        if(user == null){
+        if (user == null) {
 
             AlertDialog alertDialog = new AlertDialog.Builder(Advertisement.this)
 
@@ -219,7 +148,7 @@ public class Advertisement extends AppCompatActivity {
                     .setNegativeButton("Proceed as a guest", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            startActivity(new Intent(Advertisement.this, PlaceOrder.class));
+                           placeBuyNow();
                         }
                     })
 
@@ -232,13 +161,127 @@ public class Advertisement extends AppCompatActivity {
                     .show();
 
 
-        }else {
-            Intent intent = new Intent(Advertisement.this, PlaceOrder.class);
-            intent.putExtra("aID", advertisement.getId());
-            intent.putExtra("cID", category.getId());
-            startActivity(intent);
+        } else
+            placeBuyNow();
+
+
+    }
+
+    private void placeBuyNow() {
+        Intent intent = new Intent(Advertisement.this, BuyNow.class);
+        intent.putExtra("aID", advertisement.getId());
+        intent.putExtra("cID", category.getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onUploadImage(@NonNull Task<Uri> task) {
+
+    }
+
+    @Override
+    public void onTaskFull(boolean result) {
+
+    }
+
+    @Override
+    public void onSuccessInsertAd() {
+
+    }
+
+    @Override
+    public void onFailureInsertAd() {
+
+    }
+
+    @Override
+    public void onSuccessDeleteAd() {
+
+    }
+
+    @Override
+    public void onFailureDeleteAd() {
+
+    }
+
+    @Override
+    public void onSuccessUpdatetAd() {
+
+    }
+
+    @Override
+    public void onFailureUpdateAd() {
+
+    }
+
+    @Override
+    public void getAdbyID(@NonNull Task<DocumentSnapshot> task) {
+
+        if (task.isSuccessful()) {
+            DocumentSnapshot document = task.getResult();
+            if (document.exists()) {
+                advertisement = new com.adeasy.advertise.model.Advertisement();
+                advertisement = document.toObject(com.adeasy.advertise.model.Advertisement.class);
+
+                adTime.setText(advertisement.getPreetyTime());
+                AdTitle.setText(advertisement.getTitle());
+                AdCondition.setText(advertisement.getCondition());
+                AdDescription.setText(advertisement.getDescription());
+                AdPrice.setText("Rs. " + advertisement.getPrice());
+                Picasso.get().load(advertisement.getImageUrl()).into(image);
+
+                if (advertisement.isBuynow())
+                    adBuyNow.setVisibility(View.VISIBLE);
+
+                else
+                    adBuyNow.setVisibility(View.GONE);
+
+            } else {
+                Log.d(TAG, "No such document");
+            }
+        } else {
+            Log.d(TAG, "get failed with ", task.getException());
         }
 
     }
 
+    @Override
+    public void onClick(View view) {
+
+        if (view == chatText) {
+
+
+        } else if (view == callText) {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:212145425"));
+            startActivity(intent);
+        } else if (view == adBuyNow)
+            initBuyNow();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        advertisementManager.destroy();
+        categoryManager.destroy();
+    }
+
+    @Override
+    public void getCategoryByID(@NonNull Task<DocumentSnapshot> task) {
+        if (task.isSuccessful()) {
+            DocumentSnapshot document = task.getResult();
+            if (document.exists()) {
+                category = new com.adeasy.advertise.model.Category();
+                category = document.toObject(com.adeasy.advertise.model.Category.class);
+
+                adCatName.setText(category.getName());
+
+            } else {
+                Log.d(TAG, "No such document");
+            }
+        } else {
+            Log.d(TAG, "get failed with ", task.getException());
+        }
+    }
 }

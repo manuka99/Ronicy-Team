@@ -44,6 +44,7 @@
                         android:layout_height="400dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="20dp"
+                        android:onClick="onClick"
                         android:background="@drawable/ic_baseline_camera_alt_24"
                         android:contentDescription="@string/image"></ImageView>
 
@@ -58,6 +59,7 @@
                         android:background="#3399ff"
                         android:gravity="center"
                         android:text="@string/post_choose_image_btn"
+                        android:onClick="onClick"
                         android:textColor="#ffffff"
                         android:textSize="16sp"></Button>
 
@@ -184,6 +186,7 @@
                         android:background="#3399ff"
                         android:gravity="center"
                         android:text="@string/post_update_btn"
+                        android:onClick="onClick"
                         android:textColor="#ffffff"
                         android:textSize="18sp"></Button>
 

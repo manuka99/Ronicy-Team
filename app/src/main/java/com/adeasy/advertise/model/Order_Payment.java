@@ -1,6 +1,8 @@
 package com.adeasy.advertise.model;
 
-public class Order_Payment {
+import java.io.Serializable;
+
+public class Order_Payment implements Serializable {
 
     private String type;
     private String status;

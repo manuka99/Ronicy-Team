@@ -1,6 +1,8 @@
 package com.adeasy.advertise.model;
 
-public class Order_Customer {
+import java.io.Serializable;
+
+public class Order_Customer implements Serializable {
 
     private String uid;
     private String name;

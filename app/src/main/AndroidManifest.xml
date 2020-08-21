@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.favaourite.divya_Edit"></activity>
+        <activity android:name=".activity.advertisement.BuyNow"></activity>
+        <activity android:name=".activity.favaourite.divya_Edit" />
         <activity android:name=".activity.favaourite.divya_MActivity" /> <!-- Ravindu -->
         <activity android:name=".activity.getintouch.GetInTouchActivity" />
         <activity android:name=".activity.getintouch.AboutUsActivity" />
@@ -19,7 +20,6 @@
         <activity android:name=".activity.getintouch.BugsActivity" />
         <activity android:name=".activity.getintouch.EditBugActivity" />
         <activity android:name=".activity.getintouch.ViewBugActivity" />
-        <activity android:name=".activity.advertisement.PlaceOrder" />
         <activity android:name=".activity.athentication.register" />
         <activity android:name=".activity.athentication.login" />
         <activity android:name=".activity.advertisement.Donations" />

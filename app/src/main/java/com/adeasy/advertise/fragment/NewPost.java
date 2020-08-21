@@ -18,12 +18,14 @@ import android.widget.TextView;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.activity.advertisement.NewAdvertisement;
-import com.adeasy.advertise.firebase.CategoryFirebase;
-import com.adeasy.advertise.firebase.CategoryFirebaseImpl;
+import com.adeasy.advertise.callback.CategoryCallback;
 import com.adeasy.advertise.helper.ViewHolderPostCats;
+import com.adeasy.advertise.manager.CategoryManager;
 import com.adeasy.advertise.model.Category;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -31,7 +33,7 @@ import com.squareup.picasso.Picasso;
  * Use the {@link NewPost#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewPost extends Fragment {
+public class NewPost extends Fragment implements CategoryCallback {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,8 +47,7 @@ public class NewPost extends Fragment {
     TextView title;
     ImageView imageView;
     RecyclerView recyclerView;
-
-    CategoryFirebase categoryFirebase = new CategoryFirebaseImpl();
+    CategoryManager categoryManager;
 
     public NewPost() {
         // Required empty public constructor
@@ -101,6 +102,7 @@ public class NewPost extends Fragment {
                 return false;
             }
         });
+        categoryManager = new CategoryManager(this);
         loadData();
 
     }
@@ -108,7 +110,7 @@ public class NewPost extends Fragment {
     private void loadData() {
 
         FirestoreRecyclerOptions<Category> options = new FirestoreRecyclerOptions.Builder<Category>()
-                .setQuery(categoryFirebase.viewCats(), Category.class).build();
+                .setQuery(categoryManager.viewCategoryAll(), Category.class).build();
 
         FirestoreRecyclerAdapter<Category, ViewHolderPostCats> FirestoreRecyclerAdapter  =
                 new FirestoreRecyclerAdapter <Category, ViewHolderPostCats>(
@@ -142,6 +144,17 @@ public class NewPost extends Fragment {
         FirestoreRecyclerAdapter.startListening();
         recyclerView.setAdapter(FirestoreRecyclerAdapter);
 
+    }
+
+    @Override
+    public void getCategoryByID(@NonNull Task<DocumentSnapshot> task) {
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        categoryManager.destroy();
     }
 
 }

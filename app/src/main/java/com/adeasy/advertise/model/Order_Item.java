@@ -1,6 +1,8 @@
 package com.adeasy.advertise.model;
 
-public class Order_Item {
+import java.io.Serializable;
+
+public class Order_Item implements Serializable {
 
     private String itemName;
     private String imageUrl;

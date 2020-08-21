@@ -10,8 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,19 +21,23 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
-import com.adeasy.advertise.firebase.AdvertisementFirebase;
-import com.adeasy.advertise.firebase.AdvertisementFirebaseImpl;
+import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.helper.ViewHolderListAdds;
+import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
-public class Myadds extends AppCompatActivity {
+public class Myadds extends AppCompatActivity implements AdvertisementCallback {
 
+    Context context;
+    String imageUrlTodelete;
     Toolbar toolbar;
     RecyclerView recyclerView;
-    AdvertisementFirebase advertisementFirebase = new AdvertisementFirebaseImpl();
+    AdvertisementManager advertisementManager;
     SwipeRefreshLayout swipeRefreshLayout;
     FirestorePagingAdapter<Advertisement, ViewHolderListAdds> firestorePagingAdapter;
 
@@ -39,6 +45,8 @@ public class Myadds extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myadds);
+
+        context = this;
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,6 +66,8 @@ public class Myadds extends AppCompatActivity {
         //recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        advertisementManager = new AdvertisementManager(this);
 
         loadData();
 
@@ -80,7 +90,7 @@ public class Myadds extends AppCompatActivity {
 
         FirestorePagingOptions<Advertisement> options = new FirestorePagingOptions.Builder<Advertisement>()
                 .setLifecycleOwner(this)
-                .setQuery(advertisementFirebase.viewAddsAll(), config, Advertisement.class)
+                .setQuery(advertisementManager.viewAddsAll(), config, Advertisement.class)
                 .build();
 
         firestorePagingAdapter =
@@ -136,10 +146,8 @@ public class Myadds extends AppCompatActivity {
                                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface dialogInterface, int i) {
-
-                                                                advertisementFirebase.deleteAdd(getItem(position).getId(), (String)getItem(position).get("imageUrl"),Myadds.this);
-                                                                firestorePagingAdapter.refresh();
-
+                                                                imageUrlTodelete = (String) getItem(position).get("imageUrl");
+                                                                advertisementManager.deleteAdd(getItem(position).getId());
                                                             }
                                                         })
 
@@ -165,13 +173,12 @@ public class Myadds extends AppCompatActivity {
                                             }
                                         });
 
-                                if ((Boolean)getItem(position).get("availability")) {
+                                if ((Boolean) getItem(position).get("availability")) {
 
                                     alertDialog.setPositiveButton("Hide ad", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
-                                            advertisementFirebase.hideAdd(getItem(position).getId(), false, Myadds.this);
-                                            firestorePagingAdapter.refresh();
+                                            advertisementManager.hideAdd(getItem(position).getId(), false);
                                         }
                                     });
                                 } else {
@@ -179,8 +186,7 @@ public class Myadds extends AppCompatActivity {
                                     alertDialog.setPositiveButton("Show ad", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
-                                            advertisementFirebase.hideAdd(getItem(position).getId(), true, Myadds.this);
-                                            firestorePagingAdapter.refresh();
+                                            advertisementManager.hideAdd(getItem(position).getId(), true);
                                         }
                                     });
                                 }
@@ -238,4 +244,60 @@ public class Myadds extends AppCompatActivity {
         recyclerView.setAdapter(firestorePagingAdapter);
 
     }
+
+    @Override
+    public void onUploadImage(@NonNull Task<Uri> task) {
+
+    }
+
+    @Override
+    public void onTaskFull(boolean result) {
+
+    }
+
+    @Override
+    public void onSuccessInsertAd() {
+
+    }
+
+    @Override
+    public void onFailureInsertAd() {
+
+    }
+
+    @Override
+    public void onSuccessDeleteAd() {
+        advertisementManager.deletePreviousImage(imageUrlTodelete);
+        imageUrlTodelete = null;
+        firestorePagingAdapter.refresh();
+        Toast.makeText(context, "Success: Your advertisement was deleted", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onFailureDeleteAd() {
+        Toast.makeText(context, "Error: Your advertisement was not deleted", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onSuccessUpdatetAd() {
+        Toast.makeText(context, "Success: All changes were saved", Toast.LENGTH_LONG).show();
+        firestorePagingAdapter.refresh();
+    }
+
+    @Override
+    public void onFailureUpdateAd() {
+        Toast.makeText(context, "Error: Changes were not saved", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void getAdbyID(@NonNull Task<DocumentSnapshot> task) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        advertisementManager.destroy();
+    }
+
 }

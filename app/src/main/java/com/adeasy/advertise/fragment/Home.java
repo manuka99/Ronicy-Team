@@ -1,6 +1,7 @@
 package com.adeasy.advertise.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,12 +22,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
-import com.adeasy.advertise.firebase.AdvertisementFirebase;
-import com.adeasy.advertise.firebase.AdvertisementFirebaseImpl;
+import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.helper.ViewHolderAdds;
+import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -39,7 +42,7 @@ import java.util.List;
  * Use the {@link Home#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Home extends Fragment {
+public class Home extends Fragment implements AdvertisementCallback {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,8 +59,7 @@ public class Home extends Fragment {
     RecyclerView recyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     FirestorePagingAdapter<Advertisement, ViewHolderAdds> firestorePagingAdapter;
-
-    AdvertisementFirebase advertisementFirebase = new AdvertisementFirebaseImpl();
+    AdvertisementManager advertisementManager;
 
     public Home() {
         // Required empty public constructor
@@ -101,14 +103,14 @@ public class Home extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.app_name);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
 
         mSwipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
         recyclerView = view.findViewById(R.id.adMenuRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setHasFixedSize(false);
+        advertisementManager = new AdvertisementManager(this);
         loadData();
-
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -128,10 +130,10 @@ public class Home extends Fragment {
 
         FirestorePagingOptions<Advertisement> options = new FirestorePagingOptions.Builder<Advertisement>()
                 .setLifecycleOwner(this)
-                .setQuery(advertisementFirebase.viewAdds(), config, Advertisement.class)
+                .setQuery(advertisementManager.viewAdds(), config, Advertisement.class)
                 .build();
 
-        advertisementFirebase.viewAdds().addSnapshotListener(new EventListener<QuerySnapshot>() {
+        advertisementManager.viewAdds().addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot snapshot,
                                 @Nullable FirebaseFirestoreException e) {
@@ -161,7 +163,7 @@ public class Home extends Fragment {
                         holder.priceView.setText("Rs. " + advertisement.getPrice());
                         Picasso.get().load(advertisement.getImageUrl()).into(holder.imageView);
 
-                        if(advertisement.isBuynow())
+                        if (advertisement.isBuynow())
                             holder.buyNow.setVisibility(View.VISIBLE);
 
                         else
@@ -243,5 +245,56 @@ public class Home extends Fragment {
         firestorePagingAdapter.stopListening();
     }
 
+
+    @Override
+    public void onUploadImage(@NonNull Task<Uri> task) {
+
+    }
+
+    @Override
+    public void onTaskFull(boolean result) {
+
+    }
+
+    @Override
+    public void onSuccessInsertAd() {
+
+    }
+
+    @Override
+    public void onFailureInsertAd() {
+
+    }
+
+    @Override
+    public void onSuccessDeleteAd() {
+
+    }
+
+    @Override
+    public void onFailureDeleteAd() {
+
+    }
+
+    @Override
+    public void onSuccessUpdatetAd() {
+
+    }
+
+    @Override
+    public void onFailureUpdateAd() {
+
+    }
+
+    @Override
+    public void getAdbyID(@NonNull Task<DocumentSnapshot> task) {
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        advertisementManager.destroy();
+    }
 
 }

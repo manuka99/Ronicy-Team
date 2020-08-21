@@ -38,7 +38,7 @@
     <string name="adDescription">Description</string>
     <string name="adLocation">Location: </string>
     <string name="adLocationText"> Sri Lanka</string>
-    <string name="adPosted">Posted:</string>
+    <string name="adPosted">Posted: </string>
     <string name="adCategory">Category: </string>
     <string name="adCondition">Condition: </string>
     <string name="adForSale">For sale by member</string>
