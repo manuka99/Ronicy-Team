@@ -9,7 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.advertisement.BuyNow"></activity>
+        <activity android:name=".activity.SplashMainAppActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity android:name=".activity.advertisement.BuyNow" />
         <activity android:name=".activity.favaourite.divya_Edit" />
         <activity android:name=".activity.favaourite.divya_MActivity" /> <!-- Ravindu -->
         <activity android:name=".activity.getintouch.GetInTouchActivity" />
@@ -30,11 +39,7 @@
             android:name=".activity.advertisement.NewAdvertisement"
             android:parentActivityName=".activity.advertisement.MainActivity" />
         <activity android:name=".activity.advertisement.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data

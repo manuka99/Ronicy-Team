@@ -29,6 +29,7 @@ import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 public class Myadds extends AppCompatActivity implements AdvertisementCallback {
@@ -262,6 +263,11 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
 
     @Override
     public void onFailureInsertAd() {
+
+    }
+
+    @Override
+    public void onAdCount(Task<QuerySnapshot> task) {
 
     }
 

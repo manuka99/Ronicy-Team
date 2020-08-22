@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public interface AdvertisementCallback {
     public void onUploadImage(@NonNull Task<Uri> task);
@@ -20,5 +21,6 @@ public interface AdvertisementCallback {
     public void onFailureDeleteAd();
     public void onSuccessUpdatetAd();
     public void onFailureUpdateAd();
+    public void onAdCount(Task<QuerySnapshot> task);
     public void getAdbyID(@NonNull Task<DocumentSnapshot> task);
 }

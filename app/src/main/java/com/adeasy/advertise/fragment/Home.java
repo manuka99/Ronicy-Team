@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +50,7 @@ public class Home extends Fragment implements AdvertisementCallback {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private static final String TAG = "Home";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -103,8 +105,6 @@ public class Home extends Fragment implements AdvertisementCallback {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
-
         mSwipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
         recyclerView = view.findViewById(R.id.adMenuRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -121,6 +121,8 @@ public class Home extends Fragment implements AdvertisementCallback {
     }
 
     public void loadData() {
+
+        advertisementManager.getCount();
 
         PagedList.Config config = new PagedList.Config.Builder()
                 .setEnablePlaceholders(false)
@@ -284,6 +286,17 @@ public class Home extends Fragment implements AdvertisementCallback {
     @Override
     public void onFailureUpdateAd() {
 
+    }
+
+    @Override
+    public void onAdCount(Task<QuerySnapshot> task) {
+        if (task.isSuccessful()) {
+            toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+            TextView textView = toolbar.findViewById(R.id.adResults);
+            textView.setText(task.getResult().size() + " results");
+        } else {
+            Log.d(TAG, "Error getting documents: ", task.getException());
+        }
     }
 
     @Override

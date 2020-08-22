@@ -28,6 +28,7 @@ import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.util.ImageQualityReducer;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -259,6 +260,11 @@ public class EditAdvertisement extends AppCompatActivity implements Advertisemen
 
     @Override
     public void onFailureUpdateAd() {
+
+    }
+
+    @Override
+    public void onAdCount(Task<QuerySnapshot> task) {
 
     }
 

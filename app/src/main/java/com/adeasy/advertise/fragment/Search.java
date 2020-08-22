@@ -14,6 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
@@ -91,6 +92,7 @@ public class Search extends Fragment implements CategoryCallback {
         super.onViewCreated(view, savedInstanceState);
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Search Category");
+
         categoryManager = new CategoryManager(this);
         mSwipeRefreshLayout = view.findViewById(R.id.gridSwipeCat);
         recyclerView = view.findViewById(R.id.GridCategoryRecycle);

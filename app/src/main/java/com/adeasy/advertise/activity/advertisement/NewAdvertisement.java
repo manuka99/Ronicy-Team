@@ -27,6 +27,7 @@ import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.util.ImageQualityReducer;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
@@ -223,6 +224,11 @@ public class NewAdvertisement extends AppCompatActivity implements Advertisement
 
     @Override
     public void getAdbyID(@NonNull Task<DocumentSnapshot> task) {
+
+    }
+
+    @Override
+    public void onAdCount(Task<QuerySnapshot> task) {
 
     }
 

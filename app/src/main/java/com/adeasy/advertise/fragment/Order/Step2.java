@@ -26,6 +26,7 @@ import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.model.Order_Item;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -188,6 +189,11 @@ public class Step2 extends Fragment implements View.OnClickListener, Advertiseme
 
     @Override
     public void onFailureUpdateAd() {
+
+    }
+
+    @Override
+    public void onAdCount(Task<QuerySnapshot> task) {
 
     }
 

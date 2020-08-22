@@ -1,7 +1,8 @@
 <resources>
 
     <string name="app_name">Ronicy</string>
-
+    <string name="site_name">Ronicy.lk</string>
+    <string name="slogan">SRILANKA\'S LARGEST MARKETPLACE</string>
     <!-- common -->
     <string name="image">image view</string>
     <string name="company_phone">01122223344 </string>
