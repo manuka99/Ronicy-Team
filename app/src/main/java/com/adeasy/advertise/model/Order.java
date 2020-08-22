@@ -1,6 +1,11 @@
 package com.adeasy.advertise.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Order implements Serializable {
@@ -9,18 +14,25 @@ public class Order implements Serializable {
     private boolean avalability;
     private String orderStatus;
     private String orderDescription;
-    private Date time;
+    private Date placedDate;
+    private String deliveryEstimatedDate;
+    private Date deliveredDate;
     private Order_Customer customer;
     private Order_Payment payment;
     private Order_Item item;
 
     public Order() {
-        this.time = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, 5);
+
+        this.placedDate = new Date();
         this.avalability = true;
         this.orderStatus = "Processing";
         this.customer = new Order_Customer();
         this.payment = new Order_Payment();
         this.item = new Order_Item();
+        this.deliveryEstimatedDate =  dateFormat.format(c.getTime());
     }
 
     public String getId() {
@@ -55,12 +67,28 @@ public class Order implements Serializable {
         this.orderDescription = orderDescription;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getPlacedDate() {
+        return placedDate;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setPlacedDate(Date placedDate) {
+        this.placedDate = placedDate;
+    }
+
+    public String getDeliveryEstimatedDate() {
+        return deliveryEstimatedDate;
+    }
+
+    public void setDeliveryEstimatedDate(String deliveryEstimatedDate) {
+        this.deliveryEstimatedDate = deliveryEstimatedDate;
+    }
+
+    public Date getDeliveredDate() {
+        return deliveredDate;
+    }
+
+    public void setDeliveredDate(Date deliveredDate) {
+        this.deliveredDate = deliveredDate;
     }
 
     public Order_Customer getCustomer() {

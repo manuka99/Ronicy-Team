@@ -72,11 +72,10 @@ dependencies {
     implementation 'com.github.baoyachi:StepView:1.9'
     implementation 'com.github.Omega-R:OmegaCenterIconButton:0.0.4@aar'
     implementation 'com.shuhart.stepview:stepview:1.5.1'
+    implementation 'com.sun.mail:android-mail:1.6.4'
+    //implementation 'com.sun.mail:android-activation:1.6.5'
 
 }
 
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
-
-//weekendwarmad99@gmail.com
-//weekendSliit123

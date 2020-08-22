@@ -29,6 +29,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 public class Advertisement extends AppCompatActivity implements AdvertisementCallback, CategoryCallback, View.OnClickListener {
@@ -211,6 +212,11 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
     @Override
     public void onFailureUpdateAd() {
+
+    }
+
+    @Override
+    public void onAdCount(Task<QuerySnapshot> task) {
 
     }
 

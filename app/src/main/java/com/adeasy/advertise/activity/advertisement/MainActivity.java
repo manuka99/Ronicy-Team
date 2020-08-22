@@ -16,6 +16,10 @@ import com.adeasy.advertise.fragment.Chat;
 import com.adeasy.advertise.fragment.Home;
 import com.adeasy.advertise.fragment.NewPost;
 import com.adeasy.advertise.fragment.Search;
+import com.adeasy.advertise.model.Order;
+import com.adeasy.advertise.service.MailService;
+import com.adeasy.advertise.service.MailServiceImpl;
+import com.adeasy.advertise.util.EmailUtility;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{

@@ -1,15 +1,13 @@
 <resources>
 
+    <!--app -->
     <string name="app_name">Ronicy</string>
     <string name="site_name">Ronicy.lk</string>
     <string name="slogan">SRILANKA\'S LARGEST MARKETPLACE</string>
+
     <!-- common -->
     <string name="image">image view</string>
     <string name="company_phone">01122223344 </string>
-
-    <!-- payhere -->
-    <string name="PAYHERE_MERCHANTID">1214373</string>
-    <string name="PAYHERE_SECRET">8bIpNGLREQb4UobgTUm9Dj49Z3dIeUkau4DrwsH4olA0</string>
 
     <!-- Manuka -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

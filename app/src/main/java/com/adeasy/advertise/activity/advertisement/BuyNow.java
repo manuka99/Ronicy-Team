@@ -30,6 +30,7 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.callback.CategoryCallback;
 import com.adeasy.advertise.callback.OrderCallback;
+import com.adeasy.advertise.config.Configurations;
 import com.adeasy.advertise.fragment.Order.Step1;
 import com.adeasy.advertise.fragment.Order.Step2;
 import com.adeasy.advertise.fragment.Order.StepSuccess;
@@ -41,6 +42,8 @@ import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.model.Order;
 import com.adeasy.advertise.model.Order_Customer;
 import com.adeasy.advertise.model.Order_Payment;
+import com.adeasy.advertise.service.MailService;
+import com.adeasy.advertise.service.MailServiceImpl;
 import com.adeasy.advertise.util.UniqueIdBasedOnName;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -72,6 +75,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     Step1 step1;
     Step2 step2;
     StepSuccess orderSuccess;
+    MailService mailService;
 
     private FirebaseAuth mAuth;
     private OrderManager orderManager;
@@ -91,6 +95,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
         context = this;
         mAuth = FirebaseAuth.getInstance();
+        mailService = new MailServiceImpl(context);
         orderManager = new OrderManager(this);
         advertisementID = getIntent().getStringExtra("aID");
         categoryId = getIntent().getStringExtra("cID");
@@ -254,8 +259,8 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
             orderManager.insertOrder(order);
         } else {
             InitRequest req = new InitRequest();
-            req.setMerchantId(getApplication().getString(R.string.PAYHERE_MERCHANTID));
-            req.setMerchantSecret(getApplication().getString(R.string.PAYHERE_SECRET));
+            req.setMerchantId(Configurations.PAYHERE_MERCHANTID);
+            req.setMerchantSecret(Configurations.PAYHERE_SECRET);
             req.setCurrency("LKR");
             req.setAmount(order.getItem().getPrice());
             req.setOrderId(order.getId());
@@ -309,6 +314,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     @Override
     public void onSuccessInsertOrder() {
         onSuccessOrder();
+        mailService.SendOrderPlacedEmail(order);
     }
 
     @Override
@@ -337,4 +343,10 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        orderManager.destroy();
+        mailService.destroy();
+    }
 }
