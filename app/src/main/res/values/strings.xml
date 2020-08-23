@@ -43,6 +43,15 @@
     <string name="adForSale">For sale by member</string>
     <string name="adBuynow">Buy Now </string>
 
+    <!-- order verify phone -->
+    <string name="order_phone_header">Please verify your phone number: </string>
+    <string name="order_phone_subheading">Enter the PIN code that was sent to this phone number via SMS</string>
+    <string name="order_phone_btn_verify">Verify</string>
+    <string name="order_phone_cancel">Cancel</string>
+    <string name="order_phone_new_pin">Get new PIN code</string>
+    <string name="order_phone_didnt_recieve">Didn\'t receive the PIN code?</string>
+    <string name="order_phone_number">0772352146</string>
+
     <!-- Order -->
     <string name="orderStepHeader">Complete your purchase in 3 simple steps</string>
     <string name="orderDeliveryHeader">Delivery Summary</string>

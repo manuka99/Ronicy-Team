@@ -9,6 +9,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.ListFragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,6 +32,7 @@ import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.callback.CategoryCallback;
 import com.adeasy.advertise.callback.OrderCallback;
 import com.adeasy.advertise.config.Configurations;
+import com.adeasy.advertise.fragment.Order.OrderPhoneVerify;
 import com.adeasy.advertise.fragment.Order.Step1;
 import com.adeasy.advertise.fragment.Order.Step2;
 import com.adeasy.advertise.fragment.Order.StepSuccess;
@@ -48,7 +50,11 @@ import com.adeasy.advertise.util.UniqueIdBasedOnName;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.shuhart.stepview.StepView;
@@ -56,6 +62,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import lk.payhere.androidsdk.PHConfigs;
 import lk.payhere.androidsdk.PHConstants;
@@ -73,6 +80,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     Toolbar toolbar;
     StepView stepView;
     Step1 step1;
+    OrderPhoneVerify orderPhoneVerify;
     Step2 step2;
     StepSuccess orderSuccess;
     MailService mailService;
@@ -91,6 +99,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
         order = new Order();
         step1 = new Step1();
         step2 = new Step2();
+        orderPhoneVerify = new OrderPhoneVerify();
         orderSuccess = new StepSuccess();
 
         context = this;
@@ -111,9 +120,66 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
+
+        String phoneNum = "+94721146092";
+        String testVerificationCode = "123456";
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                phoneNum, 30L /*timeout*/, TimeUnit.SECONDS,
+                this, new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
+                    @Override
+                    public void onCodeSent(String verificationId,
+                                           PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+
+
+                        Toast.makeText(getApplicationContext(), "sent", Toast.LENGTH_LONG).show();
+                        // The corresponding whitelisted code above should be used to complete sign-in.
+                        //MainActivity.this.enableUserManuallyInputCode();
+                    }
+
+                    @Override
+                    public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+                        // Sign in with the credential
+                        // ...
+                    }
+
+                    @Override
+                    public void onVerificationFailed(FirebaseException e) {
+                        // ...
+                        // Save the verification id somewhere
+                        // ...
+                        if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                            // Invalid request
+                            // [START_EXCLUDE]
+                            Toast.makeText(getApplicationContext(), "Invalid phone number", Toast.LENGTH_LONG).show();
+                            // [END_EXCLUDE]
+                        }
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+
+                });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (getCurrentFragment() instanceof OrderPhoneVerify || getCurrentFragment() instanceof Step2) {
+
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.remove(getCurrentFragment());
+            ft.commit();
+
+            stepView.go(0, true);
+            super.onBackPressed();
+        } else if (getCurrentFragment() instanceof StepSuccess) {
+            finish();
+        }
 
     }
 
@@ -133,8 +199,8 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
                 .selectedStepNumberColor(ContextCompat.getColor(this, R.color.colorBlack))
                 .steps(new ArrayList<String>() {{
                     add("Delivery");
-                    add("Payment");
                     add("Confirmation");
+                    add("Payment");
                 }})
                 .animationDuration(getResources().getInteger(android.R.integer.config_shortAnimTime))
                 .stepLineWidth(20)
@@ -163,23 +229,33 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
                 stepView.go(1, true);
 
-                Bundle bundle = new Bundle();
-                bundle.putString("aID", advertisementID);
-                bundle.putString("cID", categoryId);
-
-                step2.setArguments(bundle);
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.orderStepContainer, step2);
+                ft.addToBackStack(Step1.class.getName());
+                ft.replace(R.id.orderStepContainer, orderPhoneVerify);
                 ft.commit();
 
             }
+        } else if (getCurrentFragment() instanceof OrderPhoneVerify) {
+
+            stepView.go(2, true);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("aID", advertisementID);
+            bundle.putString("cID", categoryId);
+
+            step2.setArguments(bundle);
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.orderStepContainer, step2);
+            ft.commit();
+
 
         } else if (getCurrentFragment() instanceof Step2) {
 
-            order.setItem(((Step2) getCurrentFragment()).getItem());
-
-            processPayment(((Step2) getCurrentFragment()).isCODSelectedPaymentType());
+            Log.i(TAG, "sasw232323232323232323232435565676");
+            order.setItem(step2.getItem());
+            processPayment(step2.isCODSelectedPaymentType());
 
         }
 
@@ -193,41 +269,41 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
     public void processPayment(final boolean CODSelected) {
 
-            if (validateUserBefourPayment()) {
+        if (validateUserBefourPayment()) {
 
-                String alert = null;
+            String alert = null;
 
-                if (CODSelected)
-                    alert = "as a cash on delivery order?";
+            if (CODSelected)
+                alert = "as a cash on delivery order?";
 
-                else
-                    alert = "through our online payment gateway?";
+            else
+                alert = "through our online payment gateway?";
 
-                AlertDialog alertDialog = new AlertDialog.Builder(context)
+            AlertDialog alertDialog = new AlertDialog.Builder(context)
 
-                        .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
 
-                        .setTitle("Confirm your order")
+                    .setTitle("Confirm your order")
 
-                        .setMessage("Do you want to place this order " + alert)
+                    .setMessage("Do you want to place this order " + alert)
 
-                        .setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                placeOrder(CODSelected);
-                            }
-                        })
+                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            placeOrder(CODSelected);
+                        }
+                    })
 
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                            }
-                        })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    })
 
-                        .show();
+                    .show();
 
 
-            }
+        }
 
     }
 
@@ -236,7 +312,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
             if (order.getItem().getItemName().isEmpty() || order.getItem().getPrice() == 0 || order.getItem().getImageUrl().isEmpty() || order.getItem().getCategoryName().isEmpty())
                 return false;
 
-            if(order.getCustomer().getName().isEmpty() || order.getCustomer().getEmail().isEmpty() || order.getCustomer().getPhone() == 0 || order.getCustomer().getAddress().isEmpty())
+            if (order.getCustomer().getName().isEmpty() || order.getCustomer().getEmail().isEmpty() || order.getCustomer().getPhone() == 0 || order.getCustomer().getAddress().isEmpty())
                 return false;
 
             else
@@ -290,7 +366,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
             if (response.isSuccess()) {
                 int status = response.getData().getStatus();
 
-                if (status == 2 ) {
+                if (status == 2) {
                     completePayhereOrder(response.getData().getPrice());
                 }
 
@@ -299,9 +375,10 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
             Log.d(TAG, response.getData().toString());
 
-        }}
+        }
+    }
 
-    public void completePayhereOrder(long amount){
+    public void completePayhereOrder(long amount) {
         Order_Payment payment = new Order_Payment();
         payment.setType("Payhere");
         payment.setStatus("Approved");
@@ -322,7 +399,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
     }
 
-    public void onSuccessOrder(){
+    public void onSuccessOrder() {
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("order", order);

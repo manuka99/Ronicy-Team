@@ -28,7 +28,6 @@ import javax.mail.util.ByteArrayDataSource;
 
 public class MailServiceImpl extends javax.mail.Authenticator implements MailService {
 
-    // change this host name
     private static final String TAG = "MailServiceImpl";
 
     private static final String user = Configurations.EMAIL_RONICY;
@@ -44,6 +43,7 @@ public class MailServiceImpl extends javax.mail.Authenticator implements MailSer
     public void SendOrderPlacedEmail(Order order) {
 
         InputStream inputStream = context.getResources().openRawResource(R.raw.order_placed_email_template);
+
         try {
             int size = inputStream.available();
             byte[] buffer = new byte[size];
@@ -77,7 +77,6 @@ public class MailServiceImpl extends javax.mail.Authenticator implements MailSer
 
             EmailUtility emailUtility = new EmailUtility(order.getCustomer().getEmail(), "Ronicy: Order placed successfully ", str);
             emailUtility.execute();
-
         } catch (IOException e) {
             e.printStackTrace();
             Log.i(TAG, "Error sending email");
