@@ -28,7 +28,7 @@ tools:context=".fragment.Order.Step2">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:padding="8dp">
 
             <ImageView
                 android:id="@+id/orderItemImage"
@@ -53,7 +53,7 @@ tools:context=".fragment.Order.Step2">
                     android:gravity="start"
                     android:text="@string/orderDeliveryHeader"
                     android:textColor="@color/colorBlack"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"></TextView>
 
                 <TextView
@@ -63,7 +63,7 @@ tools:context=".fragment.Order.Step2">
                     android:layout_marginBottom="4dp"
                     android:gravity="start"
                     android:text="@string/orderDeliveryHeader"
-                    android:textSize="18sp"></TextView>
+                    android:textSize="16sp"></TextView>
 
                 <TextView
                     android:id="@+id/orderItemPrice"
@@ -220,14 +220,14 @@ tools:context=".fragment.Order.Step2">
             android:background="@drawable/button_border_green"
             android:drawableStart="@drawable/ic_baseline_credit_card_24"
             android:fontFamily="serif"
-            android:paddingStart="20dp"
+            android:paddingStart="10dp"
             android:textColor="@color/colorBlack"
-            android:paddingEnd="20dp"
+            android:paddingEnd="10dp"
             android:text="@string/orderItemPaymentCredit"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:onClick="onClick"
-            android:textSize="14sp"></Button>
+            android:textSize="12sp"></Button>
 
         <Button
             android:id="@+id/orderPaymentCOD"
@@ -238,14 +238,14 @@ tools:context=".fragment.Order.Step2">
             android:background="@drawable/order_border"
             android:drawableStart="@drawable/ic_baseline_emoji_people_24"
             android:fontFamily="serif"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:text="@string/orderItemPaymentCOD"
             android:textAlignment="center"
             android:textColor="@color/colorBlack"
             android:textAllCaps="false"
             android:onClick="onClick"
-            android:textSize="14sp"></Button>
+            android:textSize="12sp"></Button>
 
 
     </LinearLayout>
