@@ -124,45 +124,6 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
             }
         });
 
-        String phoneNum = "+94721146092";
-        String testVerificationCode = "123456";
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                phoneNum, 30L /*timeout*/, TimeUnit.SECONDS,
-                this, new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-
-                    @Override
-                    public void onCodeSent(String verificationId,
-                                           PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-
-
-                        Toast.makeText(getApplicationContext(), "sent", Toast.LENGTH_LONG).show();
-                        // The corresponding whitelisted code above should be used to complete sign-in.
-                        //MainActivity.this.enableUserManuallyInputCode();
-                    }
-
-                    @Override
-                    public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-                        // Sign in with the credential
-                        // ...
-                    }
-
-                    @Override
-                    public void onVerificationFailed(FirebaseException e) {
-                        // ...
-                        // Save the verification id somewhere
-                        // ...
-                        if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                            // Invalid request
-                            // [START_EXCLUDE]
-                            Toast.makeText(getApplicationContext(), "Invalid phone number", Toast.LENGTH_LONG).show();
-                            // [END_EXCLUDE]
-                        }
-                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                        e.printStackTrace();
-                    }
-
-                });
-
     }
 
     @Override
@@ -177,9 +138,8 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
             stepView.go(0, true);
             super.onBackPressed();
-        } else if (getCurrentFragment() instanceof StepSuccess) {
+        } else
             finish();
-        }
 
     }
 
@@ -238,25 +198,11 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
             }
         } else if (getCurrentFragment() instanceof OrderPhoneVerify) {
 
-            stepView.go(2, true);
-
-            Bundle bundle = new Bundle();
-            bundle.putString("aID", advertisementID);
-            bundle.putString("cID", categoryId);
-
-            step2.setArguments(bundle);
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.orderStepContainer, step2);
-            ft.commit();
-
+            orderPhoneVerify.validatePhonenumber();
 
         } else if (getCurrentFragment() instanceof Step2) {
-
-            Log.i(TAG, "sasw232323232323232323232435565676");
             order.setItem(step2.getItem());
             processPayment(step2.isCODSelectedPaymentType());
-
         }
 
     }
@@ -304,6 +250,22 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
 
         }
+
+    }
+
+    public void phoneNumberValidated() {
+
+        stepView.go(2, true);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("aID", advertisementID);
+        bundle.putString("cID", categoryId);
+
+        step2.setArguments(bundle);
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.orderStepContainer, step2);
+        ft.commit();
 
     }
 
