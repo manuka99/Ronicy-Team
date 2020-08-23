@@ -17,8 +17,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center_vertical"
                 android:foregroundGravity="left"
                 android:background="@drawable/icon_logo_notification"
@@ -28,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_marginLeft="4dp"
                 android:layout_gravity="center_vertical"
                 android:orientation="vertical">
 
@@ -35,15 +36,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="serif"
+                    android:layout_gravity="start"
                     android:text="@string/site_name"
                     android:textColor="@color/colorWhite"
-                    android:textSize="60sp"
+                    android:textSize="50sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="serif"
+                    android:layout_gravity="start"
                     android:text="@string/slogan"
                     android:textColor="@color/colorWhite"
                     android:textSize="14sp"

@@ -1,5 +1,6 @@
 package com.adeasy.advertise.fragment.Order;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -53,10 +54,13 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
 
+    OrderPhone orderPhone;
+
+    String phoneNum = "+16505554567";
     //String phoneNum = "+94721146092";
     //String phoneNum = "+94714163881";
     //String phoneNum = "+94775259715";
-    String phoneNum = "+94788445729";
+    //String phoneNum = "+94788445729";
     String verificationCodeInput = "";
 
     // TODO: Rename and change types of parameters
@@ -65,6 +69,11 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
 
     EditText codeInput;
     TextView cancel, newcode;
+
+    public interface OrderPhone
+    {
+        public void sentValidationSuccessmessage();
+    }
 
     public OrderPhoneVerify() {
         // Required empty public constructor
@@ -111,8 +120,17 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
         cancel.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
-
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            orderPhone = (OrderPhone) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnArticleSelectedListener");
+        }
     }
 
     @Override
@@ -159,6 +177,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
 
     }
 
+    //called from activity
     public void validatePhonenumber() {
 
         verificationCodeInput = codeInput.getText().toString();
@@ -177,9 +196,13 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
             // [START verify_with_code]
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
             // [END verify_with_code]
-            //signInWithPhoneAuthCredential(credential);
-            linkMobileWithCurrent(credential);
+            if (mAuth.getCurrentUser() != null)
+                linkMobileWithCurrent(credential);
 
+            else
+                signInWithPhoneAuthCredential(credential);
+            //signInWithPhoneAuthCredential(credential);
+            //updateMobileWithCurrent(credential);
         } catch (Exception e) {
             Toast toast = Toast.makeText(getActivity(), "Verification Code is wrong " + e.getMessage(), Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
@@ -197,8 +220,9 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "linkWithCredential: success");
-                            FirebaseUser user = task.getResult().getUser();
-                            unlinkNewPhone(user);
+                            //FirebaseUser user = task.getResult().getUser();
+                            orderPhone.sentValidationSuccessmessage();
+                            unlinkPhoneAuth();
                         } else {
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
@@ -216,7 +240,33 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
 
     }
 
+    private void updateMobileWithCurrent(PhoneAuthCredential credential) {
+
+        mAuth.getCurrentUser().updatePhoneNumber(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "linkWithCredential: success");
+                    unlinkPhoneAuth();
+                } else {
+                    if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                        // The verification code entered was invalid
+                        // [START_EXCLUDE silent]
+                        //mBinding.fieldVerificationCode.setError("Invalid code.");
+                        // [END_EXCLUDE]
+                    }
+                    Log.w(TAG, "linkWithCredential:failure", task.getException());
+
+                }
+            }
+
+        });
+
+
+    }
+
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
@@ -227,10 +277,8 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
 
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInWithCredential:success");
-
-                                FirebaseUser user = task.getResult().getUser();
-                                BuyNow buyNow = new BuyNow();
-                                buyNow.phoneNumberValidated();
+                                orderPhone.sentValidationSuccessmessage();
+                                deletePhoneAuthAccout(task.getResult().getUser());
 
                                 // [START_EXCLUDE]
                                 //updateUI(STATE_SIGNIN_SUCCESS, user);
@@ -262,9 +310,9 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
     }
     // [END sign_in_with_phone]
 
-    public void unlinkNewPhone(FirebaseUser phoneAuthUser) {
+    public void unlinkPhoneAuth() {
 
-        mAuth.getCurrentUser().unlink(phoneAuthUser.getProviderId())
+        mAuth.getCurrentUser().unlink(PhoneAuthProvider.PROVIDER_ID)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -275,6 +323,18 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
                     }
                 });
 
+    }
+
+    private void deletePhoneAuthAccout(FirebaseUser user){
+        user.delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "User account deleted.");
+                        }
+                    }
+                });
     }
 
     @Override

@@ -71,7 +71,7 @@ import lk.payhere.androidsdk.PHResponse;
 import lk.payhere.androidsdk.model.InitRequest;
 import lk.payhere.androidsdk.model.StatusResponse;
 
-public class BuyNow extends AppCompatActivity implements View.OnClickListener, OrderCallback {
+public class BuyNow extends AppCompatActivity implements View.OnClickListener, OrderCallback, OrderPhoneVerify.OrderPhone{
 
     Button continueOrder;
     String advertisementID, categoryId;
@@ -388,4 +388,10 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
         orderManager.destroy();
         mailService.destroy();
     }
+
+    @Override
+    public void sentValidationSuccessmessage() {
+        phoneNumberValidated();
+    }
+
 }
