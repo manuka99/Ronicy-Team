@@ -115,7 +115,7 @@ tools:context=".fragment.Order.StepSuccess">
                     android:layout_marginBottom="4dp"
                     android:fontFamily="serif"
                     android:gravity="start"
-                    android:text="@string/orderDeliveryHeader"
+                    android:text="@string/loading"
                     android:textColor="@color/colorBlack"
                     android:textSize="16sp"
                     android:textStyle="bold"></TextView>
@@ -126,7 +126,7 @@ tools:context=".fragment.Order.StepSuccess">
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
                     android:gravity="start"
-                    android:text="@string/orderDeliveryHeader"
+                    android:text="@string/loading"
                     android:textSize="16sp"></TextView>
 
                 <TextView
@@ -135,7 +135,7 @@ tools:context=".fragment.Order.StepSuccess">
                     android:layout_height="wrap_content"
                     android:fontFamily="serif"
                     android:gravity="start"
-                    android:text="@string/orderDeliveryHeader"
+                    android:text="@string/loading"
                     android:textColor="#088F83"
                     android:textSize="16sp"
                     android:textStyle="bold"></TextView>

@@ -235,6 +235,10 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     private void startVerifyNumberFragment() {
         stepView.go(1, true);
 
+        Bundle bundle = new Bundle();
+        bundle.putString("phone", String.valueOf(order.getCustomer().getPhone()));
+        orderPhoneVerify.setArguments(bundle);
+
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.addToBackStack(Step1.class.getName());

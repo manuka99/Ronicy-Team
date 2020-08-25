@@ -59,11 +59,12 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
     private FirebaseAuth mAuth;
     private BuynowViewModel buynowViewModel;
 
-    String phoneNum = "+16505554567";
-    //String phoneNum = "+94721146092";
+    //String phoneNum = "+16505554567";
+    //String phoneNum = "+940721146092";
     //String phoneNum = "+94714163881";
     //String phoneNum = "+94775259715";
     //String phoneNum = "+94788445729";
+    String phoneNum = "";
     String verificationCodeInput = "";
 
     // TODO: Rename and change types of parameters
@@ -71,7 +72,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
     private String mParam2;
 
     EditText codeInput;
-    TextView cancel, newcode;
+    TextView cancel, newcode, order_phone_number;
 
     public OrderPhoneVerify() {
         // Required empty public constructor
@@ -110,6 +111,9 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.manuka_fragment_order_phone_verify, container, false);
 
+        phoneNum = "+94" + getArguments().getString("phone");
+
+        order_phone_number = view.findViewById(R.id.order_phone_number);
         codeInput = view.findViewById(R.id.orderCodeVerify);
         newcode = view.findViewById(R.id.resendPinCodeOrder);
         cancel = view.findViewById(R.id.pinVerifyCancel);
@@ -130,6 +134,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        order_phone_number.setText(phoneNum);
         buynowViewModel.getStartVerifyMobileNumber().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {

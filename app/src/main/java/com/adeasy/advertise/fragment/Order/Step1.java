@@ -41,7 +41,7 @@ public class Step1 extends Fragment {
 
     private EditText nameView, phoneView, emailView, addressView;
     private String name, email, address;
-    private int phone;
+    private Integer phone;
     private Order_Customer customer;
     private FirebaseUser firebaseUser;
     private BuynowViewModel buynowViewModel;
@@ -133,8 +133,8 @@ public class Step1 extends Fragment {
         if (name.isEmpty())
             nameView.setError("Please fill out your name");
 
-        else if (phone == 0 || phone < 100000000)
-            phoneView.setError("Please fill out your phone number");
+        else if (phone < 100000000 || phone > 1000000000)
+            phoneView.setError("Please fill out a valid phone number");
 
         else if (email.isEmpty())
             emailView.setError("Please provide us your email");
