@@ -163,6 +163,8 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
                 isCODSelected = aBoolean;
             }
         });
+
+        startDeliveryDetailsFragment();
     }
 
     @Override
@@ -179,35 +181,6 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
             super.onBackPressed();
         } else
             finish();
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.orderStepContainer, new Step1());
-        ft.commit();
-
-        stepView.getState()
-                .selectedTextColor(ContextCompat.getColor(this, R.color.colorWhite))
-                .animationType(StepView.ANIMATION_CIRCLE)
-                .selectedCircleColor(ContextCompat.getColor(this, R.color.colorWhite))
-                .selectedCircleRadius(34)
-                .selectedStepNumberColor(ContextCompat.getColor(this, R.color.colorBlack))
-                .steps(new ArrayList<String>() {{
-                    add("Delivery");
-                    add("Confirmation");
-                    add("Payment");
-                }})
-                .animationDuration(getResources().getInteger(android.R.integer.config_shortAnimTime))
-                .stepLineWidth(20)
-                .textSize(44)
-                .stepNumberTextSize(30)
-                .typeface(ResourcesCompat.getFont(context, R.font.pt_serif))
-                // other state methods are equal to the corresponding xml attributes
-                .commit();
 
     }
 
@@ -229,6 +202,33 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
         } else if (getCurrentFragment() instanceof Step2) {
             processPayment(isCODSelected);
         }
+
+    }
+
+    private void startDeliveryDetailsFragment() {
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.orderStepContainer, step1);
+        ft.commit();
+
+        stepView.getState()
+                .selectedTextColor(ContextCompat.getColor(this, R.color.colorWhite))
+                .animationType(StepView.ANIMATION_CIRCLE)
+                .selectedCircleColor(ContextCompat.getColor(this, R.color.colorWhite))
+                .selectedCircleRadius(34)
+                .selectedStepNumberColor(ContextCompat.getColor(this, R.color.colorBlack))
+                .steps(new ArrayList<String>() {{
+                    add("Delivery");
+                    add("Confirmation");
+                    add("Payment");
+                }})
+                .animationDuration(getResources().getInteger(android.R.integer.config_shortAnimTime))
+                .stepLineWidth(20)
+                .textSize(44)
+                .stepNumberTextSize(30)
+                .typeface(ResourcesCompat.getFont(context, R.font.pt_serif))
+                // other state methods are equal to the corresponding xml attributes
+                .commit();
 
     }
 
