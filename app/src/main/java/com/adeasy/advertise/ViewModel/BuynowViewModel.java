@@ -8,13 +8,12 @@ import com.adeasy.advertise.model.Order_Customer;
 import com.adeasy.advertise.model.Order_Item;
 
 public class BuynowViewModel extends ViewModel {
-    private MutableLiveData<Order_Customer> customer;
-    private MutableLiveData<Order_Item> item;
-    private MutableLiveData<Boolean> validateCustomerDetails;
-    private MutableLiveData<Boolean> startVerifyMobileNumber;
-    private MutableLiveData<Boolean> mobileNumberVerifyStatus;
-    private MutableLiveData<Boolean> placeOrder;
-    private MutableLiveData<Boolean> placeOrderStatus;
+    private MutableLiveData<Order_Customer> customer = new MutableLiveData<>();
+    private MutableLiveData<Order_Item> item = new MutableLiveData<>();
+    private MutableLiveData<Boolean> validateCustomerDetails = new MutableLiveData<>();
+    private MutableLiveData<Boolean> startVerifyMobileNumber = new MutableLiveData<>();
+    private MutableLiveData<Boolean> mobileNumberVerifyStatus = new MutableLiveData<>();
+    private MutableLiveData<Boolean> paymentSelectCOD = new MutableLiveData<>();
 
     public LiveData<Order_Customer> getCustomer() {
         return customer;
@@ -56,19 +55,11 @@ public class BuynowViewModel extends ViewModel {
         this.mobileNumberVerifyStatus.setValue(mobileNumberVerifyStatus);
     }
 
-    public LiveData<Boolean> getPlaceOrder() {
-        return placeOrder;
+    public LiveData<Boolean> getPaymentSelectCOD() {
+        return paymentSelectCOD;
     }
 
-    public void setPlaceOrder(Boolean placeOrder) {
-        this.placeOrder.setValue(placeOrder);
-    }
-
-    public LiveData<Boolean> getPlaceOrderStatus() {
-        return placeOrderStatus;
-    }
-
-    public void setPlaceOrderStatus(Boolean placeOrderStatus) {
-        this.placeOrderStatus.setValue(placeOrderStatus);
+    public void setPaymentSelectCOD(Boolean paymentSelectCOD) {
+        this.paymentSelectCOD.setValue(paymentSelectCOD);
     }
 }

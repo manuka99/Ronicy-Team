@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.ViewModel.BuynowViewModel;
 import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.callback.CategoryCallback;
 import com.adeasy.advertise.manager.AdvertisementManager;
@@ -46,19 +49,20 @@ public class Step2 extends Fragment implements View.OnClickListener, Advertiseme
     private String mParam1;
     private String mParam2;
 
-    private String advertisementID;
-    private String categoryId;
-    private Advertisement advertisement;
-    private Category category;
-
-    private TextView itemName, itemCat, itemPrice, itemPrice2, paymentTotal;
-    private ImageView adImage;
-    private Button placeOrder, creditCardBtn, CODBtn;
+    String advertisementID;
+    String categoryId;
+    Advertisement advertisement = new Advertisement();
+    Category category = new Category();
+    Order_Item item;
+    TextView itemName, itemCat, itemPrice, itemPrice2, paymentTotal;
+    ImageView adImage;
+    Button placeOrder, creditCardBtn, CODBtn;
     boolean CODSelected = false;
 
     private AdvertisementManager advertisementManager;
     private CategoryManager categoryManager;
-    private Order_Item item;
+    private BuynowViewModel buynowViewModel;
+
 
     public Step2() {
         // Required empty public constructor
@@ -115,7 +119,7 @@ public class Step2 extends Fragment implements View.OnClickListener, Advertiseme
         advertisementManager = new AdvertisementManager(this);
         categoryManager = new CategoryManager(this);
         displayItem();
-
+        buynowViewModel = ViewModelProviders.of(getActivity()).get(BuynowViewModel.class);
         return view;
     }
 
@@ -127,7 +131,6 @@ public class Step2 extends Fragment implements View.OnClickListener, Advertiseme
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
     }
 
     public void displayItem(){
@@ -141,13 +144,13 @@ public class Step2 extends Fragment implements View.OnClickListener, Advertiseme
         if (view == creditCardBtn) {
             creditCardBtn.setBackgroundResource(R.drawable.button_border_green);
             CODBtn.setBackgroundResource(R.drawable.order_border);
-            CODSelected = false;
+            buynowViewModel.setPaymentSelectCOD(false);
         }
 
         else if (view == CODBtn) {
             CODBtn.setBackgroundResource(R.drawable.button_border_green);
             creditCardBtn.setBackgroundResource(R.drawable.order_border);
-            CODSelected = true;
+            buynowViewModel.setPaymentSelectCOD(true);
         }
 
     }
@@ -209,6 +212,7 @@ public class Step2 extends Fragment implements View.OnClickListener, Advertiseme
                 itemPrice2.setText("Rs. " + advertisement.getPrice());
                 paymentTotal.setText("Rs. " + advertisement.getPrice());
                 Picasso.get().load(advertisement.getImageUrl()).into(adImage);
+                setOrderItem();
             } else {
                 Log.d(TAG, "No such document");
             }
@@ -225,6 +229,7 @@ public class Step2 extends Fragment implements View.OnClickListener, Advertiseme
                 category = new com.adeasy.advertise.model.Category();
                 category = document.toObject(com.adeasy.advertise.model.Category.class);
                 itemCat.setText(category.getName());
+                setOrderItem();
             } else {
                 Log.d(TAG, "No such document");
             }
@@ -233,17 +238,15 @@ public class Step2 extends Fragment implements View.OnClickListener, Advertiseme
         }
     }
 
-    public Order_Item getItem(){
-        item = new Order_Item();
-        item.setItemName(advertisement.getTitle());
-        item.setPrice(advertisement.getPrice());
-        item.setImageUrl(advertisement.getImageUrl());
-        item.setCategoryName(category.getName());
-        return item;
-    }
-
-    public boolean isCODSelectedPaymentType(){
-        return CODSelected;
+    private void setOrderItem(){
+        if(advertisement.getId() != null && category.getId() != null) {
+            item = new Order_Item();
+            item.setItemName(advertisement.getTitle());
+            item.setPrice(advertisement.getPrice());
+            item.setImageUrl(advertisement.getImageUrl());
+            item.setCategoryName(category.getName());
+            buynowViewModel.setItem(item);
+        }
     }
 
 }

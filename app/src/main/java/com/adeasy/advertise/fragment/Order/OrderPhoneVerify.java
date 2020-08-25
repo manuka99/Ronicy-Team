@@ -6,6 +6,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
 import android.view.Gravity;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.ViewModel.BuynowViewModel;
 import com.adeasy.advertise.activity.advertisement.BuyNow;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -53,8 +57,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
     private FirebaseAuth mAuth;
-
-    OrderPhone orderPhone;
+    private BuynowViewModel buynowViewModel;
 
     String phoneNum = "+16505554567";
     //String phoneNum = "+94721146092";
@@ -69,11 +72,6 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
 
     EditText codeInput;
     TextView cancel, newcode;
-
-    public interface OrderPhone
-    {
-        public void sentValidationSuccessmessage();
-    }
 
     public OrderPhoneVerify() {
         // Required empty public constructor
@@ -120,23 +118,32 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
         cancel.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
+        buynowViewModel = ViewModelProviders.of(getActivity()).get(BuynowViewModel.class);
         return view;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            orderPhone = (OrderPhone) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement OnArticleSelectedListener");
-        }
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        buynowViewModel.getStartVerifyMobileNumber().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
+                    if (aBoolean)
+                        validatePhonenumber();
+                }
+            }
+        });
+
+        sendMobileVerifycode();
+    }
+
+    private void sendMobileVerifycode() {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNum, 30L /*timeout*/, TimeUnit.SECONDS,
                 getActivity(), new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -174,11 +181,9 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
                     }
 
                 });
-
     }
 
-    //called from activity
-    public void validatePhonenumber() {
+    private void validatePhonenumber() {
 
         verificationCodeInput = codeInput.getText().toString();
 
@@ -221,7 +226,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "linkWithCredential: success");
                             //FirebaseUser user = task.getResult().getUser();
-                            orderPhone.sentValidationSuccessmessage();
+                            buynowViewModel.setMobileNumberVerifyStatus(true);
                             unlinkPhoneAuth();
                         } else {
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
@@ -277,7 +282,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
 
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInWithCredential:success");
-                                orderPhone.sentValidationSuccessmessage();
+                                buynowViewModel.setMobileNumberVerifyStatus(true);
                                 deletePhoneAuthAccout(task.getResult().getUser());
 
                                 // [START_EXCLUDE]
@@ -325,7 +330,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener {
 
     }
 
-    private void deletePhoneAuthAccout(FirebaseUser user){
+    private void deletePhoneAuthAccout(FirebaseUser user) {
         user.delete()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

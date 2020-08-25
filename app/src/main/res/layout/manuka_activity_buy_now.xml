@@ -41,7 +41,7 @@ tools:ignore="LabelFor">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/orderStepHeader"
-                android:textSize="18sp"></TextView>
+                android:textSize="16sp"></TextView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"

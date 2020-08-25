@@ -5,16 +5,22 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.ViewModel.BuynowViewModel;
 import com.adeasy.advertise.model.Order_Customer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.core.Tag;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +33,7 @@ public class Step1 extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "Step1";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -37,6 +44,7 @@ public class Step1 extends Fragment {
     private int phone;
     private Order_Customer customer;
     private FirebaseUser firebaseUser;
+    private BuynowViewModel buynowViewModel;
 
     public Step1() {
         // Required empty public constructor
@@ -73,21 +81,42 @@ public class Step1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.manuka_fragment_step1, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        View view = inflater.inflate(R.layout.manuka_fragment_step1, container, false);
         nameView = view.findViewById(R.id.orderName);
         emailView = view.findViewById(R.id.orderEmail);
         phoneView = view.findViewById(R.id.orderPhone);
         addressView = view.findViewById(R.id.orderAddress);
         customer = new Order_Customer();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        return view;
     }
 
-    public boolean validateCustomer() {
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        buynowViewModel = ViewModelProviders.of(getActivity()).get(BuynowViewModel.class);
+        buynowViewModel.getValidateCustomerDetails().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(getViewLifecycleOwner().getLifecycle().getCurrentState()== Lifecycle.State.RESUMED){
+                    if (aBoolean)
+                        startValidation();
+                }
+            }
+        });
+    }
+
+    private void startValidation() {
+        if (validateCustomer())
+            buynowViewModel.setCustomer(customer);
+    }
+
+    private boolean validateCustomer() {
 
         boolean result = false;
 
@@ -113,21 +142,17 @@ public class Step1 extends Fragment {
         else if (address.isEmpty())
             addressView.setError("Please enter you delivery address");
 
-        else{
+        else {
             result = true;
             customer.setAddress(address);
             customer.setEmail(email);
             customer.setPhone(phone);
             customer.setName(name);
-            if(firebaseUser != null)
-            customer.setUid(firebaseUser.getUid());
+            if (firebaseUser != null)
+                customer.setUid(firebaseUser.getUid());
         }
 
         return result;
-    }
-
-    public Order_Customer getCustomer(){
-        return customer;
     }
 
 }

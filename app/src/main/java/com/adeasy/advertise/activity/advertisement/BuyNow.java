@@ -10,6 +10,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.ListFragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.ViewModel.BuynowViewModel;
 import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.callback.CategoryCallback;
 import com.adeasy.advertise.callback.OrderCallback;
@@ -43,6 +48,7 @@ import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.model.Order;
 import com.adeasy.advertise.model.Order_Customer;
+import com.adeasy.advertise.model.Order_Item;
 import com.adeasy.advertise.model.Order_Payment;
 import com.adeasy.advertise.service.MailService;
 import com.adeasy.advertise.service.MailServiceImpl;
@@ -71,7 +77,7 @@ import lk.payhere.androidsdk.PHResponse;
 import lk.payhere.androidsdk.model.InitRequest;
 import lk.payhere.androidsdk.model.StatusResponse;
 
-public class BuyNow extends AppCompatActivity implements View.OnClickListener, OrderCallback, OrderPhoneVerify.OrderPhone{
+public class BuyNow extends AppCompatActivity implements View.OnClickListener, OrderCallback {
 
     Button continueOrder;
     String advertisementID, categoryId;
@@ -84,9 +90,11 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     Step2 step2;
     StepSuccess orderSuccess;
     MailService mailService;
+    Boolean isCODSelected = false;
 
     private FirebaseAuth mAuth;
     private OrderManager orderManager;
+    private BuynowViewModel buynowViewModel;
 
     private static final String TAG = "BuyNow";
     private static final int PAYHERE_REQUEST = 11010;
@@ -124,6 +132,37 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
             }
         });
 
+        buynowViewModel = ViewModelProviders.of(this).get(BuynowViewModel.class);
+
+        buynowViewModel.getCustomer().observe(this, new Observer<Order_Customer>() {
+            @Override
+            public void onChanged(Order_Customer order_customer) {
+                order.setCustomer(order_customer);
+                startVerifyNumberFragment();
+            }
+        });
+
+        buynowViewModel.getMobileNumberVerifyStatus().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean)
+                    startPaymentSelectFragment();
+            }
+        });
+
+        buynowViewModel.getItem().observe(this, new Observer<Order_Item>() {
+            @Override
+            public void onChanged(Order_Item item) {
+                order.setItem(item);
+            }
+        });
+
+        buynowViewModel.getPaymentSelectCOD().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                isCODSelected = aBoolean;
+            }
+        });
     }
 
     @Override
@@ -182,29 +221,39 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     public void validateAndContinue() {
 
         if (getCurrentFragment() instanceof Step1) {
+            buynowViewModel.setValidateCustomerDetails(true);
 
-            if (((Step1) getCurrentFragment()).validateCustomer()) {
-
-                order.setCustomer(((Step1) getCurrentFragment()).getCustomer());
-
-                stepView.go(1, true);
-
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.addToBackStack(Step1.class.getName());
-                ft.replace(R.id.orderStepContainer, orderPhoneVerify);
-                ft.commit();
-
-            }
         } else if (getCurrentFragment() instanceof OrderPhoneVerify) {
-
-            orderPhoneVerify.validatePhonenumber();
+            buynowViewModel.setStartVerifyMobileNumber(true);
 
         } else if (getCurrentFragment() instanceof Step2) {
-            order.setItem(step2.getItem());
-            processPayment(step2.isCODSelectedPaymentType());
+            processPayment(isCODSelected);
         }
 
+    }
+
+    private void startVerifyNumberFragment() {
+        stepView.go(1, true);
+
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.addToBackStack(Step1.class.getName());
+        ft.replace(R.id.orderStepContainer, orderPhoneVerify);
+        ft.commit();
+    }
+
+    private void startPaymentSelectFragment() {
+        stepView.go(2, true);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("aID", advertisementID);
+        bundle.putString("cID", categoryId);
+
+        step2.setArguments(bundle);
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.orderStepContainer, step2);
+        ft.commit();
     }
 
     private Fragment getCurrentFragment() {
@@ -250,22 +299,6 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
 
         }
-
-    }
-
-    public void phoneNumberValidated() {
-
-        stepView.go(2, true);
-
-        Bundle bundle = new Bundle();
-        bundle.putString("aID", advertisementID);
-        bundle.putString("cID", categoryId);
-
-        step2.setArguments(bundle);
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.orderStepContainer, step2);
-        ft.commit();
 
     }
 
@@ -387,11 +420,6 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
         super.onDestroy();
         orderManager.destroy();
         mailService.destroy();
-    }
-
-    @Override
-    public void sentValidationSuccessmessage() {
-        phoneNumberValidated();
     }
 
 }

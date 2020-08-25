@@ -6,6 +6,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
 android:gravity="center"
+android:padding="16dp"
 android:background="@color/colorWhite"
 tools:context=".fragment.Order.StepSuccess">
 
@@ -53,24 +54,20 @@ tools:context=".fragment.Order.StepSuccess">
 </LinearLayout>
 
 <TextView
-    android:layout_weight="1"
     android:layout_marginStart="10dp"
     android:textAlignment="center"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
     android:fontFamily="serif"
     android:text="@string/orderThankyou"
     android:textColor="@color/colorBlack"
-    android:textSize="18sp"></TextView>
+    android:layout_marginBottom="20dp"
+    android:textSize="16sp"></TextView>
 
 <TextView
-    android:layout_weight="1"
-    android:layout_marginStart="10dp"
     android:textAlignment="center"
-    android:layout_width="280dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="24dp"
     android:fontFamily="serif"
     android:text="@string/orderContactYou"
     android:textSize="14sp"></TextView>
@@ -78,10 +75,10 @@ tools:context=".fragment.Order.StepSuccess">
 
 
 <LinearLayout
+    android:layout_marginTop="20dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorWhite"
-    android:padding="16dp"
     android:orientation="vertical">
 
 
@@ -94,8 +91,8 @@ tools:context=".fragment.Order.StepSuccess">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp">
+            android:padding="10dp"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/orderedItemImage"
@@ -120,7 +117,7 @@ tools:context=".fragment.Order.StepSuccess">
                     android:gravity="start"
                     android:text="@string/orderDeliveryHeader"
                     android:textColor="@color/colorBlack"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"></TextView>
 
                 <TextView
@@ -130,7 +127,7 @@ tools:context=".fragment.Order.StepSuccess">
                     android:layout_marginBottom="4dp"
                     android:gravity="start"
                     android:text="@string/orderDeliveryHeader"
-                    android:textSize="18sp"></TextView>
+                    android:textSize="16sp"></TextView>
 
                 <TextView
                     android:id="@+id/orderedItemPrice"
@@ -158,14 +155,14 @@ tools:context=".fragment.Order.StepSuccess">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:baselineAligned="false"
+            android:padding="16dp"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -187,8 +184,7 @@ tools:context=".fragment.Order.StepSuccess">
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/orderedPaymentPrice"
@@ -224,7 +220,7 @@ tools:context=".fragment.Order.StepSuccess">
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="#4DBEC1CA"
-            android:padding="16dp">
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -253,7 +249,7 @@ tools:context=".fragment.Order.StepSuccess">
 </LinearLayout>
 
 <TextView
-    android:layout_weight="1"
+    android:layout_marginTop="10dp"
     android:layout_marginStart="10dp"
     android:textAlignment="center"
     android:layout_width="wrap_content"
@@ -265,7 +261,6 @@ tools:context=".fragment.Order.StepSuccess">
 
 
 <TextView
-    android:layout_weight="1"
     android:layout_marginStart="10dp"
     android:textAlignment="center"
     android:layout_width="wrap_content"
