@@ -58,6 +58,11 @@
     <string name="order_phone_cancel">Cancel</string>
     <string name="order_phone_new_pin">Get new PIN code</string>
     <string name="order_phone_didnt_recieve">Didn\'t receive the PIN code?</string>
+    <string name="virtual_env_exception">This feature will not work in a virtual environment. Please try again with your mobile phone.</string>
+    <string name="quota_exceeded">The SMS quota for this project has been exceeded!</string>
+    <string name="invalid_mobile">Invalid mobile number!.</string>
+    <string name="sending_code">Sending validation code....</string>
+    <string name="invalid_mobile_code">Entered code is invalid!</string>
 
     <!-- Order -->
     <string name="orderStepHeader">Complete your purchase in 3 simple steps</string>

@@ -46,6 +46,24 @@
         android:fontFamily="sans-serif-light"
         android:textSize="16sp" />
 
+    <TextView
+        android:id="@+id/codeFailed"
+        android:visibility="visible"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="textStart"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/order_phone_new_pin"
+        android:textSize="16sp" />
+
+    <ProgressBar
+        android:id="@+id/progressVerifyNumberOrder"
+        android:visibility="gone"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <EditText
         android:layout_marginTop="20dp"
         android:id="@+id/orderCodeVerify"
@@ -76,15 +94,5 @@
         android:fontFamily="sans-serif-light"
         android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/pinVerifyCancel"
-        android:layout_marginTop="40dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:text="@string/order_phone_cancel"
-        android:fontFamily="sans-serif-light"
-        android:textSize="16sp" />
 
 </LinearLayout>

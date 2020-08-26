@@ -10,12 +10,14 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,8 +58,6 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
     private boolean mVerificationInProgress = false;
     private String verificationID;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
-    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
-
     private FirebaseAuth mAuth;
     private BuynowViewModel buynowViewModel;
 
@@ -74,7 +74,8 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
     private String mParam2;
     FirebasePhoneAuthentication firebasePhoneAuthentication;
     EditText codeInput;
-    TextView cancel, newcode, order_phone_number;
+    TextView codeMessage, newcode, order_phone_number;
+    ProgressBar progressBar;
 
     public OrderPhoneVerify() {
         // Required empty public constructor
@@ -118,10 +119,10 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
         order_phone_number = view.findViewById(R.id.order_phone_number);
         codeInput = view.findViewById(R.id.orderCodeVerify);
         newcode = view.findViewById(R.id.resendPinCodeOrder);
-        cancel = view.findViewById(R.id.pinVerifyCancel);
+        codeMessage = view.findViewById(R.id.codeFailed);
+        progressBar = view.findViewById(R.id.progressVerifyNumberOrder);
 
         newcode.setOnClickListener(this);
-        cancel.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
         buynowViewModel = ViewModelProviders.of(getActivity()).get(BuynowViewModel.class);
@@ -141,8 +142,12 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
             @Override
             public void onChanged(Boolean aBoolean) {
                 if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
-                    if (aBoolean)
+                    if (aBoolean) {
+                        codeMessage.setTextColor(getResources().getColor(R.color.colorGreen));
+                        codeMessage.setText("Validating your code...");
+                        progressBar.setVisibility(View.VISIBLE);
                         validatePhonenumber();
+                    }
                 }
             }
         });
@@ -182,31 +187,50 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onClick(View view) {
-
+        if (view == newcode && mResendToken != null) {
+            codeMessage.setVisibility(View.VISIBLE);
+            codeMessage.setTextColor(getResources().getColor(R.color.colorGreen));
+            codeMessage.setText(R.string.sending_code);
+            progressBar.setVisibility(View.VISIBLE);
+            firebasePhoneAuthentication.resendVerificationCode(phoneNum, getActivity(), mResendToken);
+        }
     }
 
     @Override
     public void onCodeSent(String verificationId, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+        progressBar.setVisibility(View.GONE);
+        codeMessage.setVisibility(View.GONE);
         verificationID = verificationId;
-        Toast.makeText(getContext(), "sent", Toast.LENGTH_LONG).show();
+        mResendToken = forceResendingToken;
+        Toast.makeText(getContext(), "Verification code sent sucessfully", Toast.LENGTH_LONG).show();
         // The corresponding whitelisted code above should be used to complete sign-in.
         //MainActivity.this.enableUserManuallyInputCode();
     }
 
     @Override
     public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-        verifyPhoneNumberWithPhoneAuthCredential(phoneAuthCredential);
+        progressBar.setVisibility(View.VISIBLE);
+        codeMessage.setVisibility(View.VISIBLE);
+        codeMessage.setTextColor(getResources().getColor(R.color.colorGreen));
+        codeMessage.setText("Validating your code...");
+        codeInput.setText(phoneAuthCredential.getSmsCode());
+        OrderPhoneVerify.this.verifyPhoneNumberWithPhoneAuthCredential(phoneAuthCredential);
     }
 
     @Override
     public void onVerificationFailed(FirebaseException e) {
-        if (e instanceof FirebaseAuthInvalidCredentialsException) {
-            // Invalid request
-            Toast.makeText(getContext(), "Invalid phone number", Toast.LENGTH_LONG).show();
-        }
+        progressBar.setVisibility(View.GONE);
+        codeMessage.setTextColor(getResources().getColor(R.color.colorError));
+        codeMessage.setVisibility(View.GONE);
 
-        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-        e.printStackTrace();
+        if (e instanceof FirebaseAuthInvalidCredentialsException) {
+            codeMessage.setText(R.string.invalid_mobile);
+        } else if (e instanceof FirebaseTooManyRequestsException) {
+            codeMessage.setText(R.string.quota_exceeded);
+        } else
+            codeMessage.setText(R.string.virtual_env_exception);
+
+
     }
 
     @Override
@@ -222,6 +246,10 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
                 // [START_EXCLUDE silent]
                 //mBinding.fieldVerificationCode.setError("Invalid code.");
                 // [END_EXCLUDE]
+                progressBar.setVisibility(View.GONE);
+                codeMessage.setTextColor(getResources().getColor(R.color.colorError));
+                codeMessage.setVisibility(View.VISIBLE);
+                codeMessage.setText(R.string.invalid_mobile_code);
             }
             Log.w(TAG, "linkWithCredential:failure", task.getException());
 
@@ -239,6 +267,10 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
                 // [START_EXCLUDE silent]
                 //mBinding.fieldVerificationCode.setError("Invalid code.");
                 // [END_EXCLUDE]
+                progressBar.setVisibility(View.GONE);
+                codeMessage.setTextColor(getResources().getColor(R.color.colorError));
+                codeMessage.setVisibility(View.VISIBLE);
+                codeMessage.setText(R.string.invalid_mobile_code);
             }
             Log.w(TAG, "linkWithCredential:failure", task.getException());
 
@@ -263,6 +295,10 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
                 // [START_EXCLUDE silent]
                 //mBinding.fieldVerificationCode.setError("Invalid code.");
                 // [END_EXCLUDE]
+                progressBar.setVisibility(View.GONE);
+                codeMessage.setTextColor(getResources().getColor(R.color.colorError));
+                codeMessage.setVisibility(View.VISIBLE);
+                codeMessage.setText(R.string.invalid_mobile_code);
             }
             // [START_EXCLUDE silent]
             // Update UI
@@ -291,6 +327,11 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
     public void onDestroy() {
         super.onDestroy();
         firebasePhoneAuthentication.destroy();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
 }

@@ -43,16 +43,10 @@
                     android:id="@+id/adBuyNow"
                     android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="0dp"
-                    android:background="@color/colorGreen"
-                    android:fontFamily="sans-serif"
-                    android:gravity="center"
-                    android:text="@string/adBuynow"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="18sp"
-                    android:onClick="onClick"
-                    android:textStyle="bold"></Button>
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:drawableStart="@drawable/icon_buy_now_serp"
+                    android:gravity="center" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -69,7 +63,8 @@
                         android:fontFamily="serif"
                         android:padding="4dp"
                         android:textColor="@color/colorBlack"
-                        android:textSize="28sp"></TextView>
+                        android:textStyle="bold"
+                        android:textSize="22sp"></TextView>
 
                     <TextView
                         android:id="@+id/adDetailsPrice"
@@ -80,7 +75,7 @@
                         android:fontFamily="serif"
                         android:padding="8dp"
                         android:textColor="@color/colorBlack"
-                        android:textSize="18sp"></TextView>
+                        android:textSize="16sp"></TextView>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -107,7 +102,7 @@
                             android:layout_marginEnd="8dp"
                             android:text="@string/adLocation"
                             android:textColor="@color/colorBlack"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
                             android:textStyle="bold"></TextView>
 
                         <TextView
@@ -116,7 +111,7 @@
                             android:layout_marginTop="6dp"
                             android:text="@string/adLocationText"
                             android:textColor="@color/colorBlack"
-                            android:textSize="16sp"></TextView>
+                            android:textSize="14sp"></TextView>
 
 
                     </LinearLayout>
@@ -134,7 +129,7 @@
                             android:layout_marginEnd="8dp"
                             android:text="@string/adCondition"
                             android:textColor="@color/colorBlack"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
                             android:textStyle="bold"></TextView>
 
                         <TextView
@@ -143,7 +138,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:textColor="@color/colorBlack"
-                            android:textSize="16sp"></TextView>
+                            android:textSize="14sp"></TextView>
 
 
                     </LinearLayout>
@@ -161,7 +156,7 @@
                             android:layout_marginEnd="8dp"
                             android:text="@string/adCategory"
                             android:textColor="@color/colorBlack"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
                             android:textStyle="bold"></TextView>
 
                         <TextView
@@ -170,7 +165,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:textColor="@color/colorBlack"
-                            android:textSize="16sp"></TextView>
+                            android:textSize="14sp"></TextView>
 
 
                     </LinearLayout>
@@ -188,7 +183,7 @@
                             android:layout_marginEnd="8dp"
                             android:text="@string/adPosted"
                             android:textColor="@color/colorBlack"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
                             android:textStyle="bold"></TextView>
 
                         <TextView
@@ -197,7 +192,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:textColor="@color/colorBlack"
-                            android:textSize="16sp"></TextView>
+                            android:textSize="14sp"></TextView>
 
 
                     </LinearLayout>
@@ -220,7 +215,7 @@
                         android:layout_marginTop="6dp"
                         android:text="@string/adDescription"
                         android:textColor="@color/colorBlack"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:textStyle="bold"></TextView>
 
                     <TextView

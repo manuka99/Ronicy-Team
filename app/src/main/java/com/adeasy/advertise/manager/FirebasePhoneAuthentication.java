@@ -17,9 +17,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 
-public class FirebasePhoneAuthentication {
+public class FirebasePhoneAuthentication extends PhoneAuthProvider.OnVerificationStateChangedCallbacks {
 
     private static final String TAG = "FirebasePhoneAuthentica";
     private PhoneAuthenticationCallback callback;
@@ -34,25 +35,11 @@ public class FirebasePhoneAuthentication {
 
     public void sendMobileVerifycode(String phoneNum, Activity activity) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                phoneNum, 30L /*timeout*/, TimeUnit.SECONDS, activity, new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-
-                    @Override
-                    public void onCodeSent(String verificationId,
-                                           PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                        callback.onCodeSent(verificationId, forceResendingToken);
-                    }
-
-                    @Override
-                    public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-                        callback.onVerificationCompleted(phoneAuthCredential);
-                    }
-
-                    @Override
-                    public void onVerificationFailed(FirebaseException e) {
-                        callback.onVerificationFailed(e);
-                    }
-
-                });
+                phoneNum,        // Phone number to verify
+                60,                 // Timeout duration
+                TimeUnit.SECONDS,   // Unit of timeout
+                activity,               // Activity (for callback binding)
+                this);        // OnVerificationStateChangedCallbacks
     }
 
     public void linkMobileWithCurrentUser(PhoneAuthCredential credential, FirebaseUser user) {
@@ -112,6 +99,33 @@ public class FirebasePhoneAuthentication {
                     }
                 });
 
+    }
+
+    public void resendVerificationCode(String phoneNumber, Activity activity,
+                                        PhoneAuthProvider.ForceResendingToken token) {
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                phoneNumber,        // Phone number to verify
+                60,                 // Timeout duration
+                TimeUnit.SECONDS,   // Unit of timeout
+                activity,               // Activity (for callback binding)
+                this,         // OnVerificationStateChangedCallbacks
+                token);             // ForceResendingToken from callbacks
+    }
+
+    @Override
+    public void onCodeSent(String verificationId,
+                           PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+        callback.onCodeSent(verificationId, forceResendingToken);
+    }
+
+    @Override
+    public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+        callback.onVerificationCompleted(phoneAuthCredential);
+    }
+
+    @Override
+    public void onVerificationFailed(FirebaseException e) {
+        callback.onVerificationFailed(e);
     }
 
 }
