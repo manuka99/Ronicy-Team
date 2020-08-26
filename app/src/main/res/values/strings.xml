@@ -20,6 +20,12 @@
     <string name="menu_category">category</string>
     <string name="menu_filter">filter</string>
 
+    <!-- post add -->
+    <string name="posting_allowance">Your posting allowance</string>
+    <string name="free_on_ronicy">Learn about posting adds for free on Ronicy</string>
+    <string name="all_categories">All Categories</string>
+    <string name="sell_an_item">Sell an item or service</string>
+
     <!-- advertisement new/ edit -->
     <string name="post_details">Advertisement Details</string>
     <string name="post_title">Ad Title</string>

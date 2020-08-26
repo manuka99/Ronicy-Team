@@ -83,6 +83,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         chatText = findViewById(R.id.adChatNow);
         callText = findViewById(R.id.adCallNow);
         adBuyNow = findViewById(R.id.adBuyNow);
+        adBuyNow.setOnClickListener(this);
 
         adID = getIntent().getStringExtra("adID");
         adCID = getIntent().getStringExtra("adCID");
