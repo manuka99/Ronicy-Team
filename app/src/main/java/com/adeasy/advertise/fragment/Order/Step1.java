@@ -111,6 +111,12 @@ public class Step1 extends Fragment {
         });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        buynowViewModel.setVisibilityContinue(true);
+    }
+
     private void startValidation() {
         if (validateCustomer())
             buynowViewModel.setCustomer(customer);

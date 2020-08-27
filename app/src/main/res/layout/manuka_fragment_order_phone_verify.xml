@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/phoneVerifyLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorWhite"
@@ -24,8 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textColor="@color/colorBlack"
         android:text="@string/phone_number_unknown"
+        android:textColor="@color/colorBlack"
         android:textSize="16sp" />
 
     <ImageView
@@ -34,64 +35,91 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:background="@drawable/icon_sms_medium"
-        android:contentDescription="@string/image"/>
+        android:contentDescription="@string/image" />
 
     <TextView
-        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textAlignment="center"
-        android:text="@string/order_phone_subheading"
+        android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-light"
+        android:text="@string/order_phone_subheading"
+        android:textAlignment="center"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/codeFailed"
-        android:visibility="visible"
-        android:layout_marginTop="40dp"
+        android:id="@+id/mobileCodeMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="textStart"
+        android:layout_marginTop="40dp"
         android:fontFamily="sans-serif-light"
-        android:text="@string/order_phone_new_pin"
-        android:textSize="16sp" />
-
-    <ProgressBar
-        android:id="@+id/progressVerifyNumberOrder"
-        android:visibility="gone"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:textAlignment="textStart"
+        android:textColor="@color/colorError"
+        android:textSize="16sp"
+        android:visibility="gone" />
 
     <EditText
-        android:layout_marginTop="20dp"
         android:id="@+id/orderCodeVerify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:importantForAutofill="no" />
+        android:layout_marginTop="20dp"
+        android:importantForAutofill="no"
+        android:inputType="number" />
+
+    <LinearLayout
+        android:id="@+id/phoneVerifyBtn"
+        android:layout_width="match_parent"
+        android:background="@color/colorGreen"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:padding="8dp"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/progressBarCodeVerify"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:indeterminate="true"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="@color/colorWhite"
+            android:layout_height="24dp" />
+
+        <TextView
+            android:id="@+id/PhoneVerifyTextView"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:clickable="true"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:text="@string/order_phone_btn_verify"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
+
+    </LinearLayout>
 
     <TextView
-        android:layout_marginTop="34dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textAlignment="center"
-        android:text="@string/order_phone_didnt_recieve"
+        android:layout_marginTop="34dp"
         android:fontFamily="sans-serif-light"
+        android:text="@string/order_phone_didnt_recieve"
+        android:textAlignment="center"
         android:textSize="16sp" />
 
     <TextView
         android:id="@+id/resendPinCodeOrder"
-        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textAlignment="center"
-        android:text="@string/order_phone_new_pin"
-        android:textColor="@color/colorGreen"
+        android:layout_marginTop="10dp"
         android:fontFamily="sans-serif-light"
+        android:text="@string/order_phone_new_pin"
+        android:textAlignment="center"
+        android:textColor="@color/colorGreen"
         android:textSize="16sp" />
 
 

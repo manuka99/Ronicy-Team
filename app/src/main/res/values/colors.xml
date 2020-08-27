@@ -2,8 +2,10 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorBlue">#CC1043DE</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorGreyBtn">#bfbfbf</color>
     <color name="colorSucess">#00ff80</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorDanger">#ff1a1a</color>
@@ -11,6 +13,7 @@
     <color name="colorHome">#e6ecff</color>
     <color name="colorGreen">#00a884</color>
     <color name="colorError">#FFAE0655</color>
+    <color name="colorError2">#DE041E</color>
 
     <!--Ravindu Wataketiya -->
 

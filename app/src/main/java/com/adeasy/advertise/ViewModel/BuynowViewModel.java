@@ -11,9 +11,9 @@ public class BuynowViewModel extends ViewModel {
     private MutableLiveData<Order_Customer> customer = new MutableLiveData<>();
     private MutableLiveData<Order_Item> item = new MutableLiveData<>();
     private MutableLiveData<Boolean> validateCustomerDetails = new MutableLiveData<>();
-    private MutableLiveData<Boolean> startVerifyMobileNumber = new MutableLiveData<>();
     private MutableLiveData<Boolean> mobileNumberVerifyStatus = new MutableLiveData<>();
     private MutableLiveData<Boolean> paymentSelectCOD = new MutableLiveData<>();
+    private MutableLiveData<Boolean> visibilityContinue = new MutableLiveData<>();
 
     public LiveData<Order_Customer> getCustomer() {
         return customer;
@@ -39,14 +39,6 @@ public class BuynowViewModel extends ViewModel {
         this.validateCustomerDetails.setValue(validateCustomerDetails);
     }
 
-    public LiveData<Boolean> getStartVerifyMobileNumber() {
-        return startVerifyMobileNumber;
-    }
-
-    public void setStartVerifyMobileNumber(Boolean startVerifyMobileNumber) {
-        this.startVerifyMobileNumber.setValue(startVerifyMobileNumber);
-    }
-
     public LiveData<Boolean> getMobileNumberVerifyStatus() {
         return mobileNumberVerifyStatus;
     }
@@ -62,4 +54,13 @@ public class BuynowViewModel extends ViewModel {
     public void setPaymentSelectCOD(Boolean paymentSelectCOD) {
         this.paymentSelectCOD.setValue(paymentSelectCOD);
     }
+
+    public LiveData<Boolean> getVisibilityContinue() {
+        return visibilityContinue;
+    }
+
+    public void setVisibilityContinue(Boolean visibilityContinue) {
+        this.visibilityContinue.setValue(visibilityContinue);
+    }
+
 }

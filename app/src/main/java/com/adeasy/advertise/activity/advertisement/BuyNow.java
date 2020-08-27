@@ -164,6 +164,15 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
             }
         });
 
+        buynowViewModel.getVisibilityContinue().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean)
+                    continueOrder.setVisibility(View.VISIBLE);
+                else
+                    continueOrder.setVisibility(View.GONE);
+            }
+        });
         startDeliveryDetailsFragment();
     }
 
@@ -196,9 +205,6 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
         if (getCurrentFragment() instanceof Step1) {
             buynowViewModel.setValidateCustomerDetails(true);
 
-        } else if (getCurrentFragment() instanceof OrderPhoneVerify) {
-            buynowViewModel.setStartVerifyMobileNumber(true);
-
         } else if (getCurrentFragment() instanceof Step2) {
             processPayment(isCODSelected);
         }
@@ -229,7 +235,6 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
                 .typeface(ResourcesCompat.getFont(context, R.font.pt_serif))
                 // other state methods are equal to the corresponding xml attributes
                 .commit();
-
     }
 
     private void startVerifyNumberFragment() {

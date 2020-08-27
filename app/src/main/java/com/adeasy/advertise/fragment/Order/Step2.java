@@ -133,6 +133,12 @@ public class Step2 extends Fragment implements View.OnClickListener, Advertiseme
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        buynowViewModel.setVisibilityContinue(true);
+    }
+
     public void displayItem(){
         advertisementManager.getAddbyID(advertisementID);
         categoryManager.getCategorybyID(categoryId);
