@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +47,7 @@ import java.util.function.Function;
  * Use the {@link OrderPhoneVerify#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OrderPhoneVerify extends Fragment implements View.OnClickListener, PhoneAuthenticationCallback {
+public class OrderPhoneVerify extends Fragment implements View.OnClickListener, PhoneAuthenticationCallback, TextWatcher {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -128,6 +130,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
 
         newcode.setOnClickListener(this);
         verifyTextView.setOnClickListener(this);
+        codeInput.addTextChangedListener(this);
 
         mAuth = FirebaseAuth.getInstance();
         buynowViewModel = ViewModelProviders.of(getActivity()).get(BuynowViewModel.class);
@@ -150,6 +153,8 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
     public void onStart() {
         super.onStart();
         buynowViewModel.setVisibilityContinue(false);
+        verifyBtn.setBackgroundResource(R.color.colorGreyBtn);
+        codeInput.setText(null);
     }
 
     @Override
@@ -157,31 +162,25 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
         if (view == newcode && mResendToken != null) {
             showSuccessSnackbar(String.valueOf(R.string.sending_code));
             firebasePhoneAuthentication.resendVerificationCode(phoneNum, getActivity(), mResendToken);
-        }else if(view == verifyTextView){
-            startVerificationDisplay();
+        } else if (view == verifyTextView) {
             validatePhonenumber();
         }
     }
+
 
     private void validatePhonenumber() {
 
         verificationCodeInput = codeInput.getText().toString();
 
-        if (verificationID == null)
+        if (codeInput.getText().length() != 6)
+            showErrorSnackbar("Please enter the verification code");
+        else if (verificationID == null)
             showErrorSnackbar("Verification code was not sent. Please check your credentials");
-
-        else if (verificationCodeInput == null)
-            showErrorSnackbar("Please enter the verification code");
-
-        else if (verificationCodeInput.isEmpty())
-            showErrorSnackbar("Please enter the verification code");
-
         else {
+            startVerificationDisplay();
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationID, verificationCodeInput);
             verifyPhoneNumberWithPhoneAuthCredential(credential);
         }
-
-        endVerificationDisplay();
 
     }
 
@@ -194,8 +193,6 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
             firebasePhoneAuthentication.signInWithPhoneAuthCredential(credential, mAuth);
         //signInWithPhoneAuthCredential(credential);
         //updateMobileWithCurrent(credential);
-
-        endVerificationDisplay();
 
     }
 
@@ -210,6 +207,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+        startVerificationDisplay();
         codeInput.setText(phoneAuthCredential.getSmsCode());
         verifyPhoneNumberWithPhoneAuthCredential(phoneAuthCredential);
     }
@@ -229,6 +227,9 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onCompleteLinkingMobileWithUser(@NonNull Task<AuthResult> task) {
+
+        endVerificationDisplay();
+
         if (task.isSuccessful()) {
             Log.d(TAG, "linkWithCredential: success");
             //FirebaseUser user = task.getResult().getUser();
@@ -249,6 +250,9 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onCompleteUpdateMobileWithUser(@NonNull Task<Void> task) {
+
+        endVerificationDisplay();
+
         if (task.isSuccessful()) {
             Log.d(TAG, "linkWithCredential: success");
             firebasePhoneAuthentication.unlinkPhoneAuth(mAuth.getCurrentUser());
@@ -267,6 +271,9 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onCompleteSignInWithPhoneAuthCredential(@NonNull Task<AuthResult> task) {
+
+        endVerificationDisplay();
+
         if (task.isSuccessful()) {
 
             // Sign in success, update UI with the signed-in user's information
@@ -331,16 +338,16 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
     }
 
 
-    private void startVerificationDisplay(){
-        Animation aniSlide = AnimationUtils.loadAnimation(getActivity(),R.anim.zoom_in);
+    private void startVerificationDisplay() {
+        Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
         verifyTextView.setVisibility(View.GONE);
         verifyBtn.setBackgroundColor(getResources().getColor(R.color.colorGreyBtn));
         progressBarVerifyBtn.setVisibility(View.VISIBLE);
         progressBarVerifyBtn.startAnimation(aniSlide);
     }
 
-    private void endVerificationDisplay(){
-        Animation aniSlide = AnimationUtils.loadAnimation(getActivity(),R.anim.zoom_in);
+    private void endVerificationDisplay() {
+        Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
         progressBarVerifyBtn.setVisibility(View.GONE);
         verifyBtn.setBackgroundColor(getResources().getColor(R.color.colorGreen));
         verifyTextView.setVisibility(View.VISIBLE);
@@ -356,6 +363,29 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        if (codeInput == null)
+            verifyBtn.setBackgroundResource(R.color.colorGreyBtn);
+
+        else if (codeInput.getText().length() != 6)
+            verifyBtn.setBackgroundResource(R.color.colorGreyBtn);
+
+        else
+            verifyBtn.setBackgroundResource(R.color.colorGreen);
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
     }
 
 }
