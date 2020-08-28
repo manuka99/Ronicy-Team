@@ -19,7 +19,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private static final String TAG = "MainActivity";
     BottomNavigationView bottomNavigationView;
     Toolbar toolbar;
-
+    Home home;
+    Search search;
+    Chat chat;
+    Account account;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,16 +32,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setSupportActionBar(toolbar);
         bottomNavigationView = findViewById(R.id.navBottm);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        bottomNavigationView.setSelectedItemId(R.id.navHome);
-        changeToolbarHome();
+        home = new Home();
+        search = new Search();
+        chat = new Chat();
+        account = new Account();
 
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
     }
 
-    Home home = new Home();
-    Search search = new Search();
-    Chat chat = new Chat();
-    Account account = new Account();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        bottomNavigationView.setSelectedItemId(R.id.navHome);
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
