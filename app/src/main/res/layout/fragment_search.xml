@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#e6ecff"
     android:orientation="vertical"
-    tools:context=".fragment.Search">
+    tools:context=".ui.home.Search">
 
     <!-- Manuka -->
 

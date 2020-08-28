@@ -7,7 +7,7 @@
     android:background="@color/colorWhite"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".fragment.Order.OrderPhoneVerify">
+    tools:context=".ui.Order.OrderPhoneVerify">
 
     <TextView
         android:layout_width="wrap_content"

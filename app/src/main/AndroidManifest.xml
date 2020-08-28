@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.adeasy.advertise">
 
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,50 +16,40 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".activity.SplashMainAppActivity">
-
+        <activity android:name=".ui.advertisement.NewAdCategories"
+            android:parentActivityName=".ui.home.MainActivity"></activity>
+        <activity android:name=".ui.SplashMainAppActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity android:name=".activity.advertisement.BuyNow" />
-        <activity android:name=".activity.favaourite.divya_Edit" />
-        <activity android:name=".activity.favaourite.divya_MActivity" /> <!-- Ravindu -->
-        <activity android:name=".activity.getintouch.GetInTouchActivity" />
-        <activity android:name=".activity.getintouch.AboutUsActivity" />
-        <activity android:name=".activity.getintouch.AddNewBugActivity" />
-        <activity android:name=".activity.getintouch.AddNewSuggestionActivity" />
-        <activity android:name=".activity.getintouch.BugsActionsActivity" />
-        <activity android:name=".activity.getintouch.BugsActivity" />
-        <activity android:name=".activity.getintouch.EditBugActivity" />
-        <activity android:name=".activity.getintouch.ViewBugActivity" />
-        <activity android:name=".activity.athentication.register" />
-        <activity android:name=".activity.athentication.login" />
-        <activity android:name=".activity.advertisement.Donations" />
-        <activity android:name=".activity.advertisement.Advertisement" />
-        <activity android:name=".activity.advertisement.EditAdvertisement" />
-        <activity android:name=".activity.advertisement.Myadds" />
+        <activity android:name=".ui.Order.BuyNow" />
+        <activity android:name=".ui.favaourite.divya_Edit" />
+        <activity android:name=".ui.favaourite.divya_MActivity" /> <!-- Ravindu -->
+        <activity android:name=".ui.getintouch.GetInTouchActivity" />
+        <activity android:name=".ui.getintouch.AboutUsActivity" />
+        <activity android:name=".ui.getintouch.AddNewBugActivity" />
+        <activity android:name=".ui.getintouch.AddNewSuggestionActivity" />
+        <activity android:name=".ui.getintouch.BugsActionsActivity" />
+        <activity android:name=".ui.getintouch.BugsActivity" />
+        <activity android:name=".ui.getintouch.EditBugActivity" />
+        <activity android:name=".ui.getintouch.ViewBugActivity" />
+        <activity android:name=".ui.athentication.register" />
+        <activity android:name=".ui.athentication.login" />
+        <activity android:name=".ui.advertisement.Donations" />
+        <activity android:name=".ui.advertisement.Advertisement" />
+        <activity android:name=".ui.advertisement.EditAdvertisement" />
+        <activity android:name=".ui.advertisement.Myadds" />
         <activity
-            android:name=".activity.advertisement.NewAdvertisement"
-            android:parentActivityName=".activity.advertisement.MainActivity" />
-        <activity android:name=".activity.advertisement.MainActivity">
-
-        </activity>
+            android:name=".ui.advertisement.NewAdvertisement"
+            android:parentActivityName=".ui.home.MainActivity" />
+        <activity android:name=".ui.home.MainActivity"></activity>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
     </application>
-
-    <supports-screens android:smallScreens="true"
-        android:normalScreens="true"
-        android:largeScreens="true"
-        android:xlargeScreens="true"
-        android:anyDensity="true" />
 
 </manifest>

@@ -8,7 +8,7 @@ android:orientation="vertical"
 android:gravity="center"
 android:padding="16dp"
 android:background="@color/colorWhite"
-tools:context=".fragment.Order.StepSuccess">
+tools:context=".ui.Order.StepSuccess">
 
 <!-- Manuka -->
 

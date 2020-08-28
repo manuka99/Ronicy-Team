@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#e6ecff"
-    tools:context=".activity.advertisement.EditAdvertisement">
+    tools:context=".ui.advertisement.EditAdvertisement">
 
     <!-- Manuka -->
 
