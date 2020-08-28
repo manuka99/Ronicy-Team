@@ -108,14 +108,6 @@ public class Home extends Fragment implements AdvertisementCallback {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setHasFixedSize(false);
         advertisementManager = new AdvertisementManager(this);
-        loadData();
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                firestorePagingAdapter.refresh();
-            }
-        });
-
     }
 
     public void loadData() {
@@ -235,6 +227,13 @@ public class Home extends Fragment implements AdvertisementCallback {
     @Override
     public void onStart() {
         super.onStart();
+        loadData();
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                firestorePagingAdapter.refresh();
+            }
+        });
         firestorePagingAdapter.startListening();
     }
 
@@ -289,9 +288,13 @@ public class Home extends Fragment implements AdvertisementCallback {
     @Override
     public void onAdCount(Task<QuerySnapshot> task) {
         if (task.isSuccessful()) {
-            toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-            TextView textView = toolbar.findViewById(R.id.adResults);
-            textView.setText(task.getResult().size() + " results");
+            try {
+                toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+                TextView textView = toolbar.findViewById(R.id.adResults);
+                textView.setText(task.getResult().size() + " results");
+            }catch (NullPointerException e){
+                Log.i(TAG, "fragments changed");
+            }
         } else {
             Log.d(TAG, "Error getting documents: ", task.getException());
         }

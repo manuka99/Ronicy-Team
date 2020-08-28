@@ -51,6 +51,13 @@
     <string name="adForSale">For sale by member</string>
     <string name="adBuynow">Buy Now </string>
 
+    <!-- -->
+    <string name="selectLocation">Select location for your ad: </string>
+    <string name="locationSelectorLocation">Location </string>
+    <string name="locationAuto">The location for this ad was set automatically.</string>
+    <string name="useLocationBtn">Use this location</string>
+    <string name="changeLocation">Change location</string>
+
     <!-- order verify phone -->
     <string name="order_phone_header">Please verify your phone number: </string>
     <string name="order_phone_subheading">Enter the PIN code that was sent to this phone number via SMS</string>

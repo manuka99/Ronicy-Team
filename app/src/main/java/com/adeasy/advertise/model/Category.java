@@ -1,8 +1,9 @@
 package com.adeasy.advertise.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Category {
+public class Category implements Serializable {
 
     private String id;
     private String name;

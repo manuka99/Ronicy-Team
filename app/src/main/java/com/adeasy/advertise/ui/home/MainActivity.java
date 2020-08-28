@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.adeasy.advertise.R;
-import com.adeasy.advertise.ui.advertisement.NewAdCategories;
+import com.adeasy.advertise.ui.newPost.NewAd;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.navAddPost:
                 changeToolbarDefault();
-                startActivity(new Intent(this, NewAdCategories.class));
+                startActivity(new Intent(this, NewAd.class));
                 return true;
 
             case R.id.navChat:

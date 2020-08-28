@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="#e6ecff"
+android:orientation="vertical"
+tools:context=".ui.newPost.CategorySelected">
+
+<!-- Manuka -->
+
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="10dp"
+            android:background="#ffffff"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:background="@drawable/icon_rules_medium"
+                android:contentDescription="@string/image"></ImageView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/posting_allowance"
+                    android:textAlignment="textStart"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:textSize="14sp"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/free_on_ronicy"
+                    android:textAlignment="textStart"
+                    android:textColor="#b3b3b3"
+                    android:textSize="14sp"></TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginTop="14dp"
+            android:background="#ffffff"
+            android:layout_height="70dp"
+            android:paddingStart="18dp"
+            android:gravity="center_vertical"
+            android:text="@string/all_categories"
+            android:textColor="#b3b3b3"
+            android:textSize="16sp"></TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:paddingStart="18dp"
+            android:layout_height="70dp"
+            android:gravity="center_vertical"
+            android:background="@color/colorWhite"
+            android:text="@string/sell_an_item"
+            android:textColor="#b3b3b3"
+            android:textSize="16sp"></TextView>
+
+        <LinearLayout
+            android:background="#0066ff"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+
+            <!-- Manuka -->
+
+            <ImageView
+                android:id="@+id/selectedCategoryImage"
+                android:layout_gravity="center_vertical"
+                android:padding="8dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:srcCompat="@mipmap/ic_launcher"
+                android:contentDescription="@string/image" />
+
+            <TextView
+                android:id="@+id/selectedCategoryTitle"
+                android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:layout_height="match_parent"
+                android:paddingStart="4dp"
+                android:text="@string/loading"
+                android:textSize="16sp"
+                android:textColor="@color/colorWhite"></TextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

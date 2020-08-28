@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="46dp"
+    android:orientation="vertical"
+    android:background="@color/colorHome"
+    tools:context=".ui.newPost.LocationSelector">
+
+    <TextView
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#CC000000"
+        android:text="@string/selectLocation"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="14sp"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="@string/locationSelectorLocation"
+            android:labelFor="@+id/locationSelectNewPost"/>
+
+        <EditText
+            android:id="@+id/locationSelectNewPost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:textSize="20sp"
+            android:importantForAutofill="no" />
+
+        <TextView
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="@string/locationAuto"
+            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/setLocationNewAd"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textAllCaps="false"
+            android:background="@color/colorGreen"
+            android:textSize="16sp"
+            android:text="@string/useLocationBtn"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/changeLocation"
+            android:gravity="center"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+</LinearLayout>

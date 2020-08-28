@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.advertisement.NewAdCategories"
+        <activity android:name=".ui.newPost.NewAd"
             android:parentActivityName=".ui.home.MainActivity"></activity>
         <activity android:name=".ui.SplashMainAppActivity">
             <intent-filter>
@@ -43,7 +43,7 @@
         <activity android:name=".ui.advertisement.EditAdvertisement" />
         <activity android:name=".ui.advertisement.Myadds" />
         <activity
-            android:name=".ui.advertisement.NewAdvertisement"
+            android:name=".ui.newPost.NewAdvertisement"
             android:parentActivityName=".ui.home.MainActivity" />
         <activity android:name=".ui.home.MainActivity"></activity>
 

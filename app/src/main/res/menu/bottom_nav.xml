@@ -13,6 +13,7 @@
         android:title="Search"></item>
     <item
         android:id="@+id/navAddPost"
+        android:checkable="false"
         android:icon="@drawable/ic_baseline_add_box_24"
         android:title="New"></item>
     <item

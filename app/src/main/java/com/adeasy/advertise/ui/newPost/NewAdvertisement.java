@@ -1,4 +1,4 @@
-package com.adeasy.advertise.ui.advertisement;
+package com.adeasy.advertise.ui.newPost;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

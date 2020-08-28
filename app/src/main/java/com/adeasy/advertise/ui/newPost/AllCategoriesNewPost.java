@@ -1,12 +1,12 @@
-package com.adeasy.advertise.ui.advertisement;
+package com.adeasy.advertise.ui.newPost;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,12 +17,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.ViewModel.NewPostViewModel;
 import com.adeasy.advertise.callback.CategoryCallback;
 import com.adeasy.advertise.helper.ViewHolderPostCats;
 import com.adeasy.advertise.manager.CategoryManager;
 import com.adeasy.advertise.model.Category;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.ObservableSnapshotArray;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
@@ -47,6 +49,10 @@ public class AllCategoriesNewPost extends Fragment implements CategoryCallback {
     ImageView imageView;
     RecyclerView recyclerView;
     CategoryManager categoryManager;
+    NewPostViewModel newPostViewModel;
+    Category category;
+    FirestoreRecyclerOptions<Category> options;
+    ObservableSnapshotArray categories;
 
     public AllCategoriesNewPost() {
         // Required empty public constructor
@@ -83,14 +89,16 @@ public class AllCategoriesNewPost extends Fragment implements CategoryCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new_post, container, false);
+        return inflater.inflate(R.layout.manuka_fragment_categories_new_post, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("New Post");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("New Post");
+
+        newPostViewModel = ViewModelProviders.of(getActivity()).get(NewPostViewModel.class);
 
         recyclerView = view.findViewById(R.id.CategoryListPost);
         //recyclerView.setHasFixedSize(true);
@@ -102,17 +110,18 @@ public class AllCategoriesNewPost extends Fragment implements CategoryCallback {
             }
         });
         categoryManager = new CategoryManager(this);
+
         loadData();
 
     }
 
     private void loadData() {
 
-        FirestoreRecyclerOptions<Category> options = new FirestoreRecyclerOptions.Builder<Category>()
+        options = new FirestoreRecyclerOptions.Builder<Category>()
                 .setQuery(categoryManager.viewCategoryAll(), Category.class).build();
 
-        FirestoreRecyclerAdapter<Category, ViewHolderPostCats> FirestoreRecyclerAdapter  =
-                new FirestoreRecyclerAdapter <Category, ViewHolderPostCats>(
+        FirestoreRecyclerAdapter<Category, ViewHolderPostCats> firestoreRecyclerAdapter =
+                new FirestoreRecyclerAdapter<Category, ViewHolderPostCats>(
                         options
                 ) {
                     @Override
@@ -124,9 +133,7 @@ public class AllCategoriesNewPost extends Fragment implements CategoryCallback {
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent = new Intent(getContext(), NewAdvertisement.class);
-                                intent.putExtra("key", getItem(position).getId());
-                                startActivity(intent);
+                                newPostViewModel.setCategorySelected(getItem(position));
                             }
                         });
                     }
@@ -140,8 +147,8 @@ public class AllCategoriesNewPost extends Fragment implements CategoryCallback {
 
                 };
 
-        FirestoreRecyclerAdapter.startListening();
-        recyclerView.setAdapter(FirestoreRecyclerAdapter);
+        firestoreRecyclerAdapter.startListening();
+        recyclerView.setAdapter(firestoreRecyclerAdapter);
 
     }
 
