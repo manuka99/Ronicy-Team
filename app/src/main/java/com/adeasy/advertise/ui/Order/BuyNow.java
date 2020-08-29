@@ -1,5 +1,6 @@
 package com.adeasy.advertise.ui.Order;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,7 +24,10 @@ import android.widget.LinearLayout;
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.BuynowViewModel;
 import com.adeasy.advertise.callback.OrderCallback;
+import com.adeasy.advertise.callback.VerifiedNumbersCallback;
 import com.adeasy.advertise.config.Configurations;
+import com.adeasy.advertise.manager.VerifiedNumbersManager;
+import com.adeasy.advertise.model.VerifiedNumber;
 import com.adeasy.advertise.ui.Order.OrderPhoneVerify;
 import com.adeasy.advertise.ui.Order.Step1;
 import com.adeasy.advertise.ui.Order.Step2;
@@ -36,7 +40,9 @@ import com.adeasy.advertise.model.Order_Payment;
 import com.adeasy.advertise.service.MailService;
 import com.adeasy.advertise.service.MailServiceImpl;
 import com.adeasy.advertise.util.UniqueIdBasedOnName;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.shuhart.stepview.StepView;
 
 import java.util.ArrayList;
@@ -48,7 +54,7 @@ import lk.payhere.androidsdk.PHResponse;
 import lk.payhere.androidsdk.model.InitRequest;
 import lk.payhere.androidsdk.model.StatusResponse;
 
-public class BuyNow extends AppCompatActivity implements View.OnClickListener, OrderCallback {
+public class BuyNow extends AppCompatActivity implements View.OnClickListener, OrderCallback, VerifiedNumbersCallback {
 
     Button continueOrder;
     String advertisementID, categoryId;
@@ -62,6 +68,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     StepSuccess orderSuccess;
     MailService mailService;
     Boolean isCODSelected = false;
+    VerifiedNumbersManager verifiedNumbersManager;
 
     private FirebaseAuth mAuth;
     private OrderManager orderManager;
@@ -103,13 +110,20 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
             }
         });
 
+        verifiedNumbersManager = new VerifiedNumbersManager(this);
+
         buynowViewModel = ViewModelProviders.of(this).get(BuynowViewModel.class);
 
         buynowViewModel.getCustomer().observe(this, new Observer<Order_Customer>() {
             @Override
             public void onChanged(Order_Customer order_customer) {
                 order.setCustomer(order_customer);
-                startVerifyNumberFragment();
+
+                if (mAuth.getCurrentUser() != null)
+                    verifiedNumbersManager.validateNumber(String.valueOf(order_customer.getPhone()), mAuth.getCurrentUser());
+
+                else
+                    startVerifyNumberFragment();
             }
         });
 
@@ -151,7 +165,6 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     public void onBackPressed() {
 
         if (getCurrentFragment() instanceof OrderPhoneVerify || getCurrentFragment() instanceof Step2) {
-
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             ft.remove(getCurrentFragment());
@@ -232,6 +245,8 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
         step2.setArguments(bundle);
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
+        if (getCurrentFragment() instanceof Step1)
+            ft.addToBackStack(Step1.class.getName());
         ft.replace(R.id.orderStepContainer, step2);
         ft.commit();
     }
@@ -402,4 +417,12 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
         mailService.destroy();
     }
 
+    @Override
+    public void onCompleteSearchNumberInUser(QuerySnapshot queryDocumentSnapshots) {
+        if (queryDocumentSnapshots != null && queryDocumentSnapshots.getDocuments().isEmpty() == false) {
+            Log.i(TAG, queryDocumentSnapshots.getDocuments().toString());
+            startPaymentSelectFragment();
+        } else
+            startVerifyNumberFragment();
+    }
 }

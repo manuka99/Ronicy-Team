@@ -3,13 +3,19 @@ package com.adeasy.advertise.ui.newPost;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.BuynowViewModel;
@@ -32,6 +38,9 @@ public class LocationSelector extends Fragment implements View.OnClickListener{
     private String mParam2;
     NewPostViewModel newPostViewModel;
     Button btnSelect;
+    LinearLayout linearLayout;
+    ProgressBar progressBar;
+    EditText locationSelectNewPost;
 
     public LocationSelector() {
         // Required empty public constructor
@@ -73,16 +82,39 @@ public class LocationSelector extends Fragment implements View.OnClickListener{
         btnSelect = view.findViewById(R.id.setLocationNewAd);
         btnSelect.setOnClickListener(this);
         newPostViewModel = ViewModelProviders.of(getActivity()).get(NewPostViewModel.class);
-
+        linearLayout = view.findViewById(R.id.locationExtraLayout);
+        progressBar = view.findViewById(R.id.locationSelectorProgress);
+        locationSelectNewPost = view.findViewById(R.id.locationSelectNewPost);
 
         return view;
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        locationSelectNewPost.setText("Colombo");
+        linearLayout.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
     public void onClick(View view) {
         if(view == btnSelect){
-            newPostViewModel.setLocationSelected("Colombo");
+            onLocationSeleted();
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    progressBar.setVisibility(View.GONE);
+                    newPostViewModel.setLocationSelected("Colombo");
+                }
+            }, 2000 );
         }
+    }
+
+    private void onLocationSeleted(){
+        linearLayout.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
 }

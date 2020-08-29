@@ -3,6 +3,7 @@ package com.adeasy.advertise.ui.newPost;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.ViewModel.NewPostViewModel;
 import com.adeasy.advertise.model.Category;
 import com.squareup.picasso.Picasso;
 
@@ -19,7 +21,7 @@ import com.squareup.picasso.Picasso;
  * Use the {@link CategorySelected#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CategorySelected extends Fragment {
+public class CategorySelected extends Fragment implements View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,9 +31,10 @@ public class CategorySelected extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    TextView name;
+    TextView name, allCatSeleted, allSellSeleted;
     ImageView image;
     Category category;
+    NewPostViewModel newPostViewModel;
 
     public CategorySelected() {
         // Required empty public constructor
@@ -70,12 +73,25 @@ public class CategorySelected extends Fragment {
         View view = inflater.inflate(R.layout.manuka_fragment_category_selected, container, false);
         name = view.findViewById(R.id.selectedCategoryTitle);
         image = view.findViewById(R.id.selectedCategoryImage);
+        allCatSeleted = view.findViewById(R.id.allCatSeleted);
+        allSellSeleted = view.findViewById(R.id.allServiceSeleted);
+
+        allCatSeleted.setOnClickListener(this);
+        allSellSeleted.setOnClickListener(this);
 
         category = (Category) getArguments().getSerializable("category");
 
         name.setText(category.getName());
         Picasso.get().load(category.getImageUrl()).into(image);
 
+        newPostViewModel = ViewModelProviders.of(getActivity()).get(NewPostViewModel.class);
         return view;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == allCatSeleted || view == allSellSeleted){
+            newPostViewModel.setShowAllCategories(true);
+        }
     }
 }

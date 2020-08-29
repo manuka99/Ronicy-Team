@@ -24,6 +24,8 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.BuynowViewModel;
 import com.adeasy.advertise.callback.PhoneAuthenticationCallback;
 import com.adeasy.advertise.manager.FirebasePhoneAuthentication;
+import com.adeasy.advertise.manager.VerifiedNumbersManager;
+import com.adeasy.advertise.model.VerifiedNumber;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseException;
@@ -71,6 +73,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
     LinearLayout verifyBtn;
     LinearLayout linearLayout;
     ProgressBar progressBarVerifyBtn;
+    VerifiedNumbersManager verifiedNumbersManager;
 
     public OrderPhoneVerify() {
         // Required empty public constructor
@@ -109,7 +112,9 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.manuka_fragment_order_phone_verify, container, false);
         firebasePhoneAuthentication = new FirebasePhoneAuthentication(this);
-        phoneNum = "+94" + getArguments().getString("phone");
+        phoneNum = getArguments().getString("phone");
+
+        verifiedNumbersManager = new VerifiedNumbersManager();
 
         order_phone_number = view.findViewById(R.id.order_phone_number);
         codeInput = view.findViewById(R.id.orderCodeVerify);
@@ -138,7 +143,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         order_phone_number.setText(phoneNum);
-        firebasePhoneAuthentication.sendMobileVerifycode(phoneNum, getActivity());
+        firebasePhoneAuthentication.sendMobileVerifycode("+94" + phoneNum, getActivity());
     }
 
     @Override
@@ -153,7 +158,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
     public void onClick(View view) {
         if (view == newcode && mResendToken != null) {
             showSuccessSnackbar(String.valueOf(R.string.sending_code));
-            firebasePhoneAuthentication.resendVerificationCode(phoneNum, getActivity(), mResendToken);
+            firebasePhoneAuthentication.resendVerificationCode("+94" + phoneNum, getActivity(), mResendToken);
         } else if (view == verifyTextView) {
             validatePhonenumber();
         }
@@ -227,6 +232,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
             //FirebaseUser user = task.getResult().getUser();
             buynowViewModel.setMobileNumberVerifyStatus(true);
             firebasePhoneAuthentication.unlinkPhoneAuth(task.getResult().getUser());
+            verifiedNumbersManager.insertVerifiedNumber(new VerifiedNumber(phoneNum), task.getResult().getUser());
         } else {
             showErrorSnackbar(String.valueOf(R.string.invalid_mobile_code));
             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {

@@ -1,5 +1,6 @@
 package com.adeasy.advertise.ui.newPost;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -8,6 +9,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,12 +24,13 @@ import com.adeasy.advertise.ui.Order.Step2;
 
 public class NewAd extends AppCompatActivity {
 
-    FrameLayout frameLayout, frameLayout2, frameLayout3;
+    FrameLayout frameLayout, frameLayout2, frameLayout3, frameLayout4;
     Toolbar toolbar;
     AllCategoriesNewPost allCategoriesNewPost;
     LocationSelector locationSelector;
     AdvertisementDetails advertisementDetails;
     CategorySelected categorySelected;
+    ContactDetails contactDetails;
 
     NewPostViewModel newPostViewModel;
 
@@ -42,11 +46,13 @@ public class NewAd extends AppCompatActivity {
         frameLayout = findViewById(R.id.newPostFragmentCont);
         frameLayout2 = findViewById(R.id.newPostFragmentCont2);
         frameLayout3 = findViewById(R.id.newPostFragmentCont3);
+        frameLayout4 = findViewById(R.id.newPostFragmentCont4);
 
         allCategoriesNewPost = new AllCategoriesNewPost();
         locationSelector = new LocationSelector();
         advertisementDetails = new AdvertisementDetails();
         categorySelected = new CategorySelected();
+        contactDetails = new ContactDetails();
 
         category = new Category();
 
@@ -78,7 +84,17 @@ public class NewAd extends AppCompatActivity {
             @Override
             public void onChanged(String locationSelected) {
                 location = locationSelected;
-                startShowAdDetails();
+                startShowAdAndContactDetails();
+            }
+        });
+
+        newPostViewModel.getShowAllCategories().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    finish();
+                    startActivity(getIntent());
+                }
             }
         });
 
@@ -88,14 +104,8 @@ public class NewAd extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (getCurrentFragment() instanceof LocationSelector) {
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.remove(getCurrentFragment());
-            ft.commit();
-            super.onBackPressed();
-        }
-
+        if (getCurrentFragment(2) != null || getCurrentFragment(3) != null)
+            showExitAlert();
         else
             finish();
     }
@@ -119,30 +129,59 @@ public class NewAd extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.addToBackStack(AllCategoriesNewPost.class.getName());
         fragmentTransaction.replace(frameLayout2.getId(), locationSelector);
         fragmentTransaction.replace(frameLayout.getId(), categorySelected);
         fragmentTransaction.commit();
     }
 
-    private void startShowAdDetails() {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("category", category);
-        bundle.putString("location", location);
-        allCategoriesNewPost.setArguments(bundle);
-
+    private void startShowAdAndContactDetails() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.addToBackStack(AllCategoriesNewPost.class.getName());
-        fragmentTransaction.replace(frameLayout.getId(), allCategoriesNewPost);
-        fragmentTransaction.add(frameLayout.getId(), advertisementDetails);
+        fragmentTransaction.replace(frameLayout3.getId(), advertisementDetails);
+        fragmentTransaction.replace(frameLayout4.getId(), contactDetails);
         fragmentTransaction.commit();
     }
 
-    private Fragment getCurrentFragment() {
-        Fragment currentFragment = getSupportFragmentManager()
-                .findFragmentById(frameLayout.getId());
-        return currentFragment;
+    private Fragment getCurrentFragment(int caseValue) {
+        Fragment currentFragment;
+        switch (caseValue) {
+            case 1:
+                currentFragment = getSupportFragmentManager().findFragmentById(frameLayout.getId());
+                return currentFragment;
+
+            case 2:
+                currentFragment = getSupportFragmentManager().findFragmentById(frameLayout2.getId());
+                return currentFragment;
+
+            case 3:
+                currentFragment = getSupportFragmentManager().findFragmentById(frameLayout3.getId());
+                return currentFragment;
+        }
+        return null;
+    }
+
+    public void showExitAlert() {
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+
+                .setIcon(android.R.drawable.ic_dialog_alert)
+
+                .setTitle("Are you sure you want to leave this page?")
+
+                .setMessage("Please note that any details you have filled in will not be saved.")
+
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                })
+
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .show();
     }
 
 }

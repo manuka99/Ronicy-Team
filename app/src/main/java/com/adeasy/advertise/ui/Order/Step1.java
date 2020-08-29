@@ -129,16 +129,17 @@ public class Step1 extends Fragment {
         address = addressView.getText().toString();
 
         try {
-            phone = Integer.parseInt(phoneView.getText().toString());
+            phone = Integer.parseInt(phoneView.getText().toString().trim());
         } catch (Exception e) {
-            phone = 0;
+            phoneView.setError("Please fill out a valid phone number");
+            return false;
         }
 
         if (name.isEmpty())
             nameView.setError("Please fill out your name");
 
-        else if (phone < 100000000 || phone > 1000000000)
-            phoneView.setError("Please fill out a valid phone number");
+        else if (phoneView.getText().toString().trim().length() != 9)
+            phoneView.setError("Incorrect format! ex: 771234567");
 
         else if (email.isEmpty())
             emailView.setError("Please provide us your email");

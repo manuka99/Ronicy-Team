@@ -11,6 +11,7 @@ import com.adeasy.advertise.model.Order_Item;
 public class NewPostViewModel  extends ViewModel {
     private MutableLiveData<String> locationSelected = new MutableLiveData<>();
     private MutableLiveData<Category> categorySelected = new MutableLiveData<>();
+    private MutableLiveData<Boolean> showAllCategories = new MutableLiveData<>();
 
     public LiveData<String> getLocationSelected() {
         return locationSelected;
@@ -28,4 +29,11 @@ public class NewPostViewModel  extends ViewModel {
         this.categorySelected.setValue(categorySelected);
     }
 
+    public LiveData<Boolean> getShowAllCategories() {
+        return showAllCategories;
+    }
+
+    public void setShowAllCategories(Boolean showAllCategories) {
+        this.showAllCategories.setValue(showAllCategories);
+    }
 }

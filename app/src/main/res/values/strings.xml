@@ -27,7 +27,7 @@
     <string name="sell_an_item">Sell an item or service</string>
 
     <!-- advertisement new/ edit -->
-    <string name="post_details">Advertisement Details</string>
+    <string name="post_details">Ad Details: </string>
     <string name="post_title">Ad Title</string>
     <string name="post_condition">Ad Condition</string>
     <string name="post_description">Ad Description</string>
@@ -36,7 +36,16 @@
     <string name="post_new_btn">Post ad</string>
     <string name="post_choose_image_btn">Change Image</string>
     <string name="post_add_image_btn">Add a Image</string>
-    <string name="post_add_1_image">* Add at least one Image</string>
+    <string name="post_add_1_image">Attach a photo to your ad:</string>
+
+    <!-- acontact details -->
+    <string name="contact_details">Contact Details: </string>
+    <string name="phoneNumbers">Phone number(s)</string>
+    <string name="contact_detailsName">Name</string>
+    <string name="contact_detailsEmail">Email</string>
+    <string name="contact_detailsTermsAndConditions">By posting this ad you agree to our terms and conditions</string>
+    <string name="contact_detailsAdd">Add another phone number</string>
+    <string name="contact_detailsHide">Hide my phone number(s)</string>
 
     <!-- advertisement -->
     <string name="newImage">Add new Image</string>

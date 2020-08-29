@@ -64,6 +64,7 @@ tools:context=".ui.newPost.CategorySelected">
 
 
         <TextView
+            android:id="@+id/allCatSeleted"
             android:layout_width="match_parent"
             android:layout_marginTop="14dp"
             android:background="#ffffff"
@@ -75,6 +76,7 @@ tools:context=".ui.newPost.CategorySelected">
             android:textSize="16sp"></TextView>
 
         <TextView
+            android:id="@+id/allServiceSeleted"
             android:layout_width="match_parent"
             android:paddingStart="18dp"
             android:layout_height="70dp"
