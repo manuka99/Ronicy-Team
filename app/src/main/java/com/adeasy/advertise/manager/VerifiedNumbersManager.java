@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class VerifiedNumbersManager {
@@ -65,6 +66,17 @@ public class VerifiedNumbersManager {
             verifiedNumbersCallback.onCompleteSearchNumberInUser(null);
         }
     }
+
+    public Query viewVerifiedNumbersByUser(FirebaseUser user) {
+        Query query = null;
+        try{
+            query = documentReference.collection(user.getUid());
+        }catch (NullPointerException e){
+            query = null;
+        }
+        return query;
+    }
+
 
     public void destroy() {
         firebaseFirestore = null;

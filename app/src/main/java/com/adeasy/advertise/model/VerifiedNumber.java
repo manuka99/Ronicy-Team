@@ -4,6 +4,9 @@ public class VerifiedNumber {
 
     private String number;
 
+    public VerifiedNumber() {
+    }
+
     public VerifiedNumber(String number) {
         this.number = number;
     }

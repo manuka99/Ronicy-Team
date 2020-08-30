@@ -2,39 +2,49 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:id="@+id/layoytHold">
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:id="@+id/subLayout">
 
     <TextView
+        android:gravity="start"
         android:id="@+id/phoneNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="10dp"
         android:text="0775454565"
         android:textColor="@color/colorBlack"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <ImageView
         android:id="@+id/phoneNumberVerified"
-        android:layout_width="60dp"
-        android:layout_height="20dp"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="66dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_width="46dp"
+        android:layout_height="14dp"
+        android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/phoneNumber"
         android:background="@drawable/icon_verified_small" />
 
     <ImageView
         android:id="@+id/phoneNumberRemove"
-        android:layout_width="28dp"
-        android:layout_height="30dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
+        android:layout_width="32dp"
+        android:layout_height="26dp"
         android:layout_marginEnd="0dp"
-        android:layout_toRightOf="@id/phoneNumberVerified"
+        android:layout_alignParentRight="true"
         android:background="@drawable/icon_delete" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/libne"
+        android:layout_alignBottom="@+id/subLayout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#52000000" />
 
 </RelativeLayout>

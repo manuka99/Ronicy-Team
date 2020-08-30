@@ -2,13 +2,25 @@ package com.adeasy.advertise.ui.newPost;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.helper.ViewHolderPhoneNumbers;
+import com.adeasy.advertise.helper.ViewHolderPostCats;
+import com.adeasy.advertise.manager.VerifiedNumbersManager;
+import com.adeasy.advertise.model.Category;
+import com.adeasy.advertise.model.VerifiedNumber;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +37,10 @@ public class ContactDetails extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    RecyclerView recyclerView;
+    FirestoreRecyclerOptions<VerifiedNumber> options;
+    VerifiedNumbersManager verifiedNumbersManager;
+    FirebaseAuth firebaseAuth;
 
     public ContactDetails() {
         // Required empty public constructor
@@ -61,6 +77,67 @@ public class ContactDetails extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.manuka_fragment_contact_details, container, false);
+        View view = inflater.inflate(R.layout.manuka_fragment_contact_details, container, false);
+        firebaseAuth = FirebaseAuth.getInstance();
+        recyclerView = view.findViewById(R.id.phoneNumbersRecycler);
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        verifiedNumbersManager = new VerifiedNumbersManager();
+
+        return view;
+
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadVerifiedPhoneNumbers();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    private void loadVerifiedPhoneNumbers() {
+
+        options = new FirestoreRecyclerOptions.Builder<VerifiedNumber>()
+                .setQuery(verifiedNumbersManager.viewVerifiedNumbersByUser(firebaseAuth.getCurrentUser()), VerifiedNumber.class).build();
+
+        FirestoreRecyclerAdapter<VerifiedNumber, ViewHolderPhoneNumbers> firestoreRecyclerAdapter =
+                new FirestoreRecyclerAdapter<VerifiedNumber, ViewHolderPhoneNumbers>(
+                        options
+                ) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull final ViewHolderPhoneNumbers holder, final int position, @NonNull VerifiedNumber verifiedNumber) {
+
+                        holder.numberView.setText(verifiedNumber.getNumber());
+
+                        holder.removeView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                               holder.layoytHold.setVisibility(View.GONE);
+                            }
+                        });
+                    }
+
+                    @NonNull
+                    @Override
+                    public ViewHolderPhoneNumbers onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manuka_phone_numbers, parent, false);
+                        return new ViewHolderPhoneNumbers(view);
+                    }
+
+                };
+
+        firestoreRecyclerAdapter.startListening();
+        recyclerView.setAdapter(firestoreRecyclerAdapter);
+
+    }
+
 }

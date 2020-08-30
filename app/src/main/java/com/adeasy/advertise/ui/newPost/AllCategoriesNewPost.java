@@ -50,9 +50,7 @@ public class AllCategoriesNewPost extends Fragment implements CategoryCallback {
     RecyclerView recyclerView;
     CategoryManager categoryManager;
     NewPostViewModel newPostViewModel;
-    Category category;
     FirestoreRecyclerOptions<Category> options;
-    ObservableSnapshotArray categories;
 
     public AllCategoriesNewPost() {
         // Required empty public constructor
