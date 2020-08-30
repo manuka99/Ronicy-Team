@@ -1,5 +1,6 @@
 package com.adeasy.advertise.ui.newPost;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,27 +8,36 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.adapter.RecycleAdapterForVerifiedNumbers;
+import com.adeasy.advertise.callback.VerifiedNumbersCallback;
 import com.adeasy.advertise.helper.ViewHolderPhoneNumbers;
 import com.adeasy.advertise.helper.ViewHolderPostCats;
 import com.adeasy.advertise.manager.VerifiedNumbersManager;
 import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.model.VerifiedNumber;
+import com.adeasy.advertise.ui.addphone.AddNewNumber;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ContactDetails#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ContactDetails extends Fragment {
+public class ContactDetails extends Fragment implements VerifiedNumbersCallback, View.OnClickListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,9 +48,13 @@ public class ContactDetails extends Fragment {
     private String mParam1;
     private String mParam2;
     RecyclerView recyclerView;
+    LinearLayout addNewNumber, hideAllNumbers;
+    ImageView hideNumbersBox;
     FirestoreRecyclerOptions<VerifiedNumber> options;
     VerifiedNumbersManager verifiedNumbersManager;
     FirebaseAuth firebaseAuth;
+    Boolean isNumbersHidden = false;
+    private static final String TAG = "ContactDetails";
 
     public ContactDetails() {
         // Required empty public constructor
@@ -87,7 +101,14 @@ public class ContactDetails extends Fragment {
                 return false;
             }
         });
-        verifiedNumbersManager = new VerifiedNumbersManager();
+        verifiedNumbersManager = new VerifiedNumbersManager(this);
+        addNewNumber = view.findViewById(R.id.addAnewNumber);
+        hideAllNumbers = view.findViewById(R.id.hideAllNumbers);
+        hideNumbersBox = view.findViewById(R.id.numbersHideBox);
+
+        //set listners
+        addNewNumber.setOnClickListener(this);
+        hideAllNumbers.setOnClickListener(this);
 
         return view;
 
@@ -96,12 +117,14 @@ public class ContactDetails extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        loadVerifiedPhoneNumbers();
+        //loadVerifiedPhoneNumbers();
+        verifiedNumbersManager.getVerifiedNumbersOfUser(firebaseAuth.getCurrentUser());
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        verifiedNumbersManager.destroy();
     }
 
     private void loadVerifiedPhoneNumbers() {
@@ -109,7 +132,7 @@ public class ContactDetails extends Fragment {
         options = new FirestoreRecyclerOptions.Builder<VerifiedNumber>()
                 .setQuery(verifiedNumbersManager.viewVerifiedNumbersByUser(firebaseAuth.getCurrentUser()), VerifiedNumber.class).build();
 
-        FirestoreRecyclerAdapter<VerifiedNumber, ViewHolderPhoneNumbers> firestoreRecyclerAdapter =
+        final FirestoreRecyclerAdapter<VerifiedNumber, ViewHolderPhoneNumbers> firestoreRecyclerAdapter =
                 new FirestoreRecyclerAdapter<VerifiedNumber, ViewHolderPhoneNumbers>(
                         options
                 ) {
@@ -121,7 +144,8 @@ public class ContactDetails extends Fragment {
                         holder.removeView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                               holder.layoytHold.setVisibility(View.GONE);
+                                //holder.layoytHold.setVisibility(View.GONE);
+
                             }
                         });
                     }
@@ -140,4 +164,33 @@ public class ContactDetails extends Fragment {
 
     }
 
+    @Override
+    public void onCompleteSearchNumberInUser(QuerySnapshot querySnapshotTask) {
+
+    }
+
+    @Override
+    public void onCompleteRecieveAllNumbersInUser(QuerySnapshot queryDocumentSnapshots) {
+        if (queryDocumentSnapshots != null && queryDocumentSnapshots.getDocuments().isEmpty() == false) {
+            List<VerifiedNumber> numbers = queryDocumentSnapshots.toObjects(VerifiedNumber.class);
+            RecycleAdapterForVerifiedNumbers recycleAdapterForVerifiedNumbers = new RecycleAdapterForVerifiedNumbers(numbers);
+            recyclerView.setAdapter(recycleAdapterForVerifiedNumbers);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == addNewNumber)
+            startActivity(new Intent(getContext(), AddNewNumber.class));
+
+        else if(view == hideAllNumbers){
+            if(isNumbersHidden){
+                isNumbersHidden = false;
+                hideNumbersBox.setBackgroundResource(R.drawable.ic_checkbox_normal);
+            }else{
+                isNumbersHidden = true;
+                hideNumbersBox.setBackgroundResource(R.drawable.ic_checkbox_checked);
+            }
+        }
+    }
 }

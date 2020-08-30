@@ -77,6 +77,18 @@ public class VerifiedNumbersManager {
         return query;
     }
 
+    public void getVerifiedNumbersOfUser(FirebaseUser firebaseUser){
+        try{
+            documentReference.collection(firebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    verifiedNumbersCallback.onCompleteRecieveAllNumbersInUser(queryDocumentSnapshots);
+                }
+            });
+        }catch (NullPointerException e){
+            verifiedNumbersCallback.onCompleteSearchNumberInUser(null);
+        }
+    }
 
     public void destroy() {
         firebaseFirestore = null;

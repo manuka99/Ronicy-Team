@@ -20,6 +20,12 @@
     <string name="menu_category">category</string>
     <string name="menu_filter">filter</string>
 
+    <!-- add new number-->
+    <string name="enterNumber">Please enter your phone number</string>
+    <string name="haveNotVerified">If you have not verified it before, we will send you an SMS with a PIN code to make sure that we can get in touch with you.</string>
+    <string name="phoneNumberText">Phone number</string>
+    <string name="addAPhoneButton">Add a phone number</string>
+
     <!-- post add -->
     <string name="posting_allowance">Your posting allowance</string>
     <string name="free_on_ronicy">Learn about posting adds for free on Ronicy</string>

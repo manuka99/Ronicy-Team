@@ -46,6 +46,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.shuhart.stepview.StepView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lk.payhere.androidsdk.PHConfigs;
 import lk.payhere.androidsdk.PHConstants;
@@ -213,9 +214,9 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
                     add("Payment");
                 }})
                 .animationDuration(getResources().getInteger(android.R.integer.config_shortAnimTime))
-                .stepLineWidth(20)
-                .textSize(44)
-                .stepNumberTextSize(30)
+                .stepLineWidth(14)
+                .textSize(30)
+                .stepNumberTextSize(34)
                 .typeface(ResourcesCompat.getFont(context, R.font.pt_serif))
                 // other state methods are equal to the corresponding xml attributes
                 .commit();
@@ -420,9 +421,16 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     @Override
     public void onCompleteSearchNumberInUser(QuerySnapshot queryDocumentSnapshots) {
         if (queryDocumentSnapshots != null && queryDocumentSnapshots.getDocuments().isEmpty() == false) {
+            List<VerifiedNumber> numbers = queryDocumentSnapshots.toObjects(VerifiedNumber.class);
+            Log.i(TAG, numbers.get(0).getNumber());
             Log.i(TAG, queryDocumentSnapshots.getDocuments().toString());
             startPaymentSelectFragment();
         } else
             startVerifyNumberFragment();
+    }
+
+    @Override
+    public void onCompleteRecieveAllNumbersInUser(QuerySnapshot querySnapshotTask) {
+
     }
 }

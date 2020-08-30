@@ -45,99 +45,111 @@ public class AdvertisementManager {
     }
 
     public void insertAdvertisement(Advertisement advertisement) {
+        try {
+            DocumentReference refStore;
 
-        DocumentReference refStore;
+            if (advertisement.getId() == null) {
+                String myId = documentReference.getId();
+                advertisement.setId(myId);
+                refStore = documentReference;
+            } else
+                refStore = firebaseFirestore.collection(childName).document(advertisement.getId());
 
-        if (advertisement.getId() == null) {
-            String myId = documentReference.getId();
-            advertisement.setId(myId);
-            refStore = documentReference;
-        } else
-            refStore = firebaseFirestore.collection(childName).document(advertisement.getId());
-
-        refStore.set(advertisement)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        advertisementCallback.onSuccessInsertAd();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        advertisementCallback.onFailureInsertAd();
-                    }
-                });
+            refStore.set(advertisement)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            advertisementCallback.onSuccessInsertAd();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            advertisementCallback.onFailureInsertAd();
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void uploadImage(final Advertisement advertisement, byte[] data) {
+        try {
+            if (storageTask != null && storageTask.isInProgress())
+                advertisementCallback.onTaskFull(true);
 
-        if (storageTask != null && storageTask.isInProgress())
-            advertisementCallback.onTaskFull(true);
+            else {
+                advertisementCallback.onTaskFull(false);
 
-        else {
-            advertisementCallback.onTaskFull(false);
+                String imageID = documentReference.getId();
+                final StorageReference ref = storageReference.child(imageID);
+                storageTask = ref.putBytes(data);
 
-            String imageID = documentReference.getId();
-            final StorageReference ref = storageReference.child(imageID);
-            storageTask = ref.putBytes(data);
-
-            Task<Uri> urlTask = storageTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
+                Task<Uri> urlTask = storageTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
+                        // Continue with the task to get the download URL
+                        return ref.getDownloadUrl();
                     }
-                    // Continue with the task to get the download URL
-                    return ref.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    advertisementCallback.onUploadImage(task);
-                }
-            });
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        advertisementCallback.onUploadImage(task);
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public void deleteAdd(String id) {
+        try {
+            firebaseFirestore.collection(childName).document(id)
+                    .delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            advertisementCallback.onSuccessDeleteAd();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            advertisementCallback.onFailureDeleteAd();
+                        }
+                    });
 
-        firebaseFirestore.collection(childName).document(id)
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        advertisementCallback.onSuccessDeleteAd();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        advertisementCallback.onFailureDeleteAd();
-                    }
-                });
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void hideAdd(String id, boolean visibility) {
+        try {
+            // Update one field
+            Map<String, Object> data = new HashMap<>();
+            data.put("availability", visibility);
+            firebaseFirestore.collection(childName).document(id)
+                    .set(data, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    advertisementCallback.onSuccessUpdatetAd();
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            advertisementCallback.onFailureUpdateAd();
+                        }
+                    });
 
-        // Update one field
-        Map<String, Object> data = new HashMap<>();
-        data.put("availability", visibility);
-        firebaseFirestore.collection(childName).document(id)
-                .set(data, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                advertisementCallback.onSuccessUpdatetAd();
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        advertisementCallback.onFailureUpdateAd();
-                    }
-                });
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Query viewAdds() {
@@ -149,12 +161,16 @@ public class AdvertisementManager {
     }
 
     public void getAddbyID(String id) {
-        firebaseFirestore.collection(childName).document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                advertisementCallback.getAdbyID(task);
-            }
-        });
+        try {
+            firebaseFirestore.collection(childName).document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    advertisementCallback.getAdbyID(task);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void deletePreviousImage(String url) {
@@ -174,13 +190,18 @@ public class AdvertisementManager {
 
     }
 
-    public void getCount(){
-        firebaseFirestore.collection(childName).whereEqualTo("availability", true).whereEqualTo("approved", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                advertisementCallback.onAdCount(task);
-            }
-        });
+    public void getCount() {
+        try {
+            firebaseFirestore.collection(childName).whereEqualTo("availability", true).whereEqualTo("approved", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(advertisementCallback != null)
+                    advertisementCallback.onAdCount(task);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void destroy() {

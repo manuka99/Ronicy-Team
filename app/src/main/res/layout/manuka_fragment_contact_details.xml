@@ -78,6 +78,7 @@
                 </androidx.recyclerview.widget.RecyclerView>
 
                 <LinearLayout
+                    android:id="@+id/addAnewNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -98,6 +99,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/hideAllNumbers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -105,6 +107,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/numbersHideBox"
                         android:layout_width="30dp"
                         android:layout_height="22dp"
                         android:background="@drawable/ic_checkbox_normal" />
