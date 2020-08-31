@@ -4,54 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorHome"
     android:layout_marginBottom="10dp"
+    android:background="@color/colorHome"
     android:orientation="vertical"
     tools:context=".ui.newPost.AdvertisementDetails">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textColor="#CC000000"
         android:gravity="center"
-        android:text="@string/post_add_1_image"/>
+        android:text="@string/post_add_1_image"
+        android:textColor="#CC000000"
+        android:textSize="20sp" />
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <ImageView
+            android:id="@+id/imageCamera"
+            android:layout_width="80dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_camera"
+            android:contentDescription="@string/image" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/imageRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_add_photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
-            android:background="@color/colorWhite"
-            android:padding="24dp"
-            android:orientation="vertical">
+            android:layout_marginTop="24dp"
+            android:background="@color/colorGreen"
+            android:text="@string/post_add_image_btn"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp" />
 
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:background="@drawable/ic_camera"
-                android:contentDescription="@string/image" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/post_add_image_btn"
-                android:background="@color/colorGreen"
-                android:textColor="@color/colorWhite"
-                android:textSize="16sp"
-                android:textAllCaps="false"/>
-
-        </LinearLayout>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textColor="#CC000000"
         android:gravity="center"
-        android:text="@string/post_details"/>
+        android:text="@string/post_details"
+        android:textColor="#CC000000"
+        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,92 +69,90 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginBottom="6dp"
-            android:gravity="center"
-            android:labelFor="@+id/newAdTitle"
-            android:text="@string/post_title"
-            android:textColor="#a6a6a6"
-            android:textSize="14sp"></TextView>
-
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/newAdTitle"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="40dp"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName"
-            android:textSize="18sp"></EditText>
-
-        <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginBottom="6dp"
-            android:gravity="center"
-            android:labelFor="@+id/newAdSubject"
-            android:text="@string/post_condition"
-            android:textColor="#a6a6a6"
-            android:textSize="14sp"></TextView>
+            app:counterEnabled="true"
+            app:counterMaxLength="25"
+            app:errorEnabled="true"
+            app:hintTextColor="@color/colorGreen">
 
-        <EditText
-            android:id="@+id/newAdSubject"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="40dp"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName"
-            android:textSize="18sp"></EditText>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/post_title"
+                android:inputType="textPersonName"
+                android:maxLength="25"
+                android:textColorHint="@color/colorGreen"
+                android:textSize="18sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/newAdCondition"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginBottom="6dp"
-            android:gravity="center"
-            android:labelFor="@+id/newAdDescription"
-            android:text="@string/post_description"
-            android:textColor="#a6a6a6"
-            android:textSize="14sp"></TextView>
+            app:counterEnabled="true"
+            app:counterMaxLength="40"
+            app:errorEnabled="true"
+            app:hintTextColor="@color/colorGreen">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/post_condition"
+                android:inputType="textPersonName"
+                android:maxLength="40"
+                android:textColorHint="@color/colorGreen"
+                android:textSize="18sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/newAdDescription"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
-            android:gravity="top|start"
-            android:importantForAutofill="no"
-            android:inputType="textMultiLine"
-            android:lines="4"
-            android:maxLines="10"
-            android:minLines="4"
-            android:scrollbars="vertical"
-            android:textSize="18sp"></EditText>
+            app:counterEnabled="true"
+            app:counterMaxLength="200"
+            app:errorEnabled="true"
+            app:hintTextColor="@color/colorGreen">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginBottom="6dp"
-            android:gravity="center"
-            android:labelFor="@+id/newAdPrice"
-            android:text="@string/post_price"
-            android:textColor="#a6a6a6"
-            android:textSize="14sp"></TextView>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/adDescription"
+                android:inputType="textMultiLine"
+                android:maxLength="200"
+                android:textColorHint="@color/colorGreen"
+                android:textSize="18sp" />
 
-        <EditText
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/newAdPrice"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="40dp"
-            android:importantForAutofill="no"
-            android:inputType="phone"
-            android:textSize="18sp"></EditText>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:counterEnabled="true"
+            app:counterMaxLength="15"
+            app:errorEnabled="true"
+            app:hintTextColor="@color/colorGreen">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/post_price"
+                android:inputType="number"
+                android:maxLength="15"
+                android:textColorHint="@color/colorGreen"
+                android:textSize="18sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 
-
+    <FrameLayout
+        android:id="@+id/snackbar_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

@@ -1,5 +1,7 @@
 package com.adeasy.advertise.model;
 
+import android.net.Uri;
+
 import com.google.firebase.firestore.Exclude;
 
 import org.ocpsoft.prettytime.PrettyTime;
@@ -7,6 +9,7 @@ import org.ocpsoft.prettytime.PrettyTime;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class Advertisement {
 
@@ -14,7 +17,6 @@ public class Advertisement {
     private String title;
     private String condition;
     private String description;
-    private String imageUrl;
     private double price;
     private Date placedDate;
     private boolean availability;
@@ -23,6 +25,10 @@ public class Advertisement {
     private String categoryID;
     private String userID;
     private String preetyTime;
+    private String imageUrl;
+    private List<String> imageUrls;
+    private List<Uri> imageUris;
+    List<VerifiedNumber> numbers;
 
     public Advertisement() {
     }
@@ -41,14 +47,6 @@ public class Advertisement {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public void setAvailability(boolean availability) {
@@ -123,6 +121,32 @@ public class Advertisement {
         this.buynow = buynow;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
+    }
+
+    @Exclude
+    public List<Uri> getImageUris() {
+        return imageUris;
+    }
+
+    @Exclude
+    public void setImageUris(List<Uri> imageUris) {
+        this.imageUris = imageUris;
+    }
+
     @Exclude
     public String getPreetyTime() {
         String pTime = "";
@@ -134,5 +158,13 @@ public class Advertisement {
     @Exclude
     public void setPreetyTime(String preetyTime) {
         this.preetyTime = preetyTime;
+    }
+
+    public List<VerifiedNumber> getNumbers() {
+        return numbers;
+    }
+
+    public void setNumbers(List<VerifiedNumber> numbers) {
+        this.numbers = numbers;
     }
 }

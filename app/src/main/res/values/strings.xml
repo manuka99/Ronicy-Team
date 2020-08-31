@@ -28,11 +28,10 @@
     <string name="enterCode_didnt_recieve">Didn\'t recieve the SMS after 10 mins?</string>
     <string name="enterCode_check_your_phone_again">Check your phone and try again ></string>
 
-
     <!-- add new number-->
     <string name="enterNumber">Please enter your phone number</string>
     <string name="haveNotVerified">If you have not verified it before, we will send you an SMS with a PIN code to make sure that we can get in touch with you.</string>
-    <string name="phoneNumberText">Phone number</string>
+    <string name="phoneNumberText">Phone number (Ex 77 123 45 67)</string>
     <string name="addAPhoneButton">Add a phone number</string>
 
     <!-- post add -->
@@ -44,14 +43,19 @@
     <!-- advertisement new/ edit -->
     <string name="post_details">Ad Details: </string>
     <string name="post_title">Ad Title</string>
-    <string name="post_condition">Ad Condition</string>
+    <string name="post_condition">Item Condition</string>
     <string name="post_description">Ad Description</string>
-    <string name="post_price">Item Price</string>
+    <string name="post_price">Item Price (Rs)</string>
     <string name="post_update_btn">Update ad</string>
     <string name="post_new_btn">Post ad</string>
     <string name="post_choose_image_btn">Change Image</string>
     <string name="post_add_image_btn">Add a Image</string>
-    <string name="post_add_1_image">Attach a photo to your ad:</string>
+    <string name="post_add_1_image">Add at least one photo (max 5):</string>
+    <string name="more_than5images">You can not have more than 5 images</string>
+    <string name="tile_error">Ad title must have at least 10 characters</string>
+    <string name="condition_error">Ad condition must have at least 3 characters</string>
+    <string name="description_error">Ad description must have at least 20 characters</string>
+    <string name="price_error">Ad price must be at least greater than Rs 10.00</string>
 
     <!-- acontact details -->
     <string name="contact_details">Contact Details: </string>
@@ -61,6 +65,7 @@
     <string name="contact_detailsTermsAndConditions">By posting this ad you agree to our terms and conditions</string>
     <string name="contact_detailsAdd">Add another phone number</string>
     <string name="contact_detailsHide">Hide my phone number(s)</string>
+    <string name="contact_details_error"></string>
 
     <!-- advertisement -->
     <string name="newImage">Add new Image</string>
@@ -123,7 +128,6 @@
     <string name="orderHelp">Need help or want to cancel your order? </string>
     <string name="orderCallus">Call Ronici.lk </string>
 
-
     <!-- donations -->
     <string name="donate_header">Help us make a bigger impact</string>
     <string name="donate_sub_header">Be a part of our family</string>
@@ -146,7 +150,6 @@
     <string name="account_donate">Donate us</string>
     <string name="account_logout">Log out</string>
 
-
     <!-- Authentication -->
     <string name="register_btn">Register</string>
     <string name="login_btn">Login</string>
@@ -168,7 +171,6 @@
     <string name="btn"> Edit </string>
 
     <!-- Ravindu -->
-
 
     <string name="ReportBugString">App has bugs?</string>
     <string name="BugReportButtonText">Report Bugs</string>
@@ -204,7 +206,6 @@
     <string name="AppGivingTroubleString">App giving trouble?</string>
     <string name="getInTouchString">Get In Touch</string>
     <string name="bugs">Bugs</string>
-
 
     <!-- Ashan -->
 </resources>

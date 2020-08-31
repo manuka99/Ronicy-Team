@@ -11,7 +11,7 @@ public class ImageQualityReducer {
     public static byte[] reduceQuality(Drawable drawable){
         Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 60, baos);
         byte[] data = baos.toByteArray();
         return data;
     }

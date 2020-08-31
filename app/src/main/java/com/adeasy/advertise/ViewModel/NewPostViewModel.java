@@ -4,14 +4,21 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.model.Order_Customer;
 import com.adeasy.advertise.model.Order_Item;
+import com.adeasy.advertise.model.VerifiedNumber;
+
+import java.util.List;
 
 public class NewPostViewModel  extends ViewModel {
     private MutableLiveData<String> locationSelected = new MutableLiveData<>();
     private MutableLiveData<Category> categorySelected = new MutableLiveData<>();
     private MutableLiveData<Boolean> showAllCategories = new MutableLiveData<>();
+    private MutableLiveData<Advertisement> advertisement = new MutableLiveData<>();
+    private MutableLiveData<List<VerifiedNumber>> contactDetailsValidation = new MutableLiveData<>();
+    private MutableLiveData<Boolean> adDetailsValidation = new MutableLiveData<>();
 
     public LiveData<String> getLocationSelected() {
         return locationSelected;
@@ -35,5 +42,29 @@ public class NewPostViewModel  extends ViewModel {
 
     public void setShowAllCategories(Boolean showAllCategories) {
         this.showAllCategories.setValue(showAllCategories);
+    }
+
+    public LiveData<Advertisement> getAdvertisement() {
+        return advertisement;
+    }
+
+    public void setAdvertisement(Advertisement advertisement) {
+        this.advertisement.setValue(advertisement);
+    }
+
+    public LiveData<List<VerifiedNumber>> getContactDetailsValidation() {
+        return contactDetailsValidation;
+    }
+
+    public void setContactDetailsValidation(List<VerifiedNumber> numbers) {
+        this.contactDetailsValidation.setValue(numbers);
+    }
+
+    public LiveData<Boolean> getAdDetailsValidation() {
+        return adDetailsValidation;
+    }
+
+    public void setAdDetailsValidation(Boolean adDetailsValidation) {
+        this.adDetailsValidation.setValue(adDetailsValidation);
     }
 }

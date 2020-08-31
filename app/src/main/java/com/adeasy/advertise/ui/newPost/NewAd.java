@@ -18,9 +18,13 @@ import android.widget.FrameLayout;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.NewPostViewModel;
+import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.Category;
+import com.adeasy.advertise.model.VerifiedNumber;
 import com.adeasy.advertise.ui.Order.OrderPhoneVerify;
 import com.adeasy.advertise.ui.Order.Step2;
+
+import java.util.List;
 
 public class NewAd extends AppCompatActivity {
 
@@ -31,11 +35,14 @@ public class NewAd extends AppCompatActivity {
     AdvertisementDetails advertisementDetails;
     CategorySelected categorySelected;
     ContactDetails contactDetails;
+    List<VerifiedNumber> verifiedNumbers;
 
     NewPostViewModel newPostViewModel;
 
     Category category;
     String location;
+
+    Advertisement advertisement;
 
     private static final String TAG = "NewAd";
 
@@ -95,6 +102,13 @@ public class NewAd extends AppCompatActivity {
                     finish();
                     startActivity(getIntent());
                 }
+            }
+        });
+
+        newPostViewModel.getContactDetailsValidation().observe(this, new Observer<List<VerifiedNumber>>() {
+            @Override
+            public void onChanged(List<VerifiedNumber> numbers) {
+                verifiedNumbers = numbers;
             }
         });
 
@@ -182,6 +196,21 @@ public class NewAd extends AppCompatActivity {
                     }
                 })
                 .show();
+    }
+
+    private void onContactDetailsValidated(){
+        newPostViewModel.setAdDetailsValidation(true);
+        newPostViewModel.getAdvertisement().observe(this, new Observer<Advertisement>() {
+            @Override
+            public void onChanged(Advertisement ad) {
+                advertisement = ad;
+                postAd();
+            }
+        });
+    }
+
+    private void postAd(){
+
     }
 
 }

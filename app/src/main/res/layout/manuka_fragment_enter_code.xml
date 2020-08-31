@@ -72,6 +72,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:hint="@string/enterCode_editText_hint"
+            android:maxLength="6"
             android:textColorHint="@color/colorGreen"
             android:inputType="number"
             android:layout_height="wrap_content"/>

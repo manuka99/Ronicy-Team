@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         app:counterEnabled="true"
         app:counterMaxLength="9"
+        app:hintTextColor="@color/colorGreen"
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -39,8 +40,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/phoneNumberText"
             android:textColorHint="@color/colorGreen"
-            android:inputType="number"
-            android:maxLength="9" />
+            android:inputType="number" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

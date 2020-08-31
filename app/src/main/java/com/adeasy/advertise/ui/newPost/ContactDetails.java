@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,10 +14,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.ViewModel.NewPostViewModel;
 import com.adeasy.advertise.adapter.RecycleAdapterForVerifiedNumbers;
 import com.adeasy.advertise.callback.VerifiedNumbersCallback;
 import com.adeasy.advertise.helper.ViewHolderPhoneNumbers;
@@ -26,10 +31,12 @@ import com.adeasy.advertise.model.VerifiedNumber;
 import com.adeasy.advertise.ui.addphone.AddNewNumber;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,6 +61,10 @@ public class ContactDetails extends Fragment implements VerifiedNumbersCallback,
     VerifiedNumbersManager verifiedNumbersManager;
     FirebaseAuth firebaseAuth;
     Boolean isNumbersHidden = false;
+    Button postNewAd;
+    NewPostViewModel newPostViewModel;
+    List<VerifiedNumber> verifiedNumbers;
+    FrameLayout snackbarView;
     private static final String TAG = "ContactDetails";
 
     public ContactDetails() {
@@ -105,10 +116,18 @@ public class ContactDetails extends Fragment implements VerifiedNumbersCallback,
         addNewNumber = view.findViewById(R.id.addAnewNumber);
         hideAllNumbers = view.findViewById(R.id.hideAllNumbers);
         hideNumbersBox = view.findViewById(R.id.numbersHideBox);
+        postNewAd = view.findViewById(R.id.postNewAd);
+        snackbarView = view.findViewById(R.id.snackbar_text);
 
         //set listners
         addNewNumber.setOnClickListener(this);
         hideAllNumbers.setOnClickListener(this);
+        postNewAd.setOnClickListener(this);
+
+        verifiedNumbers = new ArrayList<>();
+
+        //view model
+        newPostViewModel = ViewModelProviders.of(this).get(NewPostViewModel.class);
 
         return view;
 
@@ -127,43 +146,6 @@ public class ContactDetails extends Fragment implements VerifiedNumbersCallback,
         verifiedNumbersManager.destroy();
     }
 
-    private void loadVerifiedPhoneNumbers() {
-
-        options = new FirestoreRecyclerOptions.Builder<VerifiedNumber>()
-                .setQuery(verifiedNumbersManager.viewVerifiedNumbersByUser(firebaseAuth.getCurrentUser()), VerifiedNumber.class).build();
-
-        final FirestoreRecyclerAdapter<VerifiedNumber, ViewHolderPhoneNumbers> firestoreRecyclerAdapter =
-                new FirestoreRecyclerAdapter<VerifiedNumber, ViewHolderPhoneNumbers>(
-                        options
-                ) {
-                    @Override
-                    protected void onBindViewHolder(@NonNull final ViewHolderPhoneNumbers holder, final int position, @NonNull VerifiedNumber verifiedNumber) {
-
-                        holder.numberView.setText(verifiedNumber.getNumber());
-
-                        holder.removeView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                //holder.layoytHold.setVisibility(View.GONE);
-
-                            }
-                        });
-                    }
-
-                    @NonNull
-                    @Override
-                    public ViewHolderPhoneNumbers onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manuka_phone_numbers, parent, false);
-                        return new ViewHolderPhoneNumbers(view);
-                    }
-
-                };
-
-        firestoreRecyclerAdapter.startListening();
-        recyclerView.setAdapter(firestoreRecyclerAdapter);
-
-    }
-
     @Override
     public void onCompleteSearchNumberInUser(QuerySnapshot querySnapshotTask) {
 
@@ -172,8 +154,8 @@ public class ContactDetails extends Fragment implements VerifiedNumbersCallback,
     @Override
     public void onCompleteRecieveAllNumbersInUser(QuerySnapshot queryDocumentSnapshots) {
         if (queryDocumentSnapshots != null && queryDocumentSnapshots.getDocuments().isEmpty() == false) {
-            List<VerifiedNumber> numbers = queryDocumentSnapshots.toObjects(VerifiedNumber.class);
-            RecycleAdapterForVerifiedNumbers recycleAdapterForVerifiedNumbers = new RecycleAdapterForVerifiedNumbers(numbers);
+            verifiedNumbers = queryDocumentSnapshots.toObjects(VerifiedNumber.class);
+            RecycleAdapterForVerifiedNumbers recycleAdapterForVerifiedNumbers = new RecycleAdapterForVerifiedNumbers(verifiedNumbers);
             recyclerView.setAdapter(recycleAdapterForVerifiedNumbers);
         }
     }
@@ -193,4 +175,27 @@ public class ContactDetails extends Fragment implements VerifiedNumbersCallback,
             }
         }
     }
+
+    private void validateContactDetails(){
+        if(isNumbersHidden)
+            newPostViewModel.setContactDetailsValidation(null);
+        else if(verifiedNumbers.size() > 0)
+            newPostViewModel.setContactDetailsValidation(verifiedNumbers);
+        else
+            showErrorSnackBar(R.string.more_than5images);
+    }
+
+    private void showErrorSnackBar(int error){
+        Snackbar snackbar = Snackbar
+                .make(snackbarView, error, 4000)
+                .setAction("x", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                    }
+                }).setActionTextColor(getResources().getColor(R.color.colorWhite));
+        snackbar.setTextColor(getResources().getColor(R.color.colorWhite));
+        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorError2));
+        snackbar.show();
+    }
+
 }

@@ -166,4 +166,9 @@
         android:text="@string/contact_detailsTermsAndConditions"
         android:textSize="12sp" />
 
+    <FrameLayout
+        android:id="@+id/snackbar_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>
