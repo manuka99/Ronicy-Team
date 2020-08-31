@@ -8,6 +8,7 @@ import org.ocpsoft.prettytime.PrettyTime;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,8 +30,16 @@ public class Advertisement {
     private List<String> imageUrls;
     private List<Uri> imageUris;
     List<VerifiedNumber> numbers;
+    private String location;
 
     public Advertisement() {
+        this.placedDate = new Date();
+        this.availability = true;
+        this.approved = true;
+        this.buynow = false;
+        this.imageUris = new ArrayList<>();
+        this.imageUrls = new ArrayList<>();
+        this.numbers = new ArrayList<>();
     }
 
     public String getId() {
@@ -145,6 +154,14 @@ public class Advertisement {
     @Exclude
     public void setImageUris(List<Uri> imageUris) {
         this.imageUris = imageUris;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     @Exclude

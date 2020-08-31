@@ -127,7 +127,7 @@ public class ContactDetails extends Fragment implements VerifiedNumbersCallback,
         verifiedNumbers = new ArrayList<>();
 
         //view model
-        newPostViewModel = ViewModelProviders.of(this).get(NewPostViewModel.class);
+        newPostViewModel = ViewModelProviders.of(getActivity()).get(NewPostViewModel.class);
 
         return view;
 
@@ -173,7 +173,8 @@ public class ContactDetails extends Fragment implements VerifiedNumbersCallback,
                 isNumbersHidden = true;
                 hideNumbersBox.setBackgroundResource(R.drawable.ic_checkbox_checked);
             }
-        }
+        }else if(view == postNewAd)
+            validateContactDetails();
     }
 
     private void validateContactDetails(){
@@ -182,7 +183,7 @@ public class ContactDetails extends Fragment implements VerifiedNumbersCallback,
         else if(verifiedNumbers.size() > 0)
             newPostViewModel.setContactDetailsValidation(verifiedNumbers);
         else
-            showErrorSnackBar(R.string.more_than5images);
+            showErrorSnackBar(R.string.contact_details_error);
     }
 
     private void showErrorSnackBar(int error){

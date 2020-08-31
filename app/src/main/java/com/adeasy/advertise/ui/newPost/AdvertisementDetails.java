@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +44,7 @@ import static android.app.Activity.RESULT_OK;
  * Use the {@link AdvertisementDetails#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AdvertisementDetails extends Fragment implements View.OnClickListener, RecycleAdapterForImages.RecycleAdapterInterface {
+public class AdvertisementDetails extends Fragment implements View.OnClickListener, RecycleAdapterForImages.RecycleAdapterInterface, TextWatcher {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -120,7 +122,7 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
         imageRecycler = view.findViewById(R.id.imageRecycler);
         imageRecycler.setLayoutManager(layoutManager);
         imagesUriArrayList = new ArrayList<>();
-        newPostViewModel = ViewModelProviders.of(this).get(NewPostViewModel.class);
+        newPostViewModel = ViewModelProviders.of(getActivity()).get(NewPostViewModel.class);
         return view;
     }
 
@@ -128,7 +130,7 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        newPostViewModel.getAdDetailsValidation().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        newPostViewModel.getAdDetailsValidation().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if(aBoolean)
@@ -204,16 +206,16 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
     }
 
     private void validateAdDetails(){
-        if(imagesUriArrayList.size() < 0)
+        if(imagesUriArrayList.size() < 1)
             showErrorSnackBar(R.string.post_add_1_image);
         else if(postTitle.getEditText().getText().length() < 10)
-            showErrorSnackBar(R.string.tile_error);
+            postTitle.setError(getString(R.string.tile_error));
         else if(postCondition.getEditText().getText().length() < 3)
-            showErrorSnackBar(R.string.condition_error);
+            postCondition.setError(getString(R.string.condition_error));
         else if(postDescription.getEditText().getText().length() < 20)
-            showErrorSnackBar(R.string.description_error);
+            postDescription.setError(getString(R.string.description_error));
         else if(postPrice.getEditText().getText().length() < 2)
-            showErrorSnackBar(R.string.price_error);
+            postPrice.setError(getString(R.string.price_error));
         else{
             advertisement = new Advertisement();
             advertisement.setTitle(postTitle.getEditText().getText().toString());
@@ -226,4 +228,21 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
         }
     }
 
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        postTitle.setError(null);
+        postCondition.setError(null);
+        postDescription.setError(null);
+        postPrice.setError(null);
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
+    }
 }

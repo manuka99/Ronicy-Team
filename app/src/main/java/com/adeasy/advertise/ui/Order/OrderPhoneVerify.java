@@ -25,6 +25,7 @@ import com.adeasy.advertise.ViewModel.BuynowViewModel;
 import com.adeasy.advertise.callback.PhoneAuthenticationCallback;
 import com.adeasy.advertise.manager.FirebasePhoneAuthentication;
 import com.adeasy.advertise.manager.VerifiedNumbersManager;
+import com.adeasy.advertise.model.User;
 import com.adeasy.advertise.model.VerifiedNumber;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -55,7 +56,8 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
     private FirebaseAuth mAuth;
     private BuynowViewModel buynowViewModel;
 
-    String phoneNum = "+16505554567";
+
+    Integer phoneNum = 0;
     //String phoneNum = "+940721146092";
     //String phoneNum = "+94714163881";
     //String phoneNum = "+94775259715";
@@ -112,7 +114,12 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.manuka_fragment_order_phone_verify, container, false);
         firebasePhoneAuthentication = new FirebasePhoneAuthentication(this);
-        phoneNum = getArguments().getString("phone");
+
+        try {
+            phoneNum = Integer.valueOf(getArguments().getString("phone"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         verifiedNumbersManager = new VerifiedNumbersManager();
 
@@ -142,7 +149,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        order_phone_number.setText(phoneNum);
+        order_phone_number.setText(phoneNum.toString());
         firebasePhoneAuthentication.sendMobileVerifycode("+94" + phoneNum, getActivity());
     }
 
@@ -232,7 +239,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
             //FirebaseUser user = task.getResult().getUser();
             buynowViewModel.setMobileNumberVerifyStatus(true);
             firebasePhoneAuthentication.unlinkPhoneAuth(task.getResult().getUser());
-            verifiedNumbersManager.insertVerifiedNumber(new VerifiedNumber(phoneNum), task.getResult().getUser());
+            verifiedNumbersManager.insertVerifiedNumber(new User(mAuth.getUid(), phoneNum), task.getResult().getUser());
         } else {
             showErrorSnackbar(String.valueOf(R.string.invalid_mobile_code));
             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {

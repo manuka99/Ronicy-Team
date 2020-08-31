@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.adeasy.advertise.callback.VerifiedNumbersCallback;
 import com.adeasy.advertise.model.Category;
+import com.adeasy.advertise.model.User;
 import com.adeasy.advertise.model.VerifiedNumber;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -12,15 +13,21 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class VerifiedNumbersManager {
 
     private static final String TAG = "VerifiedNumbersManager";
     private static final String childName = "Users";
-    private static final String childDoc = "verified_numbers";
+    private static final String arrayName = "verifiedNumbers";
     private FirebaseFirestore firebaseFirestore;
     private DocumentReference documentReference;
     private VerifiedNumbersCallback verifiedNumbersCallback;
@@ -28,64 +35,74 @@ public class VerifiedNumbersManager {
     public VerifiedNumbersManager(VerifiedNumbersCallback callBacks) {
         this.verifiedNumbersCallback = callBacks;
         this.firebaseFirestore = FirebaseFirestore.getInstance();
-        this.documentReference = firebaseFirestore.collection(childName).document(childDoc);
     }
 
     public VerifiedNumbersManager() {
         this.firebaseFirestore = FirebaseFirestore.getInstance();
-        this.documentReference = firebaseFirestore.collection(childName).document(childDoc);
     }
 
-    public void insertVerifiedNumber(VerifiedNumber verifiedNumber, FirebaseUser firebaseUser) {
-        DocumentReference refStore;
-        refStore = documentReference.collection(firebaseUser.getUid()).document();
-        refStore.set(verifiedNumber)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
+    public void insertVerifiedNumber(final User user, FirebaseUser firebaseUser) {
 
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+        final DocumentReference refStore;
+        refStore = firebaseFirestore.collection(childName).document(firebaseUser.getUid());
+        refStore.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    for (Integer num : user.getVerifiedNumbers())
+                        refStore.update(arrayName, FieldValue.arrayUnion(num));
+                } else {
+                    refStore.set(user, SetOptions.merge())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
 
-                    }
-                });
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                }
+                            });
+                }
+            }
+        });
+
     }
 
-    public void validateNumber(String number, FirebaseUser firebaseUser){
-        try{
-            documentReference.collection(firebaseUser.getUid()).whereEqualTo("number", number).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+    public void validateNumber(Integer number, FirebaseUser firebaseUser) {
+        try {
+            firebaseFirestore.collection(childName).whereArrayContainsAny(arrayName, Arrays.asList(number)).whereEqualTo("uid", firebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                     verifiedNumbersCallback.onCompleteSearchNumberInUser(queryDocumentSnapshots);
                 }
             });
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             verifiedNumbersCallback.onCompleteSearchNumberInUser(null);
         }
     }
 
     public Query viewVerifiedNumbersByUser(FirebaseUser user) {
         Query query = null;
-        try{
+        try {
             query = documentReference.collection(user.getUid());
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             query = null;
         }
         return query;
     }
 
-    public void getVerifiedNumbersOfUser(FirebaseUser firebaseUser){
-        try{
+    public void getVerifiedNumbersOfUser(FirebaseUser firebaseUser) {
+        try {
             documentReference.collection(firebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                     verifiedNumbersCallback.onCompleteRecieveAllNumbersInUser(queryDocumentSnapshots);
                 }
             });
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             verifiedNumbersCallback.onCompleteSearchNumberInUser(null);
         }
     }

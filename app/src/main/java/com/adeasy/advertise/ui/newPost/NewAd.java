@@ -1,5 +1,6 @@
 package com.adeasy.advertise.ui.newPost;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,24 +10,33 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.NewPostViewModel;
+import com.adeasy.advertise.callback.AdvertisementCallback;
+import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.model.VerifiedNumber;
 import com.adeasy.advertise.ui.Order.OrderPhoneVerify;
 import com.adeasy.advertise.ui.Order.Step2;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
-public class NewAd extends AppCompatActivity {
+public class NewAd extends AppCompatActivity implements AdvertisementCallback {
 
     FrameLayout frameLayout, frameLayout2, frameLayout3, frameLayout4;
     Toolbar toolbar;
@@ -36,7 +46,9 @@ public class NewAd extends AppCompatActivity {
     CategorySelected categorySelected;
     ContactDetails contactDetails;
     List<VerifiedNumber> verifiedNumbers;
-
+    AdvertisementManager advertisementManager;
+    ProgressDialog progressDialog;
+    FirebaseAuth firebaseAuth;
     NewPostViewModel newPostViewModel;
 
     Category category;
@@ -61,12 +73,18 @@ public class NewAd extends AppCompatActivity {
         categorySelected = new CategorySelected();
         contactDetails = new ContactDetails();
 
+        progressDialog = new ProgressDialog(this);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
         category = new Category();
 
 
         toolbar = findViewById(R.id.toolbar);
 
         newPostViewModel = ViewModelProviders.of(this).get(NewPostViewModel.class);
+
+        advertisementManager = new AdvertisementManager(this);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("New Post");
@@ -109,6 +127,7 @@ public class NewAd extends AppCompatActivity {
             @Override
             public void onChanged(List<VerifiedNumber> numbers) {
                 verifiedNumbers = numbers;
+                onContactDetailsValidated();
             }
         });
 
@@ -210,7 +229,75 @@ public class NewAd extends AppCompatActivity {
     }
 
     private void postAd(){
+        advertisement.setUserID(firebaseAuth.getCurrentUser().getUid());
+        advertisement.setLocation(location);
+        advertisement.setCategoryID(category.getId());
+        advertisementManager.uploadImageMultiple(advertisement, this);
+    }
+
+    @Override
+    public void onUploadImage(@NonNull Task<Uri> task) {
 
     }
 
+    @Override
+    public void onTaskFull(boolean result) {
+
+        if(result)
+            Toast.makeText(this, "Please Wait..", Toast.LENGTH_SHORT).show();
+
+        else{
+            progressDialog.setTitle("Publishing your advertisement...");
+            progressDialog.setMessage("Your advertisement will be live after we approve it.");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
+    }
+
+    @Override
+    public void onSuccessInsertAd() {
+        progressDialog.dismiss();
+        Toast.makeText(this, "Success: Your advertisement was submited", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onFailureInsertAd() {
+        progressDialog.dismiss();
+        Toast.makeText(this, "error: Your advertisement was not submited", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onSuccessDeleteAd() {
+
+    }
+
+    @Override
+    public void onFailureDeleteAd() {
+
+    }
+
+    @Override
+    public void onSuccessUpdatetAd() {
+
+    }
+
+    @Override
+    public void onFailureUpdateAd() {
+
+    }
+
+    @Override
+    public void onAdCount(Task<QuerySnapshot> task) {
+
+    }
+    @Override
+    public void getAdbyID(@NonNull Task<DocumentSnapshot> task) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        advertisementManager.destroy();
+    }
 }

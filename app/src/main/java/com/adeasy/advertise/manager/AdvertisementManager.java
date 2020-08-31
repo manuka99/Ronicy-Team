@@ -1,11 +1,13 @@
 package com.adeasy.advertise.manager;
 
+import android.content.Context;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
 
 import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.model.Advertisement;
+import com.adeasy.advertise.util.ImageQualityReducer;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -106,6 +108,59 @@ public class AdvertisementManager {
         }
     }
 
+    public void uploadImageMultiple(final Advertisement advertisement, Context context) {
+        try {
+            if (storageTask != null && storageTask.isInProgress())
+                advertisementCallback.onTaskFull(true);
+
+            else {
+                advertisementCallback.onTaskFull(false);
+
+                for (int i = 0; i <= advertisement.getImageUris().size(); ++i) {
+                    Uri imageUri = advertisement.getImageUris().get(i);
+                    byte[] data = ImageQualityReducer.reduceQualityFromBitmap(imageUri, context);
+                    String imageID = documentReference.getId();
+                    final StorageReference ref = storageReference.child(imageID);
+                    storageTask = ref.putBytes(data);
+
+                    final int counter = i;
+
+                    Task<Uri> urlTask = storageTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            if (!task.isSuccessful()) {
+                                throw task.getException();
+                            }
+                            // Continue with the task to get the download URL
+                            return ref.getDownloadUrl();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if (task.isSuccessful()) {
+                                Uri downloadUri = task.getResult();
+                                advertisement.getImageUrls().add(downloadUri.toString());
+                            } else {
+                                // Handle failures
+                                // ...
+                            }
+
+                            try{
+                               advertisement.getImageUris().get(counter + 1);
+                            }catch (Exception e){
+                                insertAdvertisement(advertisement);
+                            }
+
+                        }
+                    });
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void deleteAdd(String id) {
         try {
             firebaseFirestore.collection(childName).document(id)
@@ -195,8 +250,8 @@ public class AdvertisementManager {
             firebaseFirestore.collection(childName).whereEqualTo("availability", true).whereEqualTo("approved", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if(advertisementCallback != null)
-                    advertisementCallback.onAdCount(task);
+                    if (advertisementCallback != null)
+                        advertisementCallback.onAdCount(task);
                 }
             });
         } catch (Exception e) {

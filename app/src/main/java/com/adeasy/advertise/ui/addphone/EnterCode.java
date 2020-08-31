@@ -24,6 +24,7 @@ import com.adeasy.advertise.callback.PhoneAuthenticationCallback;
 import com.adeasy.advertise.callback.VerifiedNumbersCallback;
 import com.adeasy.advertise.manager.FirebasePhoneAuthentication;
 import com.adeasy.advertise.manager.VerifiedNumbersManager;
+import com.adeasy.advertise.model.User;
 import com.adeasy.advertise.model.VerifiedNumber;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -55,7 +56,8 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
     private String mParam1;
     private String mParam2;
 
-    String phoneNumber, verificationID;
+    Integer phoneNumber;
+    String verificationID;
 
     TextView phoneNumberView, phoneVerifyTextView, checkAgain;
     TextInputLayout codeEntered;
@@ -104,7 +106,11 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.manuka_fragment_enter_code, container, false);
 
-        phoneNumber = getArguments().getString("phone");
+        try {
+            phoneNumber = Integer.valueOf(getArguments().getString("phone"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         phoneNumberView = view.findViewById(R.id.phoneNumber);
         phoneVerifyTextView = view.findViewById(R.id.PhoneVerifyTextView);
@@ -278,7 +284,7 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
         if(task.isSuccessful()){
             firebasePhoneAuthentication.unlinkPhoneAuth(task.getResult().getUser());
             addNewPhoneViewModel.setVerifyStatus(true);
-            verifiedNumbersManager.insertVerifiedNumber(new VerifiedNumber(phoneNumber), firebaseAuth.getCurrentUser());
+            verifiedNumbersManager.insertVerifiedNumber(new User(firebaseAuth.getUid(), phoneNumber), firebaseAuth.getCurrentUser());
         }else{
             showErrorSnackbar(R.string.invalid_mobile_code);
             codeEntered.setError(getString(R.string.invalid_mobile_code));

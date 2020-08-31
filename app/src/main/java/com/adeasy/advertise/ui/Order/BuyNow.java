@@ -27,6 +27,7 @@ import com.adeasy.advertise.callback.OrderCallback;
 import com.adeasy.advertise.callback.VerifiedNumbersCallback;
 import com.adeasy.advertise.config.Configurations;
 import com.adeasy.advertise.manager.VerifiedNumbersManager;
+import com.adeasy.advertise.model.User;
 import com.adeasy.advertise.model.VerifiedNumber;
 import com.adeasy.advertise.ui.Order.OrderPhoneVerify;
 import com.adeasy.advertise.ui.Order.Step1;
@@ -121,7 +122,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
                 order.setCustomer(order_customer);
 
                 if (mAuth.getCurrentUser() != null)
-                    verifiedNumbersManager.validateNumber(String.valueOf(order_customer.getPhone()), mAuth.getCurrentUser());
+                    verifiedNumbersManager.validateNumber(Integer.parseInt(String.valueOf(order_customer.getPhone())), mAuth.getCurrentUser());
 
                 else
                     startVerifyNumberFragment();
@@ -421,8 +422,8 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     @Override
     public void onCompleteSearchNumberInUser(QuerySnapshot queryDocumentSnapshots) {
         if (queryDocumentSnapshots != null && queryDocumentSnapshots.getDocuments().isEmpty() == false) {
-            List<VerifiedNumber> numbers = queryDocumentSnapshots.toObjects(VerifiedNumber.class);
-            Log.i(TAG, numbers.get(0).getNumber());
+            List<User> numbers = queryDocumentSnapshots.toObjects(User.class);
+            Log.i(TAG, numbers.get(0).getVerifiedNumbers().toString());
             Log.i(TAG, queryDocumentSnapshots.getDocuments().toString());
             startPaymentSelectFragment();
         } else
