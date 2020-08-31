@@ -26,6 +26,8 @@ public class AddNewNumber extends AppCompatActivity {
     EnterNumber enterNumber;
     EnterCode enterCode;
 
+    String phoneNumberEntered;
+
     AddNewPhoneViewModel addNewPhoneViewModel;
 
     @Override
@@ -57,7 +59,8 @@ public class AddNewNumber extends AppCompatActivity {
 
         addNewPhoneViewModel.getPhoneNumber().observe(this, new Observer<String>() {
             @Override
-            public void onChanged(String s) {
+            public void onChanged(String phoneNumber) {
+                phoneNumberEntered = phoneNumber;
                 startEnterCode();
             }
         });
@@ -91,7 +94,7 @@ public class AddNewNumber extends AppCompatActivity {
 
 
     private void startEnterNewNumber() {
-        getSupportActionBar().setTitle("Enter Code");
+        getSupportActionBar().setTitle("Enter phone");
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(frameLayout.getId(), enterNumber);
@@ -99,7 +102,10 @@ public class AddNewNumber extends AppCompatActivity {
     }
 
     private void startEnterCode() {
-        getSupportActionBar().setTitle("Enter phone");
+        Bundle bundle = new Bundle();
+        bundle.putString("phone", phoneNumberEntered);
+        enterCode.setArguments(bundle);
+        getSupportActionBar().setTitle("Enter Code");
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.addToBackStack(EnterNumber.class.getName());

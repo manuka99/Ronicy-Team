@@ -48,7 +48,8 @@ public class FirebasePhoneAuthentication extends PhoneAuthProvider.OnVerificatio
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        callback.onCompleteLinkingMobileWithUser(task);
+                        if (callback != null)
+                            callback.onCompleteLinkingMobileWithUser(task);
                     }
                 });
 
@@ -59,7 +60,8 @@ public class FirebasePhoneAuthentication extends PhoneAuthProvider.OnVerificatio
         user.updatePhoneNumber(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                callback.onCompleteUpdateMobileWithUser(task);
+                if (callback != null)
+                    callback.onCompleteUpdateMobileWithUser(task);
             }
 
         });
@@ -72,7 +74,8 @@ public class FirebasePhoneAuthentication extends PhoneAuthProvider.OnVerificatio
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        callback.onCompleteSignInWithPhoneAuthCredential(task);
+                        if (callback != null)
+                            callback.onCompleteSignInWithPhoneAuthCredential(task);
                     }
                 });
     }
@@ -83,7 +86,8 @@ public class FirebasePhoneAuthentication extends PhoneAuthProvider.OnVerificatio
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        callback.onCompleteUnlinkPhoneAuthCredential(task);
+                        if (callback != null)
+                            callback.onCompleteUnlinkPhoneAuthCredential(task);
                     }
                 });
     }
@@ -95,14 +99,15 @@ public class FirebasePhoneAuthentication extends PhoneAuthProvider.OnVerificatio
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        callback.onCompleteDeletePhoneAuthCredentialUser(task);
+                        if (callback != null)
+                            callback.onCompleteDeletePhoneAuthCredentialUser(task);
                     }
                 });
 
     }
 
     public void resendVerificationCode(String phoneNumber, Activity activity,
-                                        PhoneAuthProvider.ForceResendingToken token) {
+                                       PhoneAuthProvider.ForceResendingToken token) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber,        // Phone number to verify
                 60,                 // Timeout duration
@@ -115,17 +120,20 @@ public class FirebasePhoneAuthentication extends PhoneAuthProvider.OnVerificatio
     @Override
     public void onCodeSent(String verificationId,
                            PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-        callback.onCodeSent(verificationId, forceResendingToken);
+        if (callback != null)
+            callback.onCodeSent(verificationId, forceResendingToken);
     }
 
     @Override
     public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-        callback.onVerificationCompleted(phoneAuthCredential);
+        if (callback != null)
+            callback.onVerificationCompleted(phoneAuthCredential);
     }
 
     @Override
     public void onVerificationFailed(FirebaseException e) {
-        callback.onVerificationFailed(e);
+        if (callback != null)
+            callback.onVerificationFailed(e);
     }
 
 }

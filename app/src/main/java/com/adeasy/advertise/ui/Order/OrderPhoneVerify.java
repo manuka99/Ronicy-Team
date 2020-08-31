@@ -213,11 +213,11 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
     public void onVerificationFailed(FirebaseException e) {
 
         if (e instanceof FirebaseAuthInvalidCredentialsException)
-            showErrorSnackbar(String.valueOf(R.string.invalid_mobile));
+            showErrorSnackbar(getString(R.string.invalid_mobile));
         else if (e instanceof FirebaseTooManyRequestsException)
-            showErrorSnackbar(String.valueOf(R.string.quota_exceeded));
+            showErrorSnackbar(getString(R.string.quota_exceeded));
         else
-            showErrorSnackbar(String.valueOf(R.string.virtual_env_exception));
+            showErrorSnackbar(getString(R.string.virtual_env_exception));
 
 
     }
@@ -280,7 +280,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
             firebasePhoneAuthentication.deletePhoneAuthAccout(task.getResult().getUser());
 
         } else {
-            showErrorSnackbar(String.valueOf(R.string.invalid_mobile_code));
+            showErrorSnackbar(getString(R.string.invalid_mobile_code));
             // Sign in failed, display a message and update the UI
             Log.w(TAG, "signInWithCredential:failure", task.getException());
             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {

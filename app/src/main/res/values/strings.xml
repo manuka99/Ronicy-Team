@@ -10,6 +10,7 @@
     <string name="company_phone">01122223344 </string>
     <string name="phone_number_unknown">xxxxxxxxxx</string>
     <string name="loading">loading...</string>
+    <string name="not_loggedIn">Dear user you are not logged in, please logged in to continue..</string>
 
     <!-- Manuka -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -19,6 +20,14 @@
     <string name="menu_location">location</string>
     <string name="menu_category">category</string>
     <string name="menu_filter">filter</string>
+
+    <!-- enter code-->
+    <string name="enterCode_SMS_SENT_TO">SMS sent to:</string>
+    <string name="enterCode_time_arrive">Please note that it will take a few minutes to arrive.</string>
+    <string name="enterCode_editText_hint">Enter PIN code (6 digits)</string>
+    <string name="enterCode_didnt_recieve">Didn\'t recieve the SMS after 10 mins?</string>
+    <string name="enterCode_check_your_phone_again">Check your phone and try again ></string>
+
 
     <!-- add new number-->
     <string name="enterNumber">Please enter your phone number</string>
@@ -80,11 +89,13 @@
     <string name="order_phone_cancel">Cancel</string>
     <string name="order_phone_new_pin">Get new PIN code</string>
     <string name="order_phone_didnt_recieve">Didn\'t receive the PIN code?</string>
-    <string name="virtual_env_exception">This feature will not work in a virtual environment. Please try again with your mobile phone.</string>
+    <string name="virtual_env_exception">This feature will not work in a virtual environment. Try with your mobile phone.</string>
     <string name="quota_exceeded">The SMS quota for this project has been exceeded!</string>
     <string name="invalid_mobile">Invalid mobile number!.</string>
     <string name="sending_code">Sending validation code....</string>
     <string name="invalid_mobile_code">Entered code is invalid!</string>
+    <string name="verify_code_sent">Verification code was sent successfully!</string>
+    <string name="verify_code_not_sent">Verification code was not sent. Please check your credentials</string>
 
     <!-- Order -->
     <string name="orderStepHeader">Complete your purchase in 3 simple steps</string>

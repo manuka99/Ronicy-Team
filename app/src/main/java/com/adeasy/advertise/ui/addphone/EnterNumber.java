@@ -85,7 +85,7 @@ public class EnterNumber extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         if (view == submitNumber && inputNumber.getEditText().length() == 9) {
             inputNumber.setError(null);
-            addNewPhoneViewModel.setPhoneNumber(inputNumber.getEditText().toString());
+            addNewPhoneViewModel.setPhoneNumber(inputNumber.getEditText().getText().toString());
         } else if (view == submitNumber && inputNumber.getEditText().length() != 9)
             inputNumber.setError("Please enter a valid 9 digit phone number starting without 0.");
     }
