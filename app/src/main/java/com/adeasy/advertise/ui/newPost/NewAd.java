@@ -12,10 +12,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -26,9 +24,6 @@ import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.Category;
-import com.adeasy.advertise.model.VerifiedNumber;
-import com.adeasy.advertise.ui.Order.OrderPhoneVerify;
-import com.adeasy.advertise.ui.Order.Step2;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -45,7 +40,7 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
     AdvertisementDetails advertisementDetails;
     CategorySelected categorySelected;
     ContactDetails contactDetails;
-    List<VerifiedNumber> verifiedNumbers;
+    List<Integer> verifiedNumbers;
     AdvertisementManager advertisementManager;
     ProgressDialog progressDialog;
     FirebaseAuth firebaseAuth;
@@ -123,9 +118,9 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
             }
         });
 
-        newPostViewModel.getContactDetailsValidation().observe(this, new Observer<List<VerifiedNumber>>() {
+        newPostViewModel.getContactDetailsValidation().observe(this, new Observer<List<Integer>>() {
             @Override
-            public void onChanged(List<VerifiedNumber> numbers) {
+            public void onChanged(List<Integer> numbers) {
                 verifiedNumbers = numbers;
                 onContactDetailsValidated();
             }
@@ -230,6 +225,7 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
 
     private void postAd(){
         advertisement.setUserID(firebaseAuth.getCurrentUser().getUid());
+        advertisement.setNumbers(verifiedNumbers);
         advertisement.setLocation(location);
         advertisement.setCategoryID(category.getId());
         advertisementManager.uploadImageMultiple(advertisement, this);
@@ -257,7 +253,8 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
     @Override
     public void onSuccessInsertAd() {
         progressDialog.dismiss();
-        Toast.makeText(this, "Success: Your advertisement was submited", Toast.LENGTH_LONG).show();
+        Toast.makeText(NewAd.this, "Success: Your advertisement was submited", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     @Override

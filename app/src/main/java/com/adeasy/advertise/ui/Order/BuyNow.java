@@ -1,6 +1,5 @@
 package com.adeasy.advertise.ui.Order;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -28,11 +27,6 @@ import com.adeasy.advertise.callback.VerifiedNumbersCallback;
 import com.adeasy.advertise.config.Configurations;
 import com.adeasy.advertise.manager.VerifiedNumbersManager;
 import com.adeasy.advertise.model.User;
-import com.adeasy.advertise.model.VerifiedNumber;
-import com.adeasy.advertise.ui.Order.OrderPhoneVerify;
-import com.adeasy.advertise.ui.Order.Step1;
-import com.adeasy.advertise.ui.Order.Step2;
-import com.adeasy.advertise.ui.Order.StepSuccess;
 import com.adeasy.advertise.manager.OrderManager;
 import com.adeasy.advertise.model.Order;
 import com.adeasy.advertise.model.Order_Customer;
@@ -41,8 +35,8 @@ import com.adeasy.advertise.model.Order_Payment;
 import com.adeasy.advertise.service.MailService;
 import com.adeasy.advertise.service.MailServiceImpl;
 import com.adeasy.advertise.util.UniqueIdBasedOnName;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.shuhart.stepview.StepView;
 
@@ -420,6 +414,11 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     }
 
     @Override
+    public void onSuccessfullNumberInserted() {
+
+    }
+
+    @Override
     public void onCompleteSearchNumberInUser(QuerySnapshot queryDocumentSnapshots) {
         if (queryDocumentSnapshots != null && queryDocumentSnapshots.getDocuments().isEmpty() == false) {
             List<User> numbers = queryDocumentSnapshots.toObjects(User.class);
@@ -431,7 +430,8 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     }
 
     @Override
-    public void onCompleteRecieveAllNumbersInUser(QuerySnapshot querySnapshotTask) {
+    public void onCompleteRecieveAllNumbersInUser(DocumentSnapshot documentSnapshot) {
 
     }
+
 }

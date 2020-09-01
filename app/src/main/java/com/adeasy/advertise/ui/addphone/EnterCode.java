@@ -19,13 +19,11 @@ import android.widget.TextView;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.AddNewPhoneViewModel;
-import com.adeasy.advertise.adapter.RecycleAdapterForVerifiedNumbers;
 import com.adeasy.advertise.callback.PhoneAuthenticationCallback;
 import com.adeasy.advertise.callback.VerifiedNumbersCallback;
 import com.adeasy.advertise.manager.FirebasePhoneAuthentication;
 import com.adeasy.advertise.manager.VerifiedNumbersManager;
 import com.adeasy.advertise.model.User;
-import com.adeasy.advertise.model.VerifiedNumber;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -36,9 +34,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -126,7 +123,7 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
 
         codeEntered.getEditText().addTextChangedListener(this);
 
-        phoneNumberView.setText(phoneNumber);
+        phoneNumberView.setText(phoneNumber.toString());
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -144,8 +141,6 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
         super.onStart();
         verifiedNumbersManager.validateNumber(phoneNumber, firebaseAuth.getCurrentUser());
     }
-
-
 
     @Override
     public void onClick(View view) {
@@ -283,8 +278,7 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
         endVerifyProgress();
         if(task.isSuccessful()){
             firebasePhoneAuthentication.unlinkPhoneAuth(task.getResult().getUser());
-            addNewPhoneViewModel.setVerifyStatus(true);
-            verifiedNumbersManager.insertVerifiedNumber(new User(firebaseAuth.getUid(), phoneNumber), firebaseAuth.getCurrentUser());
+            verifiedNumbersManager.insertVerifiedNumber(new User(firebaseAuth.getCurrentUser(), phoneNumber), firebaseAuth.getCurrentUser());
         }else{
             showErrorSnackbar(R.string.invalid_mobile_code);
             codeEntered.setError(getString(R.string.invalid_mobile_code));
@@ -311,15 +305,20 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
     }
 
     @Override
+    public void onSuccessfullNumberInserted() {
+        addNewPhoneViewModel.setVerifiedNumber(phoneNumber);
+    }
+
+    @Override
     public void onCompleteSearchNumberInUser(QuerySnapshot querySnapshotTask) {
         if (querySnapshotTask != null && querySnapshotTask.getDocuments().isEmpty() == false)
-            addNewPhoneViewModel.setVerifyStatus(true);
+            addNewPhoneViewModel.setVerifiedNumber(phoneNumber);
         else
             firebasePhoneAuthentication.sendMobileVerifycode("+94" + phoneNumber, getActivity());
     }
 
     @Override
-    public void onCompleteRecieveAllNumbersInUser(QuerySnapshot querySnapshotTask) {
+    public void onCompleteRecieveAllNumbersInUser(DocumentSnapshot documentSnapshot) {
 
     }
 

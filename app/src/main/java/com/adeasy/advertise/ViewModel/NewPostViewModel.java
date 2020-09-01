@@ -6,9 +6,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.Category;
-import com.adeasy.advertise.model.Order_Customer;
-import com.adeasy.advertise.model.Order_Item;
-import com.adeasy.advertise.model.VerifiedNumber;
 
 import java.util.List;
 
@@ -17,7 +14,7 @@ public class NewPostViewModel  extends ViewModel {
     private MutableLiveData<Category> categorySelected = new MutableLiveData<>();
     private MutableLiveData<Boolean> showAllCategories = new MutableLiveData<>();
     private MutableLiveData<Advertisement> advertisement = new MutableLiveData<>();
-    private MutableLiveData<List<VerifiedNumber>> contactDetailsValidation = new MutableLiveData<>();
+    private MutableLiveData<List<Integer>> contactDetailsValidation = new MutableLiveData<>();
     private MutableLiveData<Boolean> adDetailsValidation = new MutableLiveData<>();
 
     public LiveData<String> getLocationSelected() {
@@ -52,11 +49,11 @@ public class NewPostViewModel  extends ViewModel {
         this.advertisement.setValue(advertisement);
     }
 
-    public LiveData<List<VerifiedNumber>> getContactDetailsValidation() {
+    public LiveData<List<Integer>> getContactDetailsValidation() {
         return contactDetailsValidation;
     }
 
-    public void setContactDetailsValidation(List<VerifiedNumber> numbers) {
+    public void setContactDetailsValidation(List<Integer> numbers) {
         this.contactDetailsValidation.setValue(numbers);
     }
 

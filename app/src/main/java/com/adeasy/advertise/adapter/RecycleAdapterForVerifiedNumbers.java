@@ -9,15 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.helper.ViewHolderPhoneNumbers;
-import com.adeasy.advertise.model.VerifiedNumber;
 
 import java.util.List;
 
 public class RecycleAdapterForVerifiedNumbers extends RecyclerView.Adapter<ViewHolderPhoneNumbers> {
 
-    private List<VerifiedNumber> verifiedNumberList;
+    private List<Integer> verifiedNumberList;
 
-    public RecycleAdapterForVerifiedNumbers(List<VerifiedNumber> verifiedNumberList){
+    public RecycleAdapterForVerifiedNumbers(List<Integer> verifiedNumberList){
         this.verifiedNumberList = verifiedNumberList;
     }
 
@@ -30,7 +29,7 @@ public class RecycleAdapterForVerifiedNumbers extends RecyclerView.Adapter<ViewH
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolderPhoneNumbers holder, final int position) {
-        holder.numberView.setText(verifiedNumberList.get(position).getNumber());
+        holder.numberView.setText(verifiedNumberList.get(position).toString());
         holder.removeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,7 +44,7 @@ public class RecycleAdapterForVerifiedNumbers extends RecyclerView.Adapter<ViewH
         return verifiedNumberList.size();
     }
 
-    public List<VerifiedNumber> getSelectedNumbers(){
+    public List<Integer> getSelectedNumbers(){
         return verifiedNumberList;
     }
 

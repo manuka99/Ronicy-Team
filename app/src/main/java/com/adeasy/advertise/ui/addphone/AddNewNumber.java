@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -64,11 +65,15 @@ public class AddNewNumber extends AppCompatActivity {
                 startEnterCode();
             }
         });
-        addNewPhoneViewModel.getVerifyStatus().observe(this, new Observer<Boolean>() {
+        addNewPhoneViewModel.getVerifiedNumber().observe(this, new Observer<Integer>() {
             @Override
-            public void onChanged(Boolean result) {
-                if (result)
+            public void onChanged(Integer integer) {
+                if(integer != null){
+                    Intent intentEnd = new Intent();
+                    intentEnd.putExtra("phone", integer);
+                    setResult(RESULT_OK,intentEnd);
                     finish();
+                }
             }
         });
     }

@@ -40,6 +40,7 @@
             android:textSize="16sp"></TextView>
 
         <LinearLayout
+            android:id="@+id/locationSelectedLayout"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:background="#0066ff">
@@ -52,8 +53,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:contentDescription="@string/image"
-                android:padding="8dp"
-                app:srcCompat="@mipmap/ic_launcher" />
+                android:padding="8dp"/>
 
             <TextView
                 android:id="@+id/selectedCategoryTitle"

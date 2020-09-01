@@ -25,6 +25,7 @@ import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.helper.ViewHolderListAdds;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
+import com.adeasy.advertise.ui.editAd.EditAd;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.android.gms.tasks.Task;
@@ -167,7 +168,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                                         .setNegativeButton("Edit ad", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                                Intent intent = new Intent(getApplicationContext(), EditAdvertisement.class);
+                                                Intent intent = new Intent(getApplicationContext(), EditAd.class);
                                                 intent.putExtra("adID", getItem(position).get("id").toString());
                                                 intent.putExtra("adCID", getItem(position).get("categoryID").toString());
                                                 startActivity(intent);

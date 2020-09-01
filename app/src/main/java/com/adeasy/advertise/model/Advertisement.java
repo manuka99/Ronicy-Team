@@ -6,13 +6,14 @@ import com.google.firebase.firestore.Exclude;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Advertisement {
+public class Advertisement implements Serializable {
 
     private String id;
     private String title;
@@ -29,7 +30,7 @@ public class Advertisement {
     private String imageUrl;
     private List<String> imageUrls;
     private List<Uri> imageUris;
-    List<VerifiedNumber> numbers;
+    List<Integer> numbers;
     private String location;
 
     public Advertisement() {
@@ -177,11 +178,11 @@ public class Advertisement {
         this.preetyTime = preetyTime;
     }
 
-    public List<VerifiedNumber> getNumbers() {
+    public List<Integer> getNumbers() {
         return numbers;
     }
 
-    public void setNumbers(List<VerifiedNumber> numbers) {
+    public void setNumbers(List<Integer> numbers) {
         this.numbers = numbers;
     }
 }

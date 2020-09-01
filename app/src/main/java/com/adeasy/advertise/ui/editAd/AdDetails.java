@@ -1,31 +1,21 @@
-package com.adeasy.advertise.ui.newPost;
+package com.adeasy.advertise.ui.editAd;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.NewPostViewModel;
@@ -37,14 +27,12 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.app.Activity.RESULT_OK;
-
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AdvertisementDetails#newInstance} factory method to
+ * Use the {@link AdDetails#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AdvertisementDetails extends Fragment implements View.OnClickListener, RecycleAdapterForImages.RecycleAdapterInterface, TextWatcher {
+public class AdDetails extends Fragment implements View.OnClickListener, TextWatcher {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -66,10 +54,10 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
     RecycleAdapterForImages recycleAdapterForImages;
     NewPostViewModel newPostViewModel;
 
-    private static final String TAG = "AdvertisementDetails";
+    private static final String TAG = "AdDetails";
     private static final int MULTIPLE_IMAGE_SELECTOR = 23234;
 
-    public AdvertisementDetails() {
+    public AdDetails() {
         // Required empty public constructor
     }
 
@@ -79,11 +67,11 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AdvertisementDetails.
+     * @return A new instance of fragment AdDetails.
      */
     // TODO: Rename and change types and number of parameters
-    public static AdvertisementDetails newInstance(String param1, String param2) {
-        AdvertisementDetails fragment = new AdvertisementDetails();
+    public static AdDetails newInstance(String param1, String param2) {
+        AdDetails fragment = new AdDetails();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -103,15 +91,24 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.manuka_fragment_advertisement_details, container, false);
 
+        advertisement = (Advertisement) getArguments().getSerializable("advertisement");
+
+        //text
         postTitle = view.findViewById(R.id.newAdTitle);
         postCondition = view.findViewById(R.id.newAdCondition);
         postDescription = view.findViewById(R.id.newAdDescription);
         postPrice = view.findViewById(R.id.newAdPrice);
+
+        //images
         btn_add_photo = view.findViewById(R.id.btn_add_photo);
         imageCamera = view.findViewById(R.id.imageCamera);
+
         imageRecycler = view.findViewById(R.id.imageRecycler);
+
+        //snackbar
         snackbarView = view.findViewById(R.id.snackbar_text);
 
         btn_add_photo.setOnClickListener(this);
@@ -130,58 +127,38 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
         postDescription.getEditText().addTextChangedListener(this);
         postPrice.getEditText().addTextChangedListener(this);
 
+        displayAdDetails();
+
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        newPostViewModel.getAdDetailsValidation().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if(aBoolean)
-                    validateAdDetails();
-            }
-        });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
+    private void displayAdDetails(){
+        postTitle.getEditText().setText(advertisement.getTitle());
+        postCondition.getEditText().setText(advertisement.getCondition());
+        postDescription.getEditText().setText(advertisement.getDescription());
+        postPrice.getEditText().setText(String.valueOf(advertisement.getPrice()));
     }
 
     @Override
     public void onClick(View view) {
-        if (view == btn_add_photo)
-            multiple_image_selector();
-    }
 
-    private void multiple_image_selector() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select images for your ad"), MULTIPLE_IMAGE_SELECTOR);
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == MULTIPLE_IMAGE_SELECTOR) {
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            if (data.getClipData() != null && data.getClipData().getItemCount() + imagesUriArrayList.size() < 6) {
-                for (int i = 0; i < data.getClipData().getItemCount(); i++) {
-                    imagesUriArrayList.add(data.getClipData().getItemAt(i).getUri());
-                }
-                displayImages();
-            } else if (data.getData() != null && imagesUriArrayList.size() < 5) {
-                imagesUriArrayList.add(data.getData());
-                displayImages();
-            } else
-                showErrorSnackBar(R.string.more_than5images);
+    }
 
-        }
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        postTitle.setError(null);
+        postCondition.setError(null);
+        postDescription.setError(null);
+        postPrice.setError(null);
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
 
     }
 
@@ -196,20 +173,6 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
         snackbar.setTextColor(getResources().getColor(R.color.colorWhite));
         snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorError2));
         snackbar.show();
-    }
-
-    private void displayImages() {
-        imageCamera.setVisibility(View.GONE);
-        recycleAdapterForImages = new RecycleAdapterForImages(imagesUriArrayList, this, getContext());
-        imageRecycler.setAdapter(recycleAdapterForImages);
-        recycleAdapterForImages.notifyDataSetChanged();
-    }
-
-    @Override
-    public void itemRemoved() {
-        imagesUriArrayList = recycleAdapterForImages.getSelectedImages();
-        if (imagesUriArrayList.size() == 0)
-            imageCamera.setVisibility(View.VISIBLE);
     }
 
     private void validateAdDetails(){
@@ -235,22 +198,5 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
         }
     }
 
-    @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        postTitle.setError(null);
-        postCondition.setError(null);
-        postDescription.setError(null);
-        postPrice.setError(null);
-    }
-
-    @Override
-    public void afterTextChanged(Editable editable) {
-
-    }
 
 }

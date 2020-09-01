@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.helper.ViewHolderAdImage;
-import com.adeasy.advertise.helper.ViewHolderPhoneNumbers;
-import com.adeasy.advertise.model.VerifiedNumber;
 
 import java.io.InputStream;
 import java.util.List;

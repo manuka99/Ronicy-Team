@@ -9,7 +9,7 @@ import com.adeasy.advertise.model.Order_Item;
 
 public class AddNewPhoneViewModel extends ViewModel {
     private MutableLiveData<String> phoneNumber = new MutableLiveData<>();
-    private MutableLiveData<Boolean> verifyStatus = new MutableLiveData<>();
+    private MutableLiveData<Integer> verifiedNumber = new MutableLiveData<>();
 
     public LiveData<String> getPhoneNumber() {
         return phoneNumber;
@@ -19,11 +19,11 @@ public class AddNewPhoneViewModel extends ViewModel {
         this.phoneNumber.setValue(phoneNumber);
     }
 
-    public LiveData<Boolean> getVerifyStatus() {
-        return verifyStatus;
+    public LiveData<Integer> getVerifiedNumber() {
+        return verifiedNumber;
     }
 
-    public void setVerifyStatus(Boolean verifyStatus) {
-        this.verifyStatus.setValue(verifyStatus);
+    public void setVerifiedNumber(Integer verifiedNumber) {
+        this.verifiedNumber.setValue(verifiedNumber);
     }
 }

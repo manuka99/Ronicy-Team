@@ -3,13 +3,9 @@ package com.adeasy.advertise.manager;
 import androidx.annotation.NonNull;
 
 import com.adeasy.advertise.callback.VerifiedNumbersCallback;
-import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.model.User;
-import com.adeasy.advertise.model.VerifiedNumber;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -19,9 +15,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class VerifiedNumbersManager {
 
@@ -50,13 +44,25 @@ public class VerifiedNumbersManager {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
                     for (Integer num : user.getVerifiedNumbers())
-                        refStore.update(arrayName, FieldValue.arrayUnion(num));
+                        refStore.update(arrayName, FieldValue.arrayUnion(num)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                verifiedNumbersCallback.onSuccessfullNumberInserted();
+                            }
+                        })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                    }
+                                });
+                    ;
                 } else {
                     refStore.set(user, SetOptions.merge())
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-
+                                    verifiedNumbersCallback.onSuccessfullNumberInserted();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -96,10 +102,10 @@ public class VerifiedNumbersManager {
 
     public void getVerifiedNumbersOfUser(FirebaseUser firebaseUser) {
         try {
-            documentReference.collection(firebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            firebaseFirestore.collection(childName).document(firebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
-                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    verifiedNumbersCallback.onCompleteRecieveAllNumbersInUser(queryDocumentSnapshots);
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    verifiedNumbersCallback.onCompleteRecieveAllNumbersInUser(documentSnapshot);
                 }
             });
         } catch (NullPointerException e) {
