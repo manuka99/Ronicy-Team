@@ -1,5 +1,6 @@
 package com.adeasy.advertise.ui.editAd;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -27,12 +28,14 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AdDetails#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AdDetails extends Fragment implements View.OnClickListener, TextWatcher {
+public class AdDetails extends Fragment implements View.OnClickListener, TextWatcher, RecycleAdapterForImages.RecycleAdapterInterface{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,7 +50,7 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
     Button btn_add_photo;
     Advertisement advertisement;
 
-    List<Uri> imagesUriArrayList;
+    List<String> imagesUriArrayList;
     ImageView imageCamera;
     RecyclerView imageRecycler;
     FrameLayout snackbarView;
@@ -118,7 +121,9 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
 
         imageRecycler = view.findViewById(R.id.imageRecycler);
         imageRecycler.setLayoutManager(layoutManager);
-        imagesUriArrayList = new ArrayList<>();
+
+        //imagesUriArrayList.addAll() = advertisement.getImageUrls();
+
         newPostViewModel = ViewModelProviders.of(getActivity()).get(NewPostViewModel.class);
 
         //text watches
@@ -127,7 +132,10 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
         postDescription.getEditText().addTextChangedListener(this);
         postPrice.getEditText().addTextChangedListener(this);
 
+        imagesUriArrayList = advertisement.getImageUrls();
+
         displayAdDetails();
+        displayImages();
 
         return view;
     }
@@ -139,9 +147,52 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
         postPrice.getEditText().setText(String.valueOf(advertisement.getPrice()));
     }
 
+    private void displayImages() {
+        imageCamera.setVisibility(View.GONE);
+        recycleAdapterForImages = new RecycleAdapterForImages(imagesUriArrayList, this, getContext());
+        imageRecycler.setAdapter(recycleAdapterForImages);
+        recycleAdapterForImages.notifyDataSetChanged();
+    }
+
     @Override
     public void onClick(View view) {
+        if (view == btn_add_photo)
+            multiple_image_selector();
+    }
 
+    private void multiple_image_selector() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select images for your ad"), MULTIPLE_IMAGE_SELECTOR);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == MULTIPLE_IMAGE_SELECTOR) {
+
+            if (data.getClipData() != null && data.getClipData().getItemCount() + imagesUriArrayList.size() < 6) {
+                for (int i = 0; i < data.getClipData().getItemCount(); i++) {
+                    imagesUriArrayList.add(data.getClipData().getItemAt(i).getUri().toString());
+                }
+                displayImages();
+            } else if (data.getData() != null && imagesUriArrayList.size() < 5) {
+                imagesUriArrayList.add(data.getData().toString());
+                displayImages();
+            } else
+                showErrorSnackBar(R.string.more_than5images);
+
+        }
+
+    }
+
+    @Override
+    public void itemRemoved() {
+        imagesUriArrayList = recycleAdapterForImages.getSelectedImages();
+        if (imagesUriArrayList.size() == 0)
+            imageCamera.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -192,11 +243,10 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
             advertisement.setCondition(postCondition.getEditText().getText().toString());
             advertisement.setDescription(postDescription.getEditText().getText().toString());
             advertisement.setPrice(Double.valueOf(postPrice.getEditText().getText().toString()));
-            advertisement.setImageUris(imagesUriArrayList);
+            advertisement.setImageUrls(imagesUriArrayList);
 
             newPostViewModel.setAdvertisement(advertisement);
         }
     }
-
 
 }

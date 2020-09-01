@@ -2,6 +2,7 @@ package com.adeasy.advertise.manager;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -24,8 +25,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class AdvertisementManager {
 
@@ -116,10 +120,21 @@ public class AdvertisementManager {
             else {
                 advertisementCallback.onTaskFull(false);
 
-                for (int i = 0; i <= advertisement.getImageUris().size(); ++i) {
-                    Uri imageUri = advertisement.getImageUris().get(i);
+                final List<String> imageUriList = new ArrayList<>();
+                final Advertisement ad = advertisement;
+
+                for (int i = 0; i < advertisement.getImageUrls().size(); ++i) {
+
+                    Uri imageUri = Uri.parse(advertisement.getImageUrls().get(i));
+
+                    //imageUri.getAuthority()
+
                     byte[] data = ImageQualityReducer.reduceQualityFromBitmap(imageUri, context);
-                    String imageID = documentReference.getId();
+
+                    String imageID = UUID.randomUUID().toString().replace("-", "");
+
+                    Log.i(TAG, imageID);
+
                     final StorageReference ref = storageReference.child(imageID);
                     storageTask = ref.putBytes(data);
 
@@ -139,16 +154,18 @@ public class AdvertisementManager {
                         public void onComplete(@NonNull Task<Uri> task) {
                             if (task.isSuccessful()) {
                                 Uri downloadUri = task.getResult();
-                                advertisement.getImageUrls().add(downloadUri.toString());
+                                imageUriList.add(downloadUri.toString());
+                                //advertisement.getImageUrls().add(downloadUri.toString());
                             } else {
                                 // Handle failures
                                 // ...
                             }
 
-                            try{
-                               advertisement.getImageUris().get(counter + 1);
-                            }catch (Exception e){
-                                insertAdvertisement(advertisement);
+                            try {
+                                advertisement.getImageUrls().get(counter + 1);
+                            } catch (Exception e) {
+                                ad.setImageUrls(imageUriList);
+                                insertAdvertisement(ad);
                             }
 
                         }

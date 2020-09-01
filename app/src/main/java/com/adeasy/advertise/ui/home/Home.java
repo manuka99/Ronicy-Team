@@ -153,7 +153,12 @@ public class Home extends Fragment implements AdvertisementCallback {
                         holder.titleView.setText(advertisement.getTitle());
                         holder.dateView.setText(advertisement.getPreetyTime());
                         holder.priceView.setText("Rs. " + advertisement.getPrice());
-                        Picasso.get().load(advertisement.getImageUrls().get(0)).into(holder.imageView);
+
+                        try {
+                            Picasso.get().load(advertisement.getImageUrls().get(0)).into(holder.imageView);
+                        }catch (Exception e){
+
+                        }
 
                         if (advertisement.isBuynow())
                             holder.buyNow.setVisibility(View.VISIBLE);

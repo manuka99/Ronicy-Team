@@ -41,7 +41,12 @@ public class RecycleAdapterForVerifiedNumbers extends RecyclerView.Adapter<ViewH
 
     @Override
     public int getItemCount() {
-        return verifiedNumberList.size();
+
+        int value = 0;
+        if(verifiedNumberList != null)
+            value = verifiedNumberList.size();
+
+        return value;
     }
 
     public List<Integer> getSelectedNumbers(){

@@ -59,7 +59,7 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
     Button btn_add_photo;
     Advertisement advertisement;
 
-    List<Uri> imagesUriArrayList;
+    List<String> imagesUriArrayList;
     ImageView imageCamera;
     RecyclerView imageRecycler;
     FrameLayout snackbarView;
@@ -172,11 +172,11 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
 
             if (data.getClipData() != null && data.getClipData().getItemCount() + imagesUriArrayList.size() < 6) {
                 for (int i = 0; i < data.getClipData().getItemCount(); i++) {
-                    imagesUriArrayList.add(data.getClipData().getItemAt(i).getUri());
+                    imagesUriArrayList.add(data.getClipData().getItemAt(i).getUri().toString());
                 }
                 displayImages();
             } else if (data.getData() != null && imagesUriArrayList.size() < 5) {
-                imagesUriArrayList.add(data.getData());
+                imagesUriArrayList.add(data.getData().toString());
                 displayImages();
             } else
                 showErrorSnackBar(R.string.more_than5images);
@@ -229,7 +229,7 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
             advertisement.setCondition(postCondition.getEditText().getText().toString());
             advertisement.setDescription(postDescription.getEditText().getText().toString());
             advertisement.setPrice(Double.valueOf(postPrice.getEditText().getText().toString()));
-            advertisement.setImageUris(imagesUriArrayList);
+            advertisement.setImageUrls(imagesUriArrayList);
 
             newPostViewModel.setAdvertisement(advertisement);
         }

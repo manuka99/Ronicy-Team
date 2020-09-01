@@ -29,8 +29,7 @@ public class Advertisement implements Serializable {
     private String preetyTime;
     private String imageUrl;
     private List<String> imageUrls;
-    private List<Uri> imageUris;
-    List<Integer> numbers;
+    private List<Integer> numbers;
     private String location;
 
     public Advertisement() {
@@ -38,7 +37,6 @@ public class Advertisement implements Serializable {
         this.availability = true;
         this.approved = true;
         this.buynow = false;
-        this.imageUris = new ArrayList<>();
         this.imageUrls = new ArrayList<>();
         this.numbers = new ArrayList<>();
     }
@@ -145,16 +143,6 @@ public class Advertisement implements Serializable {
 
     public void setImageUrls(List<String> imageUrls) {
         this.imageUrls = imageUrls;
-    }
-
-    @Exclude
-    public List<Uri> getImageUris() {
-        return imageUris;
-    }
-
-    @Exclude
-    public void setImageUris(List<Uri> imageUris) {
-        this.imageUris = imageUris;
     }
 
     public String getLocation() {

@@ -18,19 +18,18 @@ import com.squareup.picasso.Picasso;
 import java.io.InputStream;
 import java.util.List;
 
-public class RecycleAdapterForImages extends RecyclerView.Adapter<ViewHolderAdImage> {
+public class RecycleAdapterForURIAndUrl extends RecyclerView.Adapter<ViewHolderAdImage> {
 
-    private List<String> uriImages;
+    private List<Uri> uriImages;
+    private List<String> urlImages;
     private RecycleAdapterInterface callback;
     private Context context;
-    private static final String TAG = "RecycleAdapterForImages";
-    private static final String FIREBASE_HOST = "firebasestorage.googleapis.com";
 
     public interface RecycleAdapterInterface {
         public void itemRemoved();
     }
 
-    public RecycleAdapterForImages(List<String> uriImages, RecycleAdapterInterface callback, Context context) {
+    public RecycleAdapterForURIAndUrl(List<Uri> uriImages, RecycleAdapterInterface callback, Context context) {
         this.uriImages = uriImages;
         this.callback = callback;
         this.context = context;
@@ -45,35 +44,41 @@ public class RecycleAdapterForImages extends RecyclerView.Adapter<ViewHolderAdIm
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolderAdImage holder, final int position) {
+
+        boolean exception = false;
+
+        uriImages.add(uriImages.get(0));
+
+
+        //for url
         try {
+            Picasso.get().load(urlImages.get(position)).into(holder.adImage);
+        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+            exception = true;
+        }
 
-            Uri imageUri = Uri.parse(uriImages.get(position));
-
-            if (imageUri.getHost().equals(FIREBASE_HOST) == false) {
-                InputStream imageStream = context.getContentResolver().openInputStream(Uri.parse(uriImages.get(position)));
+        if (exception) {
+            try {
+                InputStream imageStream = context.getContentResolver().openInputStream(uriImages.get(position));
                 Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
                 bitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
                 holder.adImage.setImageBitmap(bitmap);
+                //holder.adImage.setImageURI(uriImages.get(position));
 
-                //Picasso.get().load(uriImages.get(position)).into(holder.adImage);
+                holder.imageRemove.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        uriImages.remove(position);
+                        callback.itemRemoved();
+                        notifyDataSetChanged();
+                    }
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-            //holder.adImage.setImageURI(uriImages.get(position));
-            else
-                Picasso.get().load(uriImages.get(position)).into(holder.adImage);
-
-            holder.imageRemove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    uriImages.remove(position);
-                    callback.itemRemoved();
-                    notifyDataSetChanged();
-                }
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
     }
 
     @Override
@@ -81,7 +86,7 @@ public class RecycleAdapterForImages extends RecyclerView.Adapter<ViewHolderAdIm
         return uriImages.size();
     }
 
-    public List<String> getSelectedImages() {
+    public List<Uri> getSelectedImages() {
         return uriImages;
     }
 
