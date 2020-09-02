@@ -43,11 +43,7 @@
         <activity android:name=".ui.athentication.login" />
         <activity android:name=".ui.advertisement.Donations" />
         <activity android:name=".ui.advertisement.Advertisement" />
-        <activity android:name=".ui.advertisement.EditAdvertisement" />
         <activity android:name=".ui.advertisement.Myadds" />
-        <activity
-            android:name=".ui.newPost.NewAdvertisement"
-            android:parentActivityName=".ui.home.MainActivity" />
         <activity android:name=".ui.home.MainActivity" />
 
         <meta-data

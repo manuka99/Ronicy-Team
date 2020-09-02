@@ -11,7 +11,7 @@ import com.adeasy.advertise.R;
 
 public class ViewHolderListAdds extends RecyclerView.ViewHolder {
 
-    private TextView myadsTitle, myadsPrice, myaddsDate, myadsAprooved;
+    private TextView myadsTitle, myadsPrice, myaddsDate, myadsAprooved, myaddsUaprovedReason;
     private ImageView imageView;
 
     public ViewHolderListAdds(@NonNull View itemView) {
@@ -20,6 +20,7 @@ public class ViewHolderListAdds extends RecyclerView.ViewHolder {
         myadsPrice = itemView.findViewById(R.id.myaddsPrice);
         myaddsDate = itemView.findViewById(R.id.myaddsDate);
         myadsAprooved = itemView.findViewById(R.id.myaddsAprovedStatus);
+        myaddsUaprovedReason = itemView.findViewById(R.id.myaddsUaprovedReason);
         imageView = itemView.findViewById(R.id.myaddsImage);
     }
 
@@ -61,6 +62,14 @@ public class ViewHolderListAdds extends RecyclerView.ViewHolder {
 
     public void setMyaddsDate(TextView myaddsDate) {
         this.myaddsDate = myaddsDate;
+    }
+
+    public TextView getMyaddsUaprovedReason() {
+        return myaddsUaprovedReason;
+    }
+
+    public void setMyaddsUaprovedReason(TextView myaddsUaprovedReason) {
+        this.myaddsUaprovedReason = myaddsUaprovedReason;
     }
 
 }

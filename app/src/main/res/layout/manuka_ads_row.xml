@@ -13,39 +13,45 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="4dp">
 
         <ImageView
             android:id="@+id/myaddsImage"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
             android:layout_gravity="center_vertical"
             app:srcCompat="@mipmap/ic_launcher"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="6dp"
             android:contentDescription="@string/image" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="8dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/myaddsTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="serif"
-                android:textColor="#000000"
-                android:textSize="22sp"></TextView>
+                android:textColor="@color/colorBlackText"
+                android:textStyle="bold"
+                android:textSize="16sp"></TextView>
 
             <TextView
                 android:id="@+id/myaddsPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
-                android:fontFamily="sans-serif-medium"
                 android:gravity="center_vertical"
-                android:textSize="18sp"></TextView>
+                android:textColor="@color/colorGreen"
+                android:textStyle="bold"
+                android:textSize="14sp"></TextView>
 
             <TextView
                 android:id="@+id/myaddsDate"
@@ -54,22 +60,35 @@
                 android:layout_marginBottom="2dp"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center_vertical"
-                android:textSize="16sp"></TextView>
+                android:textSize="12sp"></TextView>
 
             <TextView
                 android:id="@+id/myaddsAprovedStatus"
                 android:elevation="8dp"
                 android:layout_width="wrap_content"
-                android:layout_height="40sp"
+                android:layout_height="wrap_content"
                 android:background="#ff1a1a"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textColor="#ffffff"
-                android:textSize="16sp"></TextView>
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:textColor="@color/colorBlackText"
+                android:textSize="12sp"></TextView>
 
         </LinearLayout>
 
+    </LinearLayout>
+        <TextView
+            android:id="@+id/myaddsUaprovedReason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWarning"
+            android:visibility="gone"
+            android:gravity="center"
+            android:padding="4dp"
+            android:textColor="@color/colorBlackText"
+            android:textSize="12sp"></TextView>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

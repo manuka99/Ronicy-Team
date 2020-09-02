@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.NewPostViewModel;
@@ -28,6 +29,7 @@ import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.ui.editAd.SelectedCategory;
 import com.adeasy.advertise.ui.editAd.ContactDetails;
 import com.adeasy.advertise.ui.editAd.LocationSelector;
+import com.adeasy.advertise.ui.newPost.NewAd;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -104,6 +106,14 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
         advertisementManager.getAddbyID(adID);
         categoryManager.getCategorybyID(adCID);
 
+        newPostViewModel.getContactDetailsValidation().observe(this, new Observer<List<Integer>>() {
+            @Override
+            public void onChanged(List<Integer> numbers) {
+                verifiedNumbers = numbers;
+                onContactDetailsValidated();
+            }
+        });
+
     }
 
     @Override
@@ -155,6 +165,21 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
         fragmentTransaction.commit();
     }
 
+    private void onContactDetailsValidated(){
+        newPostViewModel.setAdDetailsValidation(true);
+        newPostViewModel.getAdvertisement().observe(this, new Observer<Advertisement>() {
+            @Override
+            public void onChanged(Advertisement ad) {
+                advertisement = ad;
+                postAd();
+            }
+        });
+    }
+
+    private void postAd(){
+        advertisement.setNumbers(verifiedNumbers);
+        advertisementManager.uploadImageMultiple(advertisement, this);
+    }
 
     public void showExitAlert() {
         AlertDialog alertDialog = new AlertDialog.Builder(this)
@@ -187,17 +212,28 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
 
     @Override
     public void onTaskFull(boolean result) {
+        if(result)
+            Toast.makeText(this, "Please Wait..", Toast.LENGTH_SHORT).show();
 
+        else{
+            progressDialog.setTitle("Publishing your advertisement...");
+            progressDialog.setMessage("Your advertisement will be live after we approve it.");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
     }
 
     @Override
     public void onSuccessInsertAd() {
-
+        progressDialog.dismiss();
+        Toast.makeText(EditAd.this, "Success: Your advertisement was submited", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     @Override
     public void onFailureInsertAd() {
-
+        progressDialog.dismiss();
+        Toast.makeText(this, "error: Your advertisement was not submited", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -257,6 +293,12 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
         } else {
             Log.d(TAG, "get failed with ", task.getException());
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        advertisementManager.destroy();
     }
 
 }

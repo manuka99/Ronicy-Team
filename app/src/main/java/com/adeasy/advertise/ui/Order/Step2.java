@@ -210,14 +210,18 @@ public class Step2 extends Fragment implements View.OnClickListener, Advertiseme
         if (task.isSuccessful()) {
             DocumentSnapshot document = task.getResult();
             if (document.exists()) {
-                advertisement = new com.adeasy.advertise.model.Advertisement();
-                advertisement = document.toObject(com.adeasy.advertise.model.Advertisement.class);
-                itemName.setText(advertisement.getTitle());
-                itemPrice.setText("Rs. " + advertisement.getPrice());
-                itemPrice2.setText("Rs. " + advertisement.getPrice());
-                paymentTotal.setText("Rs. " + advertisement.getPrice());
-                Picasso.get().load(advertisement.getImageUrl()).into(adImage);
-                setOrderItem();
+                try {
+                    advertisement = new com.adeasy.advertise.model.Advertisement();
+                    advertisement = document.toObject(com.adeasy.advertise.model.Advertisement.class);
+                    itemName.setText(advertisement.getTitle());
+                    itemPrice.setText("Rs. " + advertisement.getPrice());
+                    itemPrice2.setText("Rs. " + advertisement.getPrice());
+                    paymentTotal.setText("Rs. " + advertisement.getPrice());
+                    Picasso.get().load(advertisement.getImageUrls().get(0)).into(adImage);
+                    setOrderItem();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             } else {
                 Log.d(TAG, "No such document");
             }
@@ -245,12 +249,16 @@ public class Step2 extends Fragment implements View.OnClickListener, Advertiseme
 
     private void setOrderItem(){
         if(advertisement.getId() != null && category.getId() != null) {
-            item = new Order_Item();
-            item.setItemName(advertisement.getTitle());
-            item.setPrice(advertisement.getPrice());
-            item.setImageUrl(advertisement.getImageUrl());
-            item.setCategoryName(category.getName());
-            buynowViewModel.setItem(item);
+            try {
+                item = new Order_Item();
+                item.setItemName(advertisement.getTitle());
+                item.setPrice(advertisement.getPrice());
+                item.setImageUrl(advertisement.getImageUrls().get(0));
+                item.setCategoryName(category.getName());
+                buynowViewModel.setItem(item);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 

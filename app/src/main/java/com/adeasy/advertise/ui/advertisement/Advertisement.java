@@ -228,22 +228,25 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         if (task.isSuccessful()) {
             DocumentSnapshot document = task.getResult();
             if (document.exists()) {
-                advertisement = new com.adeasy.advertise.model.Advertisement();
-                advertisement = document.toObject(com.adeasy.advertise.model.Advertisement.class);
+                try {
+                    advertisement = new com.adeasy.advertise.model.Advertisement();
+                    advertisement = document.toObject(com.adeasy.advertise.model.Advertisement.class);
 
-                adTime.setText(advertisement.getPreetyTime());
-                AdTitle.setText(advertisement.getTitle());
-                AdCondition.setText(advertisement.getCondition());
-                AdDescription.setText(advertisement.getDescription());
-                AdPrice.setText("Rs. " + advertisement.getPrice());
-                Picasso.get().load(advertisement.getImageUrl()).into(image);
+                    adTime.setText(advertisement.getPreetyTime());
+                    AdTitle.setText(advertisement.getTitle());
+                    AdCondition.setText(advertisement.getCondition());
+                    AdDescription.setText(advertisement.getDescription());
+                    AdPrice.setText("Rs. " + advertisement.getPrice());
+                    Picasso.get().load(advertisement.getImageUrls().get(0)).into(image);
 
-                if (advertisement.isBuynow())
-                    adBuyNow.setVisibility(View.VISIBLE);
+                    if (advertisement.isBuynow())
+                        adBuyNow.setVisibility(View.VISIBLE);
 
-                else
-                    adBuyNow.setVisibility(View.GONE);
-
+                    else
+                        adBuyNow.setVisibility(View.GONE);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             } else {
                 Log.d(TAG, "No such document");
             }

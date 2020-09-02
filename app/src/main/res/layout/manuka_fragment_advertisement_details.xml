@@ -74,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:counterEnabled="true"
-            app:counterMaxLength="25"
+            app:counterMaxLength="35"
             app:errorEnabled="true"
             app:hintTextColor="@color/colorGreen">
 
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/post_title"
                 android:inputType="textPersonName"
-                android:maxLength="25"
+                android:maxLength="35"
                 android:textColorHint="@color/colorGreen"
                 android:textSize="18sp" />
 
@@ -94,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:counterEnabled="true"
-            app:counterMaxLength="40"
+            app:counterMaxLength="15"
             app:errorEnabled="true"
             app:hintTextColor="@color/colorGreen">
 
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/post_condition"
                 android:inputType="textPersonName"
-                android:maxLength="40"
+                android:maxLength="15"
                 android:textColorHint="@color/colorGreen"
                 android:textSize="18sp" />
 
@@ -114,7 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:counterEnabled="true"
-            app:counterMaxLength="200"
+            app:counterMaxLength="500"
             app:errorEnabled="true"
             app:hintTextColor="@color/colorGreen">
 
@@ -123,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/adDescription"
                 android:inputType="textMultiLine"
-                android:maxLength="200"
+                android:maxLength="500"
                 android:textColorHint="@color/colorGreen"
                 android:textSize="18sp" />
 

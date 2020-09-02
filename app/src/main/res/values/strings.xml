@@ -153,6 +153,19 @@
     <!-- Authentication -->
     <string name="register_btn">Register</string>
     <string name="login_btn">Login</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="no_account">Don\'t have an account?</string>
+    <string name="sign_upNow">Sign up now</string>
+    <string name="continueWithFb">Continue with Facebook</string>
+    <string name="already_have_anAccount">Already have an account?</string>
+    <string name="login">Log in</string>
+    <string name="signUp">Sign up</string>
+    <string name="invalidEmail">Please enter your valid email address</string>
+    <string name="invalidPasswordLogin">Please enter your password</string>
+    <string name="invalidPasswordSignup">Password must have more than 8 characters</string>
+    <string name="invalidLogin">Error: Invalid credententials</string>
+    <string name="invalidRegister">Error: Account registration failed</string>
 
     <!-- Divya -->
 

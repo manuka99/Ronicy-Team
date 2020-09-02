@@ -164,7 +164,7 @@ public class ContactDetails extends Fragment implements View.OnClickListener {
     private void validateContactDetails(){
         if(isNumbersHidden)
             newPostViewModel.setContactDetailsValidation(null);
-        else if(verifiedNumbers.size() > 0)
+        else if(verifiedNumbers != null && verifiedNumbers.size() > 0)
             newPostViewModel.setContactDetailsValidation(verifiedNumbers);
         else
             showErrorSnackBar(R.string.contact_details_error);
@@ -189,6 +189,9 @@ public class ContactDetails extends Fragment implements View.OnClickListener {
 
         if(requestCode == NEW_NUMBER_REQUEST_CODE && resultCode == RESULT_OK && data != null){
             verifiedNumbers = recycleAdapterForVerifiedNumbers.getSelectedNumbers();
+            if(verifiedNumbers == null){
+                verifiedNumbers = new ArrayList<>();
+            }
             verifiedNumbers.add(data.getIntExtra("phone", 0));
             displayAdNumbers();
         }

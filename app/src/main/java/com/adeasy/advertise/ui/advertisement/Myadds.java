@@ -33,10 +33,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 public class Myadds extends AppCompatActivity implements AdvertisementCallback {
 
     Context context;
-    String imageUrlTodelete;
+    List<String> imageUrls;
     Toolbar toolbar;
     RecyclerView recyclerView;
     AdvertisementManager advertisementManager;
@@ -46,7 +48,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_myadds);
+        setContentView(R.layout.manuka_activity_myadds);
 
         context = this;
 
@@ -101,107 +103,118 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                 ) {
                     @Override
                     protected void onBindViewHolder(@NonNull ViewHolderListAdds holder, final int position, @NonNull Advertisement advertisement) {
+                        try {
+                            holder.getMyadsTitle().setText(advertisement.getTitle());
+                            holder.getMyadsPrice().setText("Rs." + advertisement.getPrice());
+                            holder.getMyaddsDate().setText(advertisement.getPreetyTime());
+                            Picasso.get().load(advertisement.getImageUrls().get(0)).into(holder.getImageView());
 
-                        holder.getMyadsTitle().setText(advertisement.getTitle());
-                        holder.getMyadsPrice().setText("Rs." + advertisement.getPrice());
-                        holder.getMyaddsDate().setText(advertisement.getPreetyTime());
-                        Picasso.get().load(advertisement.getImageUrl()).into(holder.getImageView());
+                            if (!advertisement.isAvailability()) {
+                                holder.getMyadsAprooved().setText("Not Available");
+                                holder.getMyadsAprooved().setBackgroundResource(R.color.colorPrimary);
+                                holder.getMyadsAprooved().setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorWhite));
+                                holder.getMyaddsUaprovedReason().setVisibility(View.GONE);
+                            } else if (advertisement.isApproved()) {
+                                holder.getMyadsAprooved().setText("Live");
+                                holder.getMyadsAprooved().setBackgroundResource(R.color.colorSucess);
+                                holder.getMyadsAprooved().setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorBlack));
+                                holder.getMyaddsUaprovedReason().setVisibility(View.GONE);
+                            } else {
+                                holder.getMyadsAprooved().setText("Not Approved");
+                                holder.getMyadsAprooved().setBackgroundResource(R.color.colorDanger);
+                                holder.getMyadsAprooved().setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorWhite));
+                                if (advertisement.getUnapprovedReason() != null) {
+                                    holder.getMyaddsUaprovedReason().setText(advertisement.getUnapprovedReason());
+                                    holder.getMyaddsUaprovedReason().setVisibility(View.VISIBLE);
+                                }else
+                                    holder.getMyaddsUaprovedReason().setVisibility(View.GONE);
+                            }
 
-                        if (!advertisement.isAvailability()) {
-                            holder.getMyadsAprooved().setText("Not Available");
-                            holder.getMyadsAprooved().setBackgroundResource(R.color.colorPrimary);
-                            holder.getMyadsAprooved().setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorWhite));
-                        } else if (advertisement.isApproved()) {
-                            holder.getMyadsAprooved().setText("Live");
-                            holder.getMyadsAprooved().setBackgroundResource(R.color.colorSucess);
-                            holder.getMyadsAprooved().setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorBlack));
-                        } else {
-                            holder.getMyadsAprooved().setText("Not Approved");
-                            holder.getMyadsAprooved().setBackgroundResource(R.color.colorDanger);
-                            holder.getMyadsAprooved().setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorWhite));
-                        }
 
-                        holder.itemView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                AlertDialog.Builder alertDialog = new AlertDialog.Builder(Myadds.this)
+                            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(Myadds.this)
 
-                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                            .setIcon(android.R.drawable.ic_dialog_alert)
 
-                                        .setTitle("My ad - " + getItem(position).get("title"))
+                                            .setTitle("My ad - " + getItem(position).get("title"))
 
-                                        .setMessage("Note any changes made cannot be revert. Select below and proceed.")
+                                            .setMessage("Note any changes made cannot be revert. Select below and proceed.")
 
-                                        .setNeutralButton("Delete ad", new DialogInterface.OnClickListener() {
+                                            .setNeutralButton("Delete ad", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+
+
+                                                    AlertDialog alertDialog = new AlertDialog.Builder(Myadds.this)
+
+                                                            .setIcon(android.R.drawable.ic_dialog_alert)
+
+                                                            .setTitle("Are you sure you want to delete your advertisement - " + getItem(position).get("title"))
+
+                                                            .setMessage("Note any changes made cannot be revert.")
+
+                                                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                                    imageUrls = (List<String>) getItem(position).get("imageUrls");
+                                                                    advertisementManager.deleteAdd(getItem(position).getId());
+                                                                }
+                                                            })
+
+                                                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                                                }
+                                                            })
+
+                                                            .show();
+
+                                                }
+                                            })
+
+                                            .setNegativeButton("Edit ad", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    Intent intent = new Intent(getApplicationContext(), EditAd.class);
+                                                    intent.putExtra("adID", getItem(position).get("id").toString());
+                                                    intent.putExtra("adCID", getItem(position).get("categoryID").toString());
+                                                    startActivity(intent);
+                                                }
+                                            });
+
+                                    if ((Boolean) getItem(position).get("availability")) {
+
+                                        alertDialog.setPositiveButton("Hide ad", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-
-
-                                                AlertDialog alertDialog = new AlertDialog.Builder(Myadds.this)
-
-                                                        .setIcon(android.R.drawable.ic_dialog_alert)
-
-                                                        .setTitle("Are you sure you want to delete your advertisement - " + getItem(position).get("title"))
-
-                                                        .setMessage("Note any changes made cannot be revert.")
-
-                                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                                imageUrlTodelete = (String) getItem(position).get("imageUrl");
-                                                                advertisementManager.deleteAdd(getItem(position).getId());
-                                                            }
-                                                        })
-
-                                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                                                            }
-                                                        })
-
-                                                        .show();
-
-                                            }
-                                        })
-
-                                        .setNegativeButton("Edit ad", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                Intent intent = new Intent(getApplicationContext(), EditAd.class);
-                                                intent.putExtra("adID", getItem(position).get("id").toString());
-                                                intent.putExtra("adCID", getItem(position).get("categoryID").toString());
-                                                startActivity(intent);
+                                                advertisementManager.hideAdd(getItem(position).getId(), false);
                                             }
                                         });
+                                    } else {
 
-                                if ((Boolean) getItem(position).get("availability")) {
+                                        alertDialog.setPositiveButton("Show ad", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                advertisementManager.hideAdd(getItem(position).getId(), true);
+                                            }
+                                        });
+                                    }
 
-                                    alertDialog.setPositiveButton("Hide ad", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            advertisementManager.hideAdd(getItem(position).getId(), false);
-                                        }
-                                    });
-                                } else {
-
-                                    alertDialog.setPositiveButton("Show ad", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            advertisementManager.hideAdd(getItem(position).getId(), true);
-                                        }
-                                    });
+                                    alertDialog.show();
                                 }
-
-                                alertDialog.show();
-                            }
-                        });
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @NonNull
                     @Override
                     public ViewHolderListAdds onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ads_row, parent, false);
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manuka_ads_row, parent, false);
                         return new ViewHolderListAdds(view);
                     }
 
@@ -274,10 +287,15 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
 
     @Override
     public void onSuccessDeleteAd() {
-        advertisementManager.deletePreviousImage(imageUrlTodelete);
-        imageUrlTodelete = null;
+        if (imageUrls != null) {
+            for (String url : imageUrls) {
+                advertisementManager.deletePreviousImage(url);
+            }
+            imageUrls = null;
+        }
         firestorePagingAdapter.refresh();
         Toast.makeText(context, "Success: Your advertisement was deleted", Toast.LENGTH_LONG).show();
+
     }
 
     @Override

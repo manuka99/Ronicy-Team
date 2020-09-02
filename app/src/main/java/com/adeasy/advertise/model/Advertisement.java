@@ -27,18 +27,19 @@ public class Advertisement implements Serializable {
     private String categoryID;
     private String userID;
     private String preetyTime;
-    private String imageUrl;
     private List<String> imageUrls;
     private List<Integer> numbers;
     private String location;
+    private String unapprovedReason;
 
     public Advertisement() {
         this.placedDate = new Date();
         this.availability = true;
-        this.approved = true;
+        this.approved = false;
         this.buynow = false;
         this.imageUrls = new ArrayList<>();
         this.numbers = new ArrayList<>();
+        this.unapprovedReason = "This ad is currently being reviewed. You will recieve a notification when we have reviewed this ad. It usually takes about 4 working hours (Office hours 07 AM - 09 PM)";
     }
 
     public String getId() {
@@ -129,14 +130,6 @@ public class Advertisement implements Serializable {
         this.buynow = buynow;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
     public List<String> getImageUrls() {
         return imageUrls;
     }
@@ -173,4 +166,13 @@ public class Advertisement implements Serializable {
     public void setNumbers(List<Integer> numbers) {
         this.numbers = numbers;
     }
+
+    public String getUnapprovedReason() {
+        return unapprovedReason;
+    }
+
+    public void setUnapprovedReason(String unapprovedReason) {
+        this.unapprovedReason = unapprovedReason;
+    }
+
 }

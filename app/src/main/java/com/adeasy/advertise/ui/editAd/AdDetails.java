@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -140,6 +143,18 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        newPostViewModel.getAdDetailsValidation().observe(getActivity(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                validateAdDetails();
+            }
+        });
+    }
+
     private void displayAdDetails(){
         postTitle.getEditText().setText(advertisement.getTitle());
         postCondition.getEditText().setText(advertisement.getCondition());
@@ -238,7 +253,8 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
         else if(postPrice.getEditText().getText().length() < 2)
             postPrice.setError(getString(R.string.price_error));
         else{
-            advertisement = new Advertisement();
+            if(advertisement == null)
+                advertisement = new Advertisement();
             advertisement.setTitle(postTitle.getEditText().getText().toString());
             advertisement.setCondition(postCondition.getEditText().getText().toString());
             advertisement.setDescription(postDescription.getEditText().getText().toString());

@@ -1,30 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e6ecff">
+    android:background="#e6ecff"
+    tools:context=".ui.home.Account">
 
     <!-- Manuka -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".ui.home.Account">
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/noAuthFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
+            android:id="@+id/authContent"
             android:layout_width="match_parent"
-            android:id="@+id/accountMain"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:padding="24dp"
+                android:text=""
+                android:textSize="24sp"></TextView>
+
             <Button
-                android:id="@+id/started"
+                android:id="@+id/myads"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="40dp"
+                android:layout_marginBottom="4dp"
+                android:background="#ffffff"
+                android:drawableStart="@drawable/ic_baseline_filter_24"
+                android:drawablePadding="20dp"
+                android:elevation="4dp"
+                android:fontFamily="@font/droid_sans"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:text="@string/account_myads"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="18sp"></Button>
+
+            <Button
+                android:id="@+id/accountMember"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginBottom="4dp"
                 android:background="#ffffff"
                 android:drawableStart="@drawable/ic_baseline_event_24"
                 android:drawablePadding="20dp"
@@ -32,177 +62,134 @@
                 android:fontFamily="@font/droid_sans"
                 android:paddingStart="6dp"
                 android:paddingEnd="6dp"
-                android:text="@string/account_getStarted"
-                android:textSize="18sp"
+                android:text="@string/account_membership"
                 android:textAlignment="textStart"
-                android:textAllCaps="false"></Button>
+                android:textAllCaps="false"
+                android:textSize="18sp"></Button>
 
+            <Button
+                android:id="@+id/favourite"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginBottom="4dp"
+                android:background="#ffffff"
+                android:drawableStart="@drawable/ic_baseline_star_24"
+                android:drawablePadding="20dp"
+                android:elevation="4dp"
+                android:fontFamily="@font/droid_sans"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:text="@string/account_fav"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="18sp"></Button>
+
+            <Button
+                android:id="@+id/myprofile"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="#ffffff"
+                android:drawableStart="@drawable/ic_baseline_person_24"
+                android:drawablePadding="20dp"
+                android:elevation="4dp"
+                android:fontFamily="@font/droid_sans"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:text="@string/account_profile"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="18sp"></Button>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/userName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="24dp"
-            android:text=""
-            android:fontFamily="sans-serif-medium"
-            android:textSize="24sp"></TextView>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginBottom="4dp"
+                android:background="#ffffff"
+                android:drawableStart="@drawable/ic_baseline_verified_user_24"
+                android:drawablePadding="20dp"
+                android:drawableTint="#a6a6a6"
+                android:elevation="4dp"
+                android:fontFamily="@font/droid_sans"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:text="@string/account_safe"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                tools:targetApi="m"></Button>
 
-        <Button
-            android:id="@+id/myads"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginBottom="4dp"
-            android:background="#ffffff"
-            android:drawableStart="@drawable/ic_baseline_filter_24"
-            android:drawablePadding="20dp"
-            android:elevation="4dp"
-            android:fontFamily="@font/droid_sans"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp"
-            android:text="@string/account_myads"
-            android:textSize="18sp"
-            android:textAlignment="textStart"
-            android:textAllCaps="false"></Button>
+            <Button
+                android:id="@+id/faq"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginBottom="4dp"
+                android:background="#ffffff"
+                android:drawableStart="@drawable/ic_baseline_battery_unknown_24"
+                android:drawablePadding="20dp"
+                android:elevation="4dp"
+                android:fontFamily="@font/droid_sans"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:text="@string/account_faq"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="18sp"></Button>
 
-        <Button
-            android:id="@+id/accountMember"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginBottom="4dp"
-            android:background="#ffffff"
-            android:drawableStart="@drawable/ic_baseline_event_24"
-            android:drawablePadding="20dp"
-            android:elevation="4dp"
-            android:fontFamily="@font/droid_sans"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp"
-            android:text="@string/account_membership"
-            android:textSize="18sp"
-            android:textAlignment="textStart"
-            android:textAllCaps="false"></Button>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginBottom="4dp"
+                android:background="#ffffff"
+                android:drawableStart="@drawable/ic_baseline_slideshow_24"
+                android:drawablePadding="20dp"
+                android:drawableTint="#a6a6a6"
+                android:elevation="4dp"
+                android:fontFamily="@font/droid_sans"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:text="@string/account_howto"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                tools:targetApi="m"></Button>
 
-        <Button
-            android:id="@+id/favourite"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginBottom="4dp"
-            android:background="#ffffff"
-            android:drawableStart="@drawable/ic_baseline_star_24"
-            android:drawablePadding="20dp"
-            android:elevation="4dp"
-            android:fontFamily="@font/droid_sans"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp"
-            android:text="@string/account_fav"
-            android:textSize="18sp"
-            android:textAlignment="textStart"
-            android:textAllCaps="false"></Button>
+            <Button
+                android:id="@+id/donateUs"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginBottom="4dp"
+                android:background="#ffffff"
+                android:drawableStart="@drawable/ic_baseline_double_arrow_24"
+                android:drawablePadding="20dp"
+                android:elevation="4dp"
+                android:fontFamily="@font/droid_sans"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:text="@string/account_donate"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="18sp"></Button>
 
-        <Button
-            android:id="@+id/myprofile"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:background="#ffffff"
-            android:drawableStart="@drawable/ic_baseline_person_24"
-            android:drawablePadding="20dp"
-            android:elevation="4dp"
-            android:fontFamily="@font/droid_sans"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp"
-            android:text="@string/account_profile"
-            android:textSize="18sp"
-            android:textAlignment="textStart"
-            android:textAllCaps="false"></Button>
-
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginBottom="4dp"
-            android:background="#ffffff"
-            android:drawableStart="@drawable/ic_baseline_verified_user_24"
-            android:drawablePadding="20dp"
-            android:drawableTint="#a6a6a6"
-            android:elevation="4dp"
-            android:fontFamily="@font/droid_sans"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp"
-            android:text="@string/account_safe"
-            android:textAlignment="textStart"
-            android:textSize="18sp"
-            android:textAllCaps="false" tools:targetApi="m"></Button>
-
-        <Button
-            android:id="@+id/faq"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginBottom="4dp"
-            android:background="#ffffff"
-            android:drawableStart="@drawable/ic_baseline_battery_unknown_24"
-            android:drawablePadding="20dp"
-            android:elevation="4dp"
-            android:fontFamily="@font/droid_sans"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp"
-            android:text="@string/account_faq"
-            android:textAlignment="textStart"
-            android:textSize="18sp"
-            android:textAllCaps="false"></Button>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginBottom="4dp"
-            android:background="#ffffff"
-            android:drawableStart="@drawable/ic_baseline_slideshow_24"
-            android:drawablePadding="20dp"
-            android:drawableTint="#a6a6a6"
-            android:elevation="4dp"
-            android:fontFamily="@font/droid_sans"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp"
-            android:text="@string/account_howto"
-            android:textSize="18sp"
-            android:textAlignment="textStart"
-            android:textAllCaps="false" tools:targetApi="m"></Button>
-
-        <Button
-            android:id="@+id/donateUs"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginBottom="4dp"
-            android:background="#ffffff"
-            android:drawableStart="@drawable/ic_baseline_double_arrow_24"
-            android:drawablePadding="20dp"
-            android:elevation="4dp"
-            android:fontFamily="@font/droid_sans"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp"
-            android:text="@string/account_donate"
-            android:textSize="18sp"
-            android:textAlignment="textStart"
-            android:textAllCaps="false"></Button>
-
-        <Button
-            android:id="@+id/logout"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginBottom="68dp"
-            android:layout_marginTop="8dp"
-            android:background="#ffffff"
-            android:drawableStart="@drawable/ic_baseline_power_settings_new_24"
-            android:drawablePadding="20dp"
-            android:elevation="4dp"
-            android:fontFamily="@font/droid_sans"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp"
-            android:text="@string/account_logout"
-            android:textSize="18sp"
-            android:textAlignment="textStart"
-            android:textAllCaps="false"></Button>
+            <Button
+                android:id="@+id/logout"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="68dp"
+                android:background="#ffffff"
+                android:drawableStart="@drawable/ic_baseline_power_settings_new_24"
+                android:drawablePadding="20dp"
+                android:elevation="4dp"
+                android:fontFamily="@font/droid_sans"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:text="@string/account_logout"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="18sp"></Button>
 
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
