@@ -13,10 +13,13 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <FrameLayout
+        <TextView
             android:id="@+id/fragmentHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/colorBlackText"
+            android:gravity="center"
             android:layout_marginBottom="20dp" />
 
         <Button
@@ -36,7 +39,7 @@
 
         <LinearLayout
             android:id="@+id/loginLayout"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -45,6 +48,7 @@
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:hintTextColor="@color/colorGreen"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -60,6 +64,7 @@
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:hintTextColor="@color/colorGreen"
                 app:passwordToggleEnabled="true"
                 app:errorEnabled="true">
 
@@ -67,8 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:textColorHint="@color/colorGreen" />
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -145,7 +149,7 @@
 
         <LinearLayout
             android:id="@+id/signUpLayout"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -154,6 +158,7 @@
                 android:id="@+id/name_signUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:hintTextColor="@color/colorGreen"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -168,6 +173,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/email_signUp"
                 android:layout_width="match_parent"
+                app:hintTextColor="@color/colorGreen"
                 android:layout_height="wrap_content"
                 app:errorEnabled="true">
 
@@ -183,6 +189,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/password_signUp"
                 android:layout_width="match_parent"
+                app:hintTextColor="@color/colorGreen"
                 android:layout_height="wrap_content"
                 app:errorEnabled="true"
                 app:counterMaxLength="20"
@@ -198,18 +205,39 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/signUp"
+            <LinearLayout
+                android:id="@+id/signupBtnLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:background="@color/colorGreen"
-                android:text="@string/signUp"
-                android:textAllCaps="false"
-                android:textColor="@color/colorWhite"
-                android:textSize="20sp"
-                android:layout_marginBottom="20dp"
-                android:textStyle="bold" />
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:padding="8dp"
+                android:layout_height="wrap_content">
+
+                <ProgressBar
+                    android:id="@+id/progressBarsignup"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:indeterminate="true"
+                    android:indeterminateTintMode="src_atop"
+                    android:indeterminateTint="@color/colorWhite"
+                    android:layout_height="24dp" />
+
+                <TextView
+                    android:id="@+id/signUp"
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    android:text="@string/signUp"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"

@@ -24,6 +24,7 @@ import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.Category;
+import com.adeasy.advertise.ui.athentication.LoginRegister;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -40,6 +41,7 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
     AdvertisementDetails advertisementDetails;
     CategorySelected categorySelected;
     ContactDetails contactDetails;
+    LoginRegister loginRegister;
     List<Integer> verifiedNumbers;
     AdvertisementManager advertisementManager;
     ProgressDialog progressDialog;
@@ -67,6 +69,7 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
         advertisementDetails = new AdvertisementDetails();
         categorySelected = new CategorySelected();
         contactDetails = new ContactDetails();
+        loginRegister = new LoginRegister();
 
         progressDialog = new ProgressDialog(this);
 
@@ -126,8 +129,16 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
             }
         });
 
-        startShowAllCategories();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (firebaseAuth.getCurrentUser() != null)
+            startShowAllCategories();
+        else
+            showLoginRegisterFragment();
     }
 
     @Override
@@ -136,6 +147,21 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
             showExitAlert();
         else
             finish();
+    }
+
+    private void showLoginRegisterFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putString("frame", "post");
+        loginRegister.setArguments(bundle);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(frameLayout.getId(), loginRegister);
+        fragmentTransaction.remove(locationSelector);
+        fragmentTransaction.remove(categorySelected);
+        fragmentTransaction.remove(contactDetails);
+        fragmentTransaction.remove(advertisementDetails);
+        fragmentTransaction.remove(allCategoriesNewPost);
+        fragmentTransaction.commit();
     }
 
     private void startShowAllCategories() {
@@ -212,7 +238,7 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
                 .show();
     }
 
-    private void onContactDetailsValidated(){
+    private void onContactDetailsValidated() {
         newPostViewModel.setAdDetailsValidation(true);
         newPostViewModel.getAdvertisement().observe(this, new Observer<Advertisement>() {
             @Override
@@ -223,7 +249,7 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
         });
     }
 
-    private void postAd(){
+    private void postAd() {
         advertisement.setUserID(firebaseAuth.getCurrentUser().getUid());
         advertisement.setNumbers(verifiedNumbers);
         advertisement.setLocation(location);
@@ -239,10 +265,10 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
     @Override
     public void onTaskFull(boolean result) {
 
-        if(result)
+        if (result)
             Toast.makeText(this, "Please Wait..", Toast.LENGTH_SHORT).show();
 
-        else{
+        else {
             progressDialog.setTitle("Publishing your advertisement...");
             progressDialog.setMessage("Your advertisement will be live after we approve it.");
             progressDialog.setCanceledOnTouchOutside(false);
@@ -287,6 +313,7 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
     public void onAdCount(Task<QuerySnapshot> task) {
 
     }
+
     @Override
     public void getAdbyID(@NonNull Task<DocumentSnapshot> task) {
 

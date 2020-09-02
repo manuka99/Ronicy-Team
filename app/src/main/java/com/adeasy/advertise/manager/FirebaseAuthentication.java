@@ -2,22 +2,14 @@ package com.adeasy.advertise.manager;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.adeasy.advertise.callback.FirebaseAuthenticationCallback;
-import com.adeasy.advertise.ui.athentication.login;
-import com.adeasy.advertise.ui.athentication.register;
-import com.adeasy.advertise.ui.home.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class FirebaseAuthentication {
     private static final String TAG = "FirebaseAuthentication";

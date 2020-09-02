@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ui.Order.BuyNow;
-import com.adeasy.advertise.ui.athentication.login;
 import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.callback.CategoryCallback;
 import com.adeasy.advertise.manager.AdvertisementManager;
@@ -143,7 +142,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
 
-                            startActivity(new Intent(Advertisement.this, login.class));
+                            //startActivity(new Intent(Advertisement.this, login.class));
 
                         }
                     })

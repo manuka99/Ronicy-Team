@@ -22,18 +22,16 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.ui.advertisement.Donations;
 import com.adeasy.advertise.ui.advertisement.Myadds;
 import com.adeasy.advertise.ui.athentication.LoginRegister;
-import com.adeasy.advertise.ui.athentication.login;
 import com.adeasy.advertise.ui.favaourite.divya_MActivity;
 import com.adeasy.advertise.ui.getintouch.GetInTouchActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Account#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Account extends Fragment implements View.OnClickListener{
+public class Account extends Fragment implements View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -113,7 +111,7 @@ public class Account extends Fragment implements View.OnClickListener{
         faq.setOnClickListener(this);
         favaourite.setOnClickListener(this);
 
-        if(mAuth.getCurrentUser() != null)
+        if (mAuth.getCurrentUser() != null)
             showAuthContent();
         else
             showNoAuthContent();
@@ -124,42 +122,43 @@ public class Account extends Fragment implements View.OnClickListener{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.account);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.account);
     }
 
     @Override
     public void onClick(View view) {
-        if(view == myads)
+        if (view == myads)
             startActivity(new Intent(getContext(), Myadds.class));
-        else if(view == donateUs)
+        else if (view == donateUs)
             startActivity(new Intent(getContext(), Donations.class));
-        else if(view == logout){
-            try {
+        else if (view == logout) {
+            if (mAuth.getCurrentUser() != null)
                 mAuth.signOut();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
             startActivity(new Intent(getContext(), MainActivity.class));
-        }
-        else if(view == faq)
+        } else if (view == faq)
             startActivity(new Intent(getContext(), GetInTouchActivity.class));
-        else if(view == favaourite)
+        else if (view == favaourite)
             startActivity(new Intent(getContext(), divya_MActivity.class));
     }
 
-    private void showNoAuthContent(){
+    private void showNoAuthContent() {
+        logout.setVisibility(View.GONE);
         authContent.setVisibility(View.GONE);
         noAuthFragment.setVisibility(View.VISIBLE);
 
+        Bundle bundle = new Bundle();
+        bundle.putString("frame", "account");
+        loginRegister.setArguments(bundle);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(noAuthFragment.getId(), loginRegister);
         fragmentTransaction.commit();
     }
 
-    private void showAuthContent(){
+    private void showAuthContent() {
         authContent.setVisibility(View.VISIBLE);
         noAuthFragment.setVisibility(View.GONE);
+        logout.setVisibility(View.VISIBLE);
         username.setText(mAuth.getCurrentUser().getDisplayName());
     }
 

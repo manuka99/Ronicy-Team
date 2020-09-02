@@ -39,8 +39,6 @@
         <activity android:name=".ui.getintouch.BugsActivity" />
         <activity android:name=".ui.getintouch.EditBugActivity" />
         <activity android:name=".ui.getintouch.ViewBugActivity" />
-        <activity android:name=".ui.athentication.register" />
-        <activity android:name=".ui.athentication.login" />
         <activity android:name=".ui.advertisement.Donations" />
         <activity android:name=".ui.advertisement.Advertisement" />
         <activity android:name=".ui.advertisement.Myadds" />

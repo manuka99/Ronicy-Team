@@ -49,11 +49,15 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
     private String mParam2;
 
     private static final String TAG = "LoginRegister";
+    private static final String Post = "Please sign up to post your ad:";
+    private static final String Chat = "Log in to chat with buyers and sellers on ronicy.lk";
+    private static final String Account = "Log in to manage your account:";
 
     LinearLayout loginLayout, signUpLayout;
 
     //topHeader
-    FrameLayout fragmentHeader;
+    TextView fragmentHeader;
+    String header;
 
     //login layout
     TextInputLayout login_email, login_password;
@@ -62,7 +66,6 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
     //signup layout
     TextInputLayout signUp_name, signUp_email, signUp_password;
     TextView loginNow;
-    Button signUp;
 
     //social login
     Button facebookLogin;
@@ -76,7 +79,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
 
     ProgressBar loginProgress, signUpProgress;
     LinearLayout loginBtnLayout, signupBtnLayout;
-    TextView login;
+    TextView login, signUp;
 
     String name;
 
@@ -123,11 +126,11 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
 
         //progress
         loginProgress = view.findViewById(R.id.progressBarLogin);
-        signUpProgress = view.findViewById(R.id.progressBarLogin);
+        signUpProgress = view.findViewById(R.id.progressBarsignup);
 
         //linear
         loginBtnLayout = view.findViewById(R.id.loginBtnLayout);
-        signupBtnLayout = view.findViewById(R.id.loginBtnLayout);
+        signupBtnLayout = view.findViewById(R.id.signupBtnLayout);
 
         //textview
         login = view.findViewById(R.id.login);
@@ -168,7 +171,8 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
 
         try {
             if (getArguments().get("frame") != null) {
-
+                header = getArguments().get("frame").toString();
+                changeHeader();
             }
         } catch (NullPointerException e) {
             Log.i(TAG, "No arguments sent");
@@ -178,6 +182,15 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
         showLogin();
 
         return view;
+    }
+
+    private void changeHeader() {
+        if (header.equals("account"))
+            fragmentHeader.setText(Account);
+        else if (header.equals("chat"))
+            fragmentHeader.setText(Chat);
+        else if (header.equals("post"))
+            fragmentHeader.setText(Post);
     }
 
     @Override
@@ -206,13 +219,16 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
         signUpLayout.setVisibility(View.VISIBLE);
     }
 
+
     private void validateLogin() {
         if (login_email.getEditText().getText().length() == 0)
             showErrorSnackbar(R.string.invalidEmail);
         else if (login_password.getEditText().getText().length() == 0)
             showErrorSnackbar(R.string.invalidPasswordLogin);
-        else
+        else {
+            showSigninUi();
             firebaseAuthentication.signInWithEmailAndPassword(login_email.getEditText().getText().toString(), login_password.getEditText().getText().toString());
+        }
     }
 
     private void validateSignUp() {
@@ -223,7 +239,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
         else if (signUp_password.getEditText().getText().length() == 0)
             showErrorSnackbar(R.string.invalidPasswordLogin);
         else {
-            showSigninUi();
+            showSignupUi();
             name = signUp_name.getEditText().getText().toString();
             firebaseAuthentication.createAccount(signUp_email.getEditText().getText().toString(), signUp_password.getEditText().getText().toString());
         }
@@ -250,9 +266,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
 
     @Override
     public void onCompleteSignIn(@NonNull Task<AuthResult> task) {
-
         endSigninUi();
-
         if (task.isSuccessful()) {
             // Sign in success, update UI with the signed-in user's information
             Log.d(TAG, "signInWithEmail:success");
@@ -272,6 +286,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
 
     @Override
     public void onCompleteCreateAccount(@NonNull Task<AuthResult> task) {
+        endSignupUi();
         if (task.isSuccessful()) {
             // Sign in success, update UI with the signed-in user's information
             Log.d(TAG, "createUserWithEmail:success");
@@ -306,7 +321,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
         getActivity().finish();
     }
 
-    private void showSigninUi(){
+    private void showSigninUi() {
         Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
         loginBtnLayout.setBackgroundResource(R.color.colorGreyBtn);
         login.setVisibility(View.GONE);
@@ -314,20 +329,28 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
         loginProgress.startAnimation(aniSlide);
     }
 
-    private void endSigninUi(){
+    private void endSigninUi() {
         Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
-        signupBtnLayout.setBackgroundResource(R.color.colorGreen);
+        loginBtnLayout.setBackgroundResource(R.color.colorGreen);
         login.setVisibility(View.VISIBLE);
         loginProgress.setVisibility(View.GONE);
         login.startAnimation(aniSlide);
     }
 
-    private void showSignupUi(){
-
+    private void showSignupUi() {
+        Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
+        signupBtnLayout.setBackgroundResource(R.color.colorGreyBtn);
+        signUp.setVisibility(View.GONE);
+        signUpProgress.setVisibility(View.VISIBLE);
+        signUpProgress.startAnimation(aniSlide);
     }
 
-    private void endSignupUi(){
-
+    private void endSignupUi() {
+        Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
+        signupBtnLayout.setBackgroundResource(R.color.colorGreen);
+        signUp.setVisibility(View.VISIBLE);
+        signUpProgress.setVisibility(View.GONE);
+        signUpProgress.startAnimation(aniSlide);
     }
 
     @Override
