@@ -60,7 +60,7 @@ public class RecycleAdapterForImages extends RecyclerView.Adapter<ViewHolderAdIm
 
             //holder.adImage.setImageURI(uriImages.get(position));
             else
-                Picasso.get().load(uriImages.get(position)).into(holder.adImage);
+                Picasso.get().load(uriImages.get(position)).fit().into(holder.adImage);
 
             holder.imageRemove.setOnClickListener(new View.OnClickListener() {
                 @Override

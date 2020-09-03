@@ -105,9 +105,9 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                     protected void onBindViewHolder(@NonNull ViewHolderListAdds holder, final int position, @NonNull Advertisement advertisement) {
                         try {
                             holder.getMyadsTitle().setText(advertisement.getTitle());
-                            holder.getMyadsPrice().setText("Rs." + advertisement.getPrice());
+                            holder.getMyadsPrice().setText("Rs " + advertisement.getPrice());
                             holder.getMyaddsDate().setText(advertisement.getPreetyTime());
-                            Picasso.get().load(advertisement.getImageUrls().get(0)).into(holder.getImageView());
+                            Picasso.get().load(advertisement.getImageUrls().get(0)).fit().into(holder.getImageView());
 
                             if (!advertisement.isAvailability()) {
                                 holder.getMyadsAprooved().setText("Not Available");
