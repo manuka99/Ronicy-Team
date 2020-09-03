@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.adapter.AdvertisementSliderAdapter;
 import com.adeasy.advertise.ui.Order.BuyNow;
 import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.callback.CategoryCallback;
@@ -30,12 +32,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 
 public class Advertisement extends AppCompatActivity implements AdvertisementCallback, CategoryCallback, View.OnClickListener {
 
     TextView AdTitle, AdCondition, AdDescription, AdPrice, adTime, adCatName;
-    ImageView image;
+    SliderView sliderView;
+    AdvertisementSliderAdapter advertisementSliderAdapter;
     String adID, adCID;
     Button callText, chatText, adBuyNow;
     Uri imageURI;
@@ -51,7 +57,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_advertisement);
+        setContentView(R.layout.manuka_activity_advertisement);
 
         auth = FirebaseAuth.getInstance();
         context = this;
@@ -71,7 +77,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
             }
         });
 
-        image = findViewById(R.id.adDetailsImage);
+        sliderView = findViewById(R.id.imageSlider);
 
         adCatName = findViewById(R.id.adDetailsCategoryName);
         adTime = findViewById(R.id.adDetailsTime);
@@ -90,6 +96,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
         advertisementManager.getAddbyID(adID);
         categoryManager.getCategorybyID(adCID);
+        advertisementSliderAdapter = new AdvertisementSliderAdapter();
 
     }
 
@@ -230,14 +237,12 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
                 try {
                     advertisement = new com.adeasy.advertise.model.Advertisement();
                     advertisement = document.toObject(com.adeasy.advertise.model.Advertisement.class);
-
                     adTime.setText(advertisement.getPreetyTime());
                     AdTitle.setText(advertisement.getTitle());
                     AdCondition.setText(advertisement.getCondition());
                     AdDescription.setText(advertisement.getDescription());
                     AdPrice.setText("Rs. " + advertisement.getPrice());
-                    Picasso.get().load(advertisement.getImageUrls().get(0)).into(image);
-
+                    displayImageSlider();
                     if (advertisement.isBuynow())
                         adBuyNow.setVisibility(View.VISIBLE);
 
@@ -268,6 +273,18 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         } else if (view == adBuyNow)
             initBuyNow();
 
+    }
+
+    private void displayImageSlider(){
+        advertisementSliderAdapter.renewItems(advertisement.getImageUrls());
+        sliderView.setSliderAdapter(advertisementSliderAdapter);
+        sliderView.setIndicatorAnimation(IndicatorAnimationType.SLIDE); //set indicator animation by using IndicatorAnimationType. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+        sliderView.setIndicatorSelectedColor(Color.WHITE);
+        sliderView.setIndicatorUnselectedColor(Color.GRAY);
+        sliderView.setScrollTimeInSec(4); //set scroll delay in seconds :
+        sliderView.startAutoCycle();
     }
 
     @Override

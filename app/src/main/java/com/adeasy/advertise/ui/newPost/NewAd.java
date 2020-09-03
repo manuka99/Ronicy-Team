@@ -129,16 +129,16 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
             }
         });
 
+            startShowAllCategories();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        if (firebaseAuth.getCurrentUser() != null)
-            startShowAllCategories();
-        else
+        if (firebaseAuth.getCurrentUser() == null)
             showLoginRegisterFragment();
+
     }
 
     @Override
@@ -254,7 +254,7 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
         advertisement.setNumbers(verifiedNumbers);
         advertisement.setLocation(location);
         advertisement.setCategoryID(category.getId());
-        advertisementManager.uploadImageMultiple(advertisement, this);
+        advertisementManager.uploadImageMultiple(advertisement, null, this);
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -23,14 +24,26 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.FirebaseAuthenticationCallback;
 import com.adeasy.advertise.manager.FirebaseAuthentication;
 import com.adeasy.advertise.ui.home.MainActivity;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,6 +65,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
     private static final String Post = "Please sign up to post your ad:";
     private static final String Chat = "Log in to chat with buyers and sellers on ronicy.lk";
     private static final String Account = "Log in to manage your account:";
+    private CallbackManager mCallbackManager;
 
     LinearLayout loginLayout, signUpLayout;
 
@@ -140,7 +154,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
         snackbar_text = view.findViewById(R.id.snackbar_text);
 
         //social login
-        facebookLogin = view.findViewById(R.id.facebookLogin);
+        //facebookLogin = view.findViewById(R.id.facebookLogin);
 
         //header
         fragmentHeader = view.findViewById(R.id.fragmentHeader);
@@ -167,7 +181,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
         signUp.setOnClickListener(this);
         login.setOnClickListener(this);
         forgotPassword.setOnClickListener(this);
-        facebookLogin.setOnClickListener(this);
+        //facebookLogin.setOnClickListener(this);
 
         try {
             if (getArguments().get("frame") != null) {
@@ -181,7 +195,39 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
         //display Login layout
         showLogin();
 
+        mCallbackManager = CallbackManager.Factory.create();
+        LoginButton loginButton = (LoginButton) view.findViewById(R.id.login_button);
+        loginButton.setReadPermissions("email", "public_profile");
+        loginButton.setFragment(this);
+        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d(TAG, "facebook:onCancel");
+                // ...
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d(TAG, "facebook:onError", error);
+                // ...
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //FacebookSdk.sdkInitialize();
+        //FacebookSdk.sdkInitialize(getActivity());
+        //AppEventsLogger.activateApp(getActivity());
     }
 
     private void changeHeader() {
@@ -205,8 +251,6 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
             validateSignUp();
         else if (view == forgotPassword)
             forgotPassword();
-        else if (view == facebookLogin)
-            startSocialLogin();
     }
 
     private void showLogin() {
@@ -252,6 +296,39 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
     private void startSocialLogin() {
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Pass the activity result back to the Facebook SDK
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    // [START auth_with_facebook]
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d(TAG, "handleFacebookAccessToken:" + token);
+        showSigninUi();
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(getActivity(), "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        endSigninUi();
+                    }
+                });
+    }
+    // [END auth_with_facebook]
 
     private void showErrorSnackbar(int error) {
         Snackbar snackbar = Snackbar.make(snackbar_text, error, Snackbar.LENGTH_LONG).setAction("x", new View.OnClickListener() {

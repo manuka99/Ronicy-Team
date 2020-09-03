@@ -80,6 +80,39 @@ public class AdvertisementManager {
         }
     }
 
+    public void updateAdvertisement(final Advertisement advertisement, final List<String> firebaseDeletedImages) {
+        try {
+            DocumentReference refStore;
+
+            if (advertisement.getId() == null) {
+                String myId = documentReference.getId();
+                advertisement.setId(myId);
+                refStore = documentReference;
+            } else
+                refStore = firebaseFirestore.collection(childName).document(advertisement.getId());
+
+            refStore.set(advertisement)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            if (firebaseDeletedImages != null)
+                                deleteMultipleImages(firebaseDeletedImages);
+                            advertisementCallback.onSuccessInsertAd();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            if (advertisement != null && advertisement.getImageUrls() != null)
+                                deleteMultipleImages(advertisement.getImageUrls());
+                            advertisementCallback.onFailureInsertAd();
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void uploadImage(final Advertisement advertisement, byte[] data) {
         try {
             if (storageTask != null && storageTask.isInProgress())
@@ -113,7 +146,7 @@ public class AdvertisementManager {
         }
     }
 
-    public void uploadImageMultiple(final Advertisement advertisement, Context context) {
+    public void uploadImageMultiple(final Advertisement advertisement, final List<String> deletedImageUrls, Context context) {
         try {
             if (storageTask != null && storageTask.isInProgress())
                 advertisementCallback.onTaskFull(true);
@@ -137,7 +170,7 @@ public class AdvertisementManager {
                             advertisement.getImageUrls().get(counter + 1);
                         } catch (Exception e) {
                             ad.setImageUrls(imageUriList);
-                            insertAdvertisement(ad);
+                            updateAdvertisement(ad, deletedImageUrls);
                         }
                     } else {
                         byte[] data = ImageQualityReducer.reduceQualityFromBitmap(imageUri, context);
@@ -174,7 +207,7 @@ public class AdvertisementManager {
                                     advertisement.getImageUrls().get(counter + 1);
                                 } catch (Exception e) {
                                     ad.setImageUrls(imageUriList);
-                                    insertAdvertisement(ad);
+                                    updateAdvertisement(ad, deletedImageUrls);
                                 }
 
                             }
@@ -255,7 +288,7 @@ public class AdvertisementManager {
         }
     }
 
-    public void deletePreviousImage(String url) {
+    public void deleteImage(String url) {
 
         final StorageReference storageref = firebaseStorage.getReferenceFromUrl(url);
         storageref.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -269,6 +302,25 @@ public class AdvertisementManager {
                 // Uh-oh, an error occurred!
             }
         });
+
+    }
+
+    public void deleteMultipleImages(List<String> imageUrls) {
+
+        for (String url : imageUrls) {
+            final StorageReference storageref = firebaseStorage.getReferenceFromUrl(url);
+            storageref.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    // File deleted successfully
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Uh-oh, an error occurred!
+                }
+            });
+        }
 
     }
 

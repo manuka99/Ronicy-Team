@@ -36,6 +36,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EditAd extends AppCompatActivity implements AdvertisementCallback, CategoryCallback {
@@ -47,6 +48,7 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
     SelectedCategory categorySelected;
     ContactDetails contactDetails;
     List<Integer> verifiedNumbers;
+    List<String> firebaseDeletedImages;
     AdvertisementManager advertisementManager;
     CategoryManager categoryManager;
     ProgressDialog progressDialog;
@@ -106,11 +108,20 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
         advertisementManager.getAddbyID(adID);
         categoryManager.getCategorybyID(adCID);
 
+        firebaseDeletedImages = new ArrayList<>();
+
         newPostViewModel.getContactDetailsValidation().observe(this, new Observer<List<Integer>>() {
             @Override
             public void onChanged(List<Integer> numbers) {
                 verifiedNumbers = numbers;
                 onContactDetailsValidated();
+            }
+        });
+
+        newPostViewModel.getDeletedFirebaseUriImages().observe(this, new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> strings) {
+                firebaseDeletedImages = strings;
             }
         });
 
@@ -178,7 +189,7 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
 
     private void postAd(){
         advertisement.setNumbers(verifiedNumbers);
-        advertisementManager.uploadImageMultiple(advertisement, this);
+        advertisementManager.uploadImageMultiple(advertisement, firebaseDeletedImages, this);
     }
 
     public void showExitAlert() {

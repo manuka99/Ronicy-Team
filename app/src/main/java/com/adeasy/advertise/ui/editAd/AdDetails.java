@@ -54,6 +54,7 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
     Advertisement advertisement;
 
     List<String> imagesUriArrayList;
+    List<String> deletedFirebaseUriArrayList;
     ImageView imageCamera;
     RecyclerView imageRecycler;
     FrameLayout snackbarView;
@@ -136,6 +137,7 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
         postPrice.getEditText().addTextChangedListener(this);
 
         imagesUriArrayList = advertisement.getImageUrls();
+        deletedFirebaseUriArrayList = new ArrayList<>();
 
         displayAdDetails();
         displayImages();
@@ -206,6 +208,7 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
     @Override
     public void itemRemoved() {
         imagesUriArrayList = recycleAdapterForImages.getSelectedImages();
+        deletedFirebaseUriArrayList = recycleAdapterForImages.getDeletedFirebaseUriImages();
         if (imagesUriArrayList.size() == 0)
             imageCamera.setVisibility(View.VISIBLE);
     }
@@ -262,6 +265,7 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
             advertisement.setImageUrls(imagesUriArrayList);
 
             newPostViewModel.setAdvertisement(advertisement);
+            newPostViewModel.setDeletedFirebaseUriImages(deletedFirebaseUriArrayList);
         }
     }
 

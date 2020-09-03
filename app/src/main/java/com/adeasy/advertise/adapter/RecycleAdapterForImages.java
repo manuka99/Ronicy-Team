@@ -16,11 +16,13 @@ import com.adeasy.advertise.helper.ViewHolderAdImage;
 import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecycleAdapterForImages extends RecyclerView.Adapter<ViewHolderAdImage> {
 
     private List<String> uriImages;
+    private List<String> deletedFirebaseUriImages;
     private RecycleAdapterInterface callback;
     private Context context;
     private static final String TAG = "RecycleAdapterForImages";
@@ -34,6 +36,7 @@ public class RecycleAdapterForImages extends RecyclerView.Adapter<ViewHolderAdIm
         this.uriImages = uriImages;
         this.callback = callback;
         this.context = context;
+        deletedFirebaseUriImages = new ArrayList<>();
     }
 
     @NonNull
@@ -65,6 +68,8 @@ public class RecycleAdapterForImages extends RecyclerView.Adapter<ViewHolderAdIm
             holder.imageRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (Uri.parse(uriImages.get(position)).getHost().equals(FIREBASE_HOST))
+                        deletedFirebaseUriImages.add(uriImages.get(position));
                     uriImages.remove(position);
                     callback.itemRemoved();
                     notifyDataSetChanged();
@@ -83,6 +88,10 @@ public class RecycleAdapterForImages extends RecyclerView.Adapter<ViewHolderAdIm
 
     public List<String> getSelectedImages() {
         return uriImages;
+    }
+
+    public List<String> getDeletedFirebaseUriImages() {
+        return deletedFirebaseUriImages;
     }
 
 }

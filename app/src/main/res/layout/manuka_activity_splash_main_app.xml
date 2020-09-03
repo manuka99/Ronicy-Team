@@ -12,6 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/pattern_icon"
+            android:backgroundTint="#14000000"
             android:layout_margin="10dp"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">

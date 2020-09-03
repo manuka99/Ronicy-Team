@@ -5,6 +5,10 @@
     <string name="site_name">Ronicy.lk</string>
     <string name="slogan">SRILANKA\'S LARGEST MARKETPLACE</string>
 
+    <string name="facebook_app_id">2691093471145086</string>
+    <string name="fb_login_protocol_scheme">fb2691093471145086</string>
+
+
     <!-- common -->
     <string name="image">image view</string>
     <string name="company_phone">01122223344 </string>

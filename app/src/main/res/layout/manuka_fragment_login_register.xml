@@ -22,18 +22,12 @@
             android:gravity="center"
             android:layout_marginBottom="20dp" />
 
-        <Button
-            android:id="@+id/facebookLogin"
-            android:layout_width="match_parent"
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:background="@color/colorBlue"
-            android:drawableStart="@drawable/icon_login_facebook_sm"
-            android:paddingStart="40dp"
-            android:paddingEnd="40dp"
-            android:text="@string/continueWithFb"
-            android:textAllCaps="false"
-            android:textColor="@color/colorWhite"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -42,6 +36,7 @@
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout

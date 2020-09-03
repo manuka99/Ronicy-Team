@@ -126,7 +126,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                                 if (advertisement.getUnapprovedReason() != null) {
                                     holder.getMyaddsUaprovedReason().setText(advertisement.getUnapprovedReason());
                                     holder.getMyaddsUaprovedReason().setVisibility(View.VISIBLE);
-                                }else
+                                } else
                                     holder.getMyaddsUaprovedReason().setVisibility(View.GONE);
                             }
 
@@ -288,9 +288,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
     @Override
     public void onSuccessDeleteAd() {
         if (imageUrls != null) {
-            for (String url : imageUrls) {
-                advertisementManager.deletePreviousImage(url);
-            }
+            advertisementManager.deleteMultipleImages(imageUrls);
             imageUrls = null;
         }
         firestorePagingAdapter.refresh();

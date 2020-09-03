@@ -16,6 +16,7 @@ public class NewPostViewModel  extends ViewModel {
     private MutableLiveData<Advertisement> advertisement = new MutableLiveData<>();
     private MutableLiveData<List<Integer>> contactDetailsValidation = new MutableLiveData<>();
     private MutableLiveData<Boolean> adDetailsValidation = new MutableLiveData<>();
+    private MutableLiveData<List<String>> deletedFirebaseUriImages = new MutableLiveData<>();
 
     public LiveData<String> getLocationSelected() {
         return locationSelected;
@@ -64,4 +65,13 @@ public class NewPostViewModel  extends ViewModel {
     public void setAdDetailsValidation(Boolean adDetailsValidation) {
         this.adDetailsValidation.setValue(adDetailsValidation);
     }
+
+    public LiveData<List<String>> getDeletedFirebaseUriImages() {
+        return deletedFirebaseUriImages;
+    }
+
+    public void setDeletedFirebaseUriImages(List<String> deletedFirebaseUriImages) {
+        this.deletedFirebaseUriImages.setValue(deletedFirebaseUriImages);
+    }
+
 }

@@ -24,14 +24,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/adDetailsImage"
+            <com.smarteist.autoimageslider.SliderView
+                android:id="@+id/imageSlider"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="40dp"
-                android:contentDescription="@string/image"></ImageView>
-
+                android:layout_height="@dimen/_260sdp"
+                app:sliderAnimationDuration="600"
+                app:sliderAutoCycleDirection="back_and_forth"
+                app:sliderAutoCycleEnabled="true"
+                app:sliderIndicatorAnimationDuration="200"
+                app:sliderIndicatorGravity="center_horizontal|bottom"
+                app:sliderIndicatorOrientation="horizontal"
+                app:sliderIndicatorPadding="3dp"
+                app:sliderIndicatorMargin="@dimen/_4sdp"
+                app:sliderIndicatorRadius="2dp"
+                app:sliderScrollTimeInSec="1"
+                app:sliderStartAutoCycle="true" />
 
             <LinearLayout
                 android:layout_width="match_parent"
