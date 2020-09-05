@@ -1,15 +1,18 @@
 package com.adeasy.advertise.ui.home;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,24 +22,44 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.callback.FacebookAuthCallback;
+import com.adeasy.advertise.manager.FacebookAuthManager;
 import com.adeasy.advertise.ui.advertisement.Donations;
 import com.adeasy.advertise.ui.advertisement.Myadds;
 import com.adeasy.advertise.ui.athentication.LoginRegister;
 import com.adeasy.advertise.ui.favaourite.divya_MActivity;
 import com.adeasy.advertise.ui.getintouch.GetInTouchActivity;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.auth.UserInfo;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Account#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Account extends Fragment implements View.OnClickListener {
+public class Account extends Fragment implements View.OnClickListener, FacebookAuthCallback {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "Account";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -44,10 +67,14 @@ public class Account extends Fragment implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
     TextView username;
-    Button myads, favaourite, membership, profile, faq, donateUs, logout;
-    FrameLayout noAuthFragment;
+    Button myads, favaourite, membership, profile, faq, donateUs, logout, linkfb;
+    FrameLayout noAuthFragment, snackView;
     LinearLayout authContent;
     LoginRegister loginRegister;
+    CallbackManager callbackManager;
+    FacebookAuthManager facebookAuthManager;
+    LoginManager loginManager;
+    Boolean isFbLinked;
 
     public Account() {
         // Required empty public constructor
@@ -100,6 +127,8 @@ public class Account extends Fragment implements View.OnClickListener {
         faq = view.findViewById(R.id.faq);
         donateUs = view.findViewById(R.id.donateUs);
         logout = view.findViewById(R.id.logout);
+        linkfb = view.findViewById(R.id.linkfb);
+        snackView = view.findViewById(R.id.snackView);
 
         loginRegister = new LoginRegister();
 
@@ -110,6 +139,9 @@ public class Account extends Fragment implements View.OnClickListener {
         myads.setOnClickListener(this);
         faq.setOnClickListener(this);
         favaourite.setOnClickListener(this);
+        linkfb.setOnClickListener(this);
+
+        facebookAuthManager = new FacebookAuthManager(this);
 
         if (mAuth.getCurrentUser() != null)
             showAuthContent();
@@ -123,6 +155,28 @@ public class Account extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.account);
+
+        callbackManager = CallbackManager.Factory.create();
+        loginManager = LoginManager.getInstance();
+        loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                facebookAuthManager.linkFacebookToUser(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d(TAG, "facebook:onCancel");
+                // ...
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d(TAG, "facebook:onError", error);
+                // ...
+            }
+        });
     }
 
     @Override
@@ -139,6 +193,8 @@ public class Account extends Fragment implements View.OnClickListener {
             startActivity(new Intent(getContext(), GetInTouchActivity.class));
         else if (view == favaourite)
             startActivity(new Intent(getContext(), divya_MActivity.class));
+        else if (view == linkfb)
+            linkWithFb();
     }
 
     private void showNoAuthContent() {
@@ -160,6 +216,110 @@ public class Account extends Fragment implements View.OnClickListener {
         noAuthFragment.setVisibility(View.GONE);
         logout.setVisibility(View.VISIBLE);
         username.setText(mAuth.getCurrentUser().getDisplayName());
+        updateFacebookLinkState();
+    }
+
+    private void linkWithFb() {
+        updateFacebookLinkState();
+        if (isFbLinked)
+            displayDialogUnlinkFb();
+        else {
+            loginManager.logInWithReadPermissions(this, Arrays.asList("email", "public_profile"));
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(callbackManager.onActivityResult(requestCode, resultCode, data)){
+            return;
+        }
+    }
+
+    private void displayDialogUnlinkFb() {
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+
+                .setMessage("Are you sure you want to unlink from facebook?")
+
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        facebookAuthManager.unlinkFromFBProvider();
+                    }
+                })
+
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+
+                .show();
+    }
+
+    public void updateFacebookLinkState() {
+        if (mAuth.getCurrentUser() != null) {
+            isFbLinked = false;
+            List<? extends UserInfo> providerData = mAuth.getCurrentUser().getProviderData();
+            for (UserInfo userInfo : providerData) {
+                if (userInfo.getProviderId().equals(FacebookAuthProvider.PROVIDER_ID)) {
+                    linkfb.setText("Connected as " + userInfo.getDisplayName());
+                    isFbLinked = true;
+                }
+            }
+            if (isFbLinked == false)
+                linkfb.setText(getString(R.string.linkFb));
+        }
+    }
+
+    @Override
+    public void onCompleteSignInWithFacebook(@NonNull Task<AuthResult> task) {
+
+    }
+
+    @Override
+    public void onCompleteLinkInWithFacebook(@NonNull Task<AuthResult> task) {
+        updateFacebookLinkState();
+        if (task.isSuccessful()) {
+            showSuccessSnackbar(getString(R.string.linkFbSuccess));
+        } else
+            showErrorSnackbar(getString(R.string.linkFbError));
+    }
+
+    @Override
+    public void onCompleteUnlinkFacebookAuthCredential(@NonNull Task<AuthResult> task) {
+        updateFacebookLinkState();
+        if (task.isSuccessful()) {
+            showSuccessSnackbar(getString(R.string.linkFbRemoveSuccess));
+        } else
+            showErrorSnackbar(getString(R.string.linkFbRemoveError));
+    }
+
+    private void showErrorSnackbar(String error) {
+        Snackbar snackbar = Snackbar.make(snackView, error, Snackbar.LENGTH_INDEFINITE).setAction("x", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        }).setActionTextColor(getResources().getColor(R.color.colorWhite));
+        View snackbarView = snackbar.getView();
+        TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+        textView.setMaxLines(5);
+        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorError2));
+        snackbar.show();
+    }
+
+    private void showSuccessSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(snackView, message, Snackbar.LENGTH_INDEFINITE).setAction("x", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        }).setActionTextColor(getResources().getColor(R.color.colorWhite));
+        View snackbarView = snackbar.getView();
+        TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+        textView.setMaxLines(5);
+        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        snackbar.show();
     }
 
 }

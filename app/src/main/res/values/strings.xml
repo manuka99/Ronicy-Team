@@ -170,6 +170,13 @@
     <string name="invalidPasswordSignup">Password must have more than 8 characters</string>
     <string name="invalidLogin">Error: Invalid credententials</string>
     <string name="invalidRegister">Error: Account registration failed</string>
+    <string name="notLinked">An account exist with your facebook email address, please sign in to your local account in ronicy.lk and link it with your facebook account.</string>
+    <string name="linkFb">Link with facebook</string>
+    <string name="linkFbSuccess">Your facebook account was successfully linked</string>
+    <string name="linkFbError">Error: Your facebook account was not linked. This may be due to an existing account linked with facebook or facebook account email you provided.</string>
+    <string name="linkFbRemoveSuccess">Your facebook account was successfully removed</string>
+    <string name="linkFbRemoveError">There was an error, please try again latter.</string>
+
 
     <!-- Divya -->
 

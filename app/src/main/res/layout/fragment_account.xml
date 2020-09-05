@@ -28,10 +28,29 @@
                 android:id="@+id/userName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:padding="24dp"
+                android:paddingStart="@dimen/_20sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
                 android:text=""
                 android:textSize="24sp"></TextView>
+
+            <Button
+                android:id="@+id/linkfb"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_28sdp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:text="@string/loading"
+                android:drawableLeft="@drawable/com_facebook_button_icon"
+                android:drawablePadding="@dimen/_10sdp"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/button_round_fb"
+                android:textSize="16sp"
+                android:paddingStart="@dimen/_20sdp"
+                android:paddingEnd="@dimen/_20sdp"
+                android:gravity="center"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/myads"
@@ -89,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="6dp"
                 android:background="#ffffff"
                 android:drawableStart="@drawable/ic_baseline_person_24"
                 android:drawablePadding="20dp"
@@ -101,6 +120,7 @@
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
                 android:textSize="16sp"></Button>
+
         </LinearLayout>
 
             <Button
@@ -190,6 +210,11 @@
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
                 android:textSize="16sp"></Button>
+
+        <FrameLayout
+            android:id="@+id/snackView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

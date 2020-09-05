@@ -48,8 +48,10 @@ public class FirebasePhoneAuthentication extends PhoneAuthProvider.OnVerificatio
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (callback != null)
-                            callback.onCompleteLinkingMobileWithUser(task);
+                        if (task.isSuccessful()) {
+                            if (callback != null)
+                                callback.onCompleteLinkingMobileWithUser(task);
+                        }
                     }
                 });
 
@@ -74,14 +76,15 @@ public class FirebasePhoneAuthentication extends PhoneAuthProvider.OnVerificatio
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (callback != null)
-                            callback.onCompleteSignInWithPhoneAuthCredential(task);
+                        if (task.isSuccessful()) {
+                            if (callback != null)
+                                callback.onCompleteSignInWithPhoneAuthCredential(task);
+                        }
                     }
                 });
     }
 
     public void unlinkPhoneAuth(FirebaseUser user) {
-
         user.unlink(PhoneAuthProvider.PROVIDER_ID)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -99,8 +102,10 @@ public class FirebasePhoneAuthentication extends PhoneAuthProvider.OnVerificatio
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (callback != null)
-                            callback.onCompleteDeletePhoneAuthCredentialUser(task);
+                        if (task.isSuccessful()) {
+                            if (callback != null)
+                                callback.onCompleteDeletePhoneAuthCredentialUser(task);
+                        }
                     }
                 });
 
