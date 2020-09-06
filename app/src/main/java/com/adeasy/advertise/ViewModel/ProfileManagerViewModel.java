@@ -10,7 +10,7 @@ import com.adeasy.advertise.model.Order_Item;
 /**
  * Created by Manuka yasas,
  * University Sliit
- * Email manukayasas94@gmail.com
+ * Email manukayasas99@gmail.com
  **/
 public class ProfileManagerViewModel extends ViewModel {
     private MutableLiveData<Boolean> updateProfile = new MutableLiveData<>();

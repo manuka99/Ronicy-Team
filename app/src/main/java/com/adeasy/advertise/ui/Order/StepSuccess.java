@@ -15,10 +15,10 @@ import com.adeasy.advertise.model.Order;
 import com.squareup.picasso.Picasso;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link StepSuccess#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class StepSuccess extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match

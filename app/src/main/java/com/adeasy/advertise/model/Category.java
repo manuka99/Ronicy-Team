@@ -2,7 +2,11 @@ package com.adeasy.advertise.model;
 
 import java.io.Serializable;
 import java.util.List;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class Category implements Serializable {
 
     private String id;

@@ -21,10 +21,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link Step1#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class Step1 extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match

@@ -12,6 +12,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public interface AdvertisementCallback {
     public void onUploadImage(@NonNull Task<Uri> task);
     public void onTaskFull(boolean result);

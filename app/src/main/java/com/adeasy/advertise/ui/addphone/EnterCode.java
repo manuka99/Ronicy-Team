@@ -42,7 +42,11 @@ import com.google.firebase.firestore.QuerySnapshot;
  * A simple {@link Fragment} subclass.
  * Use the {@link EnterCode#newInstance} factory method to
  * create an instance of this fragment.
- */
+ *//**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class EnterCode extends Fragment implements View.OnClickListener, TextWatcher, PhoneAuthenticationCallback, VerifiedNumbersCallback {
 
     // TODO: Rename parameter arguments, choose names that match

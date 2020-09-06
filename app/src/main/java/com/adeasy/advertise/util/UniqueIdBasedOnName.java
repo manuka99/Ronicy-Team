@@ -2,7 +2,11 @@ package com.adeasy.advertise.util;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class UniqueIdBasedOnName {
     private static final long twepoch = 1288834974657L;
     private static final long sequenceBits = 17;

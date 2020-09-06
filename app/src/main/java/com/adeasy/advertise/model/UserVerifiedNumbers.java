@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Manuka yasas,
  * University Sliit
- * Email manukayasas94@gmail.com
+ * Email manukayasas99@gmail.com
  **/
 public class UserVerifiedNumbers extends User {
 

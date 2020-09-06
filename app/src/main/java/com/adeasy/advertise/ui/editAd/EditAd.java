@@ -38,7 +38,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class EditAd extends AppCompatActivity implements AdvertisementCallback, CategoryCallback {
 
     FrameLayout frameLayout, frameLayout2, frameLayout3, frameLayout4;

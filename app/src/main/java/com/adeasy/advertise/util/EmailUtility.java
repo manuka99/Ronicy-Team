@@ -17,7 +17,11 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class EmailUtility extends AsyncTask{
 
     private static final String MAIL_USER = Configurations.EMAIL_RONICY;

@@ -35,7 +35,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class Myadds extends AppCompatActivity implements AdvertisementCallback {
 
     Context context;

@@ -17,7 +17,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.Arrays;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class VerifiedNumbersManager {
 
     private static final String TAG = "VerifiedNumbersManager";

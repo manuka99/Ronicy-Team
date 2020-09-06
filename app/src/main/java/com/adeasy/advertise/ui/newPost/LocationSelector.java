@@ -22,10 +22,10 @@ import com.adeasy.advertise.ViewModel.BuynowViewModel;
 import com.adeasy.advertise.ViewModel.NewPostViewModel;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link LocationSelector#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class LocationSelector extends Fragment implements View.OnClickListener{
 
     // TODO: Rename parameter arguments, choose names that match

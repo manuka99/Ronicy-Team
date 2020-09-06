@@ -17,7 +17,11 @@ import android.widget.FrameLayout;
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.AddNewPhoneViewModel;
 import com.google.android.material.textfield.TextInputEditText;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class AddNewNumber extends AppCompatActivity {
 
     FrameLayout frameLayout;

@@ -58,10 +58,10 @@ import java.util.Arrays;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link LoginRegister#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class LoginRegister extends Fragment implements View.OnClickListener, FirebaseAuthenticationCallback, FacebookAuthCallback {
 
     // TODO: Rename parameter arguments, choose names that match

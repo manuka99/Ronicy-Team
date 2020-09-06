@@ -6,7 +6,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 /**
  * Created by Manuka yasas,
  * University Sliit
- * Email manukayasas94@gmail.com
+ * Email manukayasas99@gmail.com
  **/
 public interface ProfileManagerCallback {
     public void onSuccessUpdateProfile(Void aVoid);

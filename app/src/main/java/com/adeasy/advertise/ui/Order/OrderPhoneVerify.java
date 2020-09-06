@@ -38,10 +38,10 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link OrderPhoneVerify#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class OrderPhoneVerify extends Fragment implements View.OnClickListener, PhoneAuthenticationCallback, TextWatcher {
 
     // TODO: Rename parameter arguments, choose names that match

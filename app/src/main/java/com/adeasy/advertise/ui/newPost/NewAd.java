@@ -31,7 +31,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class NewAd extends AppCompatActivity implements AdvertisementCallback {
 
     FrameLayout frameLayout, frameLayout2, frameLayout3, frameLayout4;

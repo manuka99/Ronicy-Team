@@ -27,7 +27,11 @@ import com.google.firebase.storage.UploadTask;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class OrderManager {
 
     private static final String TAG = "OrderManager";

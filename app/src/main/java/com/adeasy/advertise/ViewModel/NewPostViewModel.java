@@ -8,7 +8,11 @@ import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.Category;
 
 import java.util.List;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class NewPostViewModel  extends ViewModel {
     private MutableLiveData<String> locationSelected = new MutableLiveData<>();
     private MutableLiveData<Category> categorySelected = new MutableLiveData<>();

@@ -10,7 +10,11 @@ import android.net.Uri;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class ImageQualityReducer {
 
     public static byte[] reduceQuality(Drawable drawable){

@@ -19,6 +19,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class RecycleAdapterForImages extends RecyclerView.Adapter<ViewHolderAdImage> {
 
     private List<String> uriImages;

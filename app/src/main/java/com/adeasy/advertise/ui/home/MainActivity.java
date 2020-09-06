@@ -15,7 +15,11 @@ import android.view.View;
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ui.newPost.NewAd;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";

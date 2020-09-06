@@ -12,7 +12,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class FirebaseAuthentication {
     private static final String TAG = "FirebaseAuthentication";
     private FirebaseAuthenticationCallback firebaseAuthenticationCallback;

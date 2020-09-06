@@ -34,10 +34,10 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link AdDetails#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class AdDetails extends Fragment implements View.OnClickListener, TextWatcher, RecycleAdapterForImages.RecycleAdapterInterface{
 
     // TODO: Rename parameter arguments, choose names that match

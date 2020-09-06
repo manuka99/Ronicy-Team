@@ -1,7 +1,11 @@
 package com.adeasy.advertise.model;
 
 import java.io.Serializable;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class Order_Payment implements Serializable {
 
     private String type;

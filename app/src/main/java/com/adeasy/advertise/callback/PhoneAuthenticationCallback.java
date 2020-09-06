@@ -7,7 +7,11 @@ import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public interface PhoneAuthenticationCallback {
 
     public void onCodeSent(String verificationId, PhoneAuthProvider.ForceResendingToken forceResendingToken);

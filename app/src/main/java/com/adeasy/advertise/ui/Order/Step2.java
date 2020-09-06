@@ -32,10 +32,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link Step2#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class Step2 extends Fragment implements View.OnClickListener, AdvertisementCallback, CategoryCallback {
 
     // TODO: Rename parameter arguments, choose names that match

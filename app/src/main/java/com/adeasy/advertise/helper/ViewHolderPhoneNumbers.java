@@ -9,7 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adeasy.advertise.R;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class ViewHolderPhoneNumbers extends RecyclerView.ViewHolder {
 
     public RelativeLayout layoytHold;

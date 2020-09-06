@@ -12,7 +12,11 @@ import android.widget.LinearLayout;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ui.home.MainActivity;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class SplashMainAppActivity extends AppCompatActivity {
 
     LinearLayout linearLayout;

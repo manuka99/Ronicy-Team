@@ -6,7 +6,11 @@ import androidx.lifecycle.ViewModel;
 
 import com.adeasy.advertise.model.Order_Customer;
 import com.adeasy.advertise.model.Order_Item;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class BuynowViewModel extends ViewModel {
     private MutableLiveData<Order_Customer> customer = new MutableLiveData<>();
     private MutableLiveData<Order_Item> item = new MutableLiveData<>();

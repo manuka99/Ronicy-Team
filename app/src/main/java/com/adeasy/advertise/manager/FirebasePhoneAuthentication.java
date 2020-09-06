@@ -19,7 +19,11 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class FirebasePhoneAuthentication extends PhoneAuthProvider.OnVerificationStateChangedCallbacks {
 
     private static final String TAG = "FirebasePhoneAuthentica";

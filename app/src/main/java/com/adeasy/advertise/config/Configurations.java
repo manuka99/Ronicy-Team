@@ -1,5 +1,9 @@
 package com.adeasy.advertise.config;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class Configurations {
 
     //EMAIL

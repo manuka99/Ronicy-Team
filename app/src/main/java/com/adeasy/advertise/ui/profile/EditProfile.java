@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,10 +52,10 @@ import java.util.Calendar;
 import static android.app.Activity.RESULT_OK;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link EditProfile#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class EditProfile extends Fragment implements ProfileManagerCallback, View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -88,8 +89,7 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
     boolean isUpdating = false;
 
     DatePickerDialog picker;
-
-    ProgressDialog progressDialog;
+    ProgressBar progressBar;
 
     ProfileManagerViewModel profileManagerViewModel;
 
@@ -139,6 +139,8 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
         address = view.findViewById(R.id.location);
         birth = view.findViewById(R.id.dateOfBirth);
         dob = view.findViewById(R.id.dob);
+        progressBar = view.findViewById(R.id.progressBar);
+
         birth.getEditText().setInputType(InputType.TYPE_NULL);
 
         deleteImage = view.findViewById(R.id.deleteImage);
@@ -154,8 +156,6 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
 
         firebaseAuth = FirebaseAuth.getInstance();
         profileManager = new ProfileManager(this);
-
-        progressDialog = new ProgressDialog(getActivity());
 
         user = new User();
         profileManager.getUser();
@@ -188,16 +188,18 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
 
     @Override
     public void onSuccessUpdateProfile(Void aVoid) {
+        HideSoftKeyboard.hideKeyboard(requireActivity());
         showSuccessSnackbar("Your profile was updated successfully");
         isUpdating = false;
-        progressDialog.dismiss();
+        endUpdatingUi();
     }
 
     @Override
     public void onFailureUpdateProfile(Exception e) {
-        showErrorSnackbar("Error: your profile was not updated, " + e.getMessage());
+        HideSoftKeyboard.hideKeyboard(requireActivity());
+        showErrorSnackbar(e.getMessage());
         isUpdating = false;
-        progressDialog.dismiss();
+        endUpdatingUi();
     }
 
     @Override
@@ -205,17 +207,19 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
         if (task.isSuccessful()) {
 
         } else {
+            HideSoftKeyboard.hideKeyboard(requireActivity());
             isUpdating = false;
-            progressDialog.dismiss();
+            endUpdatingUi();
         }
     }
 
     @Override
     public void onCompleteUpdateEmail(Task<Void> task) {
         if (!task.isSuccessful()) {
-            showErrorSnackbar("Error: your profile was not updated, " + task.getException().getMessage());
+            HideSoftKeyboard.hideKeyboard(requireActivity());
+            showErrorSnackbar(task.getException().getMessage());
             isUpdating = false;
-            progressDialog.dismiss();
+            endUpdatingUi();
         }
     }
 
@@ -294,6 +298,15 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
         snackbar.show();
     }
 
+    private void updatingUi(){
+        updateBtn.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void endUpdatingUi(){
+        progressBar.setVisibility(View.GONE);
+        updateBtn.setVisibility(View.VISIBLE);
+    }
 
     @Override
     public void onClick(View view) {
@@ -320,7 +333,7 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
             email.setError("User name cannot empty");
             showErrorSnackbar("Please fill the missing fields before updating.");
         } else if (!isUpdating) {
-            updateProfileDialog();
+            updatingUi();
             user.setName(name.getEditText().getText().toString());
             user.setPhone(phone.getEditText().getText().toString());
             user.setEmail(email.getEditText().getText().toString());
@@ -349,13 +362,6 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
                     }
                 }, year, month, day);
         picker.show();
-    }
-
-    private void updateProfileDialog() {
-        progressDialog.setTitle("Updating your profile...");
-        progressDialog.setMessage("Please be patience until your profile is updated.");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
     }
 
     private void deleteSelectedImage() {

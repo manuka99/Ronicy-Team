@@ -7,6 +7,11 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public interface CategoryCallback {
     //public void onUploadImage(@NonNull Task<Uri> task);
     //public void onTaskFull(boolean result);

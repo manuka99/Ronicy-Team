@@ -29,7 +29,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.UUID;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class FacebookAuthManager {
 
     private FacebookAuthCallback facebookAuthCallback;

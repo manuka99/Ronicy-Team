@@ -10,7 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.adeasy.advertise.R;
 
 import java.text.BreakIterator;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class ViewHolderPostCats extends RecyclerView.ViewHolder {
 
     public TextView titleView;

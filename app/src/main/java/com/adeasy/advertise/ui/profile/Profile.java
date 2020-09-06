@@ -16,13 +16,21 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.ProfileManagerViewModel;
 import com.adeasy.advertise.ui.advertisement.Advertisement;
 
+import java.util.ArrayList;
+import java.util.List;
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class Profile extends AppCompatActivity {
 
     UserDetails userDetails;
     EditProfile editProfile;
+    ProfileSecurity profileSecurity;
 
     FrameLayout detailsFrame;
-    MenuItem menuItem;
+    List<MenuItem> menuItems;
     Toolbar toolbar;
     ProfileManagerViewModel profileManagerViewModel;
 
@@ -34,6 +42,7 @@ public class Profile extends AppCompatActivity {
         detailsFrame = findViewById(R.id.profileFrame);
         userDetails = new UserDetails();
         editProfile = new EditProfile();
+        profileSecurity = new ProfileSecurity();
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.com_facebook_blue));
@@ -47,6 +56,8 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        menuItems = new ArrayList<>();
+
         profileManagerViewModel = ViewModelProviders.of(this).get(ProfileManagerViewModel.class);
 
         showPersonalDetails();
@@ -54,24 +65,39 @@ public class Profile extends AppCompatActivity {
 
     private void showPersonalDetails() {
         getSupportActionBar().setTitle("Personal details");
-        menuItem = toolbar.getMenu().findItem(R.id.action_profile_update);
+        menuItems = new ArrayList<>();
+        menuItems.add(toolbar.getMenu().findItem(R.id.action_profile_update));
         invalidateOptionsMenu();
         getSupportFragmentManager().beginTransaction().replace(detailsFrame.getId(), userDetails).commit();
     }
 
     private void showEditDetails() {
         getSupportActionBar().setTitle("Update profile");
-        menuItem = toolbar.getMenu().findItem(R.id.action_profile_edit);
+        menuItems = new ArrayList<>();
+        menuItems.add(toolbar.getMenu().findItem(R.id.action_profile_edit));
+        menuItems.add(toolbar.getMenu().findItem(R.id.action_profile_security));
         invalidateOptionsMenu();
         getSupportFragmentManager().beginTransaction().replace(detailsFrame.getId(), editProfile).commit();
+    }
+
+    private void showSecurityDetails(){
+        getSupportActionBar().setTitle("Profile security");
+        menuItems = new ArrayList<>();
+        menuItems.add(toolbar.getMenu().findItem(R.id.action_profile_update));
+        menuItems.add(toolbar.getMenu().findItem(R.id.action_profile_security));
+        invalidateOptionsMenu();
+        getSupportFragmentManager().beginTransaction().replace(detailsFrame.getId(), profileSecurity).commit();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.profile, menu);
-        if (menuItem != null)
-            menu.findItem(menuItem.getItemId()).setVisible(false);
+        if (menuItems != null && menuItems.size() > 0){
+            for(MenuItem menuItem: menuItems){
+                menu.findItem(menuItem.getItemId()).setVisible(false);
+            }
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -89,6 +115,9 @@ public class Profile extends AppCompatActivity {
         } else if (id == R.id.action_profile_edit) {
             showEditDetails();
             return true;
+        } else if (id == R.id.action_profile_security) {
+            showSecurityDetails();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -96,7 +125,7 @@ public class Profile extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (getCurrentFragment() instanceof EditProfile)
+        if (getCurrentFragment() instanceof EditProfile || getCurrentFragment() instanceof ProfileSecurity)
             showPersonalDetails();
         else
             super.onBackPressed();

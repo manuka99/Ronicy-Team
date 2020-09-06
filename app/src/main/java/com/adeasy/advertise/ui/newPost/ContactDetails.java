@@ -40,10 +40,10 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ContactDetails#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class ContactDetails extends Fragment implements VerifiedNumbersCallback, View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match

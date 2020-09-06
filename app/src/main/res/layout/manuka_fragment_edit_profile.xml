@@ -77,8 +77,9 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:hint="@string/orderName"
-            android:textColorHint="@color/colorGreyText"
-            android:backgroundTint="@color/colorBlue"
+            android:textColorHint="@color/colorBlue"
+            android:textCursorDrawable="@drawable/blue_cursur"
+            android:theme="@style/EditTextBlueTheme"
             android:inputType="textPersonName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -95,8 +96,9 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:hint="@string/orderPhone"
-            android:textColorHint="@color/colorGreyText"
-            android:backgroundTint="@color/colorBlue"
+            android:textColorHint="@color/colorBlue"
+            android:textCursorDrawable="@drawable/blue_cursur"
+            android:theme="@style/EditTextBlueTheme"
             android:layout_width="match_parent"
             android:inputType="phone"
             android:layout_height="wrap_content"/>
@@ -113,8 +115,9 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:hint="@string/orderEmail"
-            android:textColorHint="@color/colorGreyText"
-            android:backgroundTint="@color/colorBlue"
+            android:textColorHint="@color/colorBlue"
+            android:textCursorDrawable="@drawable/blue_cursur"
+            android:theme="@style/EditTextBlueTheme"
             android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -158,8 +161,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/dob"
             android:hint="@string/dateOfBirth"
-            android:textColorHint="@color/colorGreyText"
-            android:backgroundTint="@color/colorBlue"
+            android:textColorHint="@color/colorBlue"
+            android:textCursorDrawable="@drawable/blue_cursur"
+            android:theme="@style/EditTextBlueTheme"
             android:clickable="true"
             android:focusableInTouchMode="false"
             android:layout_width="match_parent"
@@ -177,13 +181,26 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:hint="@string/living"
-            android:textColorHint="@color/colorGreyText"
-            android:backgroundTint="@color/colorBlue"
+            android:textColorHint="@color/colorBlue"
+            android:textCursorDrawable="@drawable/blue_cursur"
+            android:theme="@style/EditTextBlueTheme"
             android:inputType="textPostalAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_14sdp"
+        android:background="@drawable/button_round_grey"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/colorWhite"
+        android:indeterminateTintMode="src_atop"
+        android:padding="@dimen/_6sdp" />
 
     <Button
         android:id="@+id/updateBtn"

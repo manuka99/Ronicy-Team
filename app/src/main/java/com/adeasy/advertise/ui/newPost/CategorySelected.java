@@ -17,10 +17,10 @@ import com.adeasy.advertise.model.Category;
 import com.squareup.picasso.Picasso;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link CategorySelected#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class CategorySelected extends Fragment implements View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match

@@ -12,6 +12,11 @@ import com.adeasy.advertise.helper.ViewHolderPhoneNumbers;
 
 import java.util.List;
 
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class RecycleAdapterForVerifiedNumbers extends RecyclerView.Adapter<ViewHolderPhoneNumbers> {
 
     private List<Integer> verifiedNumberList;

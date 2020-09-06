@@ -38,10 +38,10 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link Home#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class Home extends Fragment implements AdvertisementCallback {
 
     // TODO: Rename parameter arguments, choose names that match
