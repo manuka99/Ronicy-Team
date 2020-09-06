@@ -61,13 +61,15 @@ public class ProfileManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        profileManagerCallback.onSuccessUpdateProfile(aVoid);
+                        if (profileManagerCallback != null)
+                            profileManagerCallback.onSuccessUpdateProfile(aVoid);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        profileManagerCallback.onFailureUpdateProfile(e);
+                        if (profileManagerCallback != null)
+                            profileManagerCallback.onFailureUpdateProfile(e);
                     }
                 });
     }
@@ -82,12 +84,16 @@ public class ProfileManager {
     }
 
 
-    private void updateFirebaseProfile(final User user, String url) {
+    public void updateFirebaseProfile(final User user, String url) {
         UserProfileChangeRequest profileUpdates;
         profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(user.getName()).build();
 
         if (url != null) {
+            if (firebaseAuth.getCurrentUser().getPhotoUrl() != null) {
+                String oldProfilePic = firebaseAuth.getCurrentUser().getPhotoUrl().toString();
+                deleteImage(oldProfilePic);
+            }
             profileUpdates = new UserProfileChangeRequest.Builder()
                     .setDisplayName(user.getName()).setPhotoUri(Uri.parse(url)).build();
         }
@@ -100,17 +106,22 @@ public class ProfileManager {
                             Log.d(TAG, "User profile updated.");
                             updateProfile(user);
                         } else {
-                            profileManagerCallback.onFailureUpdateProfile(task.getException());
+                            if (profileManagerCallback != null)
+                                profileManagerCallback.onFailureUpdateProfile(task.getException());
                         }
                     }
                 });
     }
 
-    private void updateFirebaseEmail(String email) {
+    public void updateFirebaseEmailAndUserAndImage(String email, final User user, final byte[] data) {
         firebaseAuth.getCurrentUser().updateEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                profileManagerCallback.onCompleteUpdateEmail(task);
+                if (profileManagerCallback != null)
+                    profileManagerCallback.onCompleteUpdateEmail(task);
+                if (task.isSuccessful()) {
+                    updateProfileWithImage(user, data);
+                }
             }
         });
     }
@@ -131,13 +142,14 @@ public class ProfileManager {
 
     }
 
-    public void uploadImage(final User user, byte[] data) {
+    public void updateProfileWithImage(final User user, byte[] data) {
         try {
-            if (storageTask != null && storageTask.isInProgress())
-                profileManagerCallback.onTaskFull(true);
-
-            else {
-                profileManagerCallback.onTaskFull(false);
+            if (storageTask != null && storageTask.isInProgress()) {
+                if (profileManagerCallback != null)
+                    profileManagerCallback.onTaskFull(true);
+            } else if (data != null) {
+                if (profileManagerCallback != null)
+                    profileManagerCallback.onTaskFull(false);
 
                 String imageID = UUID.randomUUID().toString().replace("-", "");
                 final StorageReference ref = storageReference.child(imageID);
@@ -147,6 +159,8 @@ public class ProfileManager {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                         if (!task.isSuccessful()) {
+                            if (profileManagerCallback != null)
+                                profileManagerCallback.onFailureUpdateProfile(task.getException());
                             throw task.getException();
                         }
                         // Continue with the task to get the download URL
@@ -156,14 +170,19 @@ public class ProfileManager {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()) {
-                            Uri uri = task.getResult();
-                            updateFirebaseProfile(user, uri.toString());
+                            Uri downloadUri = task.getResult();
+                            updateFirebaseProfile(user, downloadUri.toString());
+                        } else if (profileManagerCallback != null) {
+                            profileManagerCallback.onFailureUpdateProfile(task.getException());
                         }
                     }
                 });
-            }
+            } else
+                updateFirebaseProfile(user, null);
         } catch (Exception e) {
             e.printStackTrace();
+            if (profileManagerCallback != null)
+                profileManagerCallback.onFailureUpdateProfile(e);
         }
     }
 
@@ -178,6 +197,10 @@ public class ProfileManager {
         } catch (NullPointerException e) {
             profileManagerCallback.onSuccessGetUser(null);
         }
+    }
+
+    public void destroy() {
+        profileManagerCallback = null;
     }
 
 }

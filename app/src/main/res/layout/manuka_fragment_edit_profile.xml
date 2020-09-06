@@ -31,8 +31,8 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:layout_width="@dimen/_66sdp"
-            android:layout_height="@dimen/_66sdp">
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profilePhoto"
                 android:layout_margin="@dimen/_4sdp"
@@ -179,7 +179,7 @@
             android:hint="@string/living"
             android:textColorHint="@color/colorGreyText"
             android:backgroundTint="@color/colorBlue"
-            android:inputType="date"
+            android:inputType="textPostalAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -196,5 +196,10 @@
         android:background="@drawable/button_round_fb"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_32sdp"/>
+
+    <FrameLayout
+        android:id="@+id/snackView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

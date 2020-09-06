@@ -152,72 +152,62 @@ public class UserDetails extends Fragment implements ProfileManagerCallback {
         firebaseUser = firebaseAuth.getCurrentUser();
         if (user != null) {
 
-            if (user.getName() != null)
+            if (user.getName() != null && user.getName().length() > 0) {
                 name1.setText(user.getName());
-            else
-                name1.setVisibility(View.GONE);
-
-            if (user.getName() != null)
                 name2.getEditText().setText(user.getName());
-            else
+            } else {
+                name1.setVisibility(View.GONE);
                 name2.setVisibility(View.GONE);
+            }
 
-            if (user.getPhone() != null)
+            if (user.getPhone() != null && user.getPhone().length() > 0) {
                 phone.setText(user.getPhone());
-            else
+                phone2.getEditText().setText(user.getPhone());
+            } else {
                 phone.setVisibility(View.GONE);
-
-            if (user.getPhone() != null)
-                phone.setText(user.getPhone());
-            else
                 phone2.setVisibility(View.GONE);
+            }
 
-            if (user.getEmail() != null)
+            if (user.getEmail() != null && user.getEmail().length() > 0)
                 email.getEditText().setText(user.getEmail());
             else
                 email.setVisibility(View.GONE);
 
-            if (user.getGender() != null)
+            if (user.getGender() != null && user.getGender().length() > 0)
                 gender.getEditText().setText(user.getGender());
             else
                 gender.setVisibility(View.GONE);
 
-            if (user.getDateOfBirth() != null)
+            if (user.getDateOfBirth() != null && user.getDateOfBirth().length() > 0)
                 dateOfBirth.getEditText().setText(user.getDateOfBirth());
             else
                 dateOfBirth.setVisibility(View.GONE);
 
-            if (user.getAddress() != null)
+            if (user.getAddress() != null && user.getAddress().length() > 0)
                 address.getEditText().setText(user.getAddress());
             else
                 address.setVisibility(View.GONE);
 
         } else {
             name1.setText(firebaseUser.getDisplayName());
+            name2.getEditText().setText(firebaseUser.getDisplayName());
+            email.getEditText().setText(firebaseUser.getEmail());
 
-            if (firebaseUser.getPhoneNumber() != null)
+            if (firebaseUser.getPhoneNumber() != null && firebaseUser.getPhoneNumber().length() > 0) {
                 phone.setText(firebaseUser.getPhoneNumber());
-            else
-                phone.setVisibility(View.GONE);
-
-            if (firebaseUser.getPhoneNumber() != null)
                 phone2.getEditText().setText(firebaseUser.getPhoneNumber());
-            else
+            } else {
+                phone.setVisibility(View.GONE);
                 phone2.setVisibility(View.GONE);
-
-            if (firebaseUser.getEmail() != null)
-                email.getEditText().setText(firebaseUser.getEmail());
-            else
-                email.setVisibility(View.GONE);
+            }
 
             gender.setVisibility(View.GONE);
             dateOfBirth.setVisibility(View.GONE);
             address.setVisibility(View.GONE);
         }
 
-        if (firebaseUser.getPhotoUrl() != null) {
-            Picasso.get().load(firebaseUser.getPhotoUrl()).fit().centerInside().into(proficePic);
-        }
+        if (firebaseUser.getPhotoUrl() != null)
+            Picasso.get().load(firebaseUser.getPhotoUrl()).into(proficePic);
 
         userDetailsLayout.setVisibility(View.VISIBLE);
     }
@@ -232,17 +222,6 @@ public class UserDetails extends Fragment implements ProfileManagerCallback {
         TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setMaxLines(5);
         snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorError2));
-        snackbar.show();
-    }
-
-    private void showSuccessSnackbar(String message) {
-        Snackbar snackbar = Snackbar.make(snackbarLayout, message, Snackbar.LENGTH_INDEFINITE).setAction("x", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        }).setActionTextColor(getResources().getColor(R.color.colorWhite));
-
-        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         snackbar.show();
     }
 

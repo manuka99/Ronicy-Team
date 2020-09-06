@@ -1,12 +1,17 @@
 package com.adeasy.advertise.ui.profile;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.provider.MediaStore;
 import android.text.InputType;
@@ -21,11 +26,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.ViewModel.ProfileManagerViewModel;
 import com.adeasy.advertise.callback.ProfileManagerCallback;
 import com.adeasy.advertise.manager.ProfileManager;
 import com.adeasy.advertise.model.User;
+import com.adeasy.advertise.util.HideSoftKeyboard;
+import com.adeasy.advertise.util.ImageQualityReducer;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -75,8 +85,13 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
     FirebaseUser firebaseUser;
     Uri imageUri;
     boolean imageSelected = false;
+    boolean isUpdating = false;
 
     DatePickerDialog picker;
+
+    ProgressDialog progressDialog;
+
+    ProfileManagerViewModel profileManagerViewModel;
 
     public EditProfile() {
         // Required empty public constructor
@@ -140,6 +155,9 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
         firebaseAuth = FirebaseAuth.getInstance();
         profileManager = new ProfileManager(this);
 
+        progressDialog = new ProgressDialog(getActivity());
+
+        user = new User();
         profileManager.getUser();
 
         //listeners
@@ -151,33 +169,62 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
         birth.setOnClickListener(this);
         dob.setOnClickListener(this);
 
+        profileManagerViewModel = ViewModelProviders.of(getActivity()).get(ProfileManagerViewModel.class);
+
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        profileManagerViewModel.getUpdateProfile().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean)
+                    updateProfile();
+            }
+        });
+    }
 
     @Override
     public void onSuccessUpdateProfile(Void aVoid) {
-
+        showSuccessSnackbar("Your profile was updated successfully");
+        isUpdating = false;
+        progressDialog.dismiss();
     }
 
     @Override
     public void onFailureUpdateProfile(Exception e) {
-
+        showErrorSnackbar("Error: your profile was not updated, " + e.getMessage());
+        isUpdating = false;
+        progressDialog.dismiss();
     }
 
     @Override
     public void onCompleteUpdatePassword(Task<Void> task) {
+        if (task.isSuccessful()) {
 
+        } else {
+            isUpdating = false;
+            progressDialog.dismiss();
+        }
     }
 
     @Override
     public void onCompleteUpdateEmail(Task<Void> task) {
-
+        if (!task.isSuccessful()) {
+            showErrorSnackbar("Error: your profile was not updated, " + task.getException().getMessage());
+            isUpdating = false;
+            progressDialog.dismiss();
+        }
     }
 
     @Override
     public void onTaskFull(boolean status) {
+        if (status)
+            Toast.makeText(getActivity(), "Please wait...", Toast.LENGTH_LONG).show();
 
+        isUpdating = false;
     }
 
     @Override
@@ -190,7 +237,7 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
 
     public void updateUiOnDataRecieve() {
         firebaseUser = firebaseAuth.getCurrentUser();
-        if (user != null) {
+        if (user.getUid() != null) {
 
             name.getEditText().setText(user.getName());
 
@@ -215,8 +262,9 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
         }
 
         if (firebaseUser.getPhotoUrl() != null) {
-            Picasso.get().load(firebaseUser.getPhotoUrl()).fit().centerInside().into(profilePhoto);
-            deleteImage.setVisibility(View.VISIBLE);
+            profilePhoto.setImageURI(null);
+            profilePhoto.setImageBitmap(null);
+            Picasso.get().load(firebaseUser.getPhotoUrl()).into(profilePhoto);
         }
 
         layoutEditDetails.setVisibility(View.VISIBLE);
@@ -264,7 +312,27 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
     }
 
     private void updateProfile() {
-
+        HideSoftKeyboard.hideKeyboard(requireActivity());
+        if (name.getEditText().getText().length() == 0) {
+            name.setError("User name cannot empty");
+            showErrorSnackbar("Please fill the missing fields before updating.");
+        } else if (email.getEditText().getText().length() == 0) {
+            email.setError("User name cannot empty");
+            showErrorSnackbar("Please fill the missing fields before updating.");
+        } else if (!isUpdating) {
+            updateProfileDialog();
+            user.setName(name.getEditText().getText().toString());
+            user.setPhone(phone.getEditText().getText().toString());
+            user.setEmail(email.getEditText().getText().toString());
+            user.setAddress(address.getEditText().getText().toString());
+            user.setDateOfBirth(birth.getEditText().getText().toString());
+            isUpdating = true;
+            if (imageSelected)
+                profileManager.updateFirebaseEmailAndUserAndImage(email.getEditText().getText().toString(), user, ImageQualityReducer.reduceQuality(profilePhoto.getDrawable()));
+            else
+                profileManager.updateFirebaseEmailAndUserAndImage(email.getEditText().getText().toString(), user, null);
+        } else if (isUpdating)
+            Toast.makeText(getActivity(), "Please wait...", Toast.LENGTH_LONG).show();
     }
 
     private void showDateCalender() {
@@ -283,14 +351,20 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
         picker.show();
     }
 
+    private void updateProfileDialog() {
+        progressDialog.setTitle("Updating your profile...");
+        progressDialog.setMessage("Please be patience until your profile is updated.");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+    }
+
     private void deleteSelectedImage() {
         imageSelected = false;
         deleteImage.setVisibility(View.GONE);
         profilePhoto.setImageURI(null);
         profilePhoto.setImageBitmap(null);
         if (firebaseUser.getPhotoUrl() != null) {
-            Picasso.get().load(firebaseUser.getPhotoUrl()).fit().centerInside().into(profilePhoto);
-            deleteImage.setVisibility(View.VISIBLE);
+            Picasso.get().load(firebaseUser.getPhotoUrl()).into(profilePhoto);
         } else
             profilePhoto.setBackgroundResource(R.drawable.round_user);
     }
@@ -312,7 +386,7 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
 
         Intent chooser = Intent.createChooser(pictureActionIntent, "Select an image for profile photo");
         chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{cameraIntent});
-        startActivityForResult(chooser, IMAGE_SELECTOR);
+        this.startActivityForResult(chooser, IMAGE_SELECTOR);
     }
 
     @Override
@@ -331,6 +405,12 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
             }
         }
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        profileManager.destroy();
     }
 
 }

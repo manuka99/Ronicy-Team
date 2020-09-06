@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,6 +42,7 @@ public class AdvertisementManager {
     private DocumentReference documentReference;
     private StorageReference storageReference;
     private AdvertisementCallback advertisementCallback;
+    private FirebaseAuth firebaseAuth;
     private static final String FIREBASE_HOST = "firebasestorage.googleapis.com";
 
     public AdvertisementManager(AdvertisementCallback callBacks) {
@@ -49,6 +51,7 @@ public class AdvertisementManager {
         documentReference = firebaseFirestore.collection(childName).document();
         storageReference = firebaseStorage.getReference().child(childName).child("Images");
         this.advertisementCallback = callBacks;
+        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     public void insertAdvertisement(Advertisement advertisement) {
@@ -271,8 +274,8 @@ public class AdvertisementManager {
         return firebaseFirestore.collection(childName).whereEqualTo("availability", true).whereEqualTo("approved", true).orderBy("placedDate", Query.Direction.DESCENDING);
     }
 
-    public Query viewAddsAll() {
-        return firebaseFirestore.collection(childName).orderBy("placedDate", Query.Direction.DESCENDING);
+    public Query viewMyAddsAll() {
+        return firebaseFirestore.collection(childName).whereEqualTo("userID", firebaseAuth.getCurrentUser().getUid()).orderBy("placedDate", Query.Direction.DESCENDING);
     }
 
     public void getAddbyID(String id) {

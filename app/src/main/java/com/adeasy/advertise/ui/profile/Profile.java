@@ -3,6 +3,7 @@ package com.adeasy.advertise.ui.profile;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,15 +13,18 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.ViewModel.ProfileManagerViewModel;
 import com.adeasy.advertise.ui.advertisement.Advertisement;
 
 public class Profile extends AppCompatActivity {
 
     UserDetails userDetails;
     EditProfile editProfile;
+
     FrameLayout detailsFrame;
     MenuItem menuItem;
     Toolbar toolbar;
+    ProfileManagerViewModel profileManagerViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,8 @@ public class Profile extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        profileManagerViewModel = ViewModelProviders.of(this).get(ProfileManagerViewModel.class);
 
         showPersonalDetails();
     }
@@ -78,7 +84,7 @@ public class Profile extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_profile_update) {
-            showPersonalDetails();
+            profileManagerViewModel.setUpdateProfile(true);
             return true;
         } else if (id == R.id.action_profile_edit) {
             showEditDetails();

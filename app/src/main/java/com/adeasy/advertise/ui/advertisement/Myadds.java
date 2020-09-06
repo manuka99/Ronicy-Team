@@ -29,6 +29,7 @@ import com.adeasy.advertise.ui.editAd.EditAd;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
@@ -44,6 +45,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
     AdvertisementManager advertisementManager;
     SwipeRefreshLayout swipeRefreshLayout;
     FirestorePagingAdapter<Advertisement, ViewHolderListAdds> firestorePagingAdapter;
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +75,10 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
 
         advertisementManager = new AdvertisementManager(this);
 
-        loadData();
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        if (firebaseAuth.getCurrentUser() != null)
+            loadData();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -94,7 +99,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
 
         FirestorePagingOptions<Advertisement> options = new FirestorePagingOptions.Builder<Advertisement>()
                 .setLifecycleOwner(this)
-                .setQuery(advertisementManager.viewAddsAll(), config, Advertisement.class)
+                .setQuery(advertisementManager.viewMyAddsAll(), config, Advertisement.class)
                 .build();
 
         firestorePagingAdapter =
