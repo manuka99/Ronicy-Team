@@ -8,6 +8,7 @@
     <color name="colorBlack">#000000</color>
     <color name="colorBlackText">#CC000000</color>
     <color name="colorGreyBtn">#bfbfbf</color>
+    <color name="colorGreyText">#8B000000</color>
     <color name="colorSucess">#00ff80</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorWhiteLite">#CCCCCC</color>

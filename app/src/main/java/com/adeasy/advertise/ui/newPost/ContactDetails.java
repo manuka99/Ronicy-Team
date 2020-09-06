@@ -26,6 +26,7 @@ import com.adeasy.advertise.adapter.RecycleAdapterForVerifiedNumbers;
 import com.adeasy.advertise.callback.VerifiedNumbersCallback;
 import com.adeasy.advertise.manager.VerifiedNumbersManager;
 import com.adeasy.advertise.model.User;
+import com.adeasy.advertise.model.UserVerifiedNumbers;
 import com.adeasy.advertise.ui.addphone.AddNewNumber;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.snackbar.Snackbar;
@@ -43,7 +44,7 @@ import static android.app.Activity.RESULT_OK;
  * Use the {@link ContactDetails#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ContactDetails extends Fragment implements VerifiedNumbersCallback, View.OnClickListener{
+public class ContactDetails extends Fragment implements VerifiedNumbersCallback, View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -166,7 +167,7 @@ public class ContactDetails extends Fragment implements VerifiedNumbersCallback,
     @Override
     public void onCompleteRecieveAllNumbersInUser(DocumentSnapshot documentSnapshot) {
         if (documentSnapshot != null && documentSnapshot.exists()) {
-            User user = documentSnapshot.toObject(User.class);
+            UserVerifiedNumbers user = documentSnapshot.toObject(UserVerifiedNumbers.class);
             verifiedNumbers = user.getVerifiedNumbers();
             displayAdNumbers();
         }
@@ -174,31 +175,31 @@ public class ContactDetails extends Fragment implements VerifiedNumbersCallback,
 
     @Override
     public void onClick(View view) {
-        if(view == addNewNumber)
+        if (view == addNewNumber)
             startActivityForResult(new Intent(getContext(), AddNewNumber.class), NEW_NUMBER_REQUEST_CODE);
 
-        else if(view == hideAllNumbers){
-            if(isNumbersHidden){
+        else if (view == hideAllNumbers) {
+            if (isNumbersHidden) {
                 isNumbersHidden = false;
                 hideNumbersBox.setBackgroundResource(R.drawable.ic_checkbox_normal);
-            }else{
+            } else {
                 isNumbersHidden = true;
                 hideNumbersBox.setBackgroundResource(R.drawable.ic_checkbox_checked);
             }
-        }else if(view == postNewAd)
+        } else if (view == postNewAd)
             validateContactDetails();
     }
 
-    private void validateContactDetails(){
-        if(isNumbersHidden)
+    private void validateContactDetails() {
+        if (isNumbersHidden)
             newPostViewModel.setContactDetailsValidation(null);
-        else if(verifiedNumbers != null && verifiedNumbers.size() > 0)
+        else if (verifiedNumbers != null && verifiedNumbers.size() > 0)
             newPostViewModel.setContactDetailsValidation(verifiedNumbers);
         else
             showErrorSnackBar(R.string.contact_details_error);
     }
 
-    private void showErrorSnackBar(int error){
+    private void showErrorSnackBar(int error) {
         Snackbar snackbar = Snackbar
                 .make(snackbarView, error, 4000)
                 .setAction("x", new View.OnClickListener() {
@@ -211,7 +212,7 @@ public class ContactDetails extends Fragment implements VerifiedNumbersCallback,
         snackbar.show();
     }
 
-    private void displayAdNumbers(){
+    private void displayAdNumbers() {
         recycleAdapterForVerifiedNumbers = new RecycleAdapterForVerifiedNumbers(verifiedNumbers);
         recyclerView.setAdapter(recycleAdapterForVerifiedNumbers);
         recycleAdapterForVerifiedNumbers.notifyDataSetChanged();
@@ -221,12 +222,14 @@ public class ContactDetails extends Fragment implements VerifiedNumbersCallback,
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == NEW_NUMBER_REQUEST_CODE && resultCode == RESULT_OK && data != null){
+        if (requestCode == NEW_NUMBER_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             verifiedNumbers = recycleAdapterForVerifiedNumbers.getSelectedNumbers();
-            if(verifiedNumbers == null){
+            if (verifiedNumbers == null) {
                 verifiedNumbers = new ArrayList<>();
             }
-            verifiedNumbers.add(data.getIntExtra("phone", 0));
+            int numberVerified = data.getIntExtra("phone", 0);
+            if (!verifiedNumbers.contains(numberVerified))
+                verifiedNumbers.add(numberVerified);
             displayAdNumbers();
         }
 

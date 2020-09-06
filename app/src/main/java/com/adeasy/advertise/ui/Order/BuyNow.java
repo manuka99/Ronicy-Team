@@ -32,6 +32,7 @@ import com.adeasy.advertise.model.Order;
 import com.adeasy.advertise.model.Order_Customer;
 import com.adeasy.advertise.model.Order_Item;
 import com.adeasy.advertise.model.Order_Payment;
+import com.adeasy.advertise.model.UserVerifiedNumbers;
 import com.adeasy.advertise.service.MailService;
 import com.adeasy.advertise.service.MailServiceImpl;
 import com.adeasy.advertise.util.UniqueIdBasedOnName;
@@ -421,7 +422,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     @Override
     public void onCompleteSearchNumberInUser(QuerySnapshot queryDocumentSnapshots) {
         if (queryDocumentSnapshots != null && queryDocumentSnapshots.getDocuments().isEmpty() == false) {
-            List<User> numbers = queryDocumentSnapshots.toObjects(User.class);
+            List<UserVerifiedNumbers> numbers = queryDocumentSnapshots.toObjects(UserVerifiedNumbers.class);
             Log.i(TAG, numbers.get(0).getVerifiedNumbers().toString());
             Log.i(TAG, queryDocumentSnapshots.getDocuments().toString());
             startPaymentSelectFragment();

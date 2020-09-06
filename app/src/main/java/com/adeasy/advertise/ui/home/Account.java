@@ -29,6 +29,7 @@ import com.adeasy.advertise.ui.advertisement.Myadds;
 import com.adeasy.advertise.ui.athentication.LoginRegister;
 import com.adeasy.advertise.ui.favaourite.divya_MActivity;
 import com.adeasy.advertise.ui.getintouch.GetInTouchActivity;
+import com.adeasy.advertise.ui.profile.Profile;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -140,6 +141,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         faq.setOnClickListener(this);
         favaourite.setOnClickListener(this);
         linkfb.setOnClickListener(this);
+        profile.setOnClickListener(this);
 
         facebookAuthManager = new FacebookAuthManager(this);
 
@@ -154,7 +156,6 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.account);
 
         callbackManager = CallbackManager.Factory.create();
         loginManager = LoginManager.getInstance();
@@ -180,21 +181,27 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.account);
+    }
+
+    @Override
     public void onClick(View view) {
         if (view == myads)
             startActivity(new Intent(getContext(), Myadds.class));
         else if (view == donateUs)
             startActivity(new Intent(getContext(), Donations.class));
-        else if (view == logout) {
-            if (mAuth.getCurrentUser() != null)
-                mAuth.signOut();
-            startActivity(new Intent(getContext(), MainActivity.class));
-        } else if (view == faq)
+        else if (view == logout)
+            logoutDialog();
+        else if (view == faq)
             startActivity(new Intent(getContext(), GetInTouchActivity.class));
         else if (view == favaourite)
             startActivity(new Intent(getContext(), divya_MActivity.class));
         else if (view == linkfb)
             linkWithFb();
+        else if (view == profile)
+            startActivity(new Intent(getContext(), Profile.class));
     }
 
     private void showNoAuthContent() {
@@ -231,7 +238,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(callbackManager.onActivityResult(requestCode, resultCode, data)){
+        if (callbackManager.onActivityResult(requestCode, resultCode, data)) {
             return;
         }
     }
@@ -320,6 +327,38 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         textView.setMaxLines(5);
         snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         snackbar.show();
+    }
+
+    private void logoutDialog() {
+        new AlertDialog.Builder(getActivity())
+
+                .setMessage("Are you sure you want to log out?")
+
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (mAuth.getCurrentUser() != null)
+                            mAuth.signOut();
+                        openNewActivity();
+                    }
+                })
+
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+
+                .show();
+    }
+
+    private void openNewActivity() {
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finishAffinity();
+        getActivity().finish();
     }
 
 }

@@ -20,6 +20,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="continueBtn">Continue</string>
 
+    <!-- profile -->
+    <string name="gender">Gender</string>
+    <string name="dateOfBirth">Date of birth</string>
+    <string name="living">Living in</string>
+
     <!-- menu -->
     <string name="menu_location">location</string>
     <string name="menu_category">category</string>
@@ -171,7 +176,7 @@
     <string name="invalidLogin">Error: Invalid credententials</string>
     <string name="invalidRegister">Error: Account registration failed</string>
     <string name="notLinked">An account exist with your facebook email address, please sign in to your local account in ronicy.lk and link it with your facebook account.</string>
-    <string name="linkFb">Link with facebook</string>
+    <string name="linkFb">Connect with facebook</string>
     <string name="linkFbSuccess">Your facebook account was successfully linked</string>
     <string name="linkFbError">Error: Your facebook account was not linked. This may be due to an existing account linked with facebook or facebook account email you provided.</string>
     <string name="linkFbRemoveSuccess">Your facebook account was successfully removed</string>

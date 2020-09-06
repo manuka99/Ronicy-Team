@@ -7,7 +7,7 @@
     <corners android:radius="10dp" />
     <gradient
         android:angle="90"
-        android:centerColor="@color/com_facebook_primary_button_disabled_text_color"
-        android:endColor="@color/com_facebook_primary_button_pressed_text_color"
-        android:startColor="@color/com_facebook_primary_button_pressed_text_color" />
+        android:centerColor="@color/colorPrimaryDark"
+        android:endColor="@color/colorPrimaryDark"
+        android:startColor="@color/colorPrimaryDark" />
 </shape>

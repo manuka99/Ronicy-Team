@@ -26,6 +26,7 @@ import com.adeasy.advertise.callback.PhoneAuthenticationCallback;
 import com.adeasy.advertise.manager.FirebasePhoneAuthentication;
 import com.adeasy.advertise.manager.VerifiedNumbersManager;
 import com.adeasy.advertise.model.User;
+import com.adeasy.advertise.model.UserVerifiedNumbers;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseException;
@@ -238,7 +239,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
             //FirebaseUser user = task.getResult().getUser();
             buynowViewModel.setMobileNumberVerifyStatus(true);
             firebasePhoneAuthentication.unlinkPhoneAuth(task.getResult().getUser());
-            verifiedNumbersManager.insertVerifiedNumber(new User(mAuth.getCurrentUser(), phoneNum), task.getResult().getUser());
+            verifiedNumbersManager.insertVerifiedNumber(new UserVerifiedNumbers(mAuth.getCurrentUser(), phoneNum), task.getResult().getUser());
         } else {
             showErrorSnackbar(String.valueOf(R.string.invalid_mobile_code));
             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {

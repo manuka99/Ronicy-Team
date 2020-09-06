@@ -24,6 +24,7 @@ import com.adeasy.advertise.callback.VerifiedNumbersCallback;
 import com.adeasy.advertise.manager.FirebasePhoneAuthentication;
 import com.adeasy.advertise.manager.VerifiedNumbersManager;
 import com.adeasy.advertise.model.User;
+import com.adeasy.advertise.model.UserVerifiedNumbers;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -278,7 +279,7 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
         endVerifyProgress();
         if(task.isSuccessful()){
             firebasePhoneAuthentication.unlinkPhoneAuth(task.getResult().getUser());
-            verifiedNumbersManager.insertVerifiedNumber(new User(firebaseAuth.getCurrentUser(), phoneNumber), firebaseAuth.getCurrentUser());
+            verifiedNumbersManager.insertVerifiedNumber(new UserVerifiedNumbers(firebaseAuth.getCurrentUser(), phoneNumber), firebaseAuth.getCurrentUser());
         }else{
             showErrorSnackbar(R.string.invalid_mobile_code);
             codeEntered.setError(getString(R.string.invalid_mobile_code));

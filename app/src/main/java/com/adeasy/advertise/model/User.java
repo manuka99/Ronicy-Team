@@ -10,29 +10,26 @@ public class User {
 
     private String uid;
     private String name;
-    private List<Integer> verifiedNumbers;
     private String address;
     private String email;
+    private String gender;
+    private String phone;
+    private String dateOfBirth;
 
-    public User(){
-        this.verifiedNumbers = new ArrayList<>();
+    public User() {
     }
 
-    public User(FirebaseUser user, Integer number){
+    public User(FirebaseUser user) {
         this.uid = user.getUid();
         this.name = user.getDisplayName();
         this.email = user.getEmail();
-        this.verifiedNumbers = new ArrayList<>();
-        this.verifiedNumbers.add(number);
     }
 
-    public User(FirebaseUser user, Integer number, String address){
+    public User(FirebaseUser user, String address) {
         this.uid = user.getUid();
         this.name = user.getDisplayName();
         this.email = user.getEmail();
         this.address = address;
-        this.verifiedNumbers = new ArrayList<>();
-        this.verifiedNumbers.add(number);
     }
 
     public String getUid() {
@@ -41,14 +38,6 @@ public class User {
 
     public void setUid(String uid) {
         this.uid = uid;
-    }
-
-    public List<Integer> getVerifiedNumbers() {
-        return verifiedNumbers;
-    }
-
-    public void setVerifiedNumbers(List<Integer> verifiedNumbers) {
-        this.verifiedNumbers = verifiedNumbers;
     }
 
     public String getAddress() {
@@ -74,4 +63,29 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
 }

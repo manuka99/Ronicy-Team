@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.adeasy.advertise.callback.VerifiedNumbersCallback;
 import com.adeasy.advertise.model.User;
+import com.adeasy.advertise.model.UserVerifiedNumbers;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,7 +36,7 @@ public class VerifiedNumbersManager {
         this.firebaseFirestore = FirebaseFirestore.getInstance();
     }
 
-    public void insertVerifiedNumber(final User user, FirebaseUser firebaseUser) {
+    public void insertVerifiedNumber(final UserVerifiedNumbers user, FirebaseUser firebaseUser) {
 
         final DocumentReference refStore;
         refStore = firebaseFirestore.collection(childName).document(firebaseUser.getUid());
