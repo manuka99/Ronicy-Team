@@ -50,10 +50,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link Account#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class Account extends Fragment implements View.OnClickListener, FacebookAuthCallback {
 
     // TODO: Rename parameter arguments, choose names that match
