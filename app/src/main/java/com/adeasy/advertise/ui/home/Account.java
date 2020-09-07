@@ -291,7 +291,8 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         if (task.isSuccessful()) {
             showSuccessSnackbar(getString(R.string.linkFbSuccess));
         } else
-            showErrorSnackbar(getString(R.string.linkFbError));
+            showErrorSnackbar(task.getException().getMessage());
+            //showErrorSnackbar(getString(R.string.linkFbError));
     }
 
     @Override

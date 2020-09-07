@@ -1,5 +1,6 @@
 package com.adeasy.advertise.ui.athentication;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -10,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Parcel;
+import android.os.ResultReceiver;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,9 +31,11 @@ import android.widget.Toast;
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.FacebookAuthCallback;
 import com.adeasy.advertise.callback.FirebaseAuthenticationCallback;
+import com.adeasy.advertise.manager.CustomAuthTokenHandler;
 import com.adeasy.advertise.manager.FacebookAuthManager;
 import com.adeasy.advertise.manager.FirebaseAuthentication;
 import com.adeasy.advertise.ui.home.MainActivity;
+import com.adeasy.advertise.util.HideSoftKeyboard;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -78,6 +84,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
     private static final String Chat = "Log in to chat with buyers and sellers on ronicy.lk";
     private static final String Account = "Log in to manage your account:";
     private CallbackManager mCallbackManager;
+    ResultReceiver mresultReceiver;
 
     LinearLayout loginLayout, signUpLayout;
 
@@ -343,6 +350,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
     }
 
     private void showErrorSnackbar(String error) {
+        HideSoftKeyboard.hideKeyboard(requireActivity());
         Snackbar snackbar = Snackbar.make(snackbar_text, error, Snackbar.LENGTH_INDEFINITE).setAction("x", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -356,6 +364,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
     }
 
     private void showSuccessSnackbar(String message) {
+        HideSoftKeyboard.hideKeyboard(requireActivity());
         Snackbar snackbar = Snackbar.make(snackbar_text, message, Snackbar.LENGTH_INDEFINITE).setAction("x", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -374,6 +383,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
             FirebaseUser user = firebaseAuth.getCurrentUser();
             if (user != null) {
                 openNewActivity();
+                new CustomAuthTokenHandler().GetTokenResultAndAddClaims();
             } else
                 showErrorSnackbar(getString(R.string.invalidLogin));
         } else {
@@ -467,6 +477,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
         if (task.isSuccessful()) {
             // Sign in success, update UI with the signed-in user's information
             Log.d(TAG, "signInWithCredential:success");
+            new CustomAuthTokenHandler().GetTokenResultAndAddClaims();
             openNewActivity();
         } else {
             // If sign in fails, display a message to the user.
@@ -493,5 +504,6 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
     public void onCompleteUnlinkFacebookAuthCredential(@NonNull Task<AuthResult> task) {
 
     }
+
 
 }
