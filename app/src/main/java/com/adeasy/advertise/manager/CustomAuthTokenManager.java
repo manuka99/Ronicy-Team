@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.adeasy.advertise.callback.CustomClaimsCallback;
 import com.adeasy.advertise.config.Configurations;
+import com.adeasy.advertise.model.CustomClaims;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -19,6 +20,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
+
+import java.util.Map;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -135,6 +138,22 @@ public class CustomAuthTokenManager {
             Log.i(TAG, "user is not logged in");
             customClaimsCallback.onCompleteGetCustomClaims(null);
         }
+    }
+
+    public CustomClaims mapJsomClaimsToObject(Map<String, Object> claims) {
+        CustomClaims customClaims = new CustomClaims();
+        try{
+            customClaims.setAdmin((Boolean)claims.get("admin"));
+            customClaims.setAdvertisement_manager((Boolean)claims.get("advertisement_manager"));
+            customClaims.setOrder_manager((Boolean)claims.get("order_manager"));
+            customClaims.setFavourite_manager((Boolean)claims.get("favourite_manager"));
+            customClaims.setChat_manager((Boolean)claims.get("chat_manager"));
+            customClaims.setContact_manager((Boolean)claims.get("contact_manager"));
+        }catch (Exception e){
+            Log.i(TAG, "Claims were not successfull");
+            e.printStackTrace();
+        }
+        return customClaims;
     }
 
 }

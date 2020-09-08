@@ -31,6 +31,7 @@ import com.adeasy.advertise.callback.CustomClaimsCallback;
 import com.adeasy.advertise.callback.FacebookAuthCallback;
 import com.adeasy.advertise.manager.CustomAuthTokenManager;
 import com.adeasy.advertise.manager.FacebookAuthManager;
+import com.adeasy.advertise.ui.administration.home.DashboardHome;
 import com.adeasy.advertise.ui.advertisement.Donations;
 import com.adeasy.advertise.ui.advertisement.Myadds;
 import com.adeasy.advertise.ui.athentication.LoginRegister;
@@ -185,7 +186,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.action_admin) {
-            Toast.makeText(getActivity(), "asas", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(getActivity(), DashboardHome.class));
             return true;
         }
 

@@ -1,7 +1,6 @@
 package com.adeasy.advertise.ui.profile;
 
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -16,11 +15,13 @@ import androidx.lifecycle.ViewModelProviders;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,13 +31,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
-import com.adeasy.advertise.ViewModel.ProfileManagerViewModel;
 import com.adeasy.advertise.callback.ProfileManagerCallback;
 import com.adeasy.advertise.manager.ProfileManager;
 import com.adeasy.advertise.model.User;
 import com.adeasy.advertise.util.HideSoftKeyboard;
 import com.adeasy.advertise.util.ImageQualityReducer;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -46,7 +45,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.Calendar;
 
 import static android.app.Activity.RESULT_OK;
@@ -90,8 +88,6 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
 
     DatePickerDialog picker;
     ProgressBar progressBar;
-
-    ProfileManagerViewModel profileManagerViewModel;
 
     public EditProfile() {
         // Required empty public constructor
@@ -158,7 +154,6 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
         profileManager = new ProfileManager(this);
 
         user = new User();
-        profileManager.getUser();
 
         //listeners
         deleteImage.setOnClickListener(this);
@@ -169,21 +164,28 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
         birth.setOnClickListener(this);
         dob.setOnClickListener(this);
 
-        profileManagerViewModel = ViewModelProviders.of(getActivity()).get(ProfileManagerViewModel.class);
-
+        setHasOptionsMenu(true);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        profileManagerViewModel.getUpdateProfile().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean)
-                    updateProfile();
-            }
-        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_profile_update) {
+            updateProfile();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        profileManager.getUser();
     }
 
     @Override
@@ -334,6 +336,7 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
             showErrorSnackbar("Please fill the missing fields before updating.");
         } else if (!isUpdating) {
             updatingUi();
+            user.setUid(firebaseAuth.getCurrentUser().getUid());
             user.setName(name.getEditText().getText().toString());
             user.setPhone(phone.getEditText().getText().toString());
             user.setEmail(email.getEditText().getText().toString());

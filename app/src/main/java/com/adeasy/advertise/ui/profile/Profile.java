@@ -10,11 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.adeasy.advertise.R;
-import com.adeasy.advertise.ViewModel.ProfileManagerViewModel;
-import com.adeasy.advertise.ui.advertisement.Advertisement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +29,6 @@ public class Profile extends AppCompatActivity {
     FrameLayout detailsFrame;
     List<MenuItem> menuItems;
     Toolbar toolbar;
-    ProfileManagerViewModel profileManagerViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +53,6 @@ public class Profile extends AppCompatActivity {
         });
 
         menuItems = new ArrayList<>();
-
-        profileManagerViewModel = ViewModelProviders.of(this).get(ProfileManagerViewModel.class);
 
         showPersonalDetails();
     }
@@ -110,8 +104,7 @@ public class Profile extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_profile_update) {
-            profileManagerViewModel.setUpdateProfile(true);
-            return true;
+            return false;
         } else if (id == R.id.action_profile_edit) {
             showEditDetails();
             return true;
