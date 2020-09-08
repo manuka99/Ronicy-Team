@@ -53,6 +53,25 @@
                 android:textStyle="bold" />
 
             <Button
+                android:id="@+id/administration"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_14sdp"
+                android:background="@color/colorBlue"
+                android:drawableStart="@drawable/ic_baseline_settings_24_admin"
+                android:drawablePadding="20dp"
+                android:elevation="4dp"
+                android:fontFamily="@font/droid_sans"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:text="Administration"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp"></Button>
+
+            <Button
                 android:id="@+id/myads"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

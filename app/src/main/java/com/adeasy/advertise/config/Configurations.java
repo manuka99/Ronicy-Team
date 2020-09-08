@@ -16,4 +16,7 @@ public class Configurations {
     public static final String PAYHERE_MERCHANTID = "1214373";
     public static final String PAYHERE_SECRET = "8bIpNGLREQb4UobgTUm9Dj49Z3dIeUkau4DrwsH4olA0";
 
+    //spring boot server
+    public static final String SERVER_URL = "https://ronicy.herokuapp.com/user/get_token?tokenID=";
+
 }

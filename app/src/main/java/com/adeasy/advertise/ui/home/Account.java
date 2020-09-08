@@ -8,12 +8,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,7 +26,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.callback.CustomClaimsCallback;
 import com.adeasy.advertise.callback.FacebookAuthCallback;
+import com.adeasy.advertise.manager.CustomAuthTokenManager;
 import com.adeasy.advertise.manager.FacebookAuthManager;
 import com.adeasy.advertise.ui.advertisement.Donations;
 import com.adeasy.advertise.ui.advertisement.Myadds;
@@ -43,6 +49,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserInfo;
 
@@ -54,7 +61,7 @@ import java.util.List;
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class Account extends Fragment implements View.OnClickListener, FacebookAuthCallback {
+public class Account extends Fragment implements View.OnClickListener, FacebookAuthCallback, CustomClaimsCallback {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,14 +75,17 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
 
     private FirebaseAuth mAuth;
     TextView username;
-    Button myads, favaourite, membership, profile, faq, donateUs, logout, linkfb;
+    Button myads, favaourite, membership, profile, faq, donateUs, logout, linkfb, administration;
     FrameLayout noAuthFragment, snackView;
     LinearLayout authContent;
     LoginRegister loginRegister;
     CallbackManager callbackManager;
     FacebookAuthManager facebookAuthManager;
     LoginManager loginManager;
-    Boolean isFbLinked;
+    Boolean isFbLinked = false, isAdministrator = false;
+    CustomAuthTokenManager customAuthTokenManager;
+
+    Toolbar toolbar;
 
     public Account() {
         // Required empty public constructor
@@ -106,6 +116,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -114,6 +125,8 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_account, container, false);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.account);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -130,6 +143,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         logout = view.findViewById(R.id.logout);
         linkfb = view.findViewById(R.id.linkfb);
         snackView = view.findViewById(R.id.snackView);
+        administration = view.findViewById(R.id.administration);
 
         loginRegister = new LoginRegister();
 
@@ -142,8 +156,10 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         favaourite.setOnClickListener(this);
         linkfb.setOnClickListener(this);
         profile.setOnClickListener(this);
+        administration.setOnClickListener(this);
 
         facebookAuthManager = new FacebookAuthManager(this);
+        customAuthTokenManager = new CustomAuthTokenManager(this);
 
         if (mAuth.getCurrentUser() != null)
             showAuthContent();
@@ -181,12 +197,6 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.account);
-    }
-
-    @Override
     public void onClick(View view) {
         if (view == myads)
             startActivity(new Intent(getContext(), Myadds.class));
@@ -201,6 +211,8 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         else if (view == linkfb)
             linkWithFb();
         else if (view == profile)
+            startActivity(new Intent(getContext(), Profile.class));
+        else if (view == administration)
             startActivity(new Intent(getContext(), Profile.class));
     }
 
@@ -224,6 +236,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         logout.setVisibility(View.VISIBLE);
         username.setText(mAuth.getCurrentUser().getDisplayName());
         updateFacebookLinkState();
+        customAuthTokenManager.getCustomClaimsInLoggedinUser();
     }
 
     private void linkWithFb() {
@@ -292,7 +305,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
             showSuccessSnackbar(getString(R.string.linkFbSuccess));
         } else
             showErrorSnackbar(task.getException().getMessage());
-            //showErrorSnackbar(getString(R.string.linkFbError));
+        //showErrorSnackbar(getString(R.string.linkFbError));
     }
 
     @Override
@@ -360,6 +373,26 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         startActivity(intent);
         getActivity().finishAffinity();
         getActivity().finish();
+    }
+
+    @Override
+    public void onCompleteGetCustomClaims(@NonNull Task<GetTokenResult> task) {
+        if (task.isSuccessful()) {
+            try {
+                if ((Boolean) task.getResult().getClaims().get("admin") || (Boolean) task.getResult().getClaims().get("advertisement_manager") || (Boolean) task.getResult().getClaims().get("favourite_manager") || (Boolean) task.getResult().getClaims().get("chat_manager") || (Boolean) task.getResult().getClaims().get("contact_manager") || (Boolean) task.getResult().getClaims().get("order_manager")) {
+                    isAdministrator = true;
+                    administration.setVisibility(View.VISIBLE);
+                    Log.i(TAG, task.getResult().getClaims().toString());
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+                isAdministrator = false;
+                administration.setVisibility(View.GONE);
+            }
+        } else {
+            isAdministrator = false;
+            administration.setVisibility(View.GONE);
+        }
     }
 
 }

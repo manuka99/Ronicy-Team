@@ -1,6 +1,5 @@
 package com.adeasy.advertise.ui.athentication;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -11,8 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.os.Handler;
-import android.os.Parcel;
 import android.os.ResultReceiver;
 import android.util.Base64;
 import android.util.Log;
@@ -31,7 +28,7 @@ import android.widget.Toast;
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.FacebookAuthCallback;
 import com.adeasy.advertise.callback.FirebaseAuthenticationCallback;
-import com.adeasy.advertise.manager.CustomAuthTokenHandler;
+import com.adeasy.advertise.manager.CustomAuthTokenManager;
 import com.adeasy.advertise.manager.FacebookAuthManager;
 import com.adeasy.advertise.manager.FirebaseAuthentication;
 import com.adeasy.advertise.ui.home.MainActivity;
@@ -40,28 +37,19 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by Manuka yasas,
@@ -83,8 +71,6 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
     private static final String Post = "Please sign up to post your ad:";
     private static final String Chat = "Log in to chat with buyers and sellers on ronicy.lk";
     private static final String Account = "Log in to manage your account:";
-    private CallbackManager mCallbackManager;
-    ResultReceiver mresultReceiver;
 
     LinearLayout loginLayout, signUpLayout;
 
@@ -114,6 +100,8 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
     TextView login, signUp;
     CallbackManager callbackManager;
     LoginManager loginManager;
+
+    CustomAuthTokenManager customAuthTokenManager;
 
     String name;
 
@@ -212,6 +200,8 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
         } catch (NullPointerException e) {
             Log.i(TAG, "No arguments sent");
         }
+
+        customAuthTokenManager = new CustomAuthTokenManager();
 
         //display Login layout
         showLogin();
@@ -382,8 +372,8 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
             Log.d(TAG, "signInWithEmail:success");
             FirebaseUser user = firebaseAuth.getCurrentUser();
             if (user != null) {
+                customAuthTokenManager.GetTokenResultAndAddClaims();
                 openNewActivity();
-                new CustomAuthTokenHandler().GetTokenResultAndAddClaims();
             } else
                 showErrorSnackbar(getString(R.string.invalidLogin));
         } else {
@@ -401,6 +391,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
         if (task.isSuccessful()) {
             // Sign in success, update UI with the signed-in user's information
             Log.d(TAG, "createUserWithEmail:success");
+            customAuthTokenManager.GetTokenResultAndAddClaims();
             openNewActivity();
         } else {
             // If sign in fails, display a message to the user.
@@ -477,7 +468,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
         if (task.isSuccessful()) {
             // Sign in success, update UI with the signed-in user's information
             Log.d(TAG, "signInWithCredential:success");
-            new CustomAuthTokenHandler().GetTokenResultAndAddClaims();
+            customAuthTokenManager.GetTokenResultAndAddClaims();
             openNewActivity();
         } else {
             // If sign in fails, display a message to the user.

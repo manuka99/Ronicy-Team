@@ -4,6 +4,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.adeasy.advertise.callback.CustomClaimsCallback;
+import com.adeasy.advertise.config.Configurations;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -20,20 +22,36 @@ import com.google.firebase.auth.GetTokenResult;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class CustomAuthTokenHandler {
+public class CustomAuthTokenManager {
 
-    private static final String TAG = "CustomAuthTokenHandler";
+    private static final String TAG = "CustomAuthTokenManager";
+    private CustomClaimsCallback customClaimsCallback;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+
+    public CustomAuthTokenManager() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+    }
+
+    public CustomAuthTokenManager(CustomClaimsCallback customClaimsCallback) {
+        this.customClaimsCallback = customClaimsCallback;
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+    }
 
     public void GetTokenResultAndAddClaims() {
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (mUser != null) {
-            mUser.getIdToken(true)
+        if (firebaseAuth.getCurrentUser() != null) {
+            firebaseAuth.getCurrentUser().getIdToken(true)
                     .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                         public void onComplete(@NonNull Task<GetTokenResult> task) {
                             if (task.isSuccessful()) {
                                 String idToken = task.getResult().getToken();
                                 // Send token to your backend via HTTPS
                                 requestCustomClaimsToken(idToken);
+
+                                Log.i(TAG, idToken);
+
                                 // ...
                             } else {
                                 // Handle error -> task.getException();
@@ -48,7 +66,7 @@ public class CustomAuthTokenHandler {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String url = "http://manuka-42212.portmap.host:42212/user/get_token?tokenID=" + idToken;
+        String url = Configurations.SERVER_URL + idToken;
 
         Log.i(TAG, url);
 
@@ -66,7 +84,7 @@ public class CustomAuthTokenHandler {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // textView.setText("That didn't work!");
-                Log.i(TAG, error.getMessage());
+                error.printStackTrace();
             }
         });
 
@@ -79,14 +97,15 @@ public class CustomAuthTokenHandler {
 
         Log.i(TAG, token);
 
-        FirebaseAuth.getInstance().signInWithCustomToken(token).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        firebaseAuth.signInWithCustomToken(token).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     task.getResult().getUser().getIdToken(false).addOnSuccessListener(new OnSuccessListener<GetTokenResult>() {
                         @Override
                         public void onSuccess(GetTokenResult result) {
-                            boolean isAdmin = (boolean) result.getClaims().get("premiumAccount");
+                            Log.i(TAG, result.getClaims().toString());
+                            boolean isAdmin = (boolean) result.getClaims().get("admin");
                             if (isAdmin) {
                                 // Show admin UI.
                                 Log.i(TAG, "premium acount");
@@ -100,6 +119,22 @@ public class CustomAuthTokenHandler {
                     Log.i(TAG, task.getException().getMessage());
             }
         });
+    }
+
+    public void getCustomClaimsInLoggedinUser() {
+
+        if (firebaseUser != null) {
+            firebaseUser.getIdToken(false).addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                @Override
+                public void onComplete(@NonNull Task<GetTokenResult> task) {
+                    if (customClaimsCallback != null)
+                        customClaimsCallback.onCompleteGetCustomClaims(task);
+                }
+            });
+        } else {
+            Log.i(TAG, "user is not logged in");
+            customClaimsCallback.onCompleteGetCustomClaims(null);
+        }
     }
 
 }
