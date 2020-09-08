@@ -54,8 +54,7 @@ public class Home extends Fragment implements AdvertisementCallback {
     private String mParam2;
 
     Toolbar toolbar;
-    TextView title;
-    ImageView imageView;
+    TextView adCountText;
     RecyclerView recyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     FirestorePagingAdapter<Advertisement, ViewHolderAdds> firestorePagingAdapter;
@@ -108,6 +107,8 @@ public class Home extends Fragment implements AdvertisementCallback {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setHasFixedSize(false);
         advertisementManager = new AdvertisementManager(this);
+        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+         adCountText = toolbar.findViewById(R.id.adResults);
     }
 
     public void loadData() {
@@ -294,9 +295,7 @@ public class Home extends Fragment implements AdvertisementCallback {
     public void onAdCount(Task<QuerySnapshot> task) {
         if (task.isSuccessful()) {
             try {
-                toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-                TextView textView = toolbar.findViewById(R.id.adResults);
-                textView.setText(task.getResult().size() + " results");
+                adCountText.setText(task.getResult().size() + " results");
             }catch (NullPointerException e){
                 Log.i(TAG, "fragments changed");
             }

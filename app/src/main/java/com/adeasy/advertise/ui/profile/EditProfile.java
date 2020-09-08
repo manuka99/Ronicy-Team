@@ -270,7 +270,7 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
         if (firebaseUser.getPhotoUrl() != null) {
             profilePhoto.setImageURI(null);
             profilePhoto.setImageBitmap(null);
-            Picasso.get().load(firebaseUser.getPhotoUrl()).into(profilePhoto);
+            Picasso.get().load(firebaseUser.getPhotoUrl()).fit().centerInside().into(profilePhoto);
         }
 
         layoutEditDetails.setVisibility(View.VISIBLE);
@@ -373,7 +373,7 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
         profilePhoto.setImageURI(null);
         profilePhoto.setImageBitmap(null);
         if (firebaseUser.getPhotoUrl() != null) {
-            Picasso.get().load(firebaseUser.getPhotoUrl()).into(profilePhoto);
+            Picasso.get().load(firebaseUser.getPhotoUrl()).fit().centerInside().into(profilePhoto);
         } else
             profilePhoto.setBackgroundResource(R.drawable.round_user);
     }

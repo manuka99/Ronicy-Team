@@ -11,7 +11,7 @@
         android:layout_margin="10dp"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/colorGreen"
+        android:background="@drawable/spinner_48_inner_holo"
         android:layout_alignParentRight="true"/>
 
     <ImageView

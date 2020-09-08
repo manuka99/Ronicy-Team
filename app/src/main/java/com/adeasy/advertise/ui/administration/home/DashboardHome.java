@@ -54,7 +54,7 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
 
         //set name and image
         name.setText(firebaseUser.getDisplayName());
-        Picasso.get().load(firebaseUser.getPhotoUrl()).into(profileImage);
+        Picasso.get().load(firebaseUser.getPhotoUrl()).fit().centerInside().into(profileImage);
     }
 
     @Override

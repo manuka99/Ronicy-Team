@@ -15,7 +15,7 @@
         android:layout_width="@dimen/_72sdp"
         android:layout_height="@dimen/_72sdp"
         android:layout_marginTop="@dimen/_16sdp"
-        android:src="@drawable/spinner_48_inner_holo" />
+        android:background="@drawable/spinner_48_inner_holo" />
 
     <TextView
         android:id="@+id/name"
@@ -31,16 +31,15 @@
         android:id="@+id/roles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_2sdp"
         android:layout_marginBottom="@dimen/_16sdp"
         android:text="@string/loading"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_12sdp"
         android:textStyle="bold" />
 
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_gravity="center"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -300,6 +299,6 @@
 
         </GridLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
 </LinearLayout>

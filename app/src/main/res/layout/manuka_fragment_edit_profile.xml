@@ -38,9 +38,7 @@
                 android:layout_margin="@dimen/_4sdp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/round_user"
-                app:civ_border_width="@dimen/_2sdp"
-                app:civ_border_color="@color/colorWhiteLite"/>
+                android:src="@drawable/round_user"/>
 
             <Button
                 android:id="@+id/deleteImage"

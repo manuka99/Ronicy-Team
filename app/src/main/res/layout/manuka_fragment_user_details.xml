@@ -20,9 +20,7 @@
             android:id="@+id/profilePhoto"
             android:layout_width="@dimen/_60sdp"
             android:layout_height="@dimen/_60sdp"
-            android:src="@drawable/round_user"
-            app:civ_border_color="@color/colorWhiteLite"
-            app:civ_border_width="@dimen/_2sdp" />
+            android:src="@drawable/round_user" />
 
         <LinearLayout
             android:layout_width="match_parent"

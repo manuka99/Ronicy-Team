@@ -207,7 +207,7 @@ public class UserDetails extends Fragment implements ProfileManagerCallback {
         }
 
         if (firebaseUser.getPhotoUrl() != null)
-            Picasso.get().load(firebaseUser.getPhotoUrl()).into(proficePic);
+            Picasso.get().load(firebaseUser.getPhotoUrl()).fit().centerInside().into(proficePic);
 
         userDetailsLayout.setVisibility(View.VISIBLE);
     }

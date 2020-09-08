@@ -17,6 +17,7 @@ import android.view.View;
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ui.newPost.NewAd;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -40,20 +41,27 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        View home_logo = getLayoutInflater().inflate(R.layout.toolbar_home, null);
+        getSupportActionBar().setCustomView(home_logo);
+
         bottomNavigationView = findViewById(R.id.navBottm);
 
         home = new Home();
         search = new Search();
         chat = new Chat();
         account = new Account();
-
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+        bottomNavigationView.setSelectedItemId(R.id.navHome);
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        bottomNavigationView.setSelectedItemId(R.id.navHome);
+        if (selectedMenueID != 0)
+            bottomNavigationView.setSelectedItemId(selectedMenueID);
     }
 
     @Override
@@ -92,37 +100,36 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         Log.i(TAG, "seleected");
-        if (selectedMenueID != menuItem.getItemId()) {
 
-            selectedMenueID = menuItem.getItemId();
+        switch (menuItem.getItemId()) {
+            case R.id.navHome:
+                selectedMenueID = menuItem.getItemId();
+                changeToolbarHome();
+                getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, home).commit();
+                return true;
 
-            switch (menuItem.getItemId()) {
+            case R.id.navSearch:
+                selectedMenueID = menuItem.getItemId();
+                changeToolbarDefault();
+                getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, search).commit();
+                return true;
 
-                case R.id.navHome:
-                    changeToolbarHome();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, home).commit();
-                    return true;
+            case R.id.navAddPost:
+                changeToolbarDefault();
+                startActivity(new Intent(this, NewAd.class));
+                return true;
 
-                case R.id.navSearch:
-                    changeToolbarDefault();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, search).commit();
-                    return true;
+            case R.id.navChat:
+                selectedMenueID = menuItem.getItemId();
+                changeToolbarDefault();
+                getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, chat).commit();
+                return true;
 
-                case R.id.navAddPost:
-                    changeToolbarDefault();
-                    startActivity(new Intent(this, NewAd.class));
-                    return true;
-
-                case R.id.navChat:
-                    changeToolbarDefault();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, chat).commit();
-                    return true;
-
-                case R.id.navAccount:
-                    changeToolbarDefault();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, account).commit();
-                    return true;
-            }
+            case R.id.navAccount:
+                selectedMenueID = menuItem.getItemId();
+                changeToolbarDefault();
+                getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, account).commit();
+                return true;
         }
 
         return false;
@@ -131,12 +138,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void changeToolbarHome() {
         //toolbar.removeAllViews();
         //getSupportActionBar().setDisplayShowTitleEnabled(false);
-        View home_logo = getLayoutInflater().inflate(R.layout.toolbar_home, null);
 
         getSupportActionBar().setDisplayShowCustomEnabled(true); // enable overriding the default toolbar_home layout
-        getSupportActionBar().setDisplayShowTitleEnabled(false); // disable the default title element here (for centered title)
+        //getSupportActionBar().setDisplayShowTitleEnabled(false); // disable the default title element here (for centered title)
         getSupportActionBar().setDisplayShowHomeEnabled(false);
-        getSupportActionBar().setCustomView(home_logo);
     }
 
     public void changeToolbarDefault() {
