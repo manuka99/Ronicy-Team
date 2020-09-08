@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.CustomClaimsCallback;
@@ -75,7 +76,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
 
     private FirebaseAuth mAuth;
     TextView username;
-    Button myads, favaourite, membership, profile, faq, donateUs, logout, linkfb, administration;
+    Button myads, favaourite, membership, profile, faq, donateUs, logout, linkfb;
     FrameLayout noAuthFragment, snackView;
     LinearLayout authContent;
     LoginRegister loginRegister;
@@ -143,7 +144,6 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         logout = view.findViewById(R.id.logout);
         linkfb = view.findViewById(R.id.linkfb);
         snackView = view.findViewById(R.id.snackView);
-        administration = view.findViewById(R.id.administration);
 
         loginRegister = new LoginRegister();
 
@@ -156,7 +156,6 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         favaourite.setOnClickListener(this);
         linkfb.setOnClickListener(this);
         profile.setOnClickListener(this);
-        administration.setOnClickListener(this);
 
         facebookAuthManager = new FacebookAuthManager(this);
         customAuthTokenManager = new CustomAuthTokenManager(this);
@@ -167,6 +166,30 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
             showNoAuthContent();
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        if (isAdministrator)
+            inflater.inflate(R.menu.admin, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.action_admin) {
+            Toast.makeText(getActivity(), "asas", Toast.LENGTH_LONG).show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -211,8 +234,6 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         else if (view == linkfb)
             linkWithFb();
         else if (view == profile)
-            startActivity(new Intent(getContext(), Profile.class));
-        else if (view == administration)
             startActivity(new Intent(getContext(), Profile.class));
     }
 
@@ -381,18 +402,17 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
             try {
                 if ((Boolean) task.getResult().getClaims().get("admin") || (Boolean) task.getResult().getClaims().get("advertisement_manager") || (Boolean) task.getResult().getClaims().get("favourite_manager") || (Boolean) task.getResult().getClaims().get("chat_manager") || (Boolean) task.getResult().getClaims().get("contact_manager") || (Boolean) task.getResult().getClaims().get("order_manager")) {
                     isAdministrator = true;
-                    administration.setVisibility(View.VISIBLE);
                     Log.i(TAG, task.getResult().getClaims().toString());
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 isAdministrator = false;
-                administration.setVisibility(View.GONE);
             }
         } else {
             isAdministrator = false;
-            administration.setVisibility(View.GONE);
         }
+
+        getActivity().invalidateOptionsMenu();
     }
 
 }

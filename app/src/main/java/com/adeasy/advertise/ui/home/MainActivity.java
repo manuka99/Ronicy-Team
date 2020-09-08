@@ -57,6 +57,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public void onBackPressed() {
         showExitDialog();
     }
@@ -123,14 +129,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void changeToolbarHome() {
-        toolbar.removeAllViews();
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //toolbar.removeAllViews();
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
         View home_logo = getLayoutInflater().inflate(R.layout.toolbar_home, null);
-        toolbar.addView(home_logo);
+
+        getSupportActionBar().setDisplayShowCustomEnabled(true); // enable overriding the default toolbar_home layout
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // disable the default title element here (for centered title)
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
+        getSupportActionBar().setCustomView(home_logo);
     }
 
     public void changeToolbarDefault() {
-        toolbar.removeAllViews();
+        //toolbar.removeAllViews();
+        //getSupportActionBar().setDisplayShowTitleEnabled(true);
+
+        getSupportActionBar().setDisplayShowCustomEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
     }
 
