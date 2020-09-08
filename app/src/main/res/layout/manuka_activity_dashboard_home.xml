@@ -61,6 +61,7 @@
                 app:cardCornerRadius="@dimen/_14sdp">
 
                 <LinearLayout
+                    android:id="@+id/advertisement"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -91,6 +92,7 @@
                 app:cardCornerRadius="@dimen/_14sdp">
 
                 <LinearLayout
+                    android:id="@+id/orders"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -122,6 +124,7 @@
                 app:cardCornerRadius="@dimen/_14sdp">
 
                 <LinearLayout
+                    android:id="@+id/favourite"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -153,6 +156,7 @@
                 app:cardCornerRadius="@dimen/_14sdp">
 
                 <LinearLayout
+                    android:id="@+id/chat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -183,6 +187,7 @@
                 app:cardCornerRadius="@dimen/_14sdp">
 
                 <LinearLayout
+                    android:id="@+id/getInTouch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -214,6 +219,7 @@
                 app:cardCornerRadius="@dimen/_14sdp">
 
                 <LinearLayout
+                    android:id="@+id/users"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -245,6 +251,7 @@
                 app:cardCornerRadius="@dimen/_14sdp">
 
                 <LinearLayout
+                    android:id="@+id/categories"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -276,6 +283,7 @@
                 app:cardCornerRadius="@dimen/_14sdp">
 
                 <LinearLayout
+                    android:id="@+id/otp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
