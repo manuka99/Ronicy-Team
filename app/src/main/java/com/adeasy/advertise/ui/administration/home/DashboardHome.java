@@ -17,6 +17,8 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.CustomClaimsCallback;
 import com.adeasy.advertise.manager.CustomAuthTokenManager;
 import com.adeasy.advertise.model.CustomClaims;
+import com.adeasy.advertise.ui.administration.advertisement.AdvertisementMain;
+import com.adeasy.advertise.ui.advertisement.Advertisement;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -88,7 +90,7 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
     @Override
     public void onClick(View view) {
         if (view == advertisement && (customClaims.isAdvertisement_manager() || customClaims.isAdmin()))
-            startActivity(new Intent(this, DashboardHome.class));
+            startActivity(new Intent(this, AdvertisementMain.class));
         else if (view == orders && (customClaims.isOrder_manager() || customClaims.isAdmin()))
             startActivity(new Intent(this, DashboardHome.class));
         else if (view == users && customClaims.isAdmin())
