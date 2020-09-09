@@ -391,7 +391,6 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
         if (task.isSuccessful()) {
             // Sign in success, update UI with the signed-in user's information
             Log.d(TAG, "createUserWithEmail:success");
-            customAuthTokenManager.GetTokenResultAndAddClaims();
             openNewActivity();
         } else {
             // If sign in fails, display a message to the user.
@@ -468,7 +467,6 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
         if (task.isSuccessful()) {
             // Sign in success, update UI with the signed-in user's information
             Log.d(TAG, "signInWithCredential:success");
-            customAuthTokenManager.GetTokenResultAndAddClaims();
             openNewActivity();
         } else {
             // If sign in fails, display a message to the user.
@@ -476,8 +474,6 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
 
             if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                 showErrorSnackbar(getString(R.string.notLinked));
-                AccessToken.setCurrentAccessToken(null);
-                LoginManager.getInstance().logOut();
                 //openNewActivity();
             }
 

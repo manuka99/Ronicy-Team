@@ -23,6 +23,12 @@ public class User {
     public User() {
     }
 
+    public User(String name, FirebaseUser user) {
+        this.uid = user.getUid();
+        this.name = name;
+        this.email = user.getEmail();
+    }
+
     public User(FirebaseUser user) {
         this.uid = user.getUid();
         this.name = user.getDisplayName();

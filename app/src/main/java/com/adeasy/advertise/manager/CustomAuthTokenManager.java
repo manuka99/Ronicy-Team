@@ -97,31 +97,31 @@ public class CustomAuthTokenManager {
     }
 
     private void logingWithToken(String token) {
-
-        Log.i(TAG, token);
-
-        firebaseAuth.signInWithCustomToken(token).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    task.getResult().getUser().getIdToken(false).addOnSuccessListener(new OnSuccessListener<GetTokenResult>() {
-                        @Override
-                        public void onSuccess(GetTokenResult result) {
-                            Log.i(TAG, result.getClaims().toString());
-                            boolean isAdmin = (boolean) result.getClaims().get("admin");
-                            if (isAdmin) {
-                                // Show admin UI.
-                                Log.i(TAG, "premium acount");
-                            } else {
-                                // Show regular user UI.
-                                Log.i(TAG, "not a premium acount");
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            firebaseAuth.signOut();
+            firebaseAuth.signInWithCustomToken(token).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        task.getResult().getUser().getIdToken(false).addOnSuccessListener(new OnSuccessListener<GetTokenResult>() {
+                            @Override
+                            public void onSuccess(GetTokenResult result) {
+                                Log.i(TAG, result.getClaims().toString());
+                                boolean isAdmin = (boolean) result.getClaims().get("admin");
+                                if (isAdmin) {
+                                    // Show admin UI.
+                                    Log.i(TAG, "admin acount");
+                                } else {
+                                    // Show regular user UI.
+                                    Log.i(TAG, "not a amin acount");
+                                }
                             }
-                        }
-                    });
-                } else
-                    Log.i(TAG, task.getException().getMessage());
-            }
-        });
+                        });
+                    } else
+                        Log.i(TAG, task.getException().getMessage());
+                }
+            });
+        }
     }
 
     public void getCustomClaimsInLoggedinUser() {
@@ -142,14 +142,14 @@ public class CustomAuthTokenManager {
 
     public CustomClaims mapJsomClaimsToObject(Map<String, Object> claims) {
         CustomClaims customClaims = new CustomClaims();
-        try{
-            customClaims.setAdmin((Boolean)claims.get("admin"));
-            customClaims.setAdvertisement_manager((Boolean)claims.get("advertisement_manager"));
-            customClaims.setOrder_manager((Boolean)claims.get("order_manager"));
-            customClaims.setFavourite_manager((Boolean)claims.get("favourite_manager"));
-            customClaims.setChat_manager((Boolean)claims.get("chat_manager"));
-            customClaims.setContact_manager((Boolean)claims.get("contact_manager"));
-        }catch (Exception e){
+        try {
+            customClaims.setAdmin((Boolean) claims.get("admin"));
+            customClaims.setAdvertisement_manager((Boolean) claims.get("advertisement_manager"));
+            customClaims.setOrder_manager((Boolean) claims.get("order_manager"));
+            customClaims.setFavourite_manager((Boolean) claims.get("favourite_manager"));
+            customClaims.setChat_manager((Boolean) claims.get("chat_manager"));
+            customClaims.setContact_manager((Boolean) claims.get("contact_manager"));
+        } catch (Exception e) {
             Log.i(TAG, "Claims were not successfull");
             e.printStackTrace();
         }

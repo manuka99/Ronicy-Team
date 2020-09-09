@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.adeasy.advertise.callback.FirebaseAuthenticationCallback;
+import com.adeasy.advertise.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -20,17 +21,20 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 public class FirebaseAuthentication {
     private static final String TAG = "FirebaseAuthentication";
     private FirebaseAuthenticationCallback firebaseAuthenticationCallback;
+    private CustomAuthTokenManager customAuthTokenManager;
     private FirebaseAuth firebaseAuth;
     private Context context;
 
     public FirebaseAuthentication() {
         this.firebaseAuth = FirebaseAuth.getInstance();
+        this.customAuthTokenManager = new CustomAuthTokenManager();
     }
 
     public FirebaseAuthentication(FirebaseAuthenticationCallback firebaseAuthenticationCallback, Context context) {
         this.firebaseAuthenticationCallback = firebaseAuthenticationCallback;
         this.firebaseAuth = FirebaseAuth.getInstance();
         this.context = context;
+        this.customAuthTokenManager = new CustomAuthTokenManager();
     }
 
     public void signInWithEmailAndPassword(String email, String password) {
@@ -52,7 +56,9 @@ public class FirebaseAuthentication {
                         if (firebaseAuthenticationCallback != null)
                             firebaseAuthenticationCallback.onCompleteCreateAccount(task);
                         if (task.isSuccessful()) {
+                            customAuthTokenManager.GetTokenResultAndAddClaims();
                             updateAccountName(name);
+                            new ProfileManager().updateProfile(new User(name, firebaseAuth.getCurrentUser()));
                         }
                     }
                 });

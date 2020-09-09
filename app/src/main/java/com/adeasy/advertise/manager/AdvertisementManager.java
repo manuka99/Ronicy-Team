@@ -245,13 +245,14 @@ public class AdvertisementManager {
         }
     }
 
-    public void deleteAdd(String id) {
+    public void deleteAdd(final Advertisement advertisement) {
         try {
-            firebaseFirestore.collection(childName).document(id)
+            firebaseFirestore.collection(childName).document(advertisement.getId())
                     .delete()
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
+                            deleteMultipleImages(advertisement.getImageUrls());
                             if (advertisementCallback != null)
                                 advertisementCallback.onSuccessDeleteAd();
                         }
@@ -339,22 +340,22 @@ public class AdvertisementManager {
     }
 
     public void deleteMultipleImages(List<String> imageUrls) {
-
-        for (String url : imageUrls) {
-            final StorageReference storageref = firebaseStorage.getReferenceFromUrl(url);
-            storageref.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    // File deleted successfully
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Uh-oh, an error occurred!
-                }
-            });
+        if (imageUrls != null) {
+            for (String url : imageUrls) {
+                final StorageReference storageref = firebaseStorage.getReferenceFromUrl(url);
+                storageref.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // File deleted successfully
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Uh-oh, an error occurred!
+                    }
+                });
+            }
         }
-
     }
 
     public void getCount() {

@@ -41,18 +41,18 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
 
     TextView adDetailsID, AdTitle, AdCondition, AdDescription, AdPrice, adTime, adCatName, adDetailsContacts;
     TextView isBuyNowTextView, isApprovedTextView, isAvailableTextView, hideAllNumbersTextView;
-    Boolean isBuyNow, isApproved, isAvailable, hideAllNumbers;
+    Boolean isBuyNow = false, isApproved = false, isAvailable = false, hideAllNumbers = false;
     TextInputLayout unApprovalMessage;
     FrameLayout snackbarLayout;
     LinearLayout contactsLayout;
     SliderView sliderView;
     AdvertisementSliderAdapter advertisementSliderAdapter;
     String adID, adCID;
-    Button close, update;
+    Button delete, update;
     Context context;
     FirebaseAuth auth;
     AdvertisementManager advertisementManager;
-    ProgressBar progressBar;
+    ProgressBar progressBar, progressBarDelete;
     CategoryManager categoryManager;
     com.adeasy.advertise.model.Advertisement advertisement;
     com.adeasy.advertise.model.Category category;
@@ -108,12 +108,13 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
         hideAllNumbersTextView = findViewById(R.id.hideAllNumbers);
         snackbarLayout = findViewById(R.id.snackbarLayout);
         progressBar = findViewById(R.id.progressBar);
+        progressBarDelete = findViewById(R.id.progressBarDelete);
 
-        close = findViewById(R.id.close);
+        delete = findViewById(R.id.delete);
         update = findViewById(R.id.update);
 
         //listeners
-        close.setOnClickListener(this);
+        delete.setOnClickListener(this);
         update.setOnClickListener(this);
 
         isBuyNowTextView.setOnClickListener(this);
@@ -136,8 +137,8 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        if (view == close)
-            onBackPressed();
+        if (view == delete)
+            showDeleteDialog();
         else if (view == update)
             validateAndUpdate();
         else if (view == isApprovedTextView) {
@@ -230,12 +231,15 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onSuccessDeleteAd() {
-
+        endDeletingUI();
+        showSuccessSnackbar("Advertisement was deleted successfully");
+        finish();
     }
 
     @Override
     public void onFailureDeleteAd() {
-
+        showErrorSnackbar("Error: Advertisement was not deleted");
+        endDeletingUI();
     }
 
     @Override
@@ -270,7 +274,7 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
                     adDetailsID.setText("Ad ID: " + advertisement.getId());
                     unApprovalMessage.getEditText().setText(advertisement.getUnapprovedReason());
 
-                    if (advertisement.getNumbers().size() == 0) {
+                    if (advertisement.getNumbers() == null || advertisement.getNumbers().size() == 0) {
                         contactsLayout.setVisibility(View.GONE);
                         hideAllNumbers = true;
                     } else {
@@ -379,6 +383,16 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
         update.setVisibility(View.VISIBLE);
     }
 
+    private void showDeletingUI() {
+        progressBarDelete.setVisibility(View.VISIBLE);
+        delete.setVisibility(View.GONE);
+    }
+
+    private void endDeletingUI() {
+        progressBarDelete.setVisibility(View.GONE);
+        delete.setVisibility(View.VISIBLE);
+    }
+
     public void showExitAlert() {
         new AlertDialog.Builder(this)
 
@@ -392,6 +406,31 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         finish();
+                    }
+                })
+
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .show();
+    }
+
+    private void showDeleteDialog(){
+        new AlertDialog.Builder(this)
+
+                .setIcon(android.R.drawable.ic_dialog_alert)
+
+                .setTitle("Are you sure you want to delete this ad?")
+
+                .setMessage("Please note that any changes made cannot be reverted.")
+
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        showDeletingUI();
+                        advertisementManager.deleteAdd(advertisement);
                     }
                 })
 

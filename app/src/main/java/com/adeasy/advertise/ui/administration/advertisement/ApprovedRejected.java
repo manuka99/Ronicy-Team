@@ -12,10 +12,10 @@ import com.adeasy.advertise.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AllAds#newInstance} factory method to
+ * Use the {@link ApprovedRejected#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AllAds extends Fragment {
+public class ApprovedRejected extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class AllAds extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AllAds() {
+    public ApprovedRejected() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class AllAds extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AllAds.
+     * @return A new instance of fragment ApprovedRejected.
      */
     // TODO: Rename and change types and number of parameters
-    public static AllAds newInstance(String param1, String param2) {
-        AllAds fragment = new AllAds();
+    public static ApprovedRejected newInstance(String param1, String param2) {
+        ApprovedRejected fragment = new ApprovedRejected();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

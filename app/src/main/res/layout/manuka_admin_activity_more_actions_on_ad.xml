@@ -386,14 +386,27 @@
         android:orientation="horizontal"
         android:padding="@dimen/_6sdp">
 
+        <ProgressBar
+            android:id="@+id/progressBarDelete"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="6dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorWhite"
+            android:indeterminateTintMode="src_atop"
+            android:padding="@dimen/_4sdp"
+            android:background="@color/com_facebook_button_background_color"
+            android:layout_height="@dimen/_32sdp"/>
+
         <Button
-            android:id="@+id/close"
+            android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_32sdp"
             android:layout_marginEnd="6dp"
             android:layout_weight="1"
             android:background="@color/colorDangerDark"
-            android:text="Close"
+            android:text="Delete"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/_14sdp"></Button>

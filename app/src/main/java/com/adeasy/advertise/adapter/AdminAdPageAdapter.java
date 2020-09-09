@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.adeasy.advertise.ui.administration.advertisement.AllAds;
+import com.adeasy.advertise.ui.administration.advertisement.ApprovedRejected;
 import com.adeasy.advertise.ui.administration.advertisement.NewAds;
 import com.adeasy.advertise.ui.administration.advertisement.StatisticAds;
 
@@ -27,7 +27,7 @@ public class AdminAdPageAdapter extends FragmentPagerAdapter {
                 return new NewAds();
 
             case 1:
-                return new AllAds();
+                return new ApprovedRejected();
 
             case 2:
                 return new StatisticAds();

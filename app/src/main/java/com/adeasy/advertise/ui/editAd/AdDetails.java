@@ -27,6 +27,7 @@ import com.adeasy.advertise.adapter.RecycleAdapterForImages;
 import com.adeasy.advertise.model.Advertisement;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ import static android.app.Activity.RESULT_OK;
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class AdDetails extends Fragment implements View.OnClickListener, TextWatcher, RecycleAdapterForImages.RecycleAdapterInterface{
+public class AdDetails extends Fragment implements View.OnClickListener, TextWatcher, RecycleAdapterForImages.RecycleAdapterInterface {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -157,7 +158,7 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
         });
     }
 
-    private void displayAdDetails(){
+    private void displayAdDetails() {
         postTitle.getEditText().setText(advertisement.getTitle());
         postCondition.getEditText().setText(advertisement.getCondition());
         postDescription.getEditText().setText(advertisement.getDescription());
@@ -231,7 +232,7 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
 
     }
 
-    private void showErrorSnackBar(int error){
+    private void showErrorSnackBar(int error) {
         Snackbar snackbar = Snackbar
                 .make(snackbarView, error, 4000)
                 .setAction("x", new View.OnClickListener() {
@@ -244,28 +245,31 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
         snackbar.show();
     }
 
-    private void validateAdDetails(){
-        if(imagesUriArrayList.size() < 1)
+    private void validateAdDetails() {
+        if (imagesUriArrayList.size() < 1)
             showErrorSnackBar(R.string.post_add_1_image);
-        else if(postTitle.getEditText().getText().length() < 10)
+        else if (postTitle.getEditText().getText().length() < 10)
             postTitle.setError(getString(R.string.tile_error));
-        else if(postCondition.getEditText().getText().length() < 3)
+        else if (postCondition.getEditText().getText().length() < 3)
             postCondition.setError(getString(R.string.condition_error));
-        else if(postDescription.getEditText().getText().length() < 20)
+        else if (postDescription.getEditText().getText().length() < 20)
             postDescription.setError(getString(R.string.description_error));
-        else if(postPrice.getEditText().getText().length() < 2)
+        else if (postPrice.getEditText().getText().length() < 2)
             postPrice.setError(getString(R.string.price_error));
-        else{
-            if(advertisement == null)
-                advertisement = new Advertisement();
-            advertisement.setReviewed(false);
-            advertisement.setTitle(postTitle.getEditText().getText().toString());
-            advertisement.setCondition(postCondition.getEditText().getText().toString());
-            advertisement.setDescription(postDescription.getEditText().getText().toString());
-            advertisement.setPrice(Double.valueOf(postPrice.getEditText().getText().toString()));
-            advertisement.setImageUrls(imagesUriArrayList);
+        else {
+            Advertisement updatedAdvertisement = new Advertisement();
+            updatedAdvertisement.setUserID(advertisement.getUserID());
+            updatedAdvertisement.setCategoryID(advertisement.getCategoryID());
+            updatedAdvertisement.setId(advertisement.getId());
+            updatedAdvertisement.setLocation(advertisement.getLocation());
 
-            newPostViewModel.setAdvertisement(advertisement);
+            updatedAdvertisement.setTitle(postTitle.getEditText().getText().toString());
+            updatedAdvertisement.setCondition(postCondition.getEditText().getText().toString());
+            updatedAdvertisement.setDescription(postDescription.getEditText().getText().toString());
+            updatedAdvertisement.setPrice(Double.valueOf(postPrice.getEditText().getText().toString()));
+            updatedAdvertisement.setImageUrls(imagesUriArrayList);
+
+            newPostViewModel.setAdvertisement(updatedAdvertisement);
             newPostViewModel.setDeletedFirebaseUriImages(deletedFirebaseUriArrayList);
         }
     }

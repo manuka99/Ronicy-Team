@@ -133,7 +133,6 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                                     holder.getMyaddsUaprovedReason().setVisibility(View.GONE);
                             }
 
-
                             holder.itemView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -162,7 +161,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                                                                 @Override
                                                                 public void onClick(DialogInterface dialogInterface, int i) {
                                                                     imageUrls = (List<String>) getItem(position).get("imageUrls");
-                                                                    advertisementManager.deleteAdd(getItem(position).getId());
+                                                                    advertisementManager.deleteAdd(getItem(position).toObject(Advertisement.class));
                                                                 }
                                                             })
 

@@ -22,11 +22,16 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.AddNewPhoneViewModel;
 import com.adeasy.advertise.ViewModel.NewPostViewModel;
 import com.adeasy.advertise.adapter.RecycleAdapterForVerifiedNumbers;
+import com.adeasy.advertise.callback.ProfileManagerCallback;
+import com.adeasy.advertise.manager.ProfileManager;
 import com.adeasy.advertise.manager.VerifiedNumbersManager;
 import com.adeasy.advertise.model.Advertisement;
+import com.adeasy.advertise.model.User;
 import com.adeasy.advertise.ui.addphone.AddNewNumber;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +43,7 @@ import static android.app.Activity.RESULT_OK;
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class ContactDetails extends Fragment implements View.OnClickListener {
+public class ContactDetails extends Fragment implements View.OnClickListener, ProfileManagerCallback {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +66,8 @@ public class ContactDetails extends Fragment implements View.OnClickListener {
     FrameLayout snackbarView;
     Advertisement advertisement;
     RecycleAdapterForVerifiedNumbers recycleAdapterForVerifiedNumbers;
+    ProfileManager profileManager;
+    User user;
     private static final String TAG = "ContactDetails";
     private static final int NEW_NUMBER_REQUEST_CODE = 5423;
 
@@ -104,6 +111,8 @@ public class ContactDetails extends Fragment implements View.OnClickListener {
         advertisement = (Advertisement) getArguments().getSerializable("advertisement");
 
         verifiedNumbers = advertisement.getNumbers();
+        profileManager = new ProfileManager(this);
+        user = new User();
 
         firebaseAuth = FirebaseAuth.getInstance();
         recyclerView = view.findViewById(R.id.phoneNumbersRecycler);
@@ -122,10 +131,6 @@ public class ContactDetails extends Fragment implements View.OnClickListener {
         nameView = view.findViewById(R.id.contactDetailsName);
         emailView = view.findViewById(R.id.contactDetailsEmail);
 
-        //display
-        nameView.setText(firebaseAuth.getCurrentUser().getDisplayName());
-        emailView.setText(firebaseAuth.getCurrentUser().getEmail());
-
         //set listners
         addNewNumber.setOnClickListener(this);
         hideAllNumbers.setOnClickListener(this);
@@ -135,6 +140,7 @@ public class ContactDetails extends Fragment implements View.OnClickListener {
         newPostViewModel = ViewModelProviders.of(getActivity()).get(NewPostViewModel.class);
 
         displayAdNumbers();
+        profileManager.getUser(advertisement.getUserID());
 
         return view;
     }
@@ -201,6 +207,40 @@ public class ContactDetails extends Fragment implements View.OnClickListener {
             displayAdNumbers();
         }
 
+    }
+
+    @Override
+    public void onSuccessUpdateProfile(Void aVoid) {
+
+    }
+
+    @Override
+    public void onFailureUpdateProfile(Exception e) {
+
+    }
+
+    @Override
+    public void onCompleteUpdatePassword(Task<Void> task) {
+
+    }
+
+    @Override
+    public void onCompleteUpdateEmail(Task<Void> task) {
+
+    }
+
+    @Override
+    public void onTaskFull(boolean status) {
+
+    }
+
+    @Override
+    public void onSuccessGetUser(DocumentSnapshot documentSnapshot) {
+        if(documentSnapshot != null && documentSnapshot.exists()){
+            user = documentSnapshot.toObject(User.class);
+            nameView.setText(user.getName());
+            emailView.setText(user.getEmail());
+        }
     }
 
 }

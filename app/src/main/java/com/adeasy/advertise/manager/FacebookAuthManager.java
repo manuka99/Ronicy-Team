@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.FacebookAuthCallback;
+import com.adeasy.advertise.model.User;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -57,9 +58,14 @@ public class FacebookAuthManager {
                             facebookAuthCallback.onCompleteSignInWithFacebook(task);
 
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = task.getResult().getUser();
+
+                            //create new account for fb auth user in firestore
+                            new CustomAuthTokenManager().GetTokenResultAndAddClaims();
+                            new ProfileManager().updateProfile(new User(user));
+
+                            //create new account for fb auth user in firebase auth
                             AuthCredential credential1 = EmailAuthProvider.getCredential(user.getEmail(), UUID.randomUUID().toString());
                             user.linkWithCredential(credential1);
                         }

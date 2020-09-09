@@ -54,6 +54,13 @@ public class ProfileManager {
         storageReference = firebaseStorage.getReference().child(childName).child("Images");
     }
 
+    public ProfileManager() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        this.firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference().child(childName).child("Images");
+    }
+
     public void updateProfile(User user) {
         final DocumentReference refStore;
         refStore = firebaseFirestore.collection(childName).document(firebaseAuth.getCurrentUser().getUid());
@@ -190,6 +197,19 @@ public class ProfileManager {
     public void getUser() {
         try {
             firebaseFirestore.collection(childName).document(firebaseAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    profileManagerCallback.onSuccessGetUser(documentSnapshot);
+                }
+            });
+        } catch (NullPointerException e) {
+            profileManagerCallback.onSuccessGetUser(null);
+        }
+    }
+
+    public void getUser(String uid) {
+        try {
+            firebaseFirestore.collection(childName).document(uid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     profileManagerCallback.onSuccessGetUser(documentSnapshot);
