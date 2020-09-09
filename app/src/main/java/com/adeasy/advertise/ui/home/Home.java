@@ -174,7 +174,6 @@ public class Home extends Fragment implements AdvertisementCallback {
                                 intent.putExtra("adID", getItem(position).getId());
                                 intent.putExtra("adCID", (String) getItem(position).get("categoryID"));
                                 startActivity(intent);
-
                                 //Toast.makeText(view.getContext(), getItem(position).getId(), Toast.LENGTH_SHORT).show();
                             }
                         });

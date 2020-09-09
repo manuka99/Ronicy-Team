@@ -60,7 +60,6 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
     NewPostViewModel newPostViewModel;
 
     Category category;
-    String location;
     String adID, adCID;
 
     Advertisement advertisement;

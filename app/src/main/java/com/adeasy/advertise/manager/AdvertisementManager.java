@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -48,6 +49,14 @@ public class AdvertisementManager {
     private AdvertisementCallback advertisementCallback;
     private FirebaseAuth firebaseAuth;
     private static final String FIREBASE_HOST = "firebasestorage.googleapis.com";
+
+    public AdvertisementManager() {
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
+        documentReference = firebaseFirestore.collection(childName).document();
+        storageReference = firebaseStorage.getReference().child(childName).child("Images");
+        firebaseAuth = FirebaseAuth.getInstance();
+    }
 
     public AdvertisementManager(AdvertisementCallback callBacks) {
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -73,13 +82,15 @@ public class AdvertisementManager {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            advertisementCallback.onSuccessInsertAd();
+                            if (advertisementCallback != null)
+                                advertisementCallback.onSuccessInsertAd();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            advertisementCallback.onFailureInsertAd();
+                            if (advertisementCallback != null)
+                                advertisementCallback.onFailureInsertAd();
                         }
                     });
         } catch (Exception e) {
@@ -104,7 +115,8 @@ public class AdvertisementManager {
                         public void onSuccess(Void aVoid) {
                             if (firebaseDeletedImages != null)
                                 deleteMultipleImages(firebaseDeletedImages);
-                            advertisementCallback.onSuccessInsertAd();
+                            if (advertisementCallback != null)
+                                advertisementCallback.onSuccessInsertAd();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -112,7 +124,8 @@ public class AdvertisementManager {
                         public void onFailure(@NonNull Exception e) {
                             if (advertisement != null && advertisement.getImageUrls() != null)
                                 deleteMultipleImages(advertisement.getImageUrls());
-                            advertisementCallback.onFailureInsertAd();
+                            if (advertisementCallback != null)
+                                advertisementCallback.onFailureInsertAd();
                         }
                     });
         } catch (Exception e) {
@@ -144,7 +157,8 @@ public class AdvertisementManager {
                 }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
-                        advertisementCallback.onUploadImage(task);
+                        if (advertisementCallback != null)
+                            advertisementCallback.onUploadImage(task);
                     }
                 });
             }
@@ -156,73 +170,75 @@ public class AdvertisementManager {
     public void uploadImageMultiple(final Advertisement advertisement, final List<String> deletedImageUrls, Context context) {
         try {
             if (storageTask != null && storageTask.isInProgress())
-                advertisementCallback.onTaskFull(true);
+                if (advertisementCallback != null)
+                    advertisementCallback.onTaskFull(true);
 
-            else {
-                advertisementCallback.onTaskFull(false);
+                else {
+                    if (advertisementCallback != null)
+                        advertisementCallback.onTaskFull(false);
 
-                final List<String> imageUriList = new ArrayList<>();
-                final Advertisement ad = advertisement;
+                    final List<String> imageUriList = new ArrayList<>();
+                    final Advertisement ad = advertisement;
 
-                for (int i = 0; i < advertisement.getImageUrls().size(); ++i) {
+                    for (int i = 0; i < advertisement.getImageUrls().size(); ++i) {
 
-                    final int counter = i;
+                        final int counter = i;
 
-                    Uri imageUri = Uri.parse(advertisement.getImageUrls().get(i));
+                        Uri imageUri = Uri.parse(advertisement.getImageUrls().get(i));
 
-                    //validate if uri is from firebase
-                    if (imageUri.getHost().equals(FIREBASE_HOST)) {
-                        imageUriList.add(advertisement.getImageUrls().get(i));
-                        try {
-                            advertisement.getImageUrls().get(counter + 1);
-                        } catch (Exception e) {
-                            ad.setImageUrls(imageUriList);
-                            updateAdvertisement(ad, deletedImageUrls);
+                        //validate if uri is from firebase
+                        if (imageUri.getHost().equals(FIREBASE_HOST)) {
+                            imageUriList.add(advertisement.getImageUrls().get(i));
+                            try {
+                                advertisement.getImageUrls().get(counter + 1);
+                            } catch (Exception e) {
+                                ad.setImageUrls(imageUriList);
+                                updateAdvertisement(ad, deletedImageUrls);
+                            }
+                        } else {
+                            byte[] data = ImageQualityReducer.reduceQualityFromBitmap(imageUri, context);
+
+                            String imageID = UUID.randomUUID().toString().replace("-", "");
+
+                            Log.i(TAG, imageID);
+
+                            final StorageReference ref = storageReference.child(imageID);
+                            storageTask = ref.putBytes(data);
+
+                            Task<Uri> urlTask = storageTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                @Override
+                                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                    if (!task.isSuccessful()) {
+                                        throw task.getException();
+                                    }
+                                    // Continue with the task to get the download URL
+                                    return ref.getDownloadUrl();
+                                }
+                            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    if (task.isSuccessful()) {
+                                        Uri downloadUri = task.getResult();
+                                        imageUriList.add(downloadUri.toString());
+                                        //advertisement.getImageUrls().add(downloadUri.toString());
+                                    } else {
+                                        // Handle failures
+                                        // ...
+                                    }
+
+                                    try {
+                                        advertisement.getImageUrls().get(counter + 1);
+                                    } catch (Exception e) {
+                                        ad.setImageUrls(imageUriList);
+                                        updateAdvertisement(ad, deletedImageUrls);
+                                    }
+
+                                }
+                            });
                         }
-                    } else {
-                        byte[] data = ImageQualityReducer.reduceQualityFromBitmap(imageUri, context);
 
-                        String imageID = UUID.randomUUID().toString().replace("-", "");
-
-                        Log.i(TAG, imageID);
-
-                        final StorageReference ref = storageReference.child(imageID);
-                        storageTask = ref.putBytes(data);
-
-                        Task<Uri> urlTask = storageTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                            @Override
-                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                                if (!task.isSuccessful()) {
-                                    throw task.getException();
-                                }
-                                // Continue with the task to get the download URL
-                                return ref.getDownloadUrl();
-                            }
-                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Uri> task) {
-                                if (task.isSuccessful()) {
-                                    Uri downloadUri = task.getResult();
-                                    imageUriList.add(downloadUri.toString());
-                                    //advertisement.getImageUrls().add(downloadUri.toString());
-                                } else {
-                                    // Handle failures
-                                    // ...
-                                }
-
-                                try {
-                                    advertisement.getImageUrls().get(counter + 1);
-                                } catch (Exception e) {
-                                    ad.setImageUrls(imageUriList);
-                                    updateAdvertisement(ad, deletedImageUrls);
-                                }
-
-                            }
-                        });
                     }
-
                 }
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -235,13 +251,15 @@ public class AdvertisementManager {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            advertisementCallback.onSuccessDeleteAd();
+                            if (advertisementCallback != null)
+                                advertisementCallback.onSuccessDeleteAd();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            advertisementCallback.onFailureDeleteAd();
+                            if (advertisementCallback != null)
+                                advertisementCallback.onFailureDeleteAd();
                         }
                     });
 
@@ -259,13 +277,15 @@ public class AdvertisementManager {
                     .set(data, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    advertisementCallback.onSuccessUpdatetAd();
+                    if (advertisementCallback != null)
+                        advertisementCallback.onSuccessUpdatetAd();
                 }
             })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            advertisementCallback.onFailureUpdateAd();
+                            if (advertisementCallback != null)
+                                advertisementCallback.onFailureUpdateAd();
                         }
                     });
 
@@ -282,12 +302,17 @@ public class AdvertisementManager {
         return firebaseFirestore.collection(childName).whereEqualTo("userID", firebaseAuth.getCurrentUser().getUid()).orderBy("placedDate", Query.Direction.DESCENDING);
     }
 
+    public Query viewNotReviewedAdds() {
+        return firebaseFirestore.collection(childName).whereEqualTo("reviewed", false).orderBy("placedDate", Query.Direction.DESCENDING);
+    }
+
     public void getAddbyID(String id) {
         try {
             firebaseFirestore.collection(childName).document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    advertisementCallback.getAdbyID(task);
+                    if (advertisementCallback != null)
+                        advertisementCallback.getAdbyID(task);
                 }
             });
         } catch (Exception e) {
