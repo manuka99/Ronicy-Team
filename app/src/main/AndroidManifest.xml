@@ -29,7 +29,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.administration.advertisement.AdvertisementMain"></activity>
+        <activity android:name=".ui.administration.advertisement.MoreActionsOnAd"></activity>
+        <activity android:name=".ui.administration.advertisement.AdvertisementMain" />
         <activity android:name=".ui.administration.home.DashboardHome" />
         <activity android:name=".ui.profile.Profile" />
         <activity android:name=".ui.editAd.EditAd" />

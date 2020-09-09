@@ -261,7 +261,6 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         } else {
             Log.d(TAG, "get failed with ", task.getException());
         }
-
     }
 
     @Override
@@ -315,4 +314,5 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
             Log.d(TAG, "get failed with ", task.getException());
         }
     }
+
 }

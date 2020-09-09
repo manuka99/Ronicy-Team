@@ -169,76 +169,77 @@ public class AdvertisementManager {
 
     public void uploadImageMultiple(final Advertisement advertisement, final List<String> deletedImageUrls, Context context) {
         try {
-            if (storageTask != null && storageTask.isInProgress())
+            if (storageTask != null && storageTask.isInProgress()) {
                 if (advertisementCallback != null)
                     advertisementCallback.onTaskFull(true);
+            } else {
+                if (advertisementCallback != null)
+                    advertisementCallback.onTaskFull(false);
 
-                else {
-                    if (advertisementCallback != null)
-                        advertisementCallback.onTaskFull(false);
+                final List<String> imageUriList = new ArrayList<>();
+                final Advertisement ad = advertisement;
 
-                    final List<String> imageUriList = new ArrayList<>();
-                    final Advertisement ad = advertisement;
+                for (int i = 0; i < advertisement.getImageUrls().size(); ++i) {
 
-                    for (int i = 0; i < advertisement.getImageUrls().size(); ++i) {
+                    final int counter = i;
 
-                        final int counter = i;
+                    Uri imageUri = Uri.parse(advertisement.getImageUrls().get(i));
 
-                        Uri imageUri = Uri.parse(advertisement.getImageUrls().get(i));
-
-                        //validate if uri is from firebase
-                        if (imageUri.getHost().equals(FIREBASE_HOST)) {
-                            imageUriList.add(advertisement.getImageUrls().get(i));
-                            try {
-                                advertisement.getImageUrls().get(counter + 1);
-                            } catch (Exception e) {
-                                ad.setImageUrls(imageUriList);
-                                updateAdvertisement(ad, deletedImageUrls);
-                            }
-                        } else {
-                            byte[] data = ImageQualityReducer.reduceQualityFromBitmap(imageUri, context);
-
-                            String imageID = UUID.randomUUID().toString().replace("-", "");
-
-                            Log.i(TAG, imageID);
-
-                            final StorageReference ref = storageReference.child(imageID);
-                            storageTask = ref.putBytes(data);
-
-                            Task<Uri> urlTask = storageTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                                @Override
-                                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                                    if (!task.isSuccessful()) {
-                                        throw task.getException();
-                                    }
-                                    // Continue with the task to get the download URL
-                                    return ref.getDownloadUrl();
-                                }
-                            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Uri> task) {
-                                    if (task.isSuccessful()) {
-                                        Uri downloadUri = task.getResult();
-                                        imageUriList.add(downloadUri.toString());
-                                        //advertisement.getImageUrls().add(downloadUri.toString());
-                                    } else {
-                                        // Handle failures
-                                        // ...
-                                    }
-
-                                    try {
-                                        advertisement.getImageUrls().get(counter + 1);
-                                    } catch (Exception e) {
-                                        ad.setImageUrls(imageUriList);
-                                        updateAdvertisement(ad, deletedImageUrls);
-                                    }
-
-                                }
-                            });
+                    //validate if uri is from firebase
+                    if (imageUri.getHost().equals(FIREBASE_HOST)) {
+                        imageUriList.add(advertisement.getImageUrls().get(i));
+                        Log.i(TAG, "firebase image");
+                        try {
+                            advertisement.getImageUrls().get(counter + 1);
+                        } catch (Exception e) {
+                            ad.setImageUrls(imageUriList);
+                            updateAdvertisement(ad, deletedImageUrls);
+                            e.printStackTrace();
                         }
+                    } else {
+                        byte[] data = ImageQualityReducer.reduceQualityFromBitmap(imageUri, context);
 
+                        String imageID = UUID.randomUUID().toString().replace("-", "");
+
+                        Log.i(TAG, imageID);
+
+                        final StorageReference ref = storageReference.child(imageID);
+                        storageTask = ref.putBytes(data);
+
+                        Task<Uri> urlTask = storageTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                            @Override
+                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                if (!task.isSuccessful()) {
+                                    throw task.getException();
+                                }
+                                // Continue with the task to get the download URL
+                                return ref.getDownloadUrl();
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+                                if (task.isSuccessful()) {
+                                    Uri downloadUri = task.getResult();
+                                    imageUriList.add(downloadUri.toString());
+                                    //advertisement.getImageUrls().add(downloadUri.toString());
+                                } else {
+                                    // Handle failures
+                                    // ...
+                                }
+
+                                try {
+                                    advertisement.getImageUrls().get(counter + 1);
+                                } catch (Exception e) {
+                                    ad.setImageUrls(imageUriList);
+                                    updateAdvertisement(ad, deletedImageUrls);
+                                }
+
+                            }
+                        });
                     }
+
                 }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

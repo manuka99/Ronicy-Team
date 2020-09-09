@@ -159,10 +159,13 @@ public class NewAds extends Fragment {
                                             .setIcon(R.drawable.ic_baseline_info_24_red)
                                             .setTitle("Ad - " + getItem(position).get("title"))
                                             .setMessage("Note any changes made cannot be revert. Select below and proceed.")
-                                            .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                                            .setNeutralButton("More", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialogInterface, int i) {
-
+                                                    Intent intent = new Intent(getApplicationContext(), MoreActionsOnAd.class);
+                                                    intent.putExtra("adID", getItem(position).get("id").toString());
+                                                    intent.putExtra("adCID", getItem(position).get("categoryID").toString());
+                                                    startActivity(intent);
                                                 }
                                             })
                                             .setNegativeButton("Edit ad", new DialogInterface.OnClickListener() {
@@ -215,8 +218,8 @@ public class NewAds extends Fragment {
                                 break;
 
                             case FINISHED:
-                                Toast.makeText(getApplicationContext(), "last..", Toast.LENGTH_SHORT).show();
                                 swipeRefreshLayout.setRefreshing(false);
+                                Toast.makeText(getApplicationContext(), "last..", Toast.LENGTH_SHORT).show();
                                 break;
 
                             case ERROR:
@@ -238,6 +241,14 @@ public class NewAds extends Fragment {
 
         firestorePagingAdapter.startListening();
         recyclerView.setAdapter(firestorePagingAdapter);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                firestorePagingAdapter.refresh();
+            }
+        });
+
     }
 
 }

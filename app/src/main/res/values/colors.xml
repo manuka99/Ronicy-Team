@@ -13,6 +13,7 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorWhiteLite">#CCCCCC</color>
     <color name="colorDanger">#ff1a1a</color>
+    <color name="colorDangerDark">#F44336</color>
     <color name="colorWarning">#ffe066</color>
     <color name="colorHome">#e6ecff</color>
     <color name="colorGreen">#00a884</color>

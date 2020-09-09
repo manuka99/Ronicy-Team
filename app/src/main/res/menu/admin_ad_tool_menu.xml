@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
     <item
         android:id="@+id/action_admin_ads_search"
         android:title="Search"
@@ -9,13 +9,22 @@
         app:showAsAction="ifRoom"></item>
 
     <item
+        android:title="Published ads"
+        android:orderInCategory="300"
+        app:showAsAction="collapseActionView"></item>
+
+    <item
         android:id="@+id/action_admin_ads_buynow"
         android:title="BuyNow ads"
         android:orderInCategory="300"
         app:showAsAction="collapseActionView"></item>
 
     <item
-        android:id="@+id/action_admin_ads_advance"
+        android:title="Approved ads"
+        android:orderInCategory="300"
+        app:showAsAction="collapseActionView"></item>
+
+    <item
         android:title="Advance settings"
         android:orderInCategory="300"
         app:showAsAction="collapseActionView"></item>

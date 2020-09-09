@@ -258,6 +258,7 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
         else{
             if(advertisement == null)
                 advertisement = new Advertisement();
+            advertisement.setReviewed(false);
             advertisement.setTitle(postTitle.getEditText().getText().toString());
             advertisement.setCondition(postCondition.getEditText().getText().toString());
             advertisement.setDescription(postDescription.getEditText().getText().toString());

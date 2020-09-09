@@ -35,6 +35,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -83,13 +84,6 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
 
         if (firebaseAuth.getCurrentUser() != null)
             loadData();
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                firestorePagingAdapter.refresh();
-            }
-        });
 
     }
 
@@ -267,6 +261,12 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
         firestorePagingAdapter.startListening();
         recyclerView.setAdapter(firestorePagingAdapter);
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                firestorePagingAdapter.refresh();
+            }
+        });
     }
 
     @Override

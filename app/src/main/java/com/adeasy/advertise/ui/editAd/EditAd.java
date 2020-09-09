@@ -38,6 +38,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -135,7 +136,7 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
         showExitAlert();
     }
 
-    private void showSelectedCategoryFragment(){
+    private void showSelectedCategoryFragment() {
         Bundle bundle = new Bundle();
         bundle.putSerializable("category", category);
         categorySelected.setArguments(bundle);
@@ -146,7 +147,7 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
         fragmentTransaction.commit();
     }
 
-    private void showLocationFragment(){
+    private void showLocationFragment() {
         Bundle bundle = new Bundle();
         bundle.putString("location", advertisement.getLocation());
         locationSelector.setArguments(bundle);
@@ -157,7 +158,7 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
         fragmentTransaction.commit();
     }
 
-    private void showAdDetailsFragment(){
+    private void showAdDetailsFragment() {
         Bundle bundle = new Bundle();
         bundle.putSerializable("advertisement", advertisement);
         adDetails.setArguments(bundle);
@@ -179,7 +180,7 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
         fragmentTransaction.commit();
     }
 
-    private void onContactDetailsValidated(){
+    private void onContactDetailsValidated() {
         newPostViewModel.setAdDetailsValidation(true);
         newPostViewModel.getAdvertisement().observe(this, new Observer<Advertisement>() {
             @Override
@@ -190,13 +191,14 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
         });
     }
 
-    private void postAd(){
+    private void postAd() {
         advertisement.setNumbers(verifiedNumbers);
         advertisementManager.uploadImageMultiple(advertisement, firebaseDeletedImages, this);
+        Log.i(TAG, "updateing start");
     }
 
     public void showExitAlert() {
-        AlertDialog alertDialog = new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this)
 
                 .setIcon(android.R.drawable.ic_dialog_alert)
 
@@ -226,10 +228,10 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
 
     @Override
     public void onTaskFull(boolean result) {
-        if(result)
+        if (result)
             Toast.makeText(this, "Please Wait..", Toast.LENGTH_SHORT).show();
 
-        else{
+        else {
             progressDialog.setTitle("Publishing your advertisement...");
             progressDialog.setMessage("Your advertisement will be live after we approve it.");
             progressDialog.setCanceledOnTouchOutside(false);
