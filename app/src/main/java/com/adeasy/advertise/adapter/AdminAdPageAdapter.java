@@ -55,7 +55,7 @@ public class AdminAdPageAdapter extends FragmentPagerAdapter {
                 return "New ads";
 
             case 1:
-                return "All ads";
+                return "Approved/Rejected";
 
             case 2:
                 return "Statistics";
