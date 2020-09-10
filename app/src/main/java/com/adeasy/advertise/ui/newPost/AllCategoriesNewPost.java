@@ -34,7 +34,7 @@ import com.squareup.picasso.Picasso;
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class AllCategoriesNewPost extends Fragment implements CategoryCallback {
+public class AllCategoriesNewPost extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,8 +45,6 @@ public class AllCategoriesNewPost extends Fragment implements CategoryCallback {
     private String mParam1;
     private String mParam2;
 
-    TextView title;
-    ImageView imageView;
     RecyclerView recyclerView;
     CategoryManager categoryManager;
     NewPostViewModel newPostViewModel;
@@ -107,7 +105,7 @@ public class AllCategoriesNewPost extends Fragment implements CategoryCallback {
                 return false;
             }
         });
-        categoryManager = new CategoryManager(this);
+        categoryManager = new CategoryManager();
 
         loadData();
 
@@ -147,11 +145,6 @@ public class AllCategoriesNewPost extends Fragment implements CategoryCallback {
 
         firestoreRecyclerAdapter.startListening();
         recyclerView.setAdapter(firestoreRecyclerAdapter);
-
-    }
-
-    @Override
-    public void getCategoryByID(@NonNull Task<DocumentSnapshot> task) {
 
     }
 

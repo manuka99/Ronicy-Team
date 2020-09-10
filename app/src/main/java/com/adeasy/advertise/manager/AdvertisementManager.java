@@ -316,6 +316,14 @@ public class AdvertisementManager {
         return firebaseFirestore.collection(childName).whereEqualTo("approved", false).orderBy("placedDate", Query.Direction.DESCENDING);
     }
 
+    public Query viewAdsFilterByCategory(String filterAttribute, boolean status, String categoryID) {
+        return firebaseFirestore.collection(childName).whereEqualTo(filterAttribute, status).whereEqualTo("categoryID", categoryID).orderBy("placedDate", Query.Direction.DESCENDING);
+    }
+
+    public Query viewAdsFilterByAllCategory(String filterAttribute, boolean status) {
+        return firebaseFirestore.collection(childName).whereEqualTo(filterAttribute, status).orderBy("placedDate", Query.Direction.DESCENDING);
+    }
+
     public void getAddbyID(String id) {
         try {
             firebaseFirestore.collection(childName).document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

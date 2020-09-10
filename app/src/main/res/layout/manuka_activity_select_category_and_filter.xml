@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorHome">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_admin" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/colorWhite">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".ui.administration.advertisement.SelectCategoryAndFilter">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_14sdp"
+                android:background="@color/colorHome" />
+
+            <TextView
+                android:id="@+id/allCatSeleted"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/com_facebook_button_background_color"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/_20sdp"
+                android:text="@string/all_categories"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_16sdp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/CategoryListPost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

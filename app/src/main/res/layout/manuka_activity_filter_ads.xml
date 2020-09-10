@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorHome"
+    android:orientation="vertical"
+    tools:context=".ui.administration.advertisement.AdsFilter">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_admin" />
+
+    <TextView
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:background="@color/colorWhite"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:text="Note: These Ads are filtered considering the filter options only therefore the approval status of the advertisements are not considered."
+        android:textSize="@dimen/_10sdp"
+        android:textStyle="italic" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshMyadds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/myaddsRecycle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_4sdp"></androidx.recyclerview.widget.RecyclerView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</LinearLayout>

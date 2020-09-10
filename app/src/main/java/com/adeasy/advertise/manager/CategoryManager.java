@@ -42,6 +42,13 @@ public class CategoryManager {
     private StorageReference storageReference;
     private CategoryCallback categoryCallback;
 
+    public CategoryManager() {
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
+        documentReference = firebaseFirestore.collection(childName).document();
+        storageReference = firebaseStorage.getReference().child(childName).child("Images");
+    }
+
     public CategoryManager(CategoryCallback callBacks) {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
