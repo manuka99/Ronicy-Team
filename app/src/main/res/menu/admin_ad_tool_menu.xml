@@ -9,7 +9,14 @@
         app:showAsAction="ifRoom"></item>
 
     <item
-        android:title="Published ads"
+        android:id="@+id/action_admin_ads_live"
+        android:title="Published live ads"
+        android:orderInCategory="300"
+        app:showAsAction="collapseActionView"></item>
+
+    <item
+        android:id="@+id/action_admin_ads_hidden"
+        android:title="Published Hidden ads"
         android:orderInCategory="300"
         app:showAsAction="collapseActionView"></item>
 
@@ -20,7 +27,8 @@
         app:showAsAction="collapseActionView"></item>
 
     <item
-        android:title="Approved ads"
+        android:id="@+id/action_admin_ads_trash"
+        android:title="Trash"
         android:orderInCategory="300"
         app:showAsAction="collapseActionView"></item>
 

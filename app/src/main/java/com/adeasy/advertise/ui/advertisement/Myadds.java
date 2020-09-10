@@ -161,7 +161,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                                                                 @Override
                                                                 public void onClick(DialogInterface dialogInterface, int i) {
                                                                     imageUrls = (List<String>) getItem(position).get("imageUrls");
-                                                                    advertisementManager.deleteAdd(getItem(position).toObject(Advertisement.class));
+                                                                    advertisementManager.moveAdToTrash(getItem(position).toObject(Advertisement.class));
                                                                 }
                                                             })
 

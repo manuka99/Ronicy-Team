@@ -37,7 +37,7 @@
                 android:text="@string/all_categories"
                 android:textStyle="bold"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/_16sdp" />
+                android:textSize="@dimen/_14sdp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/CategoryListPost"

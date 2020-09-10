@@ -56,6 +56,7 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
     CategoryManager categoryManager;
     com.adeasy.advertise.model.Advertisement advertisement;
     com.adeasy.advertise.model.Category category;
+    Boolean isTrashDelete = false;
     private static final String TAG = "MoreActionsOnAd";
 
     @Override
@@ -72,6 +73,14 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
         } catch (Exception e) {
             e.printStackTrace();
             onBackPressed();
+        }
+
+        ///check if it is called from the trash files
+        try {
+            isTrashDelete = getIntent().getBooleanExtra("isTrashDelete", false);
+        } catch (Exception e) {
+            isTrashDelete = false;
+            e.printStackTrace();
         }
 
         advertisementManager = new AdvertisementManager(this);
@@ -125,7 +134,12 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
         contactsLayout.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
 
-        advertisementManager.getAddbyID(adID);
+        //check if the ad is in trash
+        if (!isTrashDelete)
+            advertisementManager.getAddbyID(adID);
+        else
+            advertisementManager.getAddFromRashbyID(adID);
+
         categoryManager.getCategorybyID(adCID);
         advertisementSliderAdapter = new AdvertisementSliderAdapter();
     }
@@ -417,12 +431,17 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
                 .show();
     }
 
-    private void showDeleteDialog(){
+    private void showDeleteDialog() {
+        String deleteAdTitle = "Are you sure you want to delete this ad?";
+
+        if(isTrashDelete)
+            deleteAdTitle = "Delete this ad permanently?";
+
         new AlertDialog.Builder(this)
 
                 .setIcon(android.R.drawable.ic_dialog_alert)
 
-                .setTitle("Are you sure you want to delete this ad?")
+                .setTitle(deleteAdTitle)
 
                 .setMessage("Please note that any changes made cannot be reverted.")
 
@@ -430,10 +449,12 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         showDeletingUI();
-                        advertisementManager.deleteAdd(advertisement);
+                        if (isTrashDelete)
+                            advertisementManager.deleteAddFromTrash(advertisement);
+                        else
+                            advertisementManager.moveAdToTrash(advertisement);
                     }
                 })
-
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

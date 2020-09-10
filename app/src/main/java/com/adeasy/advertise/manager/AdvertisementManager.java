@@ -41,6 +41,7 @@ public class AdvertisementManager {
 
     private static final String TAG = "AdvertisementManager";
     private static final String childName = "Advertisement";
+    private static final String childNameTrash = "TrashAdvertisement";
     private StorageTask storageTask;
     private FirebaseStorage firebaseStorage;
     private FirebaseFirestore firebaseFirestore;
@@ -245,9 +246,35 @@ public class AdvertisementManager {
         }
     }
 
-    public void deleteAdd(final Advertisement advertisement) {
+    //delete ad from advertisment collection
+    private void deleteAddFromAdCollection(final Advertisement advertisement) {
         try {
             firebaseFirestore.collection(childName).document(advertisement.getId())
+                    .delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            if (advertisementCallback != null)
+                                advertisementCallback.onSuccessDeleteAd();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            if (advertisementCallback != null)
+                                advertisementCallback.onFailureDeleteAd();
+                        }
+                    });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //delete ad from advertisment Trash collection
+    public void deleteAddFromTrash(final Advertisement advertisement) {
+        try {
+            firebaseFirestore.collection(childNameTrash).document(advertisement.getId())
                     .delete()
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -265,6 +292,34 @@ public class AdvertisementManager {
                         }
                     });
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void moveAdToTrash(final Advertisement advertisement){
+        try {
+            DocumentReference refStore;
+            if (advertisement.getId() == null) {
+                String myId = UUID.randomUUID().toString().replace("-", "");
+                advertisement.setId(myId);
+                refStore = documentReference;
+            } else
+                refStore = firebaseFirestore.collection(childNameTrash).document(advertisement.getId());
+
+            refStore.set(advertisement)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            deleteAddFromAdCollection(advertisement);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -324,9 +379,34 @@ public class AdvertisementManager {
         return firebaseFirestore.collection(childName).whereEqualTo(filterAttribute, status).orderBy("placedDate", Query.Direction.DESCENDING);
     }
 
+    public Query viewAllAdsInTrash() {
+        return firebaseFirestore.collection(childNameTrash).orderBy("placedDate", Query.Direction.DESCENDING);
+    }
+
+    public Query viewAdsInTrashByCategory(String categoryID) {
+        return firebaseFirestore.collection(childNameTrash).whereEqualTo("categoryID", categoryID).orderBy("placedDate", Query.Direction.DESCENDING);
+    }
+
+
+    //from the advertisement collection
     public void getAddbyID(String id) {
         try {
             firebaseFirestore.collection(childName).document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (advertisementCallback != null)
+                        advertisementCallback.getAdbyID(task);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //from the advertisement Trash collection
+    public void getAddFromRashbyID(String id) {
+        try {
+            firebaseFirestore.collection(childNameTrash).document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (advertisementCallback != null)

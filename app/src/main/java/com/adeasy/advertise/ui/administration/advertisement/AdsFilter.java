@@ -46,6 +46,8 @@ public class AdsFilter extends AppCompatActivity {
     FirestorePagingAdapter<Advertisement, ViewHolderListAdds> firestorePagingAdapter;
     FirestorePagingOptions<Advertisement> options;
 
+    boolean isTrashDelete = false;
+
     private static final String TAG = "AdsFilter";
 
     @Override
@@ -116,7 +118,8 @@ public class AdsFilter extends AppCompatActivity {
                 break;
 
             case "trash":
-                query = advertisementManager.viewAdsFilterByAllCategory("availability", true);
+                query = advertisementManager.viewAllAdsInTrash();
+                isTrashDelete = true;
                 break;
 
             default:
@@ -140,7 +143,8 @@ public class AdsFilter extends AppCompatActivity {
                 break;
 
             case "trash":
-                query = advertisementManager.viewAdsFilterByCategory("availability", true, category);
+                query = advertisementManager.viewAdsInTrashByCategory(category);
+                isTrashDelete = true;
                 break;
 
             default:
@@ -206,6 +210,7 @@ public class AdsFilter extends AppCompatActivity {
                                                 @Override
                                                 public void onClick(DialogInterface dialogInterface, int i) {
                                                     Intent intent = new Intent(context, MoreActionsOnAd.class);
+                                                    intent.putExtra("isTrashDelete", isTrashDelete);
                                                     intent.putExtra("adID", getItem(position).get("id").toString());
                                                     intent.putExtra("adCID", getItem(position).get("categoryID").toString());
                                                     startActivity(intent);
