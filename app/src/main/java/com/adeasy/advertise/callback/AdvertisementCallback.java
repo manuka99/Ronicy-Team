@@ -28,4 +28,6 @@ public interface AdvertisementCallback {
     public void onFailureUpdateAd();
     public void onAdCount(Task<QuerySnapshot> task);
     public void getAdbyID(@NonNull Task<DocumentSnapshot> task);
+    public void onSuccessGetAllAdsByYear(QuerySnapshot queryDocumentSnapshots);
+
 }

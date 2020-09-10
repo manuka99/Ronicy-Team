@@ -183,6 +183,9 @@
     <string name="linkFbRemoveError">There was an error, please try again latter.</string>
 
 
+    <!--- Admin -->
+    <string name="reviewAdsTitle">When a user post a new Ad or update an existing Ad, they wil be appeared here to be reviewed.</string>
+
     <!-- Divya -->
 
     <!-- wishlist.xml-->

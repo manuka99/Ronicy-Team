@@ -27,6 +27,8 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -297,7 +299,7 @@ public class AdvertisementManager {
         }
     }
 
-    public void moveAdToTrash(final Advertisement advertisement){
+    public void moveAdToTrash(final Advertisement advertisement) {
         try {
             DocumentReference refStore;
             if (advertisement.getId() == null) {
@@ -454,6 +456,7 @@ public class AdvertisementManager {
         }
     }
 
+
     public void getCount() {
         try {
             firebaseFirestore.collection(childName).whereEqualTo("availability", true).whereEqualTo("approved", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -464,6 +467,30 @@ public class AdvertisementManager {
                 }
             });
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void getAllAdsByYear(int year) {
+
+        //Date dateFrom = new Date(year, 1, 0); //  date from in string
+        // Date dateTo = new Date(year + 1, 1, 0);  //  date to in string
+
+        Date dateFrom = new Date("Tue Jan 00 " + year + " 00:00:00 GMT+0530 (IST)");// Any date in string
+        Date dateTo = new Date("Tue Jan 00 " + (year + 1) + " 00:00:00 GMT+0530 (IST)");// Any date in string
+
+        Log.i(TAG, "Date from: " + dateFrom + " , Date to: " + dateTo);
+
+        try {
+            firebaseFirestore.collection(childName).whereGreaterThanOrEqualTo("placedDate", dateFrom).whereLessThan("placedDate", dateTo).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    if (advertisementCallback != null)
+                        advertisementCallback.onSuccessGetAllAdsByYear(queryDocumentSnapshots);
+                }
+            });
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }

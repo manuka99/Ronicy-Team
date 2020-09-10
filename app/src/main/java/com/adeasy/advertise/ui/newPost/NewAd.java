@@ -324,6 +324,11 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
     }
 
     @Override
+    public void onSuccessGetAllAdsByYear(QuerySnapshot queryDocumentSnapshots) {
+
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         advertisementManager.destroy();

@@ -28,6 +28,21 @@
         <item name="colorControlHighlight">@color/colorDangerDark</item>
     </style>
 
+    <style name="MonthPickerDialogStyle" >
+        <item name="monthBgColor">@color/colorWhite</item>
+        <item name="monthBgSelectedColor">@color/colorBlue</item>
+        <item name="monthFontColorSelected">@color/colorBlue</item>
+        <item name="monthFontColorNormal">@color/colorBlackText</item>
+        <item name="monthFontColorDisabled">@color/colorGreyBtn</item>
+
+        <item name="headerBgColor">@color/com_facebook_messenger_blue</item>
+        <item name="headerFontColorSelected">#fff</item>
+        <item name="headerFontColorNormal">#85FFFFFF</item>
+        <item name="headerTitleColor">#fff</item>
+
+        <item name="dialogActionButtonColor">@color/com_facebook_messenger_blue</item>
+    </style>
+
     <!-- Divya -->
 
 

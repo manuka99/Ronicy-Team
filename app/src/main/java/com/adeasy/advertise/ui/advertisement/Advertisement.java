@@ -264,6 +264,11 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
     }
 
     @Override
+    public void onSuccessGetAllAdsByYear(QuerySnapshot queryDocumentSnapshots) {
+
+    }
+
+    @Override
     public void onClick(View view) {
 
         if (view == chatText) {

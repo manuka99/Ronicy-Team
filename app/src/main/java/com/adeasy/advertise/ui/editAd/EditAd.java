@@ -296,6 +296,11 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
     }
 
     @Override
+    public void onSuccessGetAllAdsByYear(QuerySnapshot queryDocumentSnapshots) {
+
+    }
+
+    @Override
     public void getCategoryByID(@NonNull Task<DocumentSnapshot> task) {
         if (task.isSuccessful()) {
             DocumentSnapshot document = task.getResult();

@@ -309,6 +309,11 @@ public class Home extends Fragment implements AdvertisementCallback {
     }
 
     @Override
+    public void onSuccessGetAllAdsByYear(QuerySnapshot queryDocumentSnapshots) {
+
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         advertisementManager.destroy();
