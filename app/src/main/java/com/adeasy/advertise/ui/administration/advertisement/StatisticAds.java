@@ -2,11 +2,14 @@ package com.adeasy.advertise.ui.administration.advertisement;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -22,19 +25,26 @@ import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -70,11 +80,13 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
     private String mParam2;
     BarChart chart;
     PieChart pieChart, pieChart2, pieChart3;
+    LineChart lineChart;
     TextInputLayout yearLayout;
     TextInputEditText yearEditText;
     ProgressBar progressBar;
     Button update;
     Context context;
+    NestedScrollView scroller;
 
     int yearSelected = 2020;
 
@@ -91,6 +103,12 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
 
     //live , not available, buynow
     int[] otherFlagsFromUnApprovedAds = new int[3];
+
+    boolean isPieChartVisible = false;
+    boolean isPieChart2Visible = false;
+    boolean isPieChart3Visible = false;
+    boolean isBarChartVisible = false;
+    boolean isLineChartVisible = false;
 
     public StatisticAds() {
         // Required empty public constructor
@@ -141,6 +159,8 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
         pieChart = view.findViewById(R.id.pieChart);
         pieChart2 = view.findViewById(R.id.pieChart2);
         pieChart3 = view.findViewById(R.id.pieChart3);
+        lineChart = view.findViewById(R.id.lineChart);
+        scroller = view.findViewById(R.id.scrollbar);
 
         yearLayout.setOnClickListener(this);
         yearEditText.setOnClickListener(this);
@@ -157,6 +177,118 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.i(TAG, "created");
+
+        final Rect scrollBounds = new Rect();
+        scroller.getHitRect(scrollBounds);
+        scroller.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                if (pieChart.getLocalVisibleRect(scrollBounds) && isPieChartVisible == false) {
+                    isPieChartVisible = true;
+                    if (!pieChart.getLocalVisibleRect(scrollBounds)
+                            || scrollBounds.height() < pieChart.getHeight()) {
+                        Log.i(TAG, "APPEAR PARCIALY");
+                    } else {
+                        Log.i(TAG, "APPEAR FULLY!!!");
+                        pieChart.animateXY(1500, 1500);
+                        pieChart.invalidate();
+                    }
+                } else {
+                    Log.i(TAG, "No");
+                    isPieChartVisible = false;
+                }
+
+                if (pieChart2.getLocalVisibleRect(scrollBounds) && !isPieChart2Visible) {
+                    isPieChart2Visible = true;
+                    if (!pieChart2.getLocalVisibleRect(scrollBounds)
+                            || scrollBounds.height() < pieChart2.getHeight()) {
+                    } else {
+                        Log.i(TAG, "APPEAR FULLY!!!");
+                        pieChart2.animateXY(1500, 1500);
+                        pieChart2.invalidate();
+                    }
+                }else {
+                    isPieChart2Visible = false;
+                }
+
+                if (pieChart3.getLocalVisibleRect(scrollBounds) && !isPieChart3Visible) {
+                    isPieChart3Visible = true;
+                    if (!pieChart3.getLocalVisibleRect(scrollBounds)
+                            || scrollBounds.height() < pieChart3.getHeight()) {
+                    } else {
+                        pieChart3.animateXY(1500, 1500);
+                        pieChart3.invalidate();
+                    }
+                }else {
+                    isPieChart3Visible = false;
+                }
+
+                if (chart.getLocalVisibleRect(scrollBounds) && !isBarChartVisible) {
+                    isBarChartVisible = true;
+                    if (!chart.getLocalVisibleRect(scrollBounds)
+                            || scrollBounds.height() < chart.getHeight()) {
+                    } else {
+                        chart.animateXY(1500, 1500);
+                        chart.invalidate();
+                    }
+                }else {
+                    isBarChartVisible = false;
+                }
+
+                if (lineChart.getLocalVisibleRect(scrollBounds) && !isLineChartVisible) {
+                    isLineChartVisible = true;
+                    if (!lineChart.getLocalVisibleRect(scrollBounds)
+                            || scrollBounds.height() < lineChart.getHeight()) {
+                    } else {
+                        lineChart.animateXY(1500, 1500);
+                        lineChart.invalidate();
+                    }
+                }else {
+                    isLineChartVisible = false;
+                }
+
+            }
+
+
+        });
+    }
+
+    private void showLineChart() {
+        LineDataSet lineDataSet = new LineDataSet(getData(), "Rate of Ads posted on selected year");
+        lineDataSet.setColor(getResources().getColor(R.color.colorPrimary));
+        lineDataSet.setValueTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        final String[] months = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+        ValueFormatter formatter = new ValueFormatter() {
+            @Override
+            public String getAxisLabel(float value, AxisBase axis) {
+                return months[(int) value];
+            }
+        };
+        xAxis.setGranularity(1f);
+        xAxis.setValueFormatter(formatter);
+
+        YAxis yAxisRight = lineChart.getAxisRight();
+        yAxisRight.setEnabled(false);
+
+        YAxis yAxisLeft = lineChart.getAxisLeft();
+        yAxisLeft.setGranularity(1f);
+
+        LineData data = new LineData(lineDataSet);
+        lineChart.getDescription().setText("");
+        lineChart.setData(data);
+        lineChart.invalidate();
+
+    }
+
+    private List getData() {
+        List<Entry> entries = new ArrayList<>();
+        for (int i = 0; i <= 11; ++i) {
+            entries.add(new Entry(i, months[i]));
+        }
+        return entries;
     }
 
     private void approvalStatusPieDataSet() {
@@ -170,11 +302,16 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
         pieDataSet.setValueTextSize(16f);
 
         PieData data = new PieData(pieDataSet);
+        data.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) Math.floor(value));
+            }
+        });
         pieChart.setCenterText("Approved/Rejected Ads");
         pieChart.setData(data);
         pieChart.getDescription().setEnabled(false);
         pieChart.setDrawEntryLabels(false);
-        pieChart.animateXY(2000, 2000);
 
     }
 
@@ -190,11 +327,19 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
         pieDataSet.setValueTextSize(14f);
 
         PieData data = new PieData(pieDataSet);
+        data.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                if (value == 0)
+                    return "";
+                else
+                    return String.valueOf((int) Math.floor(value));
+            }
+        });
         pieChart2.setCenterText("Approved Ads");
         pieChart2.setData(data);
-        pieChart.setDrawEntryLabels(false);
+        pieChart2.setDrawEntryLabels(false);
         pieChart2.getDescription().setEnabled(false);
-        pieChart2.animateXY(2000, 2000);
     }
 
     private void rejectedMoredataPieDataSet() {
@@ -209,11 +354,19 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
         pieDataSet.setValueTextSize(14f);
 
         PieData data = new PieData(pieDataSet);
+        data.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                if (value == 0)
+                    return "";
+                else
+                    return String.valueOf((int) Math.floor(value));
+            }
+        });
         pieChart3.setCenterText("Rejected Ads");
         pieChart3.setData(data);
-        pieChart.setDrawEntryLabels(false);
+        pieChart3.setDrawEntryLabels(false);
         pieChart3.getDescription().setEnabled(false);
-        pieChart3.animateXY(2000, 2000);
 
         //Legend legend = pieChart3.getLegend();
         //legend.setEnabled(true);
@@ -227,7 +380,15 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
         chart.setFitBars(true);
         chart.setData(data);
         chart.getDescription().setText("Ads based on months");
-        chart.animateY(2000);
+        data.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                if (value == 0)
+                    return "";
+                else
+                    return String.valueOf((int) Math.floor(value));
+            }
+        });
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.TOP);
         xAxis.setDrawGridLines(false);
@@ -239,7 +400,6 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
         for (int i = 0; i <= 11; ++i) {
             entries.add(new BarEntry(i, months[i]));
         }
-
         BarDataSet barDataSet1 = new BarDataSet(entries, "Ads count");
         barDataSet1.setColors(ColorTemplate.MATERIAL_COLORS);
         barDataSet1.setValueTextColor(Color.BLACK);
@@ -248,7 +408,6 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
     }
 
     public ArrayList<String> getXAxisValuesBarGraph() {
-
         final ArrayList<String> xAxisLabel = new ArrayList<>();
         xAxisLabel.add("Jan");
         xAxisLabel.add("Feb");
@@ -263,7 +422,6 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
         xAxisLabel.add("Nov");
         xAxisLabel.add("Dec");
         return xAxisLabel;
-
     }
 
     @Override
@@ -365,6 +523,7 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
         approvalStatusPieDataSet();
         approvalMoredataPieDataSet();
         rejectedMoredataPieDataSet();
+        showLineChart();
     }
 
     private void showUpdatingUi() {
