@@ -22,6 +22,8 @@ import android.widget.Toast;
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.ProfileManagerCallback;
 import com.adeasy.advertise.manager.ProfileManager;
+import com.adeasy.advertise.model.User;
+import com.adeasy.advertise.util.CustomErrorDialogs;
 import com.adeasy.advertise.util.HideSoftKeyboard;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,6 +34,9 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+
+import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED;
 
 /**
  * Created by Manuka yasas,
@@ -59,6 +64,7 @@ public class ProfileSecurity extends Fragment implements TextWatcher, View.OnCli
     Boolean isUpdating = false;
     ProfileManager profileManager;
     ProgressBar progressBar;
+    CustomErrorDialogs customErrorDialogs;
 
     public ProfileSecurity() {
         // Required empty public constructor
@@ -119,6 +125,7 @@ public class ProfileSecurity extends Fragment implements TextWatcher, View.OnCli
         changePassword.setOnClickListener(this);
 
         profileManager = new ProfileManager(this);
+        customErrorDialogs = new CustomErrorDialogs(getActivity());
 
         return view;
     }
@@ -260,7 +267,7 @@ public class ProfileSecurity extends Fragment implements TextWatcher, View.OnCli
     }
 
     @Override
-    public void onSuccessGetUser(DocumentSnapshot documentSnapshot) {
+    public void onCompleteGetUser(Task<DocumentSnapshot> task) {
 
     }
 

@@ -6,13 +6,16 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.FirebaseAuthenticationCallback;
 import com.adeasy.advertise.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -42,6 +45,10 @@ public class FirebaseAuthentication {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            customAuthTokenManager.GetTokenResultAndAddClaims();
+                        }
                         if (firebaseAuthenticationCallback != null)
                             firebaseAuthenticationCallback.onCompleteSignIn(task);
                     }
@@ -78,7 +85,7 @@ public class FirebaseAuthentication {
                 });
     }
 
-    public void forgotPassword(String email){
+    public void forgotPassword(String email) {
         firebaseAuth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

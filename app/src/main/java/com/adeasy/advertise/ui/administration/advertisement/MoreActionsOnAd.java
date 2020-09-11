@@ -36,7 +36,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickListener, AdvertisementCallback, CategoryCallback {
 
     TextView adDetailsID, AdTitle, AdCondition, AdDescription, AdPrice, adTime, adCatName, adDetailsContacts;

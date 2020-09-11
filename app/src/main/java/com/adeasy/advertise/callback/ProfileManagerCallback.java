@@ -14,5 +14,5 @@ public interface ProfileManagerCallback {
     public void onCompleteUpdatePassword(Task<Void> task);
     public void onCompleteUpdateEmail(Task<Void> task);
     public void onTaskFull(boolean status);
-    public void onSuccessGetUser(DocumentSnapshot documentSnapshot);
+    public void onCompleteGetUser(Task<DocumentSnapshot> task);
 }

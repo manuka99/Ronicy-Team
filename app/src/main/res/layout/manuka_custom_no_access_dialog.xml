@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:text="x"
+            android:paddingStart="@dimen/_10sdp"
             android:textColor="@color/colorBlackText"
             android:textSize="@dimen/_16sdp"
             android:textStyle="bold" />

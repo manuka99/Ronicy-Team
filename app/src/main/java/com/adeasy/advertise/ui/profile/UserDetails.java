@@ -19,13 +19,17 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.ProfileManagerCallback;
 import com.adeasy.advertise.manager.ProfileManager;
 import com.adeasy.advertise.model.User;
+import com.adeasy.advertise.util.CustomErrorDialogs;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
+
+import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED;
 
 /**
  * Created by Manuka yasas,
@@ -54,6 +58,7 @@ public class UserDetails extends Fragment implements ProfileManagerCallback {
 
     FirebaseAuth firebaseAuth;
     ProfileManager profileManager;
+    CustomErrorDialogs customErrorDialogs;
 
     public UserDetails() {
         // Required empty public constructor
@@ -108,6 +113,7 @@ public class UserDetails extends Fragment implements ProfileManagerCallback {
         firebaseAuth = FirebaseAuth.getInstance();
 
         profileManager = new ProfileManager(this);
+        customErrorDialogs = new CustomErrorDialogs(getActivity());
         profileManager.getUser();
 
         userDetailsLayout.setVisibility(View.GONE);
@@ -141,11 +147,16 @@ public class UserDetails extends Fragment implements ProfileManagerCallback {
     }
 
     @Override
-    public void onSuccessGetUser(DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot != null && documentSnapshot.exists()) {
-            user = documentSnapshot.toObject(User.class);
+    public void onCompleteGetUser(Task<DocumentSnapshot> task) {
+        if (task != null && task.isSuccessful() && task.getResult() != null && task.getResult().exists()) {
+            user = task.getResult().toObject(User.class);
+            updateUiOnDataRecieve();
+        } else if (task != null) {
+            if (task.getException() instanceof FirebaseFirestoreException) {
+                ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
+                customErrorDialogs.showPermissionDeniedStorage();
+            };
         }
-        updateUiOnDataRecieve();
     }
 
     public void updateUiOnDataRecieve() {

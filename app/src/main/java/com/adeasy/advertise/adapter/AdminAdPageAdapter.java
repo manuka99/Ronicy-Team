@@ -9,7 +9,11 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.adeasy.advertise.ui.administration.advertisement.ApprovedRejected;
 import com.adeasy.advertise.ui.administration.advertisement.NewAds;
 import com.adeasy.advertise.ui.administration.advertisement.StatisticAds;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class AdminAdPageAdapter extends FragmentPagerAdapter {
 
     private int no_of_tabs;

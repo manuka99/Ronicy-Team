@@ -18,7 +18,11 @@ import com.adeasy.advertise.adapter.AdminAdPageAdapter;
 import com.adeasy.advertise.ui.administration.home.DashboardHome;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class AdvertisementMain extends AppCompatActivity {
 
     Toolbar toolbar;

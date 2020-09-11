@@ -372,7 +372,6 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
             Log.d(TAG, "signInWithEmail:success");
             FirebaseUser user = firebaseAuth.getCurrentUser();
             if (user != null) {
-                customAuthTokenManager.GetTokenResultAndAddClaims();
                 openNewActivity();
             } else
                 showErrorSnackbar(getString(R.string.invalidLogin));

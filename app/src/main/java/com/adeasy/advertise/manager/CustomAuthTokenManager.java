@@ -24,7 +24,11 @@ import com.google.firebase.auth.GetTokenResult;
 import java.util.Map;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class CustomAuthTokenManager {
 
     private static final String TAG = "CustomAuthTokenManager";
@@ -81,7 +85,7 @@ public class CustomAuthTokenManager {
                         // Display the first 500 characters of the response string.
                         //textView.setText("Response is: "+ response.substring(0,500));
                         Log.i(TAG, response);
-                        logingWithToken(response);
+                        //logingWithToken(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -110,10 +114,10 @@ public class CustomAuthTokenManager {
                                 boolean isAdmin = (boolean) result.getClaims().get("admin");
                                 if (isAdmin) {
                                     // Show admin UI.
-                                    Log.i(TAG, "admin acount");
+                                    Log.i(TAG, "admin account");
                                 } else {
                                     // Show regular user UI.
-                                    Log.i(TAG, "not a amin acount");
+                                    Log.i(TAG, "not a admin account");
                                 }
                             }
                         });
@@ -125,9 +129,8 @@ public class CustomAuthTokenManager {
     }
 
     public void getCustomClaimsInLoggedinUser() {
-
         if (firebaseUser != null) {
-            firebaseUser.getIdToken(false).addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+            firebaseUser.getIdToken(true).addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                 @Override
                 public void onComplete(@NonNull Task<GetTokenResult> task) {
                     if (customClaimsCallback != null)
@@ -136,7 +139,8 @@ public class CustomAuthTokenManager {
             });
         } else {
             Log.i(TAG, "user is not logged in");
-            customClaimsCallback.onCompleteGetCustomClaims(null);
+            if (customClaimsCallback != null)
+                customClaimsCallback.onCompleteGetCustomClaims(null);
         }
     }
 

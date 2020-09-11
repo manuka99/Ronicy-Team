@@ -34,6 +34,7 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.ProfileManagerCallback;
 import com.adeasy.advertise.manager.ProfileManager;
 import com.adeasy.advertise.model.User;
+import com.adeasy.advertise.util.CustomErrorDialogs;
 import com.adeasy.advertise.util.HideSoftKeyboard;
 import com.adeasy.advertise.util.ImageQualityReducer;
 import com.google.android.gms.tasks.Task;
@@ -43,11 +44,13 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 
 import static android.app.Activity.RESULT_OK;
+import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED;
 
 /**
  * Created by Manuka yasas,
@@ -88,6 +91,7 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
 
     DatePickerDialog picker;
     ProgressBar progressBar;
+    CustomErrorDialogs customErrorDialogs;
 
     public EditProfile() {
         // Required empty public constructor
@@ -152,6 +156,7 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
 
         firebaseAuth = FirebaseAuth.getInstance();
         profileManager = new ProfileManager(this);
+        customErrorDialogs = new CustomErrorDialogs(getActivity());
 
         user = new User();
 
@@ -202,6 +207,10 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
         showErrorSnackbar(e.getMessage());
         isUpdating = false;
         endUpdatingUi();
+        if (e instanceof FirebaseFirestoreException) {
+            ((FirebaseFirestoreException) e).getCode().equals(PERMISSION_DENIED);
+            customErrorDialogs.showPermissionDeniedStorage();
+        };
     }
 
     @Override
@@ -217,11 +226,16 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
 
     @Override
     public void onCompleteUpdateEmail(Task<Void> task) {
-        if (!task.isSuccessful()) {
+        if (task != null && !task.isSuccessful()) {
             HideSoftKeyboard.hideKeyboard(requireActivity());
             showErrorSnackbar(task.getException().getMessage());
             isUpdating = false;
             endUpdatingUi();
+
+            if (task.getException() instanceof FirebaseFirestoreException) {
+                ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
+                customErrorDialogs.showPermissionDeniedStorage();
+            };
         }
     }
 
@@ -234,11 +248,16 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
     }
 
     @Override
-    public void onSuccessGetUser(DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot != null && documentSnapshot.exists()) {
-            user = documentSnapshot.toObject(User.class);
+    public void onCompleteGetUser(Task<DocumentSnapshot> task) {
+        if (task != null && task.isSuccessful() && task.getResult() != null && task.getResult().exists()) {
+            user = task.getResult().toObject(User.class);
+            updateUiOnDataRecieve();
+        }else if (task != null) {
+            if (task.getException() instanceof FirebaseFirestoreException) {
+                ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
+                customErrorDialogs.showPermissionDeniedStorage();
+            };
         }
-        updateUiOnDataRecieve();
     }
 
     public void updateUiOnDataRecieve() {

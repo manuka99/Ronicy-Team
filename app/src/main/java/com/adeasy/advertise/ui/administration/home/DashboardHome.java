@@ -27,7 +27,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class DashboardHome extends AppCompatActivity implements CustomClaimsCallback, View.OnClickListener {
 
     FirebaseAuth firebaseAuth;
@@ -111,7 +115,7 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
 
     @Override
     public void onCompleteGetCustomClaims(@NonNull Task<GetTokenResult> task) {
-        if (task.isSuccessful()) {
+        if (task != null && task.isSuccessful()) {
             customClaims = customAuthTokenManager.mapJsomClaimsToObject(task.getResult().getClaims());
             readClaimsAndUpdateUi();
         } else {
@@ -163,6 +167,10 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
                 rolesDescription += "Contact Manager, ";
             if (customClaims.isChat_manager())
                 rolesDescription += "Chat Manager, ";
+            if (customClaims.isUser_manager())
+                rolesDescription += "User Manager, ";
+            if (customClaims.isGuest_admin())
+                rolesDescription += "Admin(Read-Only), ";
         }
 
         if (rolesDescription.length() < 1)

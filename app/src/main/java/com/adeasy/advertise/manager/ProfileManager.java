@@ -196,27 +196,29 @@ public class ProfileManager {
 
     public void getUser() {
         try {
-            firebaseFirestore.collection(childName).document(firebaseAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            firebaseFirestore.collection(childName).document(firebaseAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    profileManagerCallback.onSuccessGetUser(documentSnapshot);
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (profileManagerCallback != null)
+                        profileManagerCallback.onCompleteGetUser(task);
                 }
             });
         } catch (NullPointerException e) {
-            profileManagerCallback.onSuccessGetUser(null);
+            profileManagerCallback.onCompleteGetUser(null);
         }
     }
 
     public void getUser(String uid) {
         try {
-            firebaseFirestore.collection(childName).document(uid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            firebaseFirestore.collection(childName).document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    profileManagerCallback.onSuccessGetUser(documentSnapshot);
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (profileManagerCallback != null)
+                        profileManagerCallback.onCompleteGetUser(task);
                 }
             });
         } catch (NullPointerException e) {
-            profileManagerCallback.onSuccessGetUser(null);
+            profileManagerCallback.onCompleteGetUser(null);
         }
     }
 

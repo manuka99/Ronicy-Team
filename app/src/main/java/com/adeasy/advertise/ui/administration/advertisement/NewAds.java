@@ -39,10 +39,10 @@ import java.util.List;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link NewAds#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class NewAds extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match

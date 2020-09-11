@@ -32,7 +32,11 @@ import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class AdsFilter extends AppCompatActivity {
 
     String filterType, category, categoryName;

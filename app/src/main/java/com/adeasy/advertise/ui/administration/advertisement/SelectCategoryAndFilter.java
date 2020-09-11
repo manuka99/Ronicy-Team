@@ -21,7 +21,11 @@ import com.adeasy.advertise.ui.administration.home.DashboardHome;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.squareup.picasso.Picasso;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class SelectCategoryAndFilter extends AppCompatActivity {
 
     Toolbar toolbar;

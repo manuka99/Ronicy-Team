@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,15 +27,19 @@ import com.adeasy.advertise.helper.ViewHolderListAdds;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.ui.editAd.EditAd;
+import com.adeasy.advertise.util.CustomErrorDialogs;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED;
 
 /**
  * Created by Manuka yasas,
@@ -51,6 +56,8 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
     SwipeRefreshLayout swipeRefreshLayout;
     FirestorePagingAdapter<Advertisement, ViewHolderListAdds> firestorePagingAdapter;
     FirebaseAuth firebaseAuth;
+    CustomErrorDialogs customErrorDialogs;
+    private static final String TAG = "Myadds";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +86,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         advertisementManager = new AdvertisementManager(this);
+        customErrorDialogs = new CustomErrorDialogs(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -252,7 +260,12 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                         swipeRefreshLayout.setRefreshing(false);
                         e.printStackTrace();
                         //Handle Error
-                        refresh();
+                        Log.d(TAG, "onError: " + e.getClass());
+                        if(e instanceof FirebaseFirestoreException){
+                            ((FirebaseFirestoreException) e).getCode().equals(PERMISSION_DENIED);
+                            firestorePagingAdapter.stopListening();
+                            customErrorDialogs.showPermissionDeniedStorage();
+                        };
                     }
 
                 };

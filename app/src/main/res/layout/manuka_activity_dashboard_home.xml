@@ -31,9 +31,12 @@
         android:id="@+id/roles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingStart="@dimen/_40sdp"
+        android:paddingEnd="@dimen/_40sdp"
         android:layout_marginTop="@dimen/_2sdp"
         android:layout_marginBottom="@dimen/_16sdp"
         android:text="@string/loading"
+        android:textAlignment="center"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_12sdp"
         android:textStyle="italic" />

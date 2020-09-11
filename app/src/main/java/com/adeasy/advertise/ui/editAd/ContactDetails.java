@@ -28,15 +28,18 @@ import com.adeasy.advertise.manager.VerifiedNumbersManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.User;
 import com.adeasy.advertise.ui.addphone.AddNewNumber;
+import com.adeasy.advertise.util.CustomErrorDialogs;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED;
 
 /**
  * Created by Manuka yasas,
@@ -68,6 +71,7 @@ public class ContactDetails extends Fragment implements View.OnClickListener, Pr
     RecycleAdapterForVerifiedNumbers recycleAdapterForVerifiedNumbers;
     ProfileManager profileManager;
     User user;
+    CustomErrorDialogs customErrorDialogs;
     private static final String TAG = "ContactDetails";
     private static final int NEW_NUMBER_REQUEST_CODE = 5423;
 
@@ -111,6 +115,7 @@ public class ContactDetails extends Fragment implements View.OnClickListener, Pr
         advertisement = (Advertisement) getArguments().getSerializable("advertisement");
 
         verifiedNumbers = advertisement.getNumbers();
+        customErrorDialogs = new CustomErrorDialogs(getActivity());
         profileManager = new ProfileManager(this);
         user = new User();
 
@@ -235,11 +240,16 @@ public class ContactDetails extends Fragment implements View.OnClickListener, Pr
     }
 
     @Override
-    public void onSuccessGetUser(DocumentSnapshot documentSnapshot) {
-        if(documentSnapshot != null && documentSnapshot.exists()){
-            user = documentSnapshot.toObject(User.class);
+    public void onCompleteGetUser(Task<DocumentSnapshot> task) {
+        if (task != null && task.isSuccessful() && task.getResult() != null && task.getResult().exists()) {
+            user = task.getResult().toObject(User.class);
             nameView.setText(user.getName());
             emailView.setText(user.getEmail());
+        }else if (task != null) {
+            if (task.getException() instanceof FirebaseFirestoreException) {
+                ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
+                customErrorDialogs.showPermissionDeniedStorage();
+            };
         }
     }
 
