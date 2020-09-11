@@ -8,6 +8,8 @@ public class CustomClaims{
 	private boolean chat_manager;
 	private boolean contact_manager;
 	private boolean order_manager;
+	private boolean user_manager;
+	private boolean guest_admin;
 	
 	public CustomClaims() {
 		this.advertisement_manager = false;
@@ -16,6 +18,8 @@ public class CustomClaims{
 		this.contact_manager = false;
 		this.order_manager = false;
 		this.admin = false;
+		this.user_manager = false;
+		this.guest_admin = false;
 	}
 	
 	public boolean isAdvertisement_manager() {
@@ -63,6 +67,22 @@ public class CustomClaims{
 
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
+	}
+
+	public boolean isUser_manager() {
+		return user_manager;
+	}
+
+	public void setUser_manager(boolean user_manager) {
+		this.user_manager = user_manager;
+	}
+
+	public boolean isGuest_admin() {
+		return guest_admin;
+	}
+
+	public void setGuest_admin(boolean guest_admin) {
+		this.guest_admin = guest_admin;
 	}
 
 }

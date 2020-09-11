@@ -149,6 +149,8 @@ public class CustomAuthTokenManager {
             customClaims.setFavourite_manager((Boolean) claims.get("favourite_manager"));
             customClaims.setChat_manager((Boolean) claims.get("chat_manager"));
             customClaims.setContact_manager((Boolean) claims.get("contact_manager"));
+            customClaims.setUser_manager((Boolean) claims.get("user_manager"));
+            customClaims.setGuest_admin((Boolean) claims.get("guest_admin"));
         } catch (Exception e) {
             Log.i(TAG, "Claims were not successfull");
             e.printStackTrace();

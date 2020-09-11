@@ -31,6 +31,7 @@ import com.adeasy.advertise.callback.CustomClaimsCallback;
 import com.adeasy.advertise.callback.FacebookAuthCallback;
 import com.adeasy.advertise.manager.CustomAuthTokenManager;
 import com.adeasy.advertise.manager.FacebookAuthManager;
+import com.adeasy.advertise.model.CustomClaims;
 import com.adeasy.advertise.ui.administration.home.DashboardHome;
 import com.adeasy.advertise.ui.advertisement.Donations;
 import com.adeasy.advertise.ui.advertisement.Myadds;
@@ -86,6 +87,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
     LoginManager loginManager;
     Boolean isFbLinked = false, isAdministrator = false;
     CustomAuthTokenManager customAuthTokenManager;
+    CustomClaims customClaims;
 
     Toolbar toolbar;
 
@@ -160,6 +162,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
 
         facebookAuthManager = new FacebookAuthManager(this);
         customAuthTokenManager = new CustomAuthTokenManager(this);
+        customClaims = new CustomClaims();
 
         if (mAuth.getCurrentUser() != null)
             showAuthContent();
@@ -400,20 +403,19 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
     @Override
     public void onCompleteGetCustomClaims(@NonNull Task<GetTokenResult> task) {
         if (task.isSuccessful()) {
-            try {
-                if ((Boolean) task.getResult().getClaims().get("admin") || (Boolean) task.getResult().getClaims().get("advertisement_manager") || (Boolean) task.getResult().getClaims().get("favourite_manager") || (Boolean) task.getResult().getClaims().get("chat_manager") || (Boolean) task.getResult().getClaims().get("contact_manager") || (Boolean) task.getResult().getClaims().get("order_manager")) {
-                    isAdministrator = true;
-                    Log.i(TAG, task.getResult().getClaims().toString());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                isAdministrator = false;
-            }
+            customClaims = customAuthTokenManager.mapJsomClaimsToObject(task.getResult().getClaims());
+            readClaimsAndUpdateUi();
         } else {
-            isAdministrator = false;
-        }
 
-        getActivity().invalidateOptionsMenu();
+        }
+    }
+
+    private void readClaimsAndUpdateUi() {
+        if (customClaims != null && (customClaims.isGuest_admin() || customClaims.isUser_manager() || customClaims.isChat_manager() || customClaims.isContact_manager() || customClaims.isFavourite_manager() || customClaims.isAdvertisement_manager() || customClaims.isAdmin() || customClaims.isOrder_manager())) {
+            isAdministrator = true;
+            getActivity().invalidateOptionsMenu();
+        } else
+            isAdministrator = false;
     }
 
 }

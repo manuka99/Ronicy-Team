@@ -89,21 +89,21 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
 
     @Override
     public void onClick(View view) {
-        if (view == advertisement && (customClaims.isAdvertisement_manager() || customClaims.isAdmin()))
+        if (view == advertisement && (customClaims.isAdvertisement_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
             startActivity(new Intent(this, AdvertisementMain.class));
-        else if (view == orders && (customClaims.isOrder_manager() || customClaims.isAdmin()))
+        else if (view == orders && (customClaims.isOrder_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
             startActivity(new Intent(this, DashboardHome.class));
-        else if (view == users && customClaims.isAdmin())
+        else if (view == users && (customClaims.isAdmin() || customClaims.isUser_manager() || customClaims.isGuest_admin()))
             startActivity(new Intent(this, DashboardHome.class));
-        else if (view == otp && customClaims.isAdmin())
+        else if (view == otp && (customClaims.isAdmin() || customClaims.isUser_manager() || customClaims.isGuest_admin()))
             startActivity(new Intent(this, DashboardHome.class));
-        else if (view == categories && (customClaims.isAdvertisement_manager() || customClaims.isAdmin()))
+        else if (view == categories && (customClaims.isAdvertisement_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
             startActivity(new Intent(this, DashboardHome.class));
-        else if (view == favourite && (customClaims.isFavourite_manager() || customClaims.isAdmin()))
+        else if (view == favourite && (customClaims.isFavourite_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
             startActivity(new Intent(this, DashboardHome.class));
-        else if (view == getInTouch && (customClaims.isContact_manager() || customClaims.isAdmin()))
+        else if (view == getInTouch && (customClaims.isContact_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
             startActivity(new Intent(this, DashboardHome.class));
-        else if (view == chat && (customClaims.isChat_manager() || customClaims.isAdmin()))
+        else if (view == chat && (customClaims.isChat_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
             startActivity(new Intent(this, DashboardHome.class));
         else
             showErrorDialog();
