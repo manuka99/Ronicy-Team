@@ -2,10 +2,10 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollbar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorHome"
-    android:id="@+id/scrollbar"
     tools:context=".ui.administration.advertisement.StatisticAds">
 
     <LinearLayout
@@ -27,15 +27,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_8sdp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/_8sdp">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/yearLayout"
-                    android:layout_weight="0.4"
                     android:layout_width="match_parent"
-                    android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.4"
                     android:clickable="true"
                     android:textColorHint="@color/colorBlue">
 
@@ -44,13 +44,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"
-                        android:focusableInTouchMode="false"
                         android:enabled="true"
-                        android:inputType="number"
+                        android:focusableInTouchMode="false"
                         android:hint="Select year..."
-                        android:textSize="@dimen/_12sdp"
+                        android:inputType="number"
                         android:textColorHint="@color/colorBlue"
                         android:textCursorDrawable="@drawable/blue_cursur"
+                        android:textSize="@dimen/_12sdp"
                         android:theme="@style/EditTextBlueTheme" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -58,37 +58,46 @@
 
                 <Button
                     android:id="@+id/update"
-                    android:visibility="visible"
-                    android:layout_weight="0.8"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_24sdp"
-                    android:textColor="@color/colorWhite"
-                    android:background="@drawable/button_round_fb"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight="0.8"
+                    android:background="@drawable/button_round_fb"
                     android:text="Update"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="visible" />
 
                 <ProgressBar
                     android:id="@+id/progressBar"
-                    android:visibility="gone"
-                    android:layout_weight="0.8"
-                    android:padding="@dimen/_4sdp"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_24sdp"
-                    android:textColor="@color/colorWhite"
-                    android:background="@drawable/btn_grey_colour"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight="0.8"
+                    android:background="@drawable/btn_grey_colour"
                     android:indeterminate="true"
                     android:indeterminateTint="@color/colorWhite"
                     android:indeterminateTintMode="src_atop"
+                    android:padding="@dimen/_4sdp"
                     android:text="Update"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="gone" />
 
 
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
+
+        <TextView
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:text="This bar graph represent Approved posted advertisements per month based on the selected year. Visibility of the advertisements are not considered."
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="italic" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -107,6 +116,15 @@
 
         </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:layout_marginTop="@dimen/_14sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:text="This Pie chart represent the ratio between Approved Ads and Rejected Ads from all the advertisements posted/updated on the selected year."
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="italic" />
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="@dimen/_220sdp"
@@ -123,6 +141,15 @@
                 android:layout_height="match_parent" />
 
         </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_marginTop="@dimen/_14sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:text="This Pie chart represents the Ad types from the approved ads on the selected year. Ad types such live, hidden and buynow are only considered."
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="italic" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -141,6 +168,15 @@
 
         </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:layout_marginTop="@dimen/_14sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:text="This Pie chart represents the Ad types from the rejected ads on the selected year. Ad types such live, hidden and buynow are only considered."
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="italic" />
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="@dimen/_220sdp"
@@ -157,6 +193,15 @@
                 android:layout_height="match_parent" />
 
         </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_marginTop="@dimen/_14sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:text="This Line graph represent Approved posted advertisements per month based on the selected year. Visibility of the advertisements are not considered."
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="italic" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

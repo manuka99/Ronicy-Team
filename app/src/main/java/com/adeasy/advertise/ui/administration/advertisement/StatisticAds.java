@@ -107,7 +107,7 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
     boolean isPieChartVisible = false;
     boolean isPieChart2Visible = false;
     boolean isPieChart3Visible = false;
-    boolean isBarChartVisible = false;
+    boolean isBarChartVisible = true;
     boolean isLineChartVisible = false;
 
     public StatisticAds() {
@@ -184,68 +184,80 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
-                if (pieChart.getLocalVisibleRect(scrollBounds) && isPieChartVisible == false) {
-                    isPieChartVisible = true;
+                if (pieChart.getLocalVisibleRect(scrollBounds)) {
                     if (!pieChart.getLocalVisibleRect(scrollBounds)
                             || scrollBounds.height() < pieChart.getHeight()) {
+                        isPieChartVisible = false;
                         Log.i(TAG, "APPEAR PARCIALY");
-                    } else {
+                    } else if (!isPieChartVisible) {
                         Log.i(TAG, "APPEAR FULLY!!!");
+                        isPieChartVisible = true;
                         pieChart.animateXY(1500, 1500);
                         pieChart.invalidate();
                     }
                 } else {
                     Log.i(TAG, "No");
-                    isPieChartVisible = false;
                 }
 
-                if (pieChart2.getLocalVisibleRect(scrollBounds) && !isPieChart2Visible) {
-                    isPieChart2Visible = true;
+
+                if (pieChart2.getLocalVisibleRect(scrollBounds)) {
                     if (!pieChart2.getLocalVisibleRect(scrollBounds)
                             || scrollBounds.height() < pieChart2.getHeight()) {
-                    } else {
-                        Log.i(TAG, "APPEAR FULLY!!!");
+
+                        isPieChart2Visible = false;
+
+                    } else if (!isPieChart2Visible) {
+
+                        isPieChart2Visible = true;
+
                         pieChart2.animateXY(1500, 1500);
                         pieChart2.invalidate();
                     }
-                }else {
-                    isPieChart2Visible = false;
                 }
 
-                if (pieChart3.getLocalVisibleRect(scrollBounds) && !isPieChart3Visible) {
-                    isPieChart3Visible = true;
+                if (pieChart3.getLocalVisibleRect(scrollBounds)) {
                     if (!pieChart3.getLocalVisibleRect(scrollBounds)
                             || scrollBounds.height() < pieChart3.getHeight()) {
-                    } else {
+
+                        isPieChart3Visible = false;
+
+                    } else if (!isPieChart3Visible) {
+
+                        isPieChart3Visible = true;
+
                         pieChart3.animateXY(1500, 1500);
                         pieChart3.invalidate();
                     }
-                }else {
-                    isPieChart3Visible = false;
                 }
 
-                if (chart.getLocalVisibleRect(scrollBounds) && !isBarChartVisible) {
-                    isBarChartVisible = true;
+                if (chart.getLocalVisibleRect(scrollBounds)) {
                     if (!chart.getLocalVisibleRect(scrollBounds)
                             || scrollBounds.height() < chart.getHeight()) {
-                    } else {
+
+                        isBarChartVisible = false;
+
+                    } else if (!isBarChartVisible) {
+
+                        isBarChartVisible = true;
+
                         chart.animateXY(1500, 1500);
                         chart.invalidate();
                     }
-                }else {
-                    isBarChartVisible = false;
                 }
 
-                if (lineChart.getLocalVisibleRect(scrollBounds) && !isLineChartVisible) {
-                    isLineChartVisible = true;
+                if (lineChart.getLocalVisibleRect(scrollBounds)) {
                     if (!lineChart.getLocalVisibleRect(scrollBounds)
                             || scrollBounds.height() < lineChart.getHeight()) {
-                    } else {
+
+                        isLineChartVisible = false;
+
+                    } else if (!isLineChartVisible) {
+
+                        isLineChartVisible = true;
+
                         lineChart.animateXY(1500, 1500);
                         lineChart.invalidate();
                     }
-                }else {
-                    isLineChartVisible = false;
                 }
 
             }
@@ -277,10 +289,16 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
         yAxisLeft.setGranularity(1f);
 
         LineData data = new LineData(lineDataSet);
+        data.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) Math.floor(value));
+            }
+        });
         lineChart.getDescription().setText("");
         lineChart.setData(data);
+        lineChart.animateXY(1500, 1500);
         lineChart.invalidate();
-
     }
 
     private List getData() {
@@ -305,14 +323,18 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
         data.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return String.valueOf((int) Math.floor(value));
+                if (value == 0)
+                    return "";
+                else
+                    return String.valueOf((int) Math.floor(value));
             }
         });
         pieChart.setCenterText("Approved/Rejected Ads");
         pieChart.setData(data);
         pieChart.getDescription().setEnabled(false);
         pieChart.setDrawEntryLabels(false);
-
+        pieChart.animateXY(1500, 1500);
+        pieChart.invalidate();
     }
 
     private void approvalMoredataPieDataSet() {
@@ -340,6 +362,8 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
         pieChart2.setData(data);
         pieChart2.setDrawEntryLabels(false);
         pieChart2.getDescription().setEnabled(false);
+        pieChart2.animateXY(1500, 1500);
+        pieChart2.invalidate();
     }
 
     private void rejectedMoredataPieDataSet() {
@@ -367,7 +391,8 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
         pieChart3.setData(data);
         pieChart3.setDrawEntryLabels(false);
         pieChart3.getDescription().setEnabled(false);
-
+        pieChart3.animateXY(1500, 1500);
+        pieChart3.invalidate();
         //Legend legend = pieChart3.getLegend();
         //legend.setEnabled(true);
         //legend.setExtra(ColorTemplate.MATERIAL_COLORS, new String[]{"Live", "Un-available", "Buynow"});
@@ -393,6 +418,8 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
         xAxis.setPosition(XAxis.XAxisPosition.TOP);
         xAxis.setDrawGridLines(false);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(getXAxisValuesBarGraph()));
+        chart.animateXY(1500, 1500);
+        chart.invalidate();
     }
 
     private BarDataSet getBarDataSet() {
