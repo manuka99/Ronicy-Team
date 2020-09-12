@@ -24,11 +24,10 @@ import com.adeasy.advertise.ViewModel.NewPostViewModel;
 import com.adeasy.advertise.adapter.RecycleAdapterForVerifiedNumbers;
 import com.adeasy.advertise.callback.ProfileManagerCallback;
 import com.adeasy.advertise.manager.ProfileManager;
-import com.adeasy.advertise.manager.VerifiedNumbersManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.User;
 import com.adeasy.advertise.ui.addphone.AddNewNumber;
-import com.adeasy.advertise.util.CustomErrorDialogs;
+import com.adeasy.advertise.util.CustomDialogs;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -71,7 +70,7 @@ public class ContactDetails extends Fragment implements View.OnClickListener, Pr
     RecycleAdapterForVerifiedNumbers recycleAdapterForVerifiedNumbers;
     ProfileManager profileManager;
     User user;
-    CustomErrorDialogs customErrorDialogs;
+    CustomDialogs customErrorDialogs;
     private static final String TAG = "ContactDetails";
     private static final int NEW_NUMBER_REQUEST_CODE = 5423;
 
@@ -115,7 +114,7 @@ public class ContactDetails extends Fragment implements View.OnClickListener, Pr
         advertisement = (Advertisement) getArguments().getSerializable("advertisement");
 
         verifiedNumbers = advertisement.getNumbers();
-        customErrorDialogs = new CustomErrorDialogs(getActivity());
+        customErrorDialogs = new CustomDialogs(getActivity());
         profileManager = new ProfileManager(this);
         user = new User();
 

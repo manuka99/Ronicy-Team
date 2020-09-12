@@ -27,7 +27,7 @@ import com.adeasy.advertise.helper.ViewHolderListAdds;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.ui.editAd.EditAd;
-import com.adeasy.advertise.util.CustomErrorDialogs;
+import com.adeasy.advertise.util.CustomDialogs;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.android.gms.tasks.Task;
@@ -56,7 +56,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
     SwipeRefreshLayout swipeRefreshLayout;
     FirestorePagingAdapter<Advertisement, ViewHolderListAdds> firestorePagingAdapter;
     FirebaseAuth firebaseAuth;
-    CustomErrorDialogs customErrorDialogs;
+    CustomDialogs customErrorDialogs;
     private static final String TAG = "Myadds";
 
     @Override
@@ -86,7 +86,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         advertisementManager = new AdvertisementManager(this);
-        customErrorDialogs = new CustomErrorDialogs(this);
+        customErrorDialogs = new CustomDialogs(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -261,11 +261,12 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                         e.printStackTrace();
                         //Handle Error
                         Log.d(TAG, "onError: " + e.getClass());
-                        if(e instanceof FirebaseFirestoreException){
+                        if (e instanceof FirebaseFirestoreException) {
                             ((FirebaseFirestoreException) e).getCode().equals(PERMISSION_DENIED);
                             firestorePagingAdapter.stopListening();
                             customErrorDialogs.showPermissionDeniedStorage();
-                        };
+                        }
+                        ;
                     }
 
                 };
@@ -292,44 +293,31 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
     }
 
     @Override
-    public void onSuccessInsertAd() {
-
+    public void onCompleteInsertAd(Task<Void> task) {
+        if(task != null && task.isSuccessful()){
+            Toast.makeText(context, "Success: All changes were saved", Toast.LENGTH_LONG).show();
+            firestorePagingAdapter.refresh();
+        }else if(task != null){
+            Toast.makeText(context, "Error, " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
-    public void onFailureInsertAd() {
-
+    public void onCompleteDeleteAd(Task<Void> task) {
+        if (task != null && task.isSuccessful()) {
+            if (imageUrls != null) {
+                advertisementManager.deleteMultipleImages(imageUrls);
+                imageUrls = null;
+            }
+            firestorePagingAdapter.refresh();
+            Toast.makeText(context, "Success: Your advertisement was deleted", Toast.LENGTH_LONG).show();
+        }else if(task != null){
+            Toast.makeText(context, "Error: Your advertisement was not deleted", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
     public void onAdCount(Task<QuerySnapshot> task) {
-
-    }
-
-    @Override
-    public void onSuccessDeleteAd() {
-        if (imageUrls != null) {
-            advertisementManager.deleteMultipleImages(imageUrls);
-            imageUrls = null;
-        }
-        firestorePagingAdapter.refresh();
-        Toast.makeText(context, "Success: Your advertisement was deleted", Toast.LENGTH_LONG).show();
-
-    }
-
-    @Override
-    public void onFailureDeleteAd() {
-        Toast.makeText(context, "Error: Your advertisement was not deleted", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onSuccessUpdatetAd() {
-        Toast.makeText(context, "Success: All changes were saved", Toast.LENGTH_LONG).show();
-        firestorePagingAdapter.refresh();
-    }
-
-    @Override
-    public void onFailureUpdateAd() {
         Toast.makeText(context, "Error: Changes were not saved", Toast.LENGTH_LONG).show();
     }
 
@@ -339,7 +327,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
     }
 
     @Override
-    public void onSuccessGetAllAdsByYear(QuerySnapshot queryDocumentSnapshots) {
+    public void onSuccessGetAllAdsByYear(Task<QuerySnapshot> task) {
 
     }
 

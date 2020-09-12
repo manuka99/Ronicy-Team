@@ -171,32 +171,12 @@ public class Step2 extends Fragment implements View.OnClickListener, Advertiseme
     }
 
     @Override
-    public void onSuccessInsertAd() {
+    public void onCompleteInsertAd(Task<Void> task) {
 
     }
 
     @Override
-    public void onFailureInsertAd() {
-
-    }
-
-    @Override
-    public void onSuccessDeleteAd() {
-
-    }
-
-    @Override
-    public void onFailureDeleteAd() {
-
-    }
-
-    @Override
-    public void onSuccessUpdatetAd() {
-
-    }
-
-    @Override
-    public void onFailureUpdateAd() {
+    public void onCompleteDeleteAd(Task<Void> task) {
 
     }
 
@@ -231,7 +211,7 @@ public class Step2 extends Fragment implements View.OnClickListener, Advertiseme
     }
 
     @Override
-    public void onSuccessGetAllAdsByYear(QuerySnapshot queryDocumentSnapshots) {
+    public void onSuccessGetAllAdsByYear(Task<QuerySnapshot> task) {
 
     }
 

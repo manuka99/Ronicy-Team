@@ -268,7 +268,6 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
 
     @Override
     public void onTaskFull(boolean result) {
-
         if (result)
             Toast.makeText(this, "Please Wait..", Toast.LENGTH_SHORT).show();
 
@@ -281,38 +280,22 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
     }
 
     @Override
-    public void onSuccessInsertAd() {
-        progressDialog.dismiss();
-        Toast.makeText(NewAd.this, "Success: Your advertisement was submited", Toast.LENGTH_LONG).show();
-        finish();
+    public void onCompleteInsertAd(Task<Void> task) {
+        if(task != null && task.isSuccessful()){
+            progressDialog.dismiss();
+            Toast.makeText(NewAd.this, "Success: Your advertisement was submited", Toast.LENGTH_LONG).show();
+            finish();
+        }else if(task != null){
+            progressDialog.dismiss();
+            Toast.makeText(this, "error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
-    public void onFailureInsertAd() {
-        progressDialog.dismiss();
-        Toast.makeText(this, "error: Your advertisement was not submited", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onSuccessDeleteAd() {
+    public void onCompleteDeleteAd(Task<Void> task) {
 
     }
-
-    @Override
-    public void onFailureDeleteAd() {
-
-    }
-
-    @Override
-    public void onSuccessUpdatetAd() {
-
-    }
-
-    @Override
-    public void onFailureUpdateAd() {
-
-    }
-
+    
     @Override
     public void onAdCount(Task<QuerySnapshot> task) {
 
@@ -324,7 +307,7 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
     }
 
     @Override
-    public void onSuccessGetAllAdsByYear(QuerySnapshot queryDocumentSnapshots) {
+    public void onSuccessGetAllAdsByYear(Task<QuerySnapshot> task) {
 
     }
 

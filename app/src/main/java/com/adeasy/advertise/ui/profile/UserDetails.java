@@ -2,12 +2,9 @@ package com.adeasy.advertise.ui.profile;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -19,7 +16,7 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.ProfileManagerCallback;
 import com.adeasy.advertise.manager.ProfileManager;
 import com.adeasy.advertise.model.User;
-import com.adeasy.advertise.util.CustomErrorDialogs;
+import com.adeasy.advertise.util.CustomDialogs;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -58,7 +55,7 @@ public class UserDetails extends Fragment implements ProfileManagerCallback {
 
     FirebaseAuth firebaseAuth;
     ProfileManager profileManager;
-    CustomErrorDialogs customErrorDialogs;
+    CustomDialogs customErrorDialogs;
 
     public UserDetails() {
         // Required empty public constructor
@@ -113,7 +110,7 @@ public class UserDetails extends Fragment implements ProfileManagerCallback {
         firebaseAuth = FirebaseAuth.getInstance();
 
         profileManager = new ProfileManager(this);
-        customErrorDialogs = new CustomErrorDialogs(getActivity());
+        customErrorDialogs = new CustomDialogs(getActivity());
         profileManager.getUser();
 
         userDetailsLayout.setVisibility(View.GONE);

@@ -2,17 +2,13 @@ package com.adeasy.advertise.ui.profile;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -22,10 +18,8 @@ import android.widget.Toast;
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.ProfileManagerCallback;
 import com.adeasy.advertise.manager.ProfileManager;
-import com.adeasy.advertise.model.User;
-import com.adeasy.advertise.util.CustomErrorDialogs;
+import com.adeasy.advertise.util.CustomDialogs;
 import com.adeasy.advertise.util.HideSoftKeyboard;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -34,9 +28,6 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-
-import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED;
 
 /**
  * Created by Manuka yasas,
@@ -64,7 +55,7 @@ public class ProfileSecurity extends Fragment implements TextWatcher, View.OnCli
     Boolean isUpdating = false;
     ProfileManager profileManager;
     ProgressBar progressBar;
-    CustomErrorDialogs customErrorDialogs;
+    CustomDialogs customErrorDialogs;
 
     public ProfileSecurity() {
         // Required empty public constructor
@@ -125,7 +116,7 @@ public class ProfileSecurity extends Fragment implements TextWatcher, View.OnCli
         changePassword.setOnClickListener(this);
 
         profileManager = new ProfileManager(this);
-        customErrorDialogs = new CustomErrorDialogs(getActivity());
+        customErrorDialogs = new CustomDialogs(getActivity());
 
         return view;
     }

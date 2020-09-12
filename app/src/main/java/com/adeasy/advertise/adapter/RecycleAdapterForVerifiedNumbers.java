@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.helper.ViewHolderPhoneNumbers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,8 +22,11 @@ public class RecycleAdapterForVerifiedNumbers extends RecyclerView.Adapter<ViewH
 
     private List<Integer> verifiedNumberList;
 
-    public RecycleAdapterForVerifiedNumbers(List<Integer> verifiedNumberList){
-        this.verifiedNumberList = verifiedNumberList;
+    public RecycleAdapterForVerifiedNumbers(List<Integer> verifiedNumberList) {
+        if (verifiedNumberList != null)
+            this.verifiedNumberList = verifiedNumberList;
+        else
+            this.verifiedNumberList = new ArrayList<>();
     }
 
     @NonNull
@@ -38,21 +42,18 @@ public class RecycleAdapterForVerifiedNumbers extends RecyclerView.Adapter<ViewH
         holder.removeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               verifiedNumberList.remove(position);
-               notifyDataSetChanged();
+                verifiedNumberList.remove(position);
+                notifyDataSetChanged();
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        int value = 0;
-        if(verifiedNumberList != null)
-            value = verifiedNumberList.size();
-        return value;
+        return verifiedNumberList.size();
     }
 
-    public List<Integer> getSelectedNumbers(){
+    public List<Integer> getSelectedNumbers() {
         return verifiedNumberList;
     }
 

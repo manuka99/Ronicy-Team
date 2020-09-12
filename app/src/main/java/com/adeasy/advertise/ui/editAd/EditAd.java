@@ -240,35 +240,19 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
     }
 
     @Override
-    public void onSuccessInsertAd() {
-        progressDialog.dismiss();
-        Toast.makeText(EditAd.this, "Success: Your advertisement was submited", Toast.LENGTH_LONG).show();
-        finish();
+    public void onCompleteInsertAd(Task<Void> task) {
+        if(task != null && task.isSuccessful()){
+            progressDialog.dismiss();
+            Toast.makeText(EditAd.this, "Success: Your advertisement was submited", Toast.LENGTH_LONG).show();
+            finish();
+        }else if(task != null){
+            progressDialog.dismiss();
+            Toast.makeText(this, "error: Your advertisement was not submited", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
-    public void onFailureInsertAd() {
-        progressDialog.dismiss();
-        Toast.makeText(this, "error: Your advertisement was not submited", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onSuccessDeleteAd() {
-
-    }
-
-    @Override
-    public void onFailureDeleteAd() {
-
-    }
-
-    @Override
-    public void onSuccessUpdatetAd() {
-
-    }
-
-    @Override
-    public void onFailureUpdateAd() {
+    public void onCompleteDeleteAd(Task<Void> task) {
 
     }
 
@@ -296,7 +280,7 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
     }
 
     @Override
-    public void onSuccessGetAllAdsByYear(QuerySnapshot queryDocumentSnapshots) {
+    public void onSuccessGetAllAdsByYear(Task<QuerySnapshot> task) {
 
     }
 

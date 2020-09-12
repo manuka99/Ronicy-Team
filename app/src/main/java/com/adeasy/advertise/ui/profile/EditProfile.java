@@ -9,14 +9,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +30,7 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.ProfileManagerCallback;
 import com.adeasy.advertise.manager.ProfileManager;
 import com.adeasy.advertise.model.User;
-import com.adeasy.advertise.util.CustomErrorDialogs;
+import com.adeasy.advertise.util.CustomDialogs;
 import com.adeasy.advertise.util.HideSoftKeyboard;
 import com.adeasy.advertise.util.ImageQualityReducer;
 import com.google.android.gms.tasks.Task;
@@ -91,7 +87,7 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
 
     DatePickerDialog picker;
     ProgressBar progressBar;
-    CustomErrorDialogs customErrorDialogs;
+    CustomDialogs customErrorDialogs;
 
     public EditProfile() {
         // Required empty public constructor
@@ -156,7 +152,7 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
 
         firebaseAuth = FirebaseAuth.getInstance();
         profileManager = new ProfileManager(this);
-        customErrorDialogs = new CustomErrorDialogs(getActivity());
+        customErrorDialogs = new CustomDialogs(getActivity());
 
         user = new User();
 

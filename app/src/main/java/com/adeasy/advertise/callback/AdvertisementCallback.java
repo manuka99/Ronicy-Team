@@ -20,14 +20,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 public interface AdvertisementCallback {
     public void onUploadImage(@NonNull Task<Uri> task);
     public void onTaskFull(boolean result);
-    public void onSuccessInsertAd();
-    public void onFailureInsertAd();
-    public void onSuccessDeleteAd();
-    public void onFailureDeleteAd();
-    public void onSuccessUpdatetAd();
-    public void onFailureUpdateAd();
+
+    public void onCompleteInsertAd(Task<Void> task);
+
+    public void onCompleteDeleteAd(Task<Void> task);
+
     public void onAdCount(Task<QuerySnapshot> task);
     public void getAdbyID(@NonNull Task<DocumentSnapshot> task);
-    public void onSuccessGetAllAdsByYear(QuerySnapshot queryDocumentSnapshots);
+
+    public void onSuccessGetAllAdsByYear(Task<QuerySnapshot> task);
 
 }

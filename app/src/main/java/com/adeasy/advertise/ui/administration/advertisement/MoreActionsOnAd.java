@@ -36,6 +36,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -221,7 +222,7 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
             if (hideAllNumbers) {
                 advertisement.setNumbers(null);
             }
-            advertisementManager.insertAdvertisement(advertisement);
+            advertisementManager.insertUpdateAdvertisement(advertisement);
         }
     }
 
@@ -236,38 +237,22 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void onSuccessInsertAd() {
+    public void onCompleteInsertAd(Task<Void> task) {
         endUpdatingUI();
-        showSuccessSnackbar("Advertisement was updated successfully");
+        if (task != null && task.isSuccessful())
+            showSuccessSnackbar("Advertisement was updated successfully");
+        else if (task != null)
+            showErrorSnackbar("Error: Advertisement was not updated, please try again later");
     }
 
     @Override
-    public void onFailureInsertAd() {
-        endUpdatingUI();
-        showErrorSnackbar("Error: Advertisement was not updated, please try again later");
-    }
-
-    @Override
-    public void onSuccessDeleteAd() {
+    public void onCompleteDeleteAd(Task<Void> task) {
         endDeletingUI();
-        showSuccessSnackbar("Advertisement was deleted successfully");
-        finish();
-    }
-
-    @Override
-    public void onFailureDeleteAd() {
-        showErrorSnackbar("Error: Advertisement was not deleted");
-        endDeletingUI();
-    }
-
-    @Override
-    public void onSuccessUpdatetAd() {
-
-    }
-
-    @Override
-    public void onFailureUpdateAd() {
-
+        if (task != null && task.isSuccessful()) {
+            showSuccessSnackbar("Advertisement was deleted successfully");
+            finish();
+        } else if (task != null)
+            showErrorSnackbar("Error: Advertisement was not deleted");
     }
 
     @Override
@@ -338,7 +323,7 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void onSuccessGetAllAdsByYear(QuerySnapshot queryDocumentSnapshots) {
+    public void onSuccessGetAllAdsByYear(Task<QuerySnapshot> task) {
 
     }
 
@@ -443,7 +428,7 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
     private void showDeleteDialog() {
         String deleteAdTitle = "Are you sure you want to delete this ad?";
 
-        if(isTrashDelete)
+        if (isTrashDelete)
             deleteAdTitle = "Delete this ad permanently?";
 
         new AlertDialog.Builder(this)
