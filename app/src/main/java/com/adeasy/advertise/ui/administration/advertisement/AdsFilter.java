@@ -25,13 +25,17 @@ import com.adeasy.advertise.helper.ViewHolderListAdds;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.ui.editAd.EditAd;
+import com.adeasy.advertise.util.CustomDialogs;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -53,6 +57,7 @@ public class AdsFilter extends AppCompatActivity {
     boolean isTrashDelete = false;
 
     private static final String TAG = "AdsFilter";
+    CustomDialogs customDialogs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +69,7 @@ public class AdsFilter extends AppCompatActivity {
         recyclerView = findViewById(R.id.myaddsRecycle);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshMyadds);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        customDialogs = new CustomDialogs(this);
 
         try {
             filterType = getIntent().getStringExtra("filterType");
@@ -275,7 +281,7 @@ public class AdsFilter extends AppCompatActivity {
                                 break;
 
                             case ERROR:
-                                retry();
+                                //retry();
                                 break;
                         }
                     }
@@ -286,9 +292,12 @@ public class AdsFilter extends AppCompatActivity {
                         swipeRefreshLayout.setRefreshing(false);
                         e.printStackTrace();
                         //Handle Error
-                        refresh();
+                        //refresh();
+                        if (e instanceof FirebaseFirestoreException) {
+                            ((FirebaseFirestoreException) e).getCode().equals(PERMISSION_DENIED);
+                            customDialogs.showPermissionDeniedStorage();
+                        }
                     }
-
                 };
 
         firestorePagingAdapter.startListening();

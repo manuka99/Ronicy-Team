@@ -299,6 +299,13 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
             firestorePagingAdapter.refresh();
         }else if(task != null){
             Toast.makeText(context, "Error, " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+
+            if (task.getException() instanceof FirebaseFirestoreException) {
+                ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
+                firestorePagingAdapter.stopListening();
+                customErrorDialogs.showPermissionDeniedStorage();
+            }
+
         }
     }
 
@@ -313,6 +320,11 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
             Toast.makeText(context, "Success: Your advertisement was deleted", Toast.LENGTH_LONG).show();
         }else if(task != null){
             Toast.makeText(context, "Error: Your advertisement was not deleted", Toast.LENGTH_LONG).show();
+            if (task.getException() instanceof FirebaseFirestoreException) {
+                ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
+                firestorePagingAdapter.stopListening();
+                customErrorDialogs.showPermissionDeniedStorage();
+            }
         }
     }
 

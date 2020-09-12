@@ -30,14 +30,18 @@ import com.adeasy.advertise.ui.editAd.SelectedCategory;
 import com.adeasy.advertise.ui.editAd.ContactDetails;
 import com.adeasy.advertise.ui.editAd.LocationSelector;
 import com.adeasy.advertise.ui.newPost.NewAd;
+import com.adeasy.advertise.util.CustomDialogs;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED;
 
 /**
  * Created by Manuka yasas,
@@ -64,6 +68,7 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
     String adID, adCID;
 
     Advertisement advertisement;
+    CustomDialogs customDialogs;
 
     private static final String TAG = "EditAd";
 
@@ -83,6 +88,7 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
         contactDetails = new ContactDetails();
 
         progressDialog = new ProgressDialog(this);
+        customDialogs = new CustomDialogs(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -248,6 +254,10 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
         }else if(task != null){
             progressDialog.dismiss();
             Toast.makeText(this, "error: Your advertisement was not submited", Toast.LENGTH_LONG).show();
+            if (task.getException() instanceof FirebaseFirestoreException) {
+                ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
+                customDialogs.showPermissionDeniedStorage();
+            }
         }
     }
 
@@ -276,6 +286,10 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
             }
         } else {
             Log.d(TAG, "get failed with ", task.getException());
+            if (task.getException() instanceof FirebaseFirestoreException) {
+                ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
+                customDialogs.showPermissionDeniedStorage();
+            }
         }
     }
 

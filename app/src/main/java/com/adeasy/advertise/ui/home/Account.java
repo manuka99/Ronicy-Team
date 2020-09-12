@@ -176,6 +176,8 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
     public void onStart() {
         super.onStart();
         setHasOptionsMenu(true);
+        if(FirebaseAuth.getInstance().getCurrentUser() != null)
+            customAuthTokenManager.getCustomClaimsInLoggedinUser();
     }
 
     @Override
@@ -261,7 +263,6 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         logout.setVisibility(View.VISIBLE);
         username.setText(mAuth.getCurrentUser().getDisplayName());
         updateFacebookLinkState();
-        customAuthTokenManager.getCustomClaimsInLoggedinUser();
     }
 
     private void linkWithFb() {

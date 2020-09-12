@@ -27,15 +27,19 @@ import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.callback.CategoryCallback;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.manager.CategoryManager;
+import com.adeasy.advertise.util.CustomDialogs;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
+
+import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED;
 
 /**
  * Created by Manuka yasas,
@@ -63,6 +67,7 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
     com.adeasy.advertise.model.Category category;
     Boolean isTrashDelete = false;
     private static final String TAG = "MoreActionsOnAd";
+    CustomDialogs customDialogs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +95,7 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
 
         advertisementManager = new AdvertisementManager(this);
         categoryManager = new CategoryManager(this);
+        customDialogs = new CustomDialogs(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -241,8 +247,13 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
         endUpdatingUI();
         if (task != null && task.isSuccessful())
             showSuccessSnackbar("Advertisement was updated successfully");
-        else if (task != null)
+        else if (task != null) {
             showErrorSnackbar("Error: Advertisement was not updated, please try again later");
+            if (task.getException() instanceof FirebaseFirestoreException) {
+                ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
+                customDialogs.showPermissionDeniedStorage();
+            }
+        }
     }
 
     @Override
@@ -251,8 +262,13 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
         if (task != null && task.isSuccessful()) {
             showSuccessSnackbar("Advertisement was deleted successfully");
             finish();
-        } else if (task != null)
+        } else if (task != null) {
             showErrorSnackbar("Error: Advertisement was not deleted");
+            if (task.getException() instanceof FirebaseFirestoreException) {
+                ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
+                customDialogs.showPermissionDeniedStorage();
+            }
+        }
     }
 
     @Override
@@ -262,7 +278,6 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void getAdbyID(@NonNull Task<DocumentSnapshot> task) {
-
         if (task.isSuccessful()) {
             DocumentSnapshot document = task.getResult();
             if (document.exists()) {
@@ -319,6 +334,10 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
             }
         } else {
             Log.d(TAG, "get failed with ", task.getException());
+            if (task.getException() instanceof FirebaseFirestoreException) {
+                ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
+                customDialogs.showPermissionDeniedStorage();
+            }
         }
     }
 

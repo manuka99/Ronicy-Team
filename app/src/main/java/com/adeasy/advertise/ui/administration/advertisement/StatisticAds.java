@@ -24,6 +24,7 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
+import com.adeasy.advertise.util.CustomDialogs;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -50,6 +51,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
@@ -61,6 +63,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED;
 
 /**
  * Created by Manuka yasas,
@@ -91,6 +95,7 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
     int yearSelected = 2020;
 
     AdvertisementManager advertisementManager;
+    CustomDialogs customDialogs;
 
     //12 months data
     int[] months = new int[12];
@@ -168,6 +173,7 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
 
         context = getActivity();
         advertisementManager = new AdvertisementManager(this);
+        customDialogs = new CustomDialogs(getActivity());
         advertisementManager.getAllAdsByYear(yearSelected);
 
         return view;
@@ -603,6 +609,11 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
                 sortDataByAdvertisemntList(advertisements);
             else
                 Toast.makeText(context, "No data available", Toast.LENGTH_LONG).show();
+        }else if(task != null){
+            if (task.getException() instanceof FirebaseFirestoreException) {
+                ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
+                customDialogs.showPermissionDeniedStorage();
+            }
         }
     }
 
