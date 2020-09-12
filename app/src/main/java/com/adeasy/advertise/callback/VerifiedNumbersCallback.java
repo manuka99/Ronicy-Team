@@ -11,7 +11,7 @@ import com.google.firebase.firestore.QuerySnapshot;
  * Email manukayasas99@gmail.com
  **/
 public interface VerifiedNumbersCallback {
-    public void onSuccessfullNumberInserted();
-    public void onCompleteSearchNumberInUser(QuerySnapshot querySnapshotTask);
-    public void onCompleteRecieveAllNumbersInUser(DocumentSnapshot documentSnapshot);
+    public void onCompleteNumberInserted(Task<Void> task);
+    public void onCompleteSearchNumberInUser(Task<QuerySnapshot> task);
+    public void onCompleteRecieveAllNumbersInUser(Task<DocumentSnapshot> task);
 }

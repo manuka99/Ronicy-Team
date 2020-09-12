@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.BuynowViewModel;
@@ -36,6 +37,7 @@ import com.adeasy.advertise.model.UserVerifiedNumbers;
 import com.adeasy.advertise.service.MailService;
 import com.adeasy.advertise.service.MailServiceImpl;
 import com.adeasy.advertise.util.UniqueIdBasedOnName;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -50,6 +52,7 @@ import lk.payhere.androidsdk.PHMainActivity;
 import lk.payhere.androidsdk.PHResponse;
 import lk.payhere.androidsdk.model.InitRequest;
 import lk.payhere.androidsdk.model.StatusResponse;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -67,7 +70,6 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     OrderPhoneVerify orderPhoneVerify;
     Step2 step2;
     StepSuccess orderSuccess;
-    MailService mailService;
     Boolean isCODSelected = false;
     VerifiedNumbersManager verifiedNumbersManager;
 
@@ -91,8 +93,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
         context = this;
         mAuth = FirebaseAuth.getInstance();
-        mailService = new MailServiceImpl(context);
-        orderManager = new OrderManager(this);
+        orderManager = new OrderManager(this, this);
         advertisementID = getIntent().getStringExtra("aID");
         categoryId = getIntent().getStringExtra("cID");
         continueOrder = findViewById(R.id.continueOrder);
@@ -323,7 +324,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
             payment.setStatus("Processing");
             payment.setAmount(order.getItem().getPrice());
             order.setPayment(payment);
-            orderManager.insertOrder(order);
+            orderManager.insertOrder(order, true);
         } else {
             InitRequest req = new InitRequest();
             req.setMerchantId(Configurations.PAYHERE_MERCHANTID);
@@ -376,18 +377,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
         //payment.setAmount(Double.valueOf(amount)); //this add extra zeros
         payment.setAmount(order.getItem().getPrice());
         order.setPayment(payment);
-        orderManager.insertOrder(order);
-    }
-
-    @Override
-    public void onSuccessInsertOrder() {
-        onSuccessOrder();
-        mailService.SendOrderPlacedEmail(order);
-    }
-
-    @Override
-    public void onFailureInsertOrder() {
-
+        orderManager.insertOrder(order, true);
     }
 
     public void onSuccessOrder() {
@@ -415,28 +405,36 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     protected void onDestroy() {
         super.onDestroy();
         orderManager.destroy();
-        mailService.destroy();
     }
 
     @Override
-    public void onSuccessfullNumberInserted() {
+    public void onCompleteInsertOrder(Task<Void> task) {
+        if (task != null && task.isSuccessful())
+            onSuccessOrder();
+        else
+            Toast.makeText(context, "Error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onCompleteNumberInserted(Task<Void> task) {
 
     }
 
     @Override
-    public void onCompleteSearchNumberInUser(QuerySnapshot queryDocumentSnapshots) {
-        if (queryDocumentSnapshots != null && queryDocumentSnapshots.getDocuments().isEmpty() == false) {
-            List<UserVerifiedNumbers> numbers = queryDocumentSnapshots.toObjects(UserVerifiedNumbers.class);
+    public void onCompleteSearchNumberInUser(Task<QuerySnapshot> task) {
+        if (task != null && task.isSuccessful() && task.getResult().getDocuments().isEmpty() == false) {
+            List<UserVerifiedNumbers> numbers = task.getResult().toObjects(UserVerifiedNumbers.class);
             Log.i(TAG, numbers.get(0).getVerifiedNumbers().toString());
-            Log.i(TAG, queryDocumentSnapshots.getDocuments().toString());
+            Log.i(TAG, task.getResult().getDocuments().toString());
             startPaymentSelectFragment();
         } else
             startVerifyNumberFragment();
     }
 
     @Override
-    public void onCompleteRecieveAllNumbersInUser(DocumentSnapshot documentSnapshot) {
+    public void onCompleteRecieveAllNumbersInUser(Task<DocumentSnapshot> task) {
 
     }
+
 
 }

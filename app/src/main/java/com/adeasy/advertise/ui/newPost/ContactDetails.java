@@ -29,6 +29,7 @@ import com.adeasy.advertise.model.User;
 import com.adeasy.advertise.model.UserVerifiedNumbers;
 import com.adeasy.advertise.ui.addphone.AddNewNumber;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -156,24 +157,6 @@ public class ContactDetails extends Fragment implements VerifiedNumbersCallback,
     }
 
     @Override
-    public void onSuccessfullNumberInserted() {
-    }
-
-    @Override
-    public void onCompleteSearchNumberInUser(QuerySnapshot querySnapshotTask) {
-
-    }
-
-    @Override
-    public void onCompleteRecieveAllNumbersInUser(DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot != null && documentSnapshot.exists()) {
-            UserVerifiedNumbers user = documentSnapshot.toObject(UserVerifiedNumbers.class);
-            verifiedNumbers = user.getVerifiedNumbers();
-            displayAdNumbers();
-        }
-    }
-
-    @Override
     public void onClick(View view) {
         if (view == addNewNumber)
             startActivityForResult(new Intent(getContext(), AddNewNumber.class), NEW_NUMBER_REQUEST_CODE);
@@ -234,4 +217,24 @@ public class ContactDetails extends Fragment implements VerifiedNumbersCallback,
         }
 
     }
+
+    @Override
+    public void onCompleteNumberInserted(Task<Void> task) {
+
+    }
+
+    @Override
+    public void onCompleteSearchNumberInUser(Task<QuerySnapshot> task) {
+
+    }
+
+    @Override
+    public void onCompleteRecieveAllNumbersInUser(Task<DocumentSnapshot> task) {
+        if (task != null && task.isSuccessful() && task.getResult().exists()) {
+                UserVerifiedNumbers user = task.getResult().toObject(UserVerifiedNumbers.class);
+                verifiedNumbers = user.getVerifiedNumbers();
+                displayAdNumbers();
+        }
+    }
+
 }

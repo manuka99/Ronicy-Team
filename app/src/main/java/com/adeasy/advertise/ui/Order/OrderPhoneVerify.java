@@ -332,12 +332,13 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
     }
 
     private void showSuccessSnackbar(String message) {
-        Snackbar snackbar = Snackbar.make(linearLayout, message, Snackbar.LENGTH_LONG).setAction("x", new View.OnClickListener() {
+        Snackbar snackbar = Snackbar.make(linearLayout, message, Snackbar.LENGTH_INDEFINITE).setAction("x", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             }
         }).setActionTextColor(getResources().getColor(R.color.colorWhite));
-
+        TextView textView = snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);
+        textView.setMaxLines(5);
         snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorBlue));
         snackbar.show();
     }

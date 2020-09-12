@@ -19,6 +19,7 @@ import com.adeasy.advertise.manager.CustomAuthTokenManager;
 import com.adeasy.advertise.model.CustomClaims;
 import com.adeasy.advertise.ui.administration.advertisement.AdvertisementMain;
 import com.adeasy.advertise.ui.advertisement.Advertisement;
+import com.adeasy.advertise.util.CustomDialogs;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,6 +43,7 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
     CustomClaims customClaims;
     String rolesDescription = "";
     LinearLayout advertisement, orders, users, categories, otp, favourite, getInTouch, chat;
+    CustomDialogs customDialogs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +84,7 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
         getInTouch.setOnClickListener(this);
 
         customClaims = new CustomClaims();
+        customDialogs = new CustomDialogs(this);
 
         customAuthTokenManager = new CustomAuthTokenManager(this);
         customAuthTokenManager.getCustomClaimsInLoggedinUser();
@@ -110,7 +113,7 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
         else if (view == chat && (customClaims.isChat_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
             startActivity(new Intent(this, DashboardHome.class));
         else
-            showErrorDialog();
+            customDialogs.showPermissionDeniedStorage();
     }
 
     @Override
@@ -123,44 +126,16 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
         }
     }
 
-    private void showErrorDialog() {
-        final Dialog dialog = new Dialog(this);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.manuka_custom_no_access_dialog);
-        TextView title = (TextView) dialog.findViewById(R.id.title);
-        title.setText("Opps! Access denied /404");
-        TextView message = (TextView) dialog.findViewById(R.id.message);
-        message.setText(firebaseUser.getDisplayName() + " the content that you requested may not be available for you. You can only request content that matches your role, if you think this is by mistake please sign in again. Thank you!");
-        Button signOut = (Button) dialog.findViewById(R.id.button);
-        signOut.setText("Sign Out");
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                firebaseAuth.signOut();
-                finish();
-            }
-        });
-        TextView close = (TextView) dialog.findViewById(R.id.close);
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-    }
-
     //just after the claims are received
     private void readClaimsAndUpdateUi() {
         if (customClaims.isAdmin())
             rolesDescription = "System Administrator, ";
 
         else {
-            if (customClaims.isOrder_manager())
-                rolesDescription += "Order Manager, ";
             if (customClaims.isAdvertisement_manager())
                 rolesDescription += "Advertisement Manager, ";
+            if (customClaims.isOrder_manager())
+                rolesDescription += "Order Manager, ";
             if (customClaims.isFavourite_manager())
                 rolesDescription += "Favourite Manager, ";
             if (customClaims.isContact_manager())
@@ -174,7 +149,7 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
         }
 
         if (rolesDescription.length() < 1)
-            finish();
+            customDialogs.showPermissionDeniedStorage();
         else
             rolesDescription = rolesDescription.substring(0, rolesDescription.length() - 2);
 

@@ -25,6 +25,7 @@ import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.ui.advertisement.Myadds;
 import com.adeasy.advertise.ui.editAd.EditAd;
+import com.adeasy.advertise.util.CustomDialogs;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -58,6 +59,7 @@ public class NewAds extends Fragment {
     FirebaseAuth firebaseAuth;
     FirestoreRecyclerAdapter adapter;
     SwipeRefreshLayout swipeRefreshLayout;
+    CustomDialogs customDialogs;
 
     public NewAds() {
         // Required empty public constructor
@@ -100,6 +102,7 @@ public class NewAds extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         advertisementManager = new AdvertisementManager();
         firebaseAuth = FirebaseAuth.getInstance();
+        customDialogs = new CustomDialogs(getActivity());
         loadData();
         return view;
     }
@@ -210,7 +213,7 @@ public class NewAds extends Fragment {
                 // Called each time there is a new query snapshot. You may want to use this method
                 // to hide a loading spinner or check for the "no documents" state and update your UI.
                 // ...
-                if(getSnapshots().size() == getItemCount())
+                if (getSnapshots().size() == getItemCount())
                     swipeRefreshLayout.setRefreshing(false);
             }
 
@@ -220,6 +223,7 @@ public class NewAds extends Fragment {
                 // your UI to display an error message to the user.
                 // ...
                 e.printStackTrace();
+                customDialogs.showPermissionDeniedStorage();
             }
 
 

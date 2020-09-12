@@ -1,5 +1,6 @@
 package com.adeasy.advertise.manager;
 
+import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
@@ -10,6 +11,8 @@ import com.adeasy.advertise.callback.OrderCallback;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.model.Order;
+import com.adeasy.advertise.service.MailService;
+import com.adeasy.advertise.service.MailServiceImpl;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,6 +30,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -43,16 +47,20 @@ public class OrderManager {
     private DocumentReference documentReference;
     private StorageReference storageReference;
     private OrderCallback orderCallback;
+    private Context context;
+    private MailService mailService;
 
-    public OrderManager(OrderCallback callBacks) {
+
+    public OrderManager(OrderCallback callBacks, Context context) {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
         documentReference = firebaseFirestore.collection(childName).document();
         storageReference = firebaseStorage.getReference().child(childName).child("Images");
+        mailService = new MailServiceImpl(context);
         this.orderCallback = callBacks;
     }
 
-    public void insertOrder(final Order order) {
+    public void insertOrder(final Order order, final boolean uploadImageFromOrderItem) {
         DocumentReference refStore;
 
         if (order.getId() == null) {
@@ -62,26 +70,22 @@ public class OrderManager {
         } else
             refStore = firebaseFirestore.collection(childName).document(order.getId());
 
-        refStore.set(order)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        orderCallback.onSuccessInsertOrder();
-
-                        try {
-                            uploadImage(order);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-
+        refStore.set(order).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                orderCallback.onCompleteInsertOrder(task);
+                if (task.isSuccessful()) {
+                    mailService.SendOrderPlacedEmail(order);
+                    try {
+                        if(uploadImageFromOrderItem)
+                        uploadImage(order);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        orderCallback.onFailureInsertOrder();
-                    }
-                });
+                }
+            }
+        });
+
     }
 
     public void uploadImage(final Order order) throws FileNotFoundException {
@@ -141,27 +145,10 @@ public class OrderManager {
 
         //data.put(order );
         firebaseFirestore.collection(childName).document(order.getId())
-                .set(data, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "DocumentSnapshot successfully written!");
-
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
-
+                .set(data, SetOptions.merge());
     }
 
     public void destroy() {
-        firebaseFirestore = null;
-        firebaseStorage = null;
-        documentReference = null;
-        storageReference = null;
         orderCallback = null;
     }
 

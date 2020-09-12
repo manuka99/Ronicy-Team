@@ -46,6 +46,13 @@ public class ProfileManager {
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
 
+    //when user update his profile
+    //1. updateFirebaseEmailAndUserAndImage will be called and email will be updated if failed process will stop
+    //2. updateProfileWithImage this will update the profile photo if user has selected a new one, if failed entire process fails
+    //3. updateFirebaseProfile here the firebase auth user will be updated with new details
+    //4. in the above step if user had a old profile pic that will be deleted
+    //5. updateProfile this will update the data in the local firestore
+
     public ProfileManager(ProfileManagerCallback profileManagerCallback) {
         this.profileManagerCallback = profileManagerCallback;
         firebaseAuth = FirebaseAuth.getInstance();

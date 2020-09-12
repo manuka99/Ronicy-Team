@@ -42,7 +42,9 @@ import com.google.firebase.firestore.QuerySnapshot;
  * A simple {@link Fragment} subclass.
  * Use the {@link EnterCode#newInstance} factory method to
  * create an instance of this fragment.
- *//**
+ */
+
+/**
  * Created by Manuka yasas,
  * University Sliit
  * Email manukayasas99@gmail.com
@@ -110,7 +112,7 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
 
         try {
             phoneNumber = Integer.valueOf(getArguments().getString("phone"));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -173,7 +175,7 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
         if (firebaseAuth.getCurrentUser() != null)
             firebasePhoneAuthentication.linkMobileWithCurrentUser(credential, firebaseAuth.getCurrentUser());
 
-        else{
+        else {
             showErrorSnackbar(R.string.not_loggedIn);
             codeEntered.setError(getString(R.string.not_loggedIn));
         }
@@ -281,10 +283,10 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
     @Override
     public void onCompleteLinkingMobileWithUser(@NonNull Task<AuthResult> task) {
         endVerifyProgress();
-        if(task.isSuccessful()){
+        if (task.isSuccessful()) {
             firebasePhoneAuthentication.unlinkPhoneAuth(task.getResult().getUser());
             verifiedNumbersManager.insertVerifiedNumber(new UserVerifiedNumbers(firebaseAuth.getCurrentUser(), phoneNumber), firebaseAuth.getCurrentUser());
-        }else{
+        } else {
             showErrorSnackbar(R.string.invalid_mobile_code);
             codeEntered.setError(getString(R.string.invalid_mobile_code));
         }
@@ -310,27 +312,29 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
     }
 
     @Override
-    public void onSuccessfullNumberInserted() {
-        addNewPhoneViewModel.setVerifiedNumber(phoneNumber);
+    public void onDestroy() {
+        super.onDestroy();
+        verifiedNumbersManager.destroy();
+        firebasePhoneAuthentication.destroy();
     }
 
     @Override
-    public void onCompleteSearchNumberInUser(QuerySnapshot querySnapshotTask) {
-        if (querySnapshotTask != null && querySnapshotTask.getDocuments().isEmpty() == false)
+    public void onCompleteNumberInserted(Task<Void> task) {
+        if (task != null && task.isSuccessful())
+            addNewPhoneViewModel.setVerifiedNumber(phoneNumber);
+    }
+
+    @Override
+    public void onCompleteSearchNumberInUser(Task<QuerySnapshot> task) {
+        if (task != null && task.isSuccessful() && task.getResult().getDocuments().isEmpty() == false)
             addNewPhoneViewModel.setVerifiedNumber(phoneNumber);
         else
             firebasePhoneAuthentication.sendMobileVerifycode("+94" + phoneNumber, getActivity());
     }
 
     @Override
-    public void onCompleteRecieveAllNumbersInUser(DocumentSnapshot documentSnapshot) {
+    public void onCompleteRecieveAllNumbersInUser(Task<DocumentSnapshot> task) {
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        verifiedNumbersManager.destroy();
-        firebasePhoneAuthentication.destroy();
-    }
 }
