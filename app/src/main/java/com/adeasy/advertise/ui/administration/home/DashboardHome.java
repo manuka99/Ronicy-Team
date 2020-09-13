@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 /**
@@ -87,7 +88,6 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
         customDialogs = new CustomDialogs(this);
 
         customAuthTokenManager = new CustomAuthTokenManager(this);
-        customAuthTokenManager.getCustomClaimsInLoggedinUser();
 
         //set name and image
         name.setText(firebaseUser.getDisplayName());
@@ -124,6 +124,15 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
         } else {
 
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        roles.setText(getString(R.string.loading));
+        rolesDescription = "";
+        customClaims = new CustomClaims();
+        customAuthTokenManager.getCustomClaimsInLoggedinUser();
     }
 
     //just after the claims are received

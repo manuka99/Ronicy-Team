@@ -1,5 +1,6 @@
 package com.adeasy.advertise.util;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -51,7 +52,8 @@ public class CustomDialogs {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                //dialog.dismiss();
+                ((Activity)context).finish();
             }
         });
         dialog.show();

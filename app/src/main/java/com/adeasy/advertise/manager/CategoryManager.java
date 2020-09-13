@@ -83,7 +83,6 @@ public class CategoryManager {
     }
 
     public void uploadImage(final Advertisement advertisement, byte[] data) {
-
         if (storageTask != null && storageTask.isInProgress()){
             //categoryCallback.onTaskFull(true);
         }
@@ -114,7 +113,6 @@ public class CategoryManager {
     }
 
     public void deleteCategory(String id) {
-
         firebaseFirestore.collection(childName).document(id)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -129,7 +127,6 @@ public class CategoryManager {
                         //categoryCallback.onFailureDeleteCategory();
                     }
                 });
-
     }
 
     public Query viewCategoryAll() {
@@ -148,7 +145,6 @@ public class CategoryManager {
     }
 
     public void deletePreviousImage(String url) {
-
         final StorageReference storageref = firebaseStorage.getReferenceFromUrl(url);
         storageref.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -161,7 +157,6 @@ public class CategoryManager {
                 // Uh-oh, an error occurred!
             }
         });
-
     }
 
     public void destroy() {
