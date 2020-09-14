@@ -176,6 +176,8 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
         customDialogs = new CustomDialogs(getActivity());
         advertisementManager.getAllAdsByYear(yearSelected);
 
+        yearLayout.getEditText().setText(String.valueOf(yearSelected));
+
         return view;
     }
 

@@ -34,7 +34,7 @@
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
             android:background="@drawable/button_round_fb"
-            android:textSize="@dimen/_16sdp"
+            android:textSize="@dimen/_14sdp"
             android:paddingStart="@dimen/_20sdp"
             android:paddingEnd="@dimen/_20sdp"
             android:textStyle="bold" />

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.CustomClaimsCallback;
@@ -85,7 +86,7 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
         chat.setOnClickListener(this);
         getInTouch.setOnClickListener(this);
 
-        customClaims = new CustomClaims();
+        customClaims = null;
         customDialogs = new CustomDialogs(this);
 
         customAuthTokenManager = new CustomAuthTokenManager(this);
@@ -97,24 +98,27 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
 
     @Override
     public void onClick(View view) {
-        if (view == advertisement && (customClaims.isAdvertisement_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
-            startActivity(new Intent(this, AdvertisementMain.class));
-        else if (view == orders && (customClaims.isOrder_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
-            startActivity(new Intent(this, OrdersMain.class));
-        else if (view == users && (customClaims.isAdmin() || customClaims.isUser_manager() || customClaims.isGuest_admin()))
-            startActivity(new Intent(this, DashboardHome.class));
-        else if (view == otp && (customClaims.isAdmin() || customClaims.isUser_manager() || customClaims.isGuest_admin()))
-            startActivity(new Intent(this, DashboardHome.class));
-        else if (view == categories && (customClaims.isAdvertisement_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
-            startActivity(new Intent(this, DashboardHome.class));
-        else if (view == favourite && (customClaims.isFavourite_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
-            startActivity(new Intent(this, DashboardHome.class));
-        else if (view == getInTouch && (customClaims.isContact_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
-            startActivity(new Intent(this, DashboardHome.class));
-        else if (view == chat && (customClaims.isChat_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
-            startActivity(new Intent(this, DashboardHome.class));
-        else
-            customDialogs.showPermissionDeniedStorage();
+        if(customClaims != null) {
+            if (view == advertisement && (customClaims.isAdvertisement_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
+                startActivity(new Intent(this, AdvertisementMain.class));
+            else if (view == orders && (customClaims.isOrder_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
+                startActivity(new Intent(this, OrdersMain.class));
+            else if (view == users && (customClaims.isAdmin() || customClaims.isUser_manager() || customClaims.isGuest_admin()))
+                startActivity(new Intent(this, DashboardHome.class));
+            else if (view == otp && (customClaims.isAdmin() || customClaims.isUser_manager() || customClaims.isGuest_admin()))
+                startActivity(new Intent(this, DashboardHome.class));
+            else if (view == categories && (customClaims.isAdvertisement_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
+                startActivity(new Intent(this, DashboardHome.class));
+            else if (view == favourite && (customClaims.isFavourite_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
+                startActivity(new Intent(this, DashboardHome.class));
+            else if (view == getInTouch && (customClaims.isContact_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
+                startActivity(new Intent(this, DashboardHome.class));
+            else if (view == chat && (customClaims.isChat_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
+                startActivity(new Intent(this, DashboardHome.class));
+            else
+                customDialogs.showPermissionDeniedStorage();
+        }else
+            Toast.makeText(this, "Please wait while we verify you from our server...", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -132,7 +136,7 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
         super.onStart();
         roles.setText(getString(R.string.loading));
         rolesDescription = "";
-        customClaims = new CustomClaims();
+        customClaims = null;
         customAuthTokenManager.getCustomClaimsInLoggedinUser();
     }
 

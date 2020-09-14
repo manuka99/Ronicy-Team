@@ -37,7 +37,7 @@ public class AdvertisementMain extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Dashboard v6.1");
+        getSupportActionBar().setTitle(getString(R.string.dashboardVersion));
         getSupportActionBar().setSubtitle("Manage advertisements");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

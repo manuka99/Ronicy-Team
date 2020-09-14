@@ -43,7 +43,7 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
         //for toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Dashboard v6.1");
+        getSupportActionBar().setTitle(getString(R.string.dashboardVersion));
         getSupportActionBar().setSubtitle("Manage advertisements");
 
         //toggle
@@ -64,7 +64,8 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
         recentOrders = new RecentOrders();
 
         //show dashborad on home
-        getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), dashboard).commit();
+        onNavigationItemSelected(navigationView.getMenu().findItem(R.id.home));
+        navigationView.setCheckedItem(R.id.home);
 
     }
 

@@ -49,9 +49,9 @@
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:alignmentMode="alignMargins"
+            android:alignmentMode="alignBounds"
             android:columnCount="2"
-            android:columnOrderPreserved="false"
+            android:columnOrderPreserved="true"
             android:rowCount="4">
 
             <androidx.cardview.widget.CardView

@@ -4,6 +4,7 @@
     <string name="app_name">Ronicy</string>
     <string name="site_name">Ronicy.lk</string>
     <string name="slogan">SRILANKA\'S LARGEST MARKETPLACE</string>
+    <string name="dashboardVersion">Dashboard v6.1</string>
 
     <string name="facebook_app_id">2691093471145086</string>
     <string name="fb_login_protocol_scheme">fb2691093471145086</string>
@@ -186,7 +187,7 @@
     <!--- Admin -->
     <string name="reviewAdsTitle">When a user post a new Ad or update an existing Ad, they wil be appeared here to be reviewed.</string>
 
-
+    <!--- Admin orders-->
     <string name="close">close</string>
     <string name="open">open</string>
 
