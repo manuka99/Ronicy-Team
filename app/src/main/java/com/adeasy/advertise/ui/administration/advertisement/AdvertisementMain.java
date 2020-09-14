@@ -34,8 +34,6 @@ public class AdvertisementMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manuka_activity_admin_advertisement_main);
-
-        toolbar = findViewById(R.id.toolbar);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

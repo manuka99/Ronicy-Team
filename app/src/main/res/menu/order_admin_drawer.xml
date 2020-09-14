@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/ic_baseline_person_pin_24"
+            android:title="Dashboard Orders" />
+    </group>
+
+    <item android:title="Pending Orders">
+
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/recent"
+                    android:icon="@drawable/ic_baseline_person_pin_24"
+                    android:title="Recent Orders" />
+                <item
+                    android:id="@+id/paid"
+                    android:icon="@drawable/ic_baseline_person_pin_24"
+                    android:title="Online purchased Orders" />
+                <item
+                    android:id="@+id/cod"
+                    android:icon="@drawable/ic_baseline_person_pin_24"
+                    android:title="Cash on delivery Orders" />
+            </group>
+
+
+        </menu>
+    </item>
+
+    <item android:title="Updated orders">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/cancelled"
+                    android:icon="@drawable/ic_baseline_person_pin_24"
+                    android:title="Cancelled Orders" />
+                <item
+                    android:id="@+id/completed"
+                    android:icon="@drawable/ic_baseline_person_pin_24"
+                    android:title="Completed Orders" />
+                <item
+                    android:id="@+id/statistics"
+                    android:icon="@drawable/ic_baseline_person_pin_24"
+                    android:title="Statistics" />
+            </group>
+
+        </menu>
+
+    </item>
+
+    <item android:title="More">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/newfeatures"
+                    android:icon="@drawable/ic_baseline_person_pin_24"
+                    android:title="New Features" />
+                <item
+                    android:id="@+id/documentation"
+                    android:icon="@drawable/ic_baseline_person_pin_24"
+                    android:title="Documentation" />
+                <item
+                    android:id="@+id/about"
+                    android:icon="@drawable/ic_baseline_person_pin_24"
+                    android:title="About" />
+            </group>
+
+        </menu>
+
+    </item>
+
+</menu>

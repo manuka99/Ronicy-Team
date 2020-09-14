@@ -18,6 +18,7 @@ import com.adeasy.advertise.callback.CustomClaimsCallback;
 import com.adeasy.advertise.manager.CustomAuthTokenManager;
 import com.adeasy.advertise.model.CustomClaims;
 import com.adeasy.advertise.ui.administration.advertisement.AdvertisementMain;
+import com.adeasy.advertise.ui.administration.order.OrdersMain;
 import com.adeasy.advertise.ui.advertisement.Advertisement;
 import com.adeasy.advertise.util.CustomDialogs;
 import com.google.android.gms.tasks.Task;
@@ -99,7 +100,7 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
         if (view == advertisement && (customClaims.isAdvertisement_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
             startActivity(new Intent(this, AdvertisementMain.class));
         else if (view == orders && (customClaims.isOrder_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
-            startActivity(new Intent(this, DashboardHome.class));
+            startActivity(new Intent(this, OrdersMain.class));
         else if (view == users && (customClaims.isAdmin() || customClaims.isUser_manager() || customClaims.isGuest_admin()))
             startActivity(new Intent(this, DashboardHome.class));
         else if (view == otp && (customClaims.isAdmin() || customClaims.isUser_manager() || customClaims.isGuest_admin()))

@@ -24,16 +24,17 @@
 
         <Button
             android:id="@+id/FB_login_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="20dp"
             android:text="@string/continueWithFb"
-            android:drawableStart="@drawable/icon_login_facebook_sm"
+            android:drawableStart="@drawable/com_facebook_button_icon"
+            android:drawablePadding="@dimen/_10sdp"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
             android:background="@drawable/button_round_fb"
-            android:textSize="20sp"
+            android:textSize="@dimen/_16sdp"
             android:paddingStart="@dimen/_20sdp"
             android:paddingEnd="@dimen/_20sdp"
             android:textStyle="bold" />
