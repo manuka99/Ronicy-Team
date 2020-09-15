@@ -9,12 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.adeasy.advertise.R;
 
-public class ViewModelOrderItem extends RecyclerView.ViewHolder {
+public class ViewHolderOrderItem extends RecyclerView.ViewHolder {
 
     public TextView name, category, price, placed_date, payment_mode, payment_status, total;
     public ImageView imageView;
 
-    public ViewModelOrderItem(@NonNull View itemView) {
+    public ViewHolderOrderItem(@NonNull View itemView) {
         super(itemView);
         name = itemView.findViewById(R.id.orderItemName);
         category = itemView.findViewById(R.id.orderItemCat);

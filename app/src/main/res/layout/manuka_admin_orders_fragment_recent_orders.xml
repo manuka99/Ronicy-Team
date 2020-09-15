@@ -6,14 +6,13 @@
     android:layout_height="match_parent"
     android:background="@color/colorHome"
     android:orientation="vertical"
-    tools:context=".ui.administration.order.RecentOrders">
+    tools:context=".ui.administration.order.PendingOrders">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_6sdp"
         android:layout_marginBottom="@dimen/_2sdp"
-        android:background="@color/colorWhite"
         android:paddingStart="@dimen/_12sdp"
         android:paddingBottom="@dimen/_4sdp"
         android:text="@string/reviewAdsTitle"
@@ -28,9 +27,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/myaddsRecycle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="3dp" />
+            android:layout_height="wrap_content"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

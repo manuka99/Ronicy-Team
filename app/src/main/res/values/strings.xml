@@ -245,6 +245,7 @@
     <string name="bugs">Bugs</string>
     <string name="placed_date">Placed date</string>
     <string name="payment_mode">Payment mode</string>
+    <string name="payment_status">Payment Status</string>
 
     <!-- Ashan -->
 </resources>

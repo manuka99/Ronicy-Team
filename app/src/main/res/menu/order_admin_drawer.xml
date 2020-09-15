@@ -15,11 +15,11 @@
                     android:icon="@drawable/ic_baseline_refresh_24"
                     android:title="Recent Orders" />
                 <item
-                    android:id="@+id/paid"
+                    android:id="@+id/onlinePending"
                     android:icon="@drawable/ic_baseline_credit_card_24"
                     android:title="Online purchased Orders" />
                 <item
-                    android:id="@+id/cod"
+                    android:id="@+id/codPending"
                     android:icon="@drawable/mcash"
                     android:title="Cash on delivery Orders" />
             </group>

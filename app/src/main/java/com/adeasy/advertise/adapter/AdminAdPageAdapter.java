@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.adeasy.advertise.ui.administration.advertisement.ApprovedRejected;
 import com.adeasy.advertise.ui.administration.advertisement.NewAds;
 import com.adeasy.advertise.ui.administration.advertisement.StatisticAds;
-import com.adeasy.advertise.ui.administration.order.RecentOrders;
 
 /**
  * Created by Manuka yasas,

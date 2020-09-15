@@ -30,6 +30,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,8 +88,8 @@ public class OrderManager {
                 if (task.isSuccessful()) {
                     mailService.SendOrderPlacedEmail(order);
                     try {
-                        if(uploadImageFromOrderItem)
-                        uploadImage(order);
+                        if (uploadImageFromOrderItem)
+                            uploadImage(order);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -158,10 +159,35 @@ public class OrderManager {
                 .set(data, SetOptions.merge());
     }
 
-    public Query recentOrders(){
+    public Query recentOrders() {
         Date currentDate = new Date(System.currentTimeMillis() - 3600 * 24 * 1000);
         Log.i(TAG, "current date back 24h: " + currentDate);
         return FirebaseFirestore.getInstance().collection(childName).whereGreaterThanOrEqualTo("placedDate", currentDate).orderBy("placedDate", Query.Direction.DESCENDING);
+    }
+
+    public Query onlinePendingOrders() {
+        return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", "Payhere").whereIn("payment.status", Arrays.asList("Processing", "Shipped")).orderBy("placedDate", Query.Direction.DESCENDING);
+    }
+
+    public Query codPendingOrders() {
+        return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", "COD").whereIn("payment.status", Arrays.asList("Processing", "Shipped")).orderBy("placedDate", Query.Direction.DESCENDING);
+    }
+
+    public Query codPastOrders(boolean completed, boolean cod) {
+        if (completed && cod)
+            return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", "COD").whereIn("payment.status", Arrays.asList("Delivered")).orderBy("placedDate", Query.Direction.DESCENDING);
+
+        else if (completed && !cod)
+            return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", "Payhere").whereIn("payment.status", Arrays.asList("Delivered")).orderBy("placedDate", Query.Direction.DESCENDING);
+
+        else if (!completed && cod)
+            return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", "COD").whereIn("payment.status", Arrays.asList("Cancelled")).orderBy("placedDate", Query.Direction.DESCENDING);
+
+        else if (!completed && !cod)
+            return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", "Payhere").whereIn("payment.status", Arrays.asList("Cancelled")).orderBy("placedDate", Query.Direction.DESCENDING);
+
+        else
+            return null;
     }
 
     public void destroy() {

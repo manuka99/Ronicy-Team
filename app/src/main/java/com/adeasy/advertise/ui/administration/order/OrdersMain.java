@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -23,7 +24,15 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     Dashboard dashboard;
-    RecentOrders recentOrders;
+    PendingOrders recentOrders;
+    PastOrders pastOrders;
+
+    private static final String FRAGMENT_SECTION_KEY = "pending_order_section";
+    private static final String RECENT = "recent";
+    private static final String ONLINE_PAYMENTS = "online";
+    private static final String COD_DELIVERY = "cod";
+    private static final String COMPLETED = "completed";
+    private static final String CANCELLED = "cancelled";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +70,7 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
 
         //fragments
         dashboard = new Dashboard();
-        recentOrders = new RecentOrders();
+        recentOrders = new PendingOrders();
 
         //show dashborad on home
         onNavigationItemSelected(navigationView.getMenu().findItem(R.id.home));
@@ -88,17 +97,66 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int itemID = item.getItemId();
+        //destroyCurrentFragment();
+        getSupportFragmentManager().popBackStack();
         switch (itemID) {
             case R.id.home:
                 drawerLayout.closeDrawer(GravityCompat.START);
                 getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), dashboard).commit();
                 break;
             case R.id.recent:
+                recentOrders = new PendingOrders();
+                Bundle bundle = new Bundle();
+                bundle.putString(FRAGMENT_SECTION_KEY, RECENT);
+                recentOrders.setArguments(bundle);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), recentOrders).commit();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                break;
+
+            case R.id.onlinePending:
+                recentOrders = new PendingOrders();
+                Bundle bundle2 = new Bundle();
+                bundle2.putString(FRAGMENT_SECTION_KEY, ONLINE_PAYMENTS);
+                recentOrders.setArguments(bundle2);
+                getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), recentOrders).commit();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                break;
+
+            case R.id.codPending:
+                recentOrders = new PendingOrders();
+                Bundle bundle3 = new Bundle();
+                bundle3.putString(FRAGMENT_SECTION_KEY, COD_DELIVERY);
+                recentOrders.setArguments(bundle3);
+                getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), recentOrders).commit();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                break;
+
+            case R.id.completed:
+                pastOrders = new PastOrders();
+                Bundle bundle4 = new Bundle();
+                bundle4.putString(FRAGMENT_SECTION_KEY, COMPLETED);
+                pastOrders.setArguments(bundle4);
+                getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), pastOrders).commit();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                break;
+
+            case R.id.cancelled:
+                pastOrders = new PastOrders();
+                Bundle bundle5 = new Bundle();
+                bundle5.putString(FRAGMENT_SECTION_KEY, CANCELLED);
+                pastOrders.setArguments(bundle5);
+                getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), pastOrders).commit();
+                drawerLayout.closeDrawer(GravityCompat.START);
                 break;
         }
         return true;
+    }
+
+    private void destroyCurrentFragment() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(frameLayout.getId());
+        if (fragment != null)
+            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
     }
 
 }

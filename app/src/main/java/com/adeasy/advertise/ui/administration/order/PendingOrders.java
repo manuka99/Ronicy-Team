@@ -1,13 +1,10 @@
 package com.adeasy.advertise.ui.administration.order;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,35 +15,32 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.adeasy.advertise.R;
-import com.adeasy.advertise.helper.ViewHolderListAdds;
-import com.adeasy.advertise.helper.ViewModelOrderItem;
-import com.adeasy.advertise.manager.AdvertisementManager;
+import com.adeasy.advertise.helper.ViewHolderOrderItem;
 import com.adeasy.advertise.manager.OrderManager;
-import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.Order;
-import com.adeasy.advertise.ui.administration.advertisement.MoreActionsOnAd;
-import com.adeasy.advertise.ui.editAd.EditAd;
 import com.adeasy.advertise.util.CustomDialogs;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link RecentOrders#newInstance} factory method to
+ * Use the {@link PendingOrders#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecentOrders extends Fragment {
+public class PendingOrders extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String FRAGMENT_SECTION_KEY = "pending_order_section";
+    private static final String RECENT = "recent";
+    private static final String ONLINE_PAYMENTS = "online";
+    private static final String COD_DELIVERY = "cod";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -59,7 +53,10 @@ public class RecentOrders extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     CustomDialogs customDialogs;
 
-    public RecentOrders() {
+    //this is to save the bundle value in order to show which content
+    String pending_order_section;
+
+    public PendingOrders() {
         // Required empty public constructor
     }
 
@@ -69,11 +66,11 @@ public class RecentOrders extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment RecentOrders.
+     * @return A new instance of fragment PendingOrders.
      */
     // TODO: Rename and change types and number of parameters
-    public static RecentOrders newInstance(String param1, String param2) {
-        RecentOrders fragment = new RecentOrders();
+    public static PendingOrders newInstance(String param1, String param2) {
+        PendingOrders fragment = new PendingOrders();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -97,11 +94,19 @@ public class RecentOrders extends Fragment {
         View view = inflater.inflate(R.layout.manuka_admin_orders_fragment_recent_orders, container, false);
         recyclerView = view.findViewById(R.id.myaddsRecycle);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshMyadds);
+
+        try {
+            pending_order_section = getArguments().getString(FRAGMENT_SECTION_KEY);
+        } catch (Exception e) {
+            pending_order_section = RECENT;
+        }
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         orderManager = new OrderManager();
         firebaseAuth = FirebaseAuth.getInstance();
         customDialogs = new CustomDialogs(getActivity());
-        loadData();
+        loadData(getQueryForFragment());
+        setToolbarSubTitle();
         return view;
     }
 
@@ -116,15 +121,15 @@ public class RecentOrders extends Fragment {
         });
     }
 
-    public void loadData() {
+    public void loadData(Query query) {
         FirestoreRecyclerOptions<Order> options =
                 new FirestoreRecyclerOptions.Builder<Order>()
-                        .setQuery(FirebaseFirestore.getInstance().collection("Order"), Order.class)
+                        .setQuery(query, Order.class)
                         .build();
 
-        adapter = new FirestoreRecyclerAdapter<Order, ViewModelOrderItem>(options) {
+        adapter = new FirestoreRecyclerAdapter<Order, ViewHolderOrderItem>(options) {
             @Override
-            public void onBindViewHolder(ViewModelOrderItem holder, final int position, Order order) {
+            public void onBindViewHolder(ViewHolderOrderItem holder, final int position, Order order) {
                 holder.getName().setText(order.getItem().getItemName());
                 holder.getPrice().setText("Rs " + order.getItem().getPrice());
                 holder.getCategory().setText(order.getItem().getCategoryName());
@@ -138,11 +143,11 @@ public class RecentOrders extends Fragment {
             }
 
             @Override
-            public ViewModelOrderItem onCreateViewHolder(ViewGroup group, int i) {
+            public ViewHolderOrderItem onCreateViewHolder(ViewGroup group, int i) {
                 View view = LayoutInflater.from(group.getContext())
                         .inflate(R.layout.manuka_order_item_layout, group, false);
 
-                return new ViewModelOrderItem(view);
+                return new ViewHolderOrderItem(view);
             }
 
             @Override
@@ -179,6 +184,36 @@ public class RecentOrders extends Fragment {
     public void onStop() {
         super.onStop();
         adapter.startListening();
+    }
+
+    private Query getQueryForFragment() {
+        Query query;
+        if (pending_order_section.equals(ONLINE_PAYMENTS))
+            query = orderManager.onlinePendingOrders();
+        else if (pending_order_section.equals(COD_DELIVERY))
+            query = orderManager.codPendingOrders();
+        else
+            query = orderManager.recentOrders();
+        return query;
+    }
+
+    private void setToolbarSubTitle() {
+        if (pending_order_section.equals(ONLINE_PAYMENTS))
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Pending orders - Online Payments");
+        else if (pending_order_section.equals(COD_DELIVERY))
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Pending orders - COD Orders");
+        else
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Pending orders - Recent");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
 }

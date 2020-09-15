@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorHome"
+    android:orientation="vertical"
+    tools:context=".ui.administration.order.PastOrders">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:background="@color/colorHome"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_4sdp">
+
+        <Button
+            android:id="@+id/online"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_32sdp"
+            android:background="@drawable/blue_btn_half_round"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:text="Online Payments"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_10sdp" />
+
+        <Button
+            android:id="@+id/cod"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_32sdp"
+            android:background="@drawable/red_btn_half_round"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:text="COD Orders"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_10sdp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:text="Note: These Ads are filtered considering the approval status and visibility of the advertisements are not considered."
+        android:textSize="@dimen/_10sdp"
+        android:textStyle="italic" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshMyadds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/myaddsRecycle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</LinearLayout>

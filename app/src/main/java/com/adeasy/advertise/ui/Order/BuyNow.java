@@ -381,7 +381,6 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     }
 
     public void onSuccessOrder() {
-
         Bundle bundle = new Bundle();
         bundle.putSerializable("order", order);
         orderSuccess.setArguments(bundle);
@@ -398,7 +397,6 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
         stepperWrap.setVisibility(View.GONE);
         continueWrap.setVisibility(View.GONE);
         continueOrder.setVisibility(View.GONE);
-
     }
 
     @Override
