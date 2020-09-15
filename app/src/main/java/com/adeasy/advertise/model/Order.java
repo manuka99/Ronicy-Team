@@ -1,5 +1,9 @@
 package com.adeasy.advertise.model;
 
+import com.google.firebase.firestore.Exclude;
+
+import org.ocpsoft.prettytime.PrettyTime;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,17 +25,24 @@ public class Order implements Serializable {
     private Date placedDate;
     private String deliveryEstimatedDate;
     private Date deliveredDate;
+
     private Order_Customer customer;
     private Order_Payment payment;
     private Order_Item item;
 
+    private String preetyTime;
+
     public Order() {
+
+    }
+
+    public Order(boolean avalability) {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, 5);
 
         this.placedDate = new Date();
-        this.avalability = true;
+        this.avalability = avalability;
         this.orderStatus = "Processing";
         this.customer = new Order_Customer();
         this.payment = new Order_Payment();
@@ -117,6 +128,19 @@ public class Order implements Serializable {
 
     public void setItem(Order_Item item) {
         this.item = item;
+    }
+
+    @Exclude
+    public String getPreetyTime() {
+        String pTime = "";
+        PrettyTime p = new PrettyTime();
+        pTime = p.format(this.placedDate);
+        return pTime;
+    }
+
+    @Exclude
+    public void setPreetyTime(String preetyTime) {
+        this.preetyTime = preetyTime;
     }
 
 }

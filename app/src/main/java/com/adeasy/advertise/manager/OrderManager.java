@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -28,6 +29,8 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +53,13 @@ public class OrderManager {
     private Context context;
     private MailService mailService;
 
+    public OrderManager() {
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
+        documentReference = firebaseFirestore.collection(childName).document();
+        storageReference = firebaseStorage.getReference().child(childName).child("Images");
+        mailService = new MailServiceImpl(context);
+    }
 
     public OrderManager(OrderCallback callBacks, Context context) {
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -146,6 +156,12 @@ public class OrderManager {
         //data.put(order );
         firebaseFirestore.collection(childName).document(order.getId())
                 .set(data, SetOptions.merge());
+    }
+
+    public Query recentOrders(){
+        Date currentDate = new Date(System.currentTimeMillis() - 3600 * 24 * 1000);
+        Log.i(TAG, "current date back 24h: " + currentDate);
+        return FirebaseFirestore.getInstance().collection(childName).whereGreaterThanOrEqualTo("placedDate", currentDate).orderBy("placedDate", Query.Direction.DESCENDING);
     }
 
     public void destroy() {

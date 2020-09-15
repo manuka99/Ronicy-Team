@@ -4,30 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawwelayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ui.administration.order.OrdersMain">
 
     <LinearLayout
-        android:background="@color/colorHome"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".ui.administration.order.OrdersMain">
+        android:layout_height="wrap_content"
+        android:background="@color/colorHome"
+        android:orientation="vertical">
 
         <include
             android:id="@+id/toolbar"
             layout="@layout/toolbar_admin"></include>
 
-        <androidx.core.widget.NestedScrollView
+        <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <FrameLayout
-                android:id="@+id/frameLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </FrameLayout>
-
-        </androidx.core.widget.NestedScrollView>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -35,9 +28,9 @@
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="start"
         android:background="@color/colorWhite"
         app:headerLayout="@layout/manuka_drawer_header_admin_order"
-        android:layout_gravity="start"
         app:itemIconTint="@color/selector_navigation"
         app:itemTextColor="@color/selector_navigation"
         app:menu="@menu/order_admin_drawer">

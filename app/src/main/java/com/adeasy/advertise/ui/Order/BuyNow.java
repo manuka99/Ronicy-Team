@@ -85,7 +85,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manuka_activity_buy_now);
 
-        order = new Order();
+        order = new Order(true);
         step1 = new Step1();
         step2 = new Step2();
         orderPhoneVerify = new OrderPhoneVerify();

@@ -44,7 +44,7 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.dashboardVersion));
-        getSupportActionBar().setSubtitle("Manage advertisements");
+        getSupportActionBar().setSubtitle("Manage orders");
 
         //toggle
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
@@ -90,13 +90,13 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
         int itemID = item.getItemId();
         switch (itemID) {
             case R.id.home:
+                drawerLayout.closeDrawer(GravityCompat.START);
                 getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), dashboard).commit();
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
+                break;
             case R.id.recent:
-                getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), recentOrders).commit();
                 drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
+                getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), recentOrders).commit();
+                break;
         }
         return true;
     }
