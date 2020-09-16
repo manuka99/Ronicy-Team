@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.paging.PagedList;
@@ -148,6 +149,7 @@ public class PastOrders extends Fragment implements View.OnClickListener {
     }
 
     private void onOnlineOrdersUi() {
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Past orders - Payhere Orders");
         online.setBackgroundResource(R.drawable.grey_btn_half_left_round);
         cod.setBackgroundResource(R.drawable.red_btn_half_round);
         query = orderManager.codPastOrders(completed, false);
@@ -155,6 +157,7 @@ public class PastOrders extends Fragment implements View.OnClickListener {
     }
 
     private void onCodOrdersUi() {
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Past orders - COD Orders");
         cod.setBackgroundResource(R.drawable.grey_btn_half_right_round);
         online.setBackgroundResource(R.drawable.blue_btn_half_round);
         query = orderManager.codPastOrders(completed, true);

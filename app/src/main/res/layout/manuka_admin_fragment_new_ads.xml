@@ -12,7 +12,6 @@ tools:context=".ui.administration.advertisement.NewAds">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_2sdp"
-        android:background="@color/colorWhite"
         android:paddingStart="@dimen/_12sdp"
         android:layout_marginTop="@dimen/_4sdp"
         android:paddingBottom="@dimen/_4sdp"

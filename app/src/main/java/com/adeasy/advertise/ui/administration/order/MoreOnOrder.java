@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.OrderCallback;
@@ -35,6 +36,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
@@ -85,6 +87,9 @@ public class MoreOnOrder extends AppCompatActivity implements OrderCallback, Ada
 
     Button update, confirmDelivered;
     ProgressBar progressBarDelivered, progressBarUpdate;
+
+    //to stop multiple delete requests
+    boolean isDeleting = false;
 
     private static final String TAG = "MoreOnOrder";
 
@@ -196,6 +201,7 @@ public class MoreOnOrder extends AppCompatActivity implements OrderCallback, Ada
         int itemID = item.getItemId();
         switch (itemID) {
             case R.id.actionDelete:
+                deleteOrder();
                 return true;
             case R.id.actionUser:
                 return true;
@@ -230,6 +236,51 @@ public class MoreOnOrder extends AppCompatActivity implements OrderCallback, Ada
 
     }
 
+    @Override
+    public void onDeleteOrderByID(Task<Void> task) {
+        isDeleting = false;
+        if (task != null && task.isSuccessful()) {
+            Toast.makeText(context, "Order was deleted successfully", Toast.LENGTH_LONG).show();
+            finish();
+        } else if (task != null && task.getException() instanceof FirebaseFirestoreException && ((FirebaseFirestoreException) task.getException()).getCode().equals(FirebaseFirestoreException.Code.PERMISSION_DENIED))
+            customDialogs.showPermissionDeniedStorage();
+        else
+            showErrorSnackbar("Error: Order was not deleted");
+    }
+
+    @Override
+    public void getAllOrdersByYear(Task<QuerySnapshot> task) {
+
+    }
+
+    private void deleteOrder() {
+        if (isDeleting)
+            Toast.makeText(context, "Please wait...", Toast.LENGTH_LONG).show();
+        else {
+            new AlertDialog.Builder(this)
+
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+
+                    .setTitle("Are you sure you want to delete this order?")
+
+                    .setMessage("Please note that any changes made cannot be reverted.")
+
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            isDeleting = true;
+                            orderManager.deleteOrder(order.getId());
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    })
+                    .show();
+        }
+    }
+
     private void updateUIOnResult() {
         if (order != null) {
             //customer
@@ -251,6 +302,7 @@ public class MoreOnOrder extends AppCompatActivity implements OrderCallback, Ada
 
             placedDate.setText(order.getPlacedDate().toString());
             orderDescription.getEditText().setText(order.getOrderDescription());
+            estimatedDate.getEditText().setText(order.getDeliveryEstimatedDate());
 
             if (order.getDeliveredDate() != null) {
                 deliveredDateLayout.setVisibility(View.VISIBLE);
@@ -340,7 +392,7 @@ public class MoreOnOrder extends AppCompatActivity implements OrderCallback, Ada
         order.setAvalability(isHidden);
         order.setOrderDescription(orderDescription.getEditText().getText().toString());
         order.setDeliveryEstimatedDate(estimatedDate.getEditText().getText().toString());
-        order.getPayment().setType(payment_status.getSelectedItem().toString());
+        order.getPayment().setStatus(payment_status.getSelectedItem().toString());
         order.setOrderStatus(order_status.getSelectedItem().toString());
         orderManager.insertOrder(order, false);
         showUpdatingUi();
@@ -427,14 +479,6 @@ public class MoreOnOrder extends AppCompatActivity implements OrderCallback, Ada
     private void endDeliveryConfirmUI() {
         progressBarDelivered.setVisibility(View.GONE);
         confirmDelivered.setVisibility(View.VISIBLE);
-    }
-
-    private void showDeletingUI() {
-
-    }
-
-    private void endDeletingUI() {
-
     }
 
 }

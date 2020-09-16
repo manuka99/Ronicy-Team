@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollbar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorHome"
+    tools:context=".ui.administration.order.OrderSales">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorHome"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:elevation="@dimen/_14sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/_8sdp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/yearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.4"
+                    android:clickable="true"
+                    android:textColorHint="@color/colorBlue">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/yearEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:enabled="true"
+                        android:focusableInTouchMode="false"
+                        android:hint="Select year..."
+                        android:inputType="number"
+                        android:textColorHint="@color/colorBlue"
+                        android:textCursorDrawable="@drawable/blue_cursur"
+                        android:textSize="@dimen/_12sdp"
+                        android:theme="@style/EditTextBlueTheme" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <Button
+                    android:id="@+id/update"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.8"
+                    android:background="@drawable/button_round_fb"
+                    android:text="Update"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="visible" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.8"
+                    android:background="@drawable/btn_grey_colour"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/colorWhite"
+                    android:indeterminateTintMode="src_atop"
+                    android:padding="@dimen/_4sdp"
+                    android:text="Update"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="gone" />
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:text="This bar graph represent Approved posted advertisements per month based on the selected year. Visibility of the advertisements are not considered."
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="italic" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_280sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:elevation="@dimen/_14sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:cardUseCompatPadding="true">
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barChart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:text="This Pie chart represent the ratio between Approved Ads and Rejected Ads from all the advertisements posted/updated on the selected year."
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="italic" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_220sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:elevation="@dimen/_14sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:cardUseCompatPadding="true">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:text="This Pie chart represents the Ad types from the approved ads on the selected year. Ad types such live, hidden and buynow are only considered."
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="italic" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_220sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:elevation="@dimen/_14sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:cardUseCompatPadding="true">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:text="This Pie chart represents the Ad types from the rejected ads on the selected year. Ad types such live, hidden and buynow are only considered."
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="italic" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_220sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:elevation="@dimen/_14sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:cardUseCompatPadding="true">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:text="This Line graph represent Approved posted advertisements per month based on the selected year. Visibility of the advertisements are not considered."
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="italic" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_260sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:elevation="@dimen/_14sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:cardUseCompatPadding="true">
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lineChart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -90,6 +90,8 @@ dependencies {
 
     implementation 'com.github.javafaker:javafaker:0.15'
 
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

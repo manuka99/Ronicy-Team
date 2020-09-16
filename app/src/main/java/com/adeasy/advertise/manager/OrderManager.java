@@ -24,6 +24,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -223,6 +224,41 @@ public class OrderManager {
         } catch (Exception e) {
             e.printStackTrace();
             orderCallback.onHideOrderByID(null);
+        }
+    }
+
+    public void deleteOrder(String id) {
+        try {
+            firebaseFirestore.collection(childName).document(id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    orderCallback.onDeleteOrderByID(task);
+                }
+            });
+        } catch (Exception e) {
+            orderCallback.onDeleteOrderByID(null);
+        }
+    }
+
+    public void getAllOrdersByYear(int year) {
+        //Date dateFrom = new Date(year, 1, 0); //  date from in string
+        // Date dateTo = new Date(year + 1, 1, 0);  //  date to in string
+
+        Date dateFrom = new Date("Tue Jan 00 " + year + " 00:00:00 GMT+0530 (IST)");// Any date in string
+        Date dateTo = new Date("Tue Jan 00 " + (year + 1) + " 00:00:00 GMT+0530 (IST)");// Any date in string
+
+        Log.i(TAG, "Date from: " + dateFrom + " , Date to: " + dateTo);
+
+        try {
+            firebaseFirestore.collection(childName).whereGreaterThanOrEqualTo("placedDate", dateFrom).whereLessThan("placedDate", dateTo).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (orderCallback != null)
+                        orderCallback.getAllOrdersByYear(task);
+                }
+            });
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
 

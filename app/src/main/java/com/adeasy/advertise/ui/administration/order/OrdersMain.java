@@ -26,6 +26,7 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
     Dashboard dashboard;
     PendingOrders recentOrders;
     PastOrders pastOrders;
+    OrderSales orderSales;
 
     private static final String FRAGMENT_SECTION_KEY = "pending_order_section";
     private static final String RECENT = "recent";
@@ -71,6 +72,7 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
         //fragments
         dashboard = new Dashboard();
         recentOrders = new PendingOrders();
+        orderSales = new OrderSales();
 
         //show dashborad on home
         onNavigationItemSelected(navigationView.getMenu().findItem(R.id.home));
@@ -146,6 +148,18 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
                 Bundle bundle5 = new Bundle();
                 bundle5.putString(FRAGMENT_SECTION_KEY, CANCELLED);
                 pastOrders.setArguments(bundle5);
+                getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), pastOrders).commit();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                break;
+
+            case R.id.monthAnalysis:
+                orderSales = new OrderSales();
+                getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), orderSales).commit();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                break;
+
+            case R.id.productAnalysis:
+                pastOrders = new PastOrders();
                 getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), pastOrders).commit();
                 drawerLayout.closeDrawer(GravityCompat.START);
                 break;

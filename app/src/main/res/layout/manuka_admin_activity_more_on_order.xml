@@ -26,6 +26,7 @@
                 android:id="@+id/orderImage"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_260sdp"
+                android:contentDescription="@string/image"
                 android:padding="@dimen/_22sdp"
                 android:src="@drawable/spinner_48_inner_holo" />
 
@@ -429,7 +430,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:layout_marginEnd="8dp"
@@ -504,7 +505,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
                     android:text="This message will be displayed to the user as the unapproved reason, please make sure that you enter a valid reason."
                     android:textSize="@dimen/_10sdp"
                     android:textStyle="italic" />
@@ -515,6 +516,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
                     android:clickable="true"
+                    android:focusable="true"
                     app:hintTextColor="@color/colorBlue">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -523,6 +525,7 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:enabled="true"
+                        android:focusable="true"
                         android:focusableInTouchMode="false"
                         android:hint="Estimated Delivery Date"
                         android:inputType="date"
@@ -536,7 +539,8 @@
                     android:id="@+id/orderDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
                     app:hintTextColor="@color/colorBlue">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -625,7 +629,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="@dimen/_4sdp"
-                    android:drawableLeft="@drawable/ic_baseline_check_box_outline_blank_24_ad"
+                    android:drawableStart="@drawable/ic_baseline_check_box_outline_blank_24_ad"
                     android:drawablePadding="@dimen/_4sdp"
                     android:text="Hidden for user"
                     android:textSize="@dimen/_14sdp"

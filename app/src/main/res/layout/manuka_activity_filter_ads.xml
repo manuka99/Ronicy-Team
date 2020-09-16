@@ -16,7 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_6sdp"
-        android:background="@color/colorWhite"
         android:paddingStart="@dimen/_12sdp"
         android:paddingBottom="@dimen/_4sdp"
         android:text="Note: These Ads are filtered considering the filter options only therefore the approval status of the advertisements are not considered."

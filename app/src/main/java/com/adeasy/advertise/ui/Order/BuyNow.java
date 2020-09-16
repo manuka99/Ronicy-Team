@@ -407,10 +407,8 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
     @Override
     public void onCompleteInsertOrder(Task<Void> task) {
-
         if (task != null && task.isSuccessful())
-            //onSuccessOrder();
-            orderManager.insertOrder(order, true);
+            onSuccessOrder();
         else
             Toast.makeText(context, "Error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
     }
@@ -422,6 +420,16 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
     @Override
     public void onHideOrderByID(Task<Void> task) {
+
+    }
+
+    @Override
+    public void onDeleteOrderByID(Task<Void> task) {
+
+    }
+
+    @Override
+    public void getAllOrdersByYear(Task<QuerySnapshot> task) {
 
     }
 
