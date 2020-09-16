@@ -13,6 +13,7 @@ import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.model.Order;
 import com.adeasy.advertise.service.MailService;
 import com.adeasy.advertise.service.MailServiceImpl;
+import com.adeasy.advertise.util.CommonConstants;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -167,25 +168,25 @@ public class OrderManager {
     }
 
     public Query onlinePendingOrders() {
-        return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", "Payhere").whereIn("payment.status", Arrays.asList("Processing", "Shipped")).orderBy("placedDate", Query.Direction.DESCENDING);
+        return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", CommonConstants.PAYMENT_PAYHERE).whereIn("orderStatus", Arrays.asList(CommonConstants.ORDER_PROCESSING, CommonConstants.ORDER_SHIPPED)).orderBy("placedDate", Query.Direction.DESCENDING);
     }
 
     public Query codPendingOrders() {
-        return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", "COD").whereIn("payment.status", Arrays.asList("Processing", "Shipped")).orderBy("placedDate", Query.Direction.DESCENDING);
+        return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", CommonConstants.PAYMENT_COD).whereIn("orderStatus", Arrays.asList(CommonConstants.ORDER_PROCESSING, CommonConstants.ORDER_SHIPPED)).orderBy("placedDate", Query.Direction.DESCENDING);
     }
 
     public Query codPastOrders(boolean completed, boolean cod) {
         if (completed && cod)
-            return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", "COD").whereIn("payment.status", Arrays.asList("Delivered")).orderBy("placedDate", Query.Direction.DESCENDING);
+            return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", CommonConstants.PAYMENT_COD).whereIn("orderStatus", Arrays.asList(CommonConstants.ORDER_DELIVERED)).orderBy("placedDate", Query.Direction.DESCENDING);
 
         else if (completed && !cod)
-            return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", "Payhere").whereIn("payment.status", Arrays.asList("Delivered")).orderBy("placedDate", Query.Direction.DESCENDING);
+            return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", CommonConstants.PAYMENT_PAYHERE).whereIn("orderStatus", Arrays.asList(CommonConstants.ORDER_DELIVERED)).orderBy("placedDate", Query.Direction.DESCENDING);
 
         else if (!completed && cod)
-            return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", "COD").whereIn("payment.status", Arrays.asList("Cancelled")).orderBy("placedDate", Query.Direction.DESCENDING);
+            return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", CommonConstants.PAYMENT_COD).whereIn("orderStatus", Arrays.asList(CommonConstants.ORDER_CANCELLED)).orderBy("placedDate", Query.Direction.DESCENDING);
 
         else if (!completed && !cod)
-            return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", "Payhere").whereIn("payment.status", Arrays.asList("Cancelled")).orderBy("placedDate", Query.Direction.DESCENDING);
+            return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("payment.type", CommonConstants.PAYMENT_PAYHERE).whereIn("orderStatus", Arrays.asList(CommonConstants.ORDER_CANCELLED)).orderBy("placedDate", Query.Direction.DESCENDING);
 
         else
             return null;

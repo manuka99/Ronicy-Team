@@ -36,6 +36,7 @@ import com.adeasy.advertise.model.Order_Payment;
 import com.adeasy.advertise.model.UserVerifiedNumbers;
 import com.adeasy.advertise.service.MailService;
 import com.adeasy.advertise.service.MailServiceImpl;
+import com.adeasy.advertise.util.CommonConstants;
 import com.adeasy.advertise.util.UniqueIdBasedOnName;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -320,8 +321,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
         if (CODSelected) {
             Order_Payment payment = new Order_Payment();
-            payment.setType("COD");
-            payment.setStatus("Processing");
+            payment.setType(CommonConstants.PAYMENT_COD);
             payment.setAmount(order.getItem().getPrice());
             order.setPayment(payment);
             orderManager.insertOrder(order, true);
@@ -372,8 +372,8 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
     public void completePayhereOrder(long amount) {
         Order_Payment payment = new Order_Payment();
-        payment.setType("Payhere");
-        payment.setStatus("Approved");
+        payment.setType(CommonConstants.PAYMENT_PAYHERE);
+        payment.setStatus(CommonConstants.PAYMENT_PAID);
         //payment.setAmount(Double.valueOf(amount)); //this add extra zeros
         payment.setAmount(order.getItem().getPrice());
         order.setPayment(payment);
@@ -407,8 +407,10 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
     @Override
     public void onCompleteInsertOrder(Task<Void> task) {
+
         if (task != null && task.isSuccessful())
-            onSuccessOrder();
+            //onSuccessOrder();
+            orderManager.insertOrder(order, true);
         else
             Toast.makeText(context, "Error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
     }

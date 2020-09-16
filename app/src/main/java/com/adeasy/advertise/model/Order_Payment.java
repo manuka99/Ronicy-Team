@@ -1,5 +1,7 @@
 package com.adeasy.advertise.model;
 
+import com.adeasy.advertise.util.CommonConstants;
+
 import java.io.Serializable;
 /**
  * Created by Manuka yasas,
@@ -13,6 +15,7 @@ public class Order_Payment implements Serializable {
     private double amount;
 
     public Order_Payment() {
+        this.status = CommonConstants.PAYMENT_NOT_PAID;
     }
 
     public String getType() {

@@ -191,6 +191,22 @@
     <string name="close">close</string>
     <string name="open">open</string>
 
+
+    <!--- order status-->
+    <string-array name="order_status_array">
+        <item>Processing</item>
+        <item>Shipped</item>
+        <item>Delivered</item>
+        <item>Cancelled</item>
+    </string-array>
+
+    <!--- payment status-->
+    <string-array name="payment_status_array">
+        <item>Paid</item>
+        <item>Not Paid</item>
+        <item>Refunded</item>
+    </string-array>
+
     <!-- Divya -->
 
     <!-- wishlist.xml-->

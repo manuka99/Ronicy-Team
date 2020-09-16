@@ -236,6 +236,7 @@ public class Step2 extends Fragment implements View.OnClickListener, Advertiseme
         if(advertisement.getId() != null && category.getId() != null) {
             try {
                 item = new Order_Item();
+                item.setId(advertisement.getId());
                 item.setItemName(advertisement.getTitle());
                 item.setPrice(advertisement.getPrice());
                 item.setImageUrl(advertisement.getImageUrls().get(0));

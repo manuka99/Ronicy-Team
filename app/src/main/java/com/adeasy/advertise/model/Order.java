@@ -1,5 +1,6 @@
 package com.adeasy.advertise.model;
 
+import com.adeasy.advertise.util.CommonConstants;
 import com.google.firebase.firestore.Exclude;
 
 import org.ocpsoft.prettytime.PrettyTime;
@@ -43,7 +44,7 @@ public class Order implements Serializable {
 
         this.placedDate = new Date();
         this.avalability = avalability;
-        this.orderStatus = "Processing";
+        this.orderStatus = CommonConstants.ORDER_PROCESSING;
         this.customer = new Order_Customer();
         this.payment = new Order_Payment();
         this.item = new Order_Item();
