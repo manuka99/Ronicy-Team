@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.SetOptions;
@@ -188,6 +189,40 @@ public class OrderManager {
 
         else
             return null;
+    }
+
+    public void getOrderFromByID(String id) {
+        try {
+            firebaseFirestore.collection(childName).document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (orderCallback != null)
+                        orderCallback.onGetOrderByID(task);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            orderCallback.onGetOrderByID(null);
+        }
+    }
+
+    public void hideOrder(String id, boolean visibility) {
+        try {
+            // Update one field
+            Map<String, Object> data = new HashMap<>();
+            data.put("availability", visibility);
+            firebaseFirestore.collection(childName).document(id)
+                    .set(data, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (orderCallback != null)
+                        orderCallback.onHideOrderByID(task);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            orderCallback.onHideOrderByID(null);
+        }
     }
 
     public void destroy() {

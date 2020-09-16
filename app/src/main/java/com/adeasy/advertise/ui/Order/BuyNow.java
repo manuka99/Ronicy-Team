@@ -414,6 +414,16 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     }
 
     @Override
+    public void onGetOrderByID(Task<DocumentSnapshot> task) {
+
+    }
+
+    @Override
+    public void onHideOrderByID(Task<Void> task) {
+
+    }
+
+    @Override
     public void onCompleteNumberInserted(Task<Void> task) {
 
     }
@@ -433,6 +443,5 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     public void onCompleteRecieveAllNumbersInUser(Task<DocumentSnapshot> task) {
 
     }
-
 
 }

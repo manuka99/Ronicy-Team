@@ -192,6 +192,14 @@ public class PastOrders extends Fragment implements View.OnClickListener {
 
                             holder.getTotal().setText("Rs " + order.getItem().getPrice());
                             Picasso.get().load(order.getItem().getImageUrl()).fit().into(holder.getImageView());
+                            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(getActivity(), MoreOnOrder.class);
+                                    intent.putExtra("orderID", getItem(position).getId());
+                                    startActivity(intent);
+                                }
+                            });
                         }
 
                         @NonNull

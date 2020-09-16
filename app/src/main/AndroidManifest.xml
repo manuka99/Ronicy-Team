@@ -29,7 +29,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.administration.order.OrdersMain"></activity>
+        <activity android:name=".ui.administration.order.MoreOnOrder"></activity>
+        <activity android:name=".ui.administration.order.OrdersMain" />
         <activity android:name=".ui.administration.advertisement.AdsFilter" />
         <activity android:name=".ui.administration.advertisement.SelectCategoryAndFilter" />
         <activity android:name=".ui.administration.advertisement.MoreActionsOnAd" />

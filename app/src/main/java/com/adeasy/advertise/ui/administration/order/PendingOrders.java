@@ -1,5 +1,6 @@
 package com.adeasy.advertise.ui.administration.order;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -140,6 +141,15 @@ public class PendingOrders extends Fragment {
 
                 holder.getTotal().setText("Rs " + order.getItem().getPrice());
                 Picasso.get().load(order.getItem().getImageUrl()).fit().into(holder.getImageView());
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), MoreOnOrder.class);
+                        intent.putExtra("orderID", getItem(position).getId());
+                        startActivity(intent);
+                    }
+                });
             }
 
             @Override
