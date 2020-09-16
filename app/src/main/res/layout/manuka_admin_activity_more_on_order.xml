@@ -647,12 +647,12 @@
         android:padding="@dimen/_6sdp">
 
         <ProgressBar
-            android:id="@+id/progressBarDelete"
+            android:id="@+id/progressBarDelivered"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_32sdp"
             android:layout_marginStart="6dp"
             android:layout_weight="1"
-            android:background="@color/com_facebook_button_background_color"
+            android:background="@color/colorDangerDark"
             android:indeterminate="true"
             android:indeterminateTint="@color/colorWhite"
             android:indeterminateTintMode="src_atop"
@@ -660,13 +660,13 @@
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/delete"
+            android:id="@+id/confirmDelivered"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_32sdp"
-            android:layout_marginEnd="6dp"
+            android:layout_marginEnd="@dimen/_2sdp"
             android:layout_weight="1"
             android:background="@color/colorDangerDark"
-            android:text="Delete"
+            android:text="Confirm Delivered"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/_14sdp"></Button>
@@ -675,7 +675,7 @@
             android:id="@+id/update"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_32sdp"
-            android:layout_marginStart="6dp"
+            android:layout_marginStart="@dimen/_2sdp"
             android:layout_weight="1"
             android:background="@color/com_facebook_button_background_color"
             android:text="Update"
@@ -685,7 +685,7 @@
             android:visibility="visible"></Button>
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/progressBarUpdate"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_32sdp"
             android:layout_marginStart="6dp"

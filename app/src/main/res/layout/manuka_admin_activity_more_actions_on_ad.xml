@@ -396,7 +396,7 @@
             android:indeterminateTint="@color/colorWhite"
             android:indeterminateTintMode="src_atop"
             android:padding="@dimen/_4sdp"
-            android:background="@color/com_facebook_button_background_color"
+            android:background="@color/colorDangerDark"
             android:layout_height="@dimen/_32sdp"/>
 
         <Button
