@@ -55,7 +55,6 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-
                 <Button
                     android:id="@+id/update"
                     android:layout_width="match_parent"
@@ -84,11 +83,9 @@
                     android:textSize="@dimen/_10sdp"
                     android:visibility="gone" />
 
-
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-
 
         <TextView
             android:layout_width="match_parent"

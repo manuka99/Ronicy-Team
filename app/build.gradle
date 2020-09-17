@@ -91,6 +91,9 @@ dependencies {
     implementation 'com.github.javafaker:javafaker:0.15'
 
     implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'com.mikhaellopez:circularimageview:4.2.0'
+
+    implementation 'com.github.salehyarahmadi:DataTable:v1.0.1'
 
 }
 

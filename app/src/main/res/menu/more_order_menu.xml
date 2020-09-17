@@ -8,5 +8,5 @@
     <item
         android:id="@+id/actionUser"
         android:icon="@drawable/ic_baseline_person_24"
-        android:title="Delete Order" app:showAsAction="ifRoom"/>
+        android:title="User Details" app:showAsAction="ifRoom"/>
 </menu>

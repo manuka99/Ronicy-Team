@@ -1,7 +1,10 @@
 package com.adeasy.advertise.ui.administration.order;
 
+import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,6 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.adeasy.advertise.R;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+import ir.androidexception.datatable.DataTable;
+import ir.androidexception.datatable.model.DataTableHeader;
+import ir.androidexception.datatable.model.DataTableRow;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +35,8 @@ public class ProductStatisticsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    Context context;
 
     public ProductStatisticsFragment() {
         // Required empty public constructor
@@ -62,6 +74,42 @@ public class ProductStatisticsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.manuka_admin_fragment_product_statistics, container, false);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Statistics - Products Analysis");
+
+        context = getActivity();
+
+        DataTable dataTable = view.findViewById(R.id.data_table);
+
+        DataTableHeader header = new DataTableHeader.Builder()
+                .item("ProductID", 4)
+                .item("Name", 4)
+                .item("Sales", 1)
+                .item("Total", 4)
+                .build();
+
+        ArrayList<DataTableRow> rows = new ArrayList<>();
+        // define 200 fake rows for table
+        for (int i = 0; i < 200; i++) {
+            Random r = new Random();
+            int random = r.nextInt(i + 1);
+            int randomDiscount = r.nextInt(20);
+            DataTableRow row = new DataTableRow.Builder()
+                    .value("9Nxh1jYqhejYVDjestL3")
+                    .value(String.valueOf(random))
+                    .value(String.valueOf(random * 1000).concat("$"))
+                    .value(String.valueOf(randomDiscount).concat("%"))
+                    .build();
+            rows.add(row);
+
+        }
+
+        //dataTable.setTypeface(R.font.candal);
+        dataTable.setHeader(header);
+        dataTable.setRows(rows);
+        dataTable.inflate(context);
+
+
 
         return view;
     }
