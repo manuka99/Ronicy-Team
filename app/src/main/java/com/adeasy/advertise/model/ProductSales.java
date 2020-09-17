@@ -1,44 +1,26 @@
 package com.adeasy.advertise.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ProductSales {
 
-    private String imageUrl;
-    private String productID;
-    private String productName;
-    private String productPrice;
+    private Order_Item order_item;
     private Integer salesCount;
     private Double totalSales;
+    private Map<Double, Integer> priceRangersAnCount;
 
-    public String getImageUrl() {
-        return imageUrl;
+    public ProductSales(){
+        order_item = new Order_Item();
+        priceRangersAnCount = new HashMap<>();
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public Order_Item getOrder_item() {
+        return order_item;
     }
 
-    public String getProductID() {
-        return productID;
-    }
-
-    public void setProductID(String productID) {
-        this.productID = productID;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getProductPrice() {
-        return productPrice;
-    }
-
-    public void setProductPrice(String productPrice) {
-        this.productPrice = productPrice;
+    public void setOrder_item(Order_Item order_item) {
+        this.order_item = order_item;
     }
 
     public Integer getSalesCount() {
@@ -55,6 +37,14 @@ public class ProductSales {
 
     public void setTotalSales(Double totalSales) {
         this.totalSales = totalSales;
+    }
+
+    public Map<Double, Integer> getPriceRangersAnCount() {
+        return priceRangersAnCount;
+    }
+
+    public void setPriceRangersAnCount(Map<Double, Integer> priceRangersAnCount) {
+        this.priceRangersAnCount = priceRangersAnCount;
     }
 
 }

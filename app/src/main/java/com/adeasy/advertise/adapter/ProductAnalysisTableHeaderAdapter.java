@@ -32,7 +32,7 @@ public class ProductAnalysisTableHeaderAdapter extends TableHeaderAdapter {
     private View renderHeader(int columnIndex) {
         TextView textView = new TextView(context);
         textView.setText(TABLE_HEADERS[columnIndex]);
-        textView.setPadding(14, 5, 10, 5);
+        textView.setPadding(14, 20, 10, 20);
         textView.setGravity(Gravity.CENTER);
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setTextColor(getResources().getColor(R.color.colorBlackText));

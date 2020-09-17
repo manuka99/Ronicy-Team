@@ -1,6 +1,7 @@
 package com.adeasy.advertise.adapter;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -43,7 +44,8 @@ public class ProductAnalysisTableAdapter extends TableDataAdapter<ProductSales> 
 
     private View renderProductID(ProductSales productSales) {
         TextView textView = new TextView(context);
-        textView.setText(productSales.getProductID());
+        textView.setText(productSales.getOrder_item().getId());
+        textView.setGravity(Gravity.CENTER);
         textView.setPadding(10, 5, 10, 5);
         textView.setTextSize(14);
         return textView;
@@ -51,8 +53,9 @@ public class ProductAnalysisTableAdapter extends TableDataAdapter<ProductSales> 
 
     private View renderProductName(ProductSales productSales) {
         TextView textView = new TextView(context);
-        textView.setText(productSales.getProductName());
-        textView.setPadding(10, 5, 10, 5);
+        textView.setText(productSales.getOrder_item().getItemName());
+        textView.setGravity(Gravity.CENTER);
+        textView.setPadding(20, 5, 20, 5);
         textView.setTextSize(14);
         return textView;
     }
@@ -60,6 +63,7 @@ public class ProductAnalysisTableAdapter extends TableDataAdapter<ProductSales> 
     private View renderProductSales(ProductSales productSales) {
         TextView textView = new TextView(context);
         textView.setText(String.valueOf(productSales.getSalesCount()));
+        textView.setGravity(Gravity.CENTER);
         textView.setPadding(10, 5, 10, 5);
         textView.setTextSize(14);
         return textView;
@@ -68,6 +72,7 @@ public class ProductAnalysisTableAdapter extends TableDataAdapter<ProductSales> 
     private View renderProductTotalSales(ProductSales productSales) {
         TextView textView = new TextView(context);
         textView.setText(productSales.getTotalSales().toString());
+        textView.setGravity(Gravity.CENTER);
         textView.setPadding(10, 5, 10, 5);
         textView.setTextSize(14);
         return textView;
