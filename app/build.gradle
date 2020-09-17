@@ -95,6 +95,8 @@ dependencies {
 
     implementation 'com.github.salehyarahmadi:DataTable:v1.0.1'
 
+    implementation 'de.codecrafters.tableview:tableview:2.8.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

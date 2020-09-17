@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:table="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorHome"
@@ -90,26 +91,23 @@
         android:textSize="@dimen/_10sdp"
         android:textStyle="italic" />
 
-        <ir.androidexception.datatable.DataTable
-            android:id="@+id/data_table"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_8sdp"
+        android:elevation="@dimen/_26sdp"
+        android:layout_margin="@dimen/_8sdp"
+        app:cardUseCompatPadding="true">
+
+        <de.codecrafters.tableview.TableView
+            android:id="@+id/tableView"
+            android:padding="@dimen/_4sdp"
+            table:tableView_columnCount="2"
+            app:tableView_headerColor="@color/colorWhite"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_8sdp"
-            app:corner_radius="@dimen/_8sdp"
-            app:direction="rtl"
-            app:header_background_color="@color/colorWhite"
-            app:header_gravity="center"
-            app:header_horizontal_padding="@dimen/_4sdp"
-            app:header_text_color="@color/colorBlackText"
-            app:header_text_size="@dimen/_5sdp"
-            app:header_vertical_padding="@dimen/_8sdp"
-            app:persian_number="false"
-            app:row_background_color="@color/colorWhite"
-            app:row_gravity="center"
-            app:row_horizontal_padding="@dimen/_4sdp"
-            app:row_text_color="@color/colorBlackText"
-            app:row_text_size="@dimen/_4sdp"
-            app:row_vertical_padding="@dimen/_8sdp"
-            app:shadow="@dimen/_8sdp" />
+            table:tableView_headerElevation="2"
+            android:layout_height="wrap_content" />
+
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

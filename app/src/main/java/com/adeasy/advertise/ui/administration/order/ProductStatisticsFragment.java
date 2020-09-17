@@ -10,12 +10,18 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+import de.codecrafters.tableview.TableView;
+import de.codecrafters.tableview.listeners.TableDataLongClickListener;
+import de.codecrafters.tableview.model.TableColumnWeightModel;
+import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
+import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import ir.androidexception.datatable.DataTable;
 import ir.androidexception.datatable.model.DataTableHeader;
 import ir.androidexception.datatable.model.DataTableRow;
@@ -35,6 +41,9 @@ public class ProductStatisticsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private static final String[][] DATA_TO_SHOW = {{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"}};
+    private static final String[] TABLE_HEADERS = {"ProductID", "Name", "Sales Count", "Total Sales"};
 
     Context context;
 
@@ -79,38 +88,32 @@ public class ProductStatisticsFragment extends Fragment {
 
         context = getActivity();
 
-        DataTable dataTable = view.findViewById(R.id.data_table);
+        TableView tableView = view.findViewById(R.id.tableView);
+        tableView.setColumnCount(4);
 
-        DataTableHeader header = new DataTableHeader.Builder()
-                .item("ProductID", 4)
-                .item("Name", 4)
-                .item("Sales", 1)
-                .item("Total", 4)
-                .build();
+        TableColumnWeightModel columnModel = new TableColumnWeightModel(4);
+        columnModel.setColumnWeight(0, 2);
+        columnModel.setColumnWeight(1, 2);
+        columnModel.setColumnWeight(2, 1);
+        columnModel.setColumnWeight(3, 1);
+        tableView.setColumnModel(columnModel);
 
-        ArrayList<DataTableRow> rows = new ArrayList<>();
-        // define 200 fake rows for table
-        for (int i = 0; i < 200; i++) {
-            Random r = new Random();
-            int random = r.nextInt(i + 1);
-            int randomDiscount = r.nextInt(20);
-            DataTableRow row = new DataTableRow.Builder()
-                    .value("9Nxh1jYqhejYVDjestL3")
-                    .value(String.valueOf(random))
-                    .value(String.valueOf(random * 1000).concat("$"))
-                    .value(String.valueOf(randomDiscount).concat("%"))
-                    .build();
-            rows.add(row);
+        tableView.setDataAdapter(new SimpleTableDataAdapter(context, DATA_TO_SHOW));
 
-        }
+        //tableView.setEmptyDataIndicatorView(view.findViewById(R.id.empty_data_indicator));
 
-        //dataTable.setTypeface(R.font.candal);
-        dataTable.setHeader(header);
-        dataTable.setRows(rows);
-        dataTable.inflate(context);
+        tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(context, TABLE_HEADERS));
 
-
+        tableView.addDataLongClickListener(new CarLongClickListener());
 
         return view;
+    }
+
+    private class CarLongClickListener implements TableDataLongClickListener<String[]> {
+        @Override
+        public boolean onDataLongClicked(int rowIndex, String[] clickedData) {
+            Toast.makeText(getContext(), clickedData[0], Toast.LENGTH_SHORT).show();
+            return true;
+        }
     }
 }
