@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onStart() {
         super.onStart();
+        initializeAllFragments();
         if (selectedMenueID != 0)
             bottomNavigationView.setSelectedItemId(selectedMenueID);
     }
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         Log.i(TAG, "seleected");
-
+        initializeAllFragments();
         switch (menuItem.getItemId()) {
             case R.id.navHome:
                 selectedMenueID = menuItem.getItemId();
@@ -150,6 +151,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         getSupportActionBar().setDisplayShowCustomEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
+    }
+
+    //to fix force stop on loading fragments above
+    private void initializeAllFragments() {
+        home = new Home();
+        search = new Search();
+        chat = new Chat();
+        account = new Account();
     }
 
 }
