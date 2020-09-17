@@ -1,9 +1,10 @@
 package com.adeasy.advertise.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProductSales {
+public class ProductSales implements Serializable {
 
     private Order_Item order_item;
     private Integer salesCount;

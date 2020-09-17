@@ -3,6 +3,7 @@ package com.adeasy.advertise.ui.administration.order;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -228,6 +229,9 @@ public class ProductStatisticsFragment extends Fragment implements OrderCallback
         public boolean onDataLongClicked(int rowIndex, ProductSales clickedData) {
             Toast.makeText(getContext(), productSalesList.get(rowIndex).getOrder_item().getId(), Toast.LENGTH_SHORT).show();
             Log.i(TAG, productSalesList.get(rowIndex).getPriceRangersAnCount().toString());
+            Intent intent = new Intent(context, SingleProductAnalysis.class);
+            intent.putExtra("productSales", productSalesList.get(rowIndex));
+            startActivity(intent);
             return true;
         }
     }
