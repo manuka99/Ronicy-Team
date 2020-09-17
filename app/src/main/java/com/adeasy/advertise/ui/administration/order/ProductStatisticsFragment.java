@@ -13,12 +13,19 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.adapter.ProductAnalysisTableAdapter;
+import com.adeasy.advertise.adapter.ProductAnalysisTableHeaderAdapter;
+import com.adeasy.advertise.model.ProductSales;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 
+import de.codecrafters.tableview.SortableTableView;
 import de.codecrafters.tableview.TableView;
 import de.codecrafters.tableview.listeners.TableDataLongClickListener;
+import de.codecrafters.tableview.model.TableColumnDpWidthModel;
 import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
@@ -42,10 +49,8 @@ public class ProductStatisticsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private static final String[][] DATA_TO_SHOW = {{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"},{"10e6CdJBXhQmZEeu5bcy", "ssssssssssssssssdddddddddddd", "232", "234455"}};
-    private static final String[] TABLE_HEADERS = {"ProductID", "Name", "Sales Count", "Total Sales"};
-
     Context context;
+    List<ProductSales> productSalesList;
 
     public ProductStatisticsFragment() {
         // Required empty public constructor
@@ -87,26 +92,52 @@ public class ProductStatisticsFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Statistics - Products Analysis");
 
         context = getActivity();
+        productSalesList = new ArrayList<>();
 
-        TableView tableView = view.findViewById(R.id.tableView);
+        for (int i = 0; i < 200; ++i) {
+            ProductSales productSales = new ProductSales();
+            productSales.setProductID("10e6CdJBXhQmZEeu5bcy");
+            productSales.setProductName("aaaaaaaaaaaaa sasdsdsd aaaaaaaa");
+            productSales.setSalesCount(i + 5);
+            productSales.setTotalSales(45565.00 + i * i * 100);
+            productSalesList.add(productSales);
+        }
+
+        SortableTableView tableView = view.findViewById(R.id.tableView);
         tableView.setColumnCount(4);
 
-        TableColumnWeightModel columnModel = new TableColumnWeightModel(4);
-        columnModel.setColumnWeight(0, 2);
-        columnModel.setColumnWeight(1, 2);
-        columnModel.setColumnWeight(2, 1);
-        columnModel.setColumnWeight(3, 1);
+        TableColumnDpWidthModel columnModel = new TableColumnDpWidthModel(context, 4, 160);
+        columnModel.setColumnWidth(0, 200);
+        columnModel.setColumnWidth(1, 200);
+        columnModel.setColumnWidth(2, 120);
         tableView.setColumnModel(columnModel);
 
-        tableView.setDataAdapter(new SimpleTableDataAdapter(context, DATA_TO_SHOW));
+        tableView.setDataAdapter(new ProductAnalysisTableAdapter(context, productSalesList));
 
         //tableView.setEmptyDataIndicatorView(view.findViewById(R.id.empty_data_indicator));
 
-        tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(context, TABLE_HEADERS));
+        tableView.setHeaderAdapter(new ProductAnalysisTableHeaderAdapter(context, 4));
 
         tableView.addDataLongClickListener(new CarLongClickListener());
 
+        tableView.setColumnComparator(2, new SalesCountComparator());
+        tableView.setColumnComparator(3, new SalesTotalComparator());
+
         return view;
+    }
+
+    private class SalesCountComparator implements Comparator<ProductSales> {
+        @Override
+        public int compare(ProductSales productSales1, ProductSales productSales2) {
+            return productSales1.getSalesCount().compareTo(productSales2.getSalesCount());
+        }
+    }
+
+    private class SalesTotalComparator implements Comparator<ProductSales> {
+        @Override
+        public int compare(ProductSales productSales1, ProductSales productSales2) {
+            return productSales1.getTotalSales().compareTo(productSales2.getTotalSales());
+        }
     }
 
     private class CarLongClickListener implements TableDataLongClickListener<String[]> {
@@ -116,4 +147,5 @@ public class ProductStatisticsFragment extends Fragment {
             return true;
         }
     }
+
 }

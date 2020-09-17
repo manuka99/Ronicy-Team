@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:table="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorHome"
@@ -91,23 +91,33 @@
         android:textSize="@dimen/_10sdp"
         android:textStyle="italic" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/_8sdp"
-        android:elevation="@dimen/_26sdp"
-        android:layout_margin="@dimen/_8sdp"
-        app:cardUseCompatPadding="true">
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_weight="2">
 
-        <de.codecrafters.tableview.TableView
-            android:id="@+id/tableView"
-            android:padding="@dimen/_4sdp"
-            table:tableView_columnCount="2"
-            app:tableView_headerColor="@color/colorWhite"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            table:tableView_headerElevation="2"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:elevation="@dimen/_26sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:cardUseCompatPadding="true">
 
-    </androidx.cardview.widget.CardView>
+            <de.codecrafters.tableview.SortableTableView
+                android:id="@+id/tableView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/_4sdp"
+                app:tableView_headerColor="@color/colorWhite"
+                table:tableView_columnCount="2"
+                table:tableView_headerElevation="2" />
+
+        </androidx.cardview.widget.CardView>
+
+    </HorizontalScrollView>
 
 </LinearLayout>
