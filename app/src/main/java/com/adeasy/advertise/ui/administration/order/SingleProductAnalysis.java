@@ -1,6 +1,7 @@
 package com.adeasy.advertise.ui.administration.order;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,7 @@ public class SingleProductAnalysis extends AppCompatActivity {
     TextView orderItemName, orderItemCat, orderItemPrice, productID, noOfSales, salesLkr;
     ImageView orderItemImage;
     LineChart lineChart;
+    CardView cardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class SingleProductAnalysis extends AppCompatActivity {
         noOfSales = findViewById(R.id.noOfSales);
         salesLkr = findViewById(R.id.salesLkr);
         orderItemImage = findViewById(R.id.orderItemImage);
+        cardView = findViewById(R.id.cardView);
 
         if (productSales.getOrder_item().getId() != null) {
             orderItemName.setText(productSales.getOrder_item().getItemName());
@@ -60,10 +63,10 @@ public class SingleProductAnalysis extends AppCompatActivity {
 
             Picasso.get().load(productSales.getOrder_item().getImageUrl()).fit().into(orderItemImage);
 
-            if (productSales.getPriceRangersAnCount().size() > 0)
+            if (productSales.getPriceRangersAnCount().size() > 1)
                 showLineChart();
             else
-                lineChart.setVisibility(View.GONE);
+                cardView.setVisibility(View.GONE);
         }
     }
 

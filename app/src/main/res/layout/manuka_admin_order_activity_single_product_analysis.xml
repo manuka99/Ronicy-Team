@@ -2,13 +2,14 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorHome"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorHome"
+        android:layout_gravity="center"
         android:orientation="vertical"
         tools:context=".ui.administration.order.SingleProductAnalysis">
 
@@ -195,6 +196,7 @@
             android:textStyle="italic" />
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_260sdp"
             android:layout_marginStart="@dimen/_8sdp"
