@@ -227,12 +227,12 @@ public class ProductStatisticsFragment extends Fragment implements OrderCallback
     private class longClickListener implements TableDataLongClickListener<ProductSales> {
         @Override
         public boolean onDataLongClicked(int rowIndex, ProductSales clickedData) {
-            Toast.makeText(getContext(), productSalesList.get(rowIndex).getOrder_item().getId(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), productSalesList.get(rowIndex).getOrder_item().getId(), Toast.LENGTH_SHORT).show();
             Log.i(TAG, productSalesList.get(rowIndex).getPriceRangersAnCount().toString());
             Intent intent = new Intent(context, SingleProductAnalysis.class);
             intent.putExtra("productSales", productSalesList.get(rowIndex));
             startActivity(intent);
-            return true;
+            return false;
         }
     }
 
@@ -294,12 +294,12 @@ public class ProductStatisticsFragment extends Fragment implements OrderCallback
             productSalesList.add(mapOfProductIDAndSalesCount.get(itemID));
         }
 
-        if(productSalesList.size() == 0){
+        if (productSalesList.size() == 0) {
             tableView.setVisibility(View.GONE);
             LayoutInflater factory = LayoutInflater.from(context);
             View myView = factory.inflate(R.layout.manuka_empty_data_indicator, null);
             snackBarLayout.addView(myView);
-        }else{
+        } else {
             snackBarLayout.removeAllViews();
             tableView.setVisibility(View.VISIBLE);
             showTable();
