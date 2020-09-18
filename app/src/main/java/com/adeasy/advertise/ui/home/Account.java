@@ -176,7 +176,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
     public void onStart() {
         super.onStart();
         setHasOptionsMenu(true);
-        if(FirebaseAuth.getInstance().getCurrentUser() != null)
+        if (FirebaseAuth.getInstance().getCurrentUser() != null)
             customAuthTokenManager.getCustomClaimsInLoggedinUser();
     }
 
@@ -412,11 +412,15 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
     }
 
     private void readClaimsAndUpdateUi() {
-        if (customClaims != null && (customClaims.isGuest_admin() || customClaims.isUser_manager() || customClaims.isChat_manager() || customClaims.isContact_manager() || customClaims.isFavourite_manager() || customClaims.isAdvertisement_manager() || customClaims.isAdmin() || customClaims.isOrder_manager())) {
-            isAdministrator = true;
-            getActivity().invalidateOptionsMenu();
-        } else
-            isAdministrator = false;
+        try {
+            if (customClaims != null && (customClaims.isGuest_admin() || customClaims.isUser_manager() || customClaims.isChat_manager() || customClaims.isContact_manager() || customClaims.isFavourite_manager() || customClaims.isAdvertisement_manager() || customClaims.isAdmin() || customClaims.isOrder_manager())) {
+                isAdministrator = true;
+                getActivity().invalidateOptionsMenu();
+            } else
+                isAdministrator = false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

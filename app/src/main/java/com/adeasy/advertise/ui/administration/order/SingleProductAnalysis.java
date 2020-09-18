@@ -1,9 +1,14 @@
 package com.adeasy.advertise.ui.administration.order;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.widget.NestedScrollView;
 
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,13 +16,18 @@ import android.widget.TextView;
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.model.ProductSales;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -29,12 +39,24 @@ public class SingleProductAnalysis extends AppCompatActivity {
     TextView orderItemName, orderItemCat, orderItemPrice, productID, noOfSales, salesLkr;
     ImageView orderItemImage;
     LineChart lineChart;
-    CardView cardView;
+    PieChart pieChart;
+
+    TextView statisticLineData, statisticPieData;
+    CardView statisticLineDataCard, statisticPieDataCardView;
+
+    NestedScrollView scroller;
+    boolean isPieChartVisible = true;
+    boolean isLineChartVisible = false;
+    Toolbar toolbar;
+
+    private static final String TAG = "SingleProductAnalysis";
+    private static final String LABEL = "Sales vs Product Price";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manuka_admin_order_activity_single_product_analysis);
+
         try {
             productSales = (ProductSales) getIntent().getSerializableExtra("productSales");
         } catch (Exception e) {
@@ -42,8 +64,7 @@ public class SingleProductAnalysis extends AppCompatActivity {
             productSales = new ProductSales();
         }
 
-        lineChart = findViewById(R.id.lineChart);
-
+        toolbar = findViewById(R.id.toolbar);
         orderItemName = findViewById(R.id.orderItemName);
         orderItemCat = findViewById(R.id.orderItemCat);
         orderItemPrice = findViewById(R.id.orderItemPrice);
@@ -51,12 +72,74 @@ public class SingleProductAnalysis extends AppCompatActivity {
         noOfSales = findViewById(R.id.noOfSales);
         salesLkr = findViewById(R.id.salesLkr);
         orderItemImage = findViewById(R.id.orderItemImage);
-        cardView = findViewById(R.id.cardView);
+        scroller = findViewById(R.id.scrollbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Product Details");
+        getSupportActionBar().setSubtitle(LABEL);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        //statistic views
+        statisticPieDataCardView = findViewById(R.id.statisticPieDataCardView);
+        statisticLineDataCard = findViewById(R.id.statisticLineDataCard);
+        statisticPieData = findViewById(R.id.statisticPieData);
+        statisticLineData = findViewById(R.id.statisticLineData);
+
+        lineChart = findViewById(R.id.lineChart);
+        pieChart = findViewById(R.id.pieChart);
+
+        final Rect scrollBounds = new Rect();
+        scroller.getHitRect(scrollBounds);
+        scroller.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                if (pieChart.getLocalVisibleRect(scrollBounds)) {
+                    if (!pieChart.getLocalVisibleRect(scrollBounds)
+                            || scrollBounds.height() < pieChart.getHeight()) {
+                        isPieChartVisible = false;
+                        Log.i(TAG, "APPEAR PARCIALY");
+                    } else if (!isPieChartVisible) {
+                        Log.i(TAG, "APPEAR FULLY!!!");
+                        isPieChartVisible = true;
+                        pieChart.animateXY(1500, 1500);
+                        pieChart.invalidate();
+                    }
+                } else {
+                    Log.i(TAG, "No");
+                }
+
+                if (lineChart.getLocalVisibleRect(scrollBounds)) {
+                    if (!lineChart.getLocalVisibleRect(scrollBounds)
+                            || scrollBounds.height() < lineChart.getHeight()) {
+
+                        isLineChartVisible = false;
+
+                    } else if (!isLineChartVisible) {
+
+                        isLineChartVisible = true;
+
+                        lineChart.animateXY(1500, 1500);
+                        lineChart.invalidate();
+                    }
+                }
+
+            }
+
+
+        });
 
         if (productSales.getOrder_item().getId() != null) {
             orderItemName.setText(productSales.getOrder_item().getItemName());
             orderItemCat.setText(productSales.getOrder_item().getCategoryName());
-            orderItemPrice.setText(String.valueOf(productSales.getOrder_item().getPrice()));
+            orderItemPrice.setText("Rs " + String.valueOf(productSales.getOrder_item().getPrice()));
             productID.setText(productSales.getOrder_item().getId());
             noOfSales.setText(String.valueOf(productSales.getSalesCount()));
             salesLkr.setText(String.valueOf(productSales.getTotalSales()));
@@ -64,24 +147,38 @@ public class SingleProductAnalysis extends AppCompatActivity {
             Picasso.get().load(productSales.getOrder_item().getImageUrl()).fit().into(orderItemImage);
 
             if (productSales.getPriceRangersAnCount().size() > 1)
-                showLineChart();
-            else
-                cardView.setVisibility(View.GONE);
+                calculateDataSet();
+            else {
+                statisticPieDataCardView.setVisibility(View.GONE);
+                statisticLineDataCard.setVisibility(View.GONE);
+                statisticPieData.setVisibility(View.GONE);
+                statisticLineData.setVisibility(View.GONE);
+            }
         }
     }
 
-    private void showLineChart() {
-        List<Entry> entries = new ArrayList<>();
+    private void calculateDataSet() {
+        List<Entry> lineEntries = new ArrayList<>();
+        List<PieEntry> pieEntries = new ArrayList<>();
         String[] xData = new String[productSales.getPriceRangersAnCount().size()];
 
         int i = 0;
         for (Double key : productSales.getPriceRangersAnCount().keySet()) {
-            entries.add(new Entry(i, productSales.getPriceRangersAnCount().get(key)));
-            xData[i] = String.valueOf(key);
+            //linechaery
+            lineEntries.add(new Entry(i, productSales.getPriceRangersAnCount().get(key)));
+            xData[i] = "Rs " + key;
+
+            //piechart
+            pieEntries.add(new PieEntry(productSales.getPriceRangersAnCount().get(key), "Rs " + key));
             ++i;
         }
 
-        LineDataSet lineDataSet = new LineDataSet(entries, "Sales vs Product Price");
+        showLineChart(lineEntries, xData);
+        showPieDataSet(pieEntries);
+    }
+
+    private void showLineChart(List<Entry> entries, String[] xData) {
+        LineDataSet lineDataSet = new LineDataSet(entries, LABEL);
         lineDataSet.setColor(getResources().getColor(R.color.colorPrimary));
         lineDataSet.setValueTextColor(getResources().getColor(R.color.colorPrimaryDark));
         XAxis xAxis = lineChart.getXAxis();
@@ -114,8 +211,32 @@ public class SingleProductAnalysis extends AppCompatActivity {
         });
         lineChart.getDescription().setText("");
         lineChart.setData(data);
-        lineChart.animateXY(1500, 1500);
+        lineChart.animateXY(1000, 1000);
         lineChart.invalidate();
+    }
+
+    private void showPieDataSet(List<PieEntry> entries) {
+        PieDataSet pieDataSet = new PieDataSet(entries, "Sales count");
+        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        pieDataSet.setValueTextColor(Color.BLACK);
+        pieDataSet.setValueTextSize(16f);
+
+        PieData data = new PieData(pieDataSet);
+        data.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                if (value == 0)
+                    return "";
+                else
+                    return String.valueOf((int) Math.floor(value));
+            }
+        });
+        pieChart.setCenterText(LABEL);
+        pieChart.setData(data);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setDrawEntryLabels(false);
+        pieChart.animateXY(1000, 1000);
+        pieChart.invalidate();
     }
 
 }
