@@ -1,6 +1,7 @@
 package com.adeasy.advertise.ui.home;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,13 +12,13 @@ import androidx.fragment.app.Fragment;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +34,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.List;
 
@@ -104,7 +107,7 @@ public class Home extends Fragment implements AdvertisementCallback {
 
         mSwipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
         recyclerView = view.findViewById(R.id.adMenuRecyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, 1));
         recyclerView.setHasFixedSize(false);
         advertisementManager = new AdvertisementManager(this);
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
@@ -149,14 +152,15 @@ public class Home extends Fragment implements AdvertisementCallback {
                         options
                 ) {
                     @Override
-                    protected void onBindViewHolder(@NonNull ViewHolderAdds holder, final int position, @NonNull Advertisement advertisement) {
+                    protected void onBindViewHolder(@NonNull final ViewHolderAdds holder, final int position, @NonNull Advertisement advertisement) {
 
                         holder.titleView.setText(advertisement.getTitle());
                         holder.dateView.setText(advertisement.getPreetyTime());
-                        holder.priceView.setText("Rs. " + advertisement.getPrice());
+                        holder.priceView.setText(advertisement.getPreetyCurrency());
 
                         try {
                             Picasso.get().load(advertisement.getImageUrls().get(0)).into(holder.imageView);
+
                         }catch (Exception e){
 
                         }
@@ -183,7 +187,7 @@ public class Home extends Fragment implements AdvertisementCallback {
                     @NonNull
                     @Override
                     public ViewHolderAdds onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ad_menu, parent, false);
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manuka_ad_menu, parent, false);
                         return new ViewHolderAdds(view);
                     }
 

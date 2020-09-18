@@ -106,6 +106,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/adMenuRecyclerView"
+                android:padding="@dimen/_6sdp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 

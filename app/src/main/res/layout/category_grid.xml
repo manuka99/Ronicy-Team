@@ -21,7 +21,7 @@
 
             <ImageView
                 android:id="@+id/gridCatImageSearch"
-                android:background="#ffffff"
+                android:background="@color/colorWhite"
                 android:padding="32dp"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"

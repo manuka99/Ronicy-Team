@@ -10,9 +10,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="9dp"
-        app:cardUseCompatPadding="true">
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="@dimen/_6sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,11 +22,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/adMenuImage"
-                android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:scaleType="fitXY" />
+                <ImageView
+                    android:id="@+id/adMenuImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/_140sdp"
+                    android:maxHeight="@dimen/_180sdp"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true" />
 
                 <TextView
                     android:id="@+id/adMenuBuyNow"
@@ -42,9 +44,9 @@
                     android:paddingLeft="4dp"
                     android:text="Buy Now"
                     android:textColor="@color/colorWhite"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/_12sdp"
                     android:textStyle="bold"
-                    android:visibility="visible"/>
+                    android:visibility="visible" />
 
             </RelativeLayout>
 
@@ -52,15 +54,13 @@
                 android:id="@+id/adMenuTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:textStyle="bold"
+                android:layout_gravity="start"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:text="ABCD"
                 android:textColor="#000000"
-                android:textSize="16sp"></TextView>
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"></TextView>
 
             <TextView
                 android:id="@+id/adMenuPrice"
@@ -68,28 +68,27 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
+                android:layout_gravity="start"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginTop="2dp"
-                android:textStyle="bold"
-                android:textColor="#009664"
+                android:layout_marginEnd="10dp"
                 android:text="ABCD"
-                android:textSize="14sp"></TextView>
+                android:textColor="#009664"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"></TextView>
 
 
             <TextView
                 android:id="@+id/adMenuDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/_6sdp"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="ABCD"
-                android:textSize="14sp"></TextView>
+                android:textSize="@dimen/_8sdp"></TextView>
 
 
         </LinearLayout>

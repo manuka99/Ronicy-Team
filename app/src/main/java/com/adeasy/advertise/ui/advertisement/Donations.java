@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.custom_view.CurrencyEditText;
+import com.adeasy.advertise.custom_view.CurrencyTextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import lk.payhere.androidsdk.PHConfigs;
 import lk.payhere.androidsdk.PHConstants;
@@ -28,7 +31,9 @@ public class Donations extends AppCompatActivity {
 
     private final static int PAYHERE_REQUEST = 11010;
     private static final String TAG = "Donations";
-    EditText name, email, phone, amount;
+    EditText name, email, phone;
+    CurrencyEditText amount;
+    TextInputLayout amountTextInputEditText;
     TextView donateSuccess;
     Button donateBtn;
     String userName, userEmail;
@@ -47,6 +52,7 @@ public class Donations extends AppCompatActivity {
         email = findViewById(R.id.donationEmail);
         phone = findViewById(R.id.donationNumber);
         amount = findViewById(R.id.donationAmount);
+        amountTextInputEditText = findViewById(R.id.amountTextInputEditText);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,11 +79,18 @@ public class Donations extends AppCompatActivity {
                     userPhone = 0;
                 }
 
+                //Log.i(TAG, String.valueOf(amount.getText().toString()));
+
+                Log.i(TAG, String.valueOf("23232323 " + amountTextInputEditText.getEditText().getText().toString()));
+
                 try{
-                    userAmount = Double.parseDouble(amount.getText().toString());
+                    //userAmount = Double.parseDouble(amount.getText().toString().replace(",", "").replace("LKR", ""));
+                    userAmount = Double.parseDouble(amountTextInputEditText.getEditText().getText().toString().replace(",", "").replace("LKR", ""));
                 }catch (Exception e){
                     userAmount = 0;
                 }
+
+                Log.i(TAG, String.valueOf(userAmount));
 
                 if(userName.isEmpty())
                     name.setError("Please fill out this feild");

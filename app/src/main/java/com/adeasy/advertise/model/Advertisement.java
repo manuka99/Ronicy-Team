@@ -2,6 +2,7 @@ package com.adeasy.advertise.model;
 
 import android.net.Uri;
 
+import com.adeasy.advertise.util.DoubleToCurrencyFormat;
 import com.google.firebase.firestore.Exclude;
 
 import org.ocpsoft.prettytime.PrettyTime;
@@ -12,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -30,12 +32,13 @@ public class Advertisement implements Serializable {
     private boolean buynow;
     private String categoryID;
     private String userID;
-    private String preetyTime;
     private List<String> imageUrls;
     private List<Integer> numbers;
     private String location;
     private String unapprovedReason;
     private boolean reviewed;
+    private String preetyTime;
+    private String preetyCurrency;
 
     public Advertisement() {
         this.placedDate = new Date();
@@ -187,6 +190,16 @@ public class Advertisement implements Serializable {
 
     public void setReviewed(boolean reviewed) {
         this.reviewed = reviewed;
+    }
+
+    @Exclude
+    public String getPreetyCurrency() {
+        return new DoubleToCurrencyFormat().setStringValue(String.valueOf(price));
+    }
+
+    @Exclude
+    public void setPreetyCurrency(String preetyCurrency) {
+        this.preetyCurrency = preetyCurrency;
     }
 
 }

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#e6ecff"
+    android:orientation="vertical"
     tools:context=".ui.advertisement.Donations">
 
     <!-- Manuka -->
@@ -33,6 +33,7 @@
                 android:text="@string/donate_header"
                 android:textColor="#8c8c8c"
                 android:textSize="26sp"></TextView>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,8 +42,8 @@
                 android:fontFamily="sans-serif-black"
                 android:gravity="center"
                 android:text="@string/donate_sub_header"
-                android:textStyle="bold|italic"
-                android:textSize="20sp"></TextView>
+                android:textSize="20sp"
+                android:textStyle="bold|italic"></TextView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -65,9 +66,9 @@
                         android:layout_gravity="start"
                         android:layout_marginBottom="6dp"
                         android:gravity="center"
+                        android:labelFor="@+id/donationName"
                         android:text="@string/donate_name"
                         android:textColor="#a6a6a6"
-                        android:labelFor="@+id/donationName"
                         android:textSize="16sp"></TextView>
 
                     <EditText
@@ -75,9 +76,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="30dp"
-                        android:textSize="20sp"
+                        android:importantForAutofill="no"
                         android:inputType="textPersonName"
-                        android:importantForAutofill="no"></EditText>
+                        android:textSize="20sp"></EditText>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -85,9 +86,9 @@
                         android:layout_gravity="start"
                         android:layout_marginBottom="6dp"
                         android:gravity="center"
+                        android:labelFor="@+id/donationEmail"
                         android:text="@string/donate_email"
                         android:textColor="#a6a6a6"
-                        android:labelFor="@+id/donationEmail"
                         android:textSize="16sp"></TextView>
 
                     <EditText
@@ -105,9 +106,9 @@
                         android:layout_gravity="start"
                         android:layout_marginBottom="6dp"
                         android:gravity="center"
+                        android:labelFor="@+id/donationNumber"
                         android:text="@string/donate_phone"
                         android:textColor="#a6a6a6"
-                        android:labelFor="@+id/donationNumber"
                         android:textSize="16sp"></TextView>
 
                     <EditText
@@ -116,8 +117,8 @@
                         android:layout_height="40dp"
                         android:layout_marginBottom="30dp"
                         android:importantForAutofill="no"
-                        android:textSize="20sp"
-                        android:inputType="number"></EditText>
+                        android:inputType="number"
+                        android:textSize="20sp"></EditText>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -125,19 +126,19 @@
                         android:layout_gravity="start"
                         android:layout_marginBottom="6dp"
                         android:gravity="center"
+                        android:labelFor="@+id/donationAmount"
                         android:text="@string/donate_amount"
                         android:textColor="#a6a6a6"
-                        android:labelFor="@+id/donationAmount"
                         android:textSize="16sp"></TextView>
 
-                    <EditText
+                    <com.adeasy.advertise.custom_view.CurrencyEditText
                         android:id="@+id/donationAmount"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="30dp"
                         android:importantForAutofill="no"
-                        android:textSize="20sp"
-                        android:inputType="phone"></EditText>
+                        android:inputType="phone"
+                        android:textSize="20sp"></com.adeasy.advertise.custom_view.CurrencyEditText>
 
                     <TextView
                         android:id="@+id/donateSuccess"
@@ -145,12 +146,25 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_marginBottom="20dp"
-                        android:gravity="center"
-                        android:textStyle="italic|bold"
                         android:background="@color/colorWarning"
+                        android:gravity="center"
                         android:padding="6dp"
-                        android:visibility="gone"
-                        android:textSize="16sp"></TextView>
+                        android:textSize="16sp"
+                        android:textStyle="italic|bold"
+                        android:visibility="gone"></TextView>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/amountTextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp">
+
+                        <com.adeasy.advertise.custom_view.CurrencyTextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Enter amount" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <Button
                         android:id="@+id/donateBtn"

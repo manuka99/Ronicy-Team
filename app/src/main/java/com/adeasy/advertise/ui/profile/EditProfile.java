@@ -172,6 +172,8 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        profileManager.getUser();
     }
 
     @Override
@@ -186,7 +188,7 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
     @Override
     public void onStart() {
         super.onStart();
-        profileManager.getUser();
+        //profileManager.getUser();
     }
 
     @Override
@@ -419,9 +421,11 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
         if (resultCode == RESULT_OK && requestCode == IMAGE_SELECTOR) {
             if (data.getData() != null) {
                 imageSelected = true;
-                profilePhoto.setImageURI(data.getData());
+                Picasso.get().load(data.getData()).fit().into(profilePhoto);
+                //profilePhoto.setImageURI(data.getData());
                 deleteImage.setVisibility(View.VISIBLE);
             } else if (data.getExtras() != null) {
+                //camera
                 imageSelected = true;
                 Bundle bundle = data.getExtras();
                 profilePhoto.setImageBitmap((Bitmap) bundle.get("data"));

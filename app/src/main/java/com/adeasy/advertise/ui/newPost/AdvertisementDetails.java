@@ -228,7 +228,7 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
             advertisement.setTitle(postTitle.getEditText().getText().toString());
             advertisement.setCondition(postCondition.getEditText().getText().toString());
             advertisement.setDescription(postDescription.getEditText().getText().toString());
-            advertisement.setPrice(Double.valueOf(postPrice.getEditText().getText().toString()));
+            advertisement.setPrice(Double.valueOf(postPrice.getEditText().getText().toString().replace(",", "").replace("LKR", "")));
             advertisement.setImageUrls(imagesUriArrayList);
 
             newPostViewModel.setAdvertisement(advertisement);

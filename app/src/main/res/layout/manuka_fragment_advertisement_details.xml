@@ -138,7 +138,7 @@
             app:errorEnabled="true"
             app:hintTextColor="@color/colorGreen">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.adeasy.advertise.custom_view.CurrencyTextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/post_price"
