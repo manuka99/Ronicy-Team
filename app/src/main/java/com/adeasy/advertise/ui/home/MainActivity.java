@@ -42,9 +42,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        View home_logo = getLayoutInflater().inflate(R.layout.toolbar_home, null);
-        getSupportActionBar().setCustomView(home_logo);
-
         bottomNavigationView = findViewById(R.id.navBottm);
 
         home = new Home();
@@ -111,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.navSearch:
                 selectedMenueID = menuItem.getItemId();
-                changeToolbarDefault();
+                changeToolbarSearch();
                 getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, search).commit();
                 return true;
 
@@ -137,8 +134,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void changeToolbarHome() {
+        toolbar.setVisibility(View.VISIBLE);
         //toolbar.removeAllViews();
         //getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        View home_logo = getLayoutInflater().inflate(R.layout.toolbar_home, null);
+        getSupportActionBar().setCustomView(home_logo);
 
         getSupportActionBar().setDisplayShowCustomEnabled(true); // enable overriding the default toolbar_home layout
         //getSupportActionBar().setDisplayShowTitleEnabled(false); // disable the default title element here (for centered title)
@@ -146,12 +147,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void changeToolbarDefault() {
+        toolbar.setVisibility(View.VISIBLE);
         //toolbar.removeAllViews();
         //getSupportActionBar().setDisplayShowTitleEnabled(true);
 
         getSupportActionBar().setDisplayShowCustomEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
     }
+
+    public void changeToolbarSearch() {
+        toolbar.setVisibility(View.GONE);
+
+
+        getSupportActionBar().setDisplayShowCustomEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
 
     //to fix force stop on loading fragments above
     private void initializeAllFragments() {

@@ -7,6 +7,7 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="colorBlack">#000000</color>
     <color name="colorBlackText">#CC000000</color>
+    <color name="colorBlackTextLite">#99000000</color>
     <color name="colorGreyBtn">#bfbfbf</color>
     <color name="colorGreyText">#8B000000</color>
     <color name="colorSucess">#00ff80</color>
