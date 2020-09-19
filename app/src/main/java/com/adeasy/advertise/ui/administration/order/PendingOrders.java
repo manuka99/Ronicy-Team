@@ -132,14 +132,14 @@ public class PendingOrders extends Fragment {
             @Override
             public void onBindViewHolder(ViewHolderOrderItem holder, final int position, Order order) {
                 holder.getName().setText(order.getItem().getItemName());
-                holder.getPrice().setText("Rs " + order.getItem().getPrice());
+                holder.getPrice().setText(order.getItem().getPreetyCurrency());
                 holder.getCategory().setText(order.getItem().getCategoryName());
 
                 holder.getPlaced_date().setText(order.getPreetyTime());
                 holder.getPayment_mode().setText(order.getPayment().getType());
                 holder.getPayment_status().setText(order.getPayment().getStatus());
 
-                holder.getTotal().setText("Rs " + order.getItem().getPrice());
+                holder.getTotal().setText(order.getPayment().getPreetyCurrency());
                 Picasso.get().load(order.getItem().getImageUrl()).fit().into(holder.getImageView());
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {

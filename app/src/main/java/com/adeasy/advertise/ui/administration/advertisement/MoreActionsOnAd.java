@@ -288,7 +288,7 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
                     AdTitle.setText(advertisement.getTitle());
                     AdCondition.setText(advertisement.getCondition());
                     AdDescription.setText(advertisement.getDescription());
-                    AdPrice.setText("Rs. " + advertisement.getPrice());
+                    AdPrice.setText(advertisement.getPreetyCurrency());
                     adDetailsID.setText("Ad ID: " + advertisement.getId());
                     unApprovalMessage.getEditText().setText(advertisement.getUnapprovedReason());
 

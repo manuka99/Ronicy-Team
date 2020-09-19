@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.model.ProductSales;
+import com.adeasy.advertise.util.DoubleToCurrencyFormat;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -48,6 +49,7 @@ public class SingleProductAnalysis extends AppCompatActivity {
     boolean isPieChartVisible = true;
     boolean isLineChartVisible = false;
     Toolbar toolbar;
+    DoubleToCurrencyFormat doubleToCurrencyFormat;
 
     private static final String TAG = "SingleProductAnalysis";
     private static final String LABEL = "Sales vs Product Price";
@@ -78,6 +80,8 @@ public class SingleProductAnalysis extends AppCompatActivity {
         getSupportActionBar().setTitle("Product Details");
         getSupportActionBar().setSubtitle(LABEL);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        doubleToCurrencyFormat = new DoubleToCurrencyFormat();
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,10 +143,10 @@ public class SingleProductAnalysis extends AppCompatActivity {
         if (productSales.getOrder_item().getId() != null) {
             orderItemName.setText(productSales.getOrder_item().getItemName());
             orderItemCat.setText(productSales.getOrder_item().getCategoryName());
-            orderItemPrice.setText("Rs " + String.valueOf(productSales.getOrder_item().getPrice()));
+            orderItemPrice.setText(productSales.getOrder_item().getPreetyCurrency());
             productID.setText(productSales.getOrder_item().getId());
             noOfSales.setText(String.valueOf(productSales.getSalesCount()));
-            salesLkr.setText(String.valueOf(productSales.getTotalSales()));
+            salesLkr.setText(productSales.getPreetyCurrency());
 
             Picasso.get().load(productSales.getOrder_item().getImageUrl()).fit().into(orderItemImage);
 
@@ -166,10 +170,10 @@ public class SingleProductAnalysis extends AppCompatActivity {
         for (Double key : productSales.getPriceRangersAnCount().keySet()) {
             //linechaery
             lineEntries.add(new Entry(i, productSales.getPriceRangersAnCount().get(key)));
-            xData[i] = "Rs " + key;
+            xData[i] = doubleToCurrencyFormat.setStringValue(key.toString());
 
             //piechart
-            pieEntries.add(new PieEntry(productSales.getPriceRangersAnCount().get(key), "Rs " + key));
+            pieEntries.add(new PieEntry(productSales.getPriceRangersAnCount().get(key), doubleToCurrencyFormat.setStringValue(key.toString())));
             ++i;
         }
 

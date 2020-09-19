@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.adeasy.advertise.model.ProductSales;
+import com.adeasy.advertise.util.DoubleToCurrencyFormat;
 
 import java.util.List;
 
@@ -71,7 +72,7 @@ public class ProductAnalysisTableAdapter extends TableDataAdapter<ProductSales> 
 
     private View renderProductTotalSales(ProductSales productSales) {
         TextView textView = new TextView(context);
-        textView.setText(productSales.getTotalSales().toString());
+        textView.setText(new DoubleToCurrencyFormat().setStringValue(productSales.getTotalSales().toString()));
         textView.setGravity(Gravity.CENTER);
         textView.setPadding(10, 5, 10, 5);
         textView.setTextSize(14);

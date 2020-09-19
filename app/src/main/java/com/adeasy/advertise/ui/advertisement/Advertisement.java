@@ -229,7 +229,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
                     AdTitle.setText(advertisement.getTitle());
                     AdCondition.setText(advertisement.getCondition());
                     AdDescription.setText(advertisement.getDescription());
-                    AdPrice.setText("Rs. " + advertisement.getPrice());
+                    AdPrice.setText(advertisement.getPreetyCurrency());
                     displayImageSlider();
                     if (advertisement.isBuynow())
                         adBuyNow.setVisibility(View.VISIBLE);

@@ -1,6 +1,8 @@
 package com.adeasy.advertise.model;
 
 import com.adeasy.advertise.util.CommonConstants;
+import com.adeasy.advertise.util.DoubleToCurrencyFormat;
+import com.google.firebase.firestore.Exclude;
 
 import java.io.Serializable;
 /**
@@ -13,6 +15,7 @@ public class Order_Payment implements Serializable {
     private String type;
     private String status;
     private double amount;
+    private String preetyCurrency;
 
     public Order_Payment() {
         this.status = CommonConstants.PAYMENT_NOT_PAID;
@@ -40,6 +43,16 @@ public class Order_Payment implements Serializable {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    @Exclude
+    public String getPreetyCurrency() {
+        return new DoubleToCurrencyFormat().setStringValue(String.valueOf(amount));
+    }
+
+    @Exclude
+    public void setPreetyCurrency(String preetyCurrency) {
+        this.preetyCurrency = preetyCurrency;
     }
 
 }

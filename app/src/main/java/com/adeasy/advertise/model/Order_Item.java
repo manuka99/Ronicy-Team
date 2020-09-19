@@ -1,5 +1,8 @@
 package com.adeasy.advertise.model;
 
+import com.adeasy.advertise.util.DoubleToCurrencyFormat;
+import com.google.firebase.firestore.Exclude;
+
 import java.io.Serializable;
 /**
  * Created by Manuka yasas,
@@ -13,6 +16,7 @@ public class Order_Item implements Serializable {
     private String imageUrl;
     private String categoryName;
     private double price;
+    private String preetyCurrency;
 
     public Order_Item() {
     }
@@ -55,6 +59,16 @@ public class Order_Item implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Exclude
+    public String getPreetyCurrency() {
+        return new DoubleToCurrencyFormat().setStringValue(String.valueOf(price));
+    }
+
+    @Exclude
+    public void setPreetyCurrency(String preetyCurrency) {
+        this.preetyCurrency = preetyCurrency;
     }
 
 }

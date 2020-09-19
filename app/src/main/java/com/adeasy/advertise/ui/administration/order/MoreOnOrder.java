@@ -291,7 +291,7 @@ public class MoreOnOrder extends AppCompatActivity implements OrderCallback, Ada
             //order
             orderIDView.setText(order.getId());
             orderTitle.setText(order.getItem().getItemName());
-            orderTotal.setText(String.valueOf(order.getPayment().getAmount()));
+            orderTotal.setText(order.getPayment().getPreetyCurrency());
 
             isHidden = order.isAvalability();
 
@@ -332,10 +332,10 @@ public class MoreOnOrder extends AppCompatActivity implements OrderCallback, Ada
             itemID.setText(order.getItem().getId());
             title.setText(order.getItem().getItemName());
             catName.setText(order.getItem().getCategoryName());
-            price.setText(String.valueOf(order.getItem().getPrice()));
+            price.setText(order.getItem().getPreetyCurrency());
             Picasso.get().load(order.getItem().getImageUrl()).fit().into(imageView);
             //payment
-            total.setText(String.valueOf(order.getPayment().getAmount()));
+            total.setText(order.getPayment().getPreetyCurrency());
             paymentType.setText(order.getPayment().getType());
         }
     }

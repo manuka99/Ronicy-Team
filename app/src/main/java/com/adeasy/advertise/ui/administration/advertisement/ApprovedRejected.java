@@ -131,7 +131,7 @@ public class ApprovedRejected extends Fragment implements View.OnClickListener {
                     protected void onBindViewHolder(@NonNull ViewHolderListAdds holder, final int position, @NonNull Advertisement advertisement) {
                         try {
                             holder.getMyadsTitle().setText(advertisement.getTitle());
-                            holder.getMyadsPrice().setText("Rs " + advertisement.getPrice());
+                            holder.getMyadsPrice().setText(advertisement.getPreetyCurrency());
                             holder.getMyaddsDate().setText(advertisement.getPreetyTime());
                             Picasso.get().load(advertisement.getImageUrls().get(0)).fit().into(holder.getImageView());
 

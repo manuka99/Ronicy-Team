@@ -1,5 +1,8 @@
 package com.adeasy.advertise.model;
 
+import com.adeasy.advertise.util.DoubleToCurrencyFormat;
+import com.google.firebase.firestore.Exclude;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +13,7 @@ public class ProductSales implements Serializable {
     private Integer salesCount;
     private Double totalSales;
     private Map<Double, Integer> priceRangersAnCount;
+    private String preetyCurrency;
 
     public ProductSales(){
         order_item = new Order_Item();
@@ -46,6 +50,16 @@ public class ProductSales implements Serializable {
 
     public void setPriceRangersAnCount(Map<Double, Integer> priceRangersAnCount) {
         this.priceRangersAnCount = priceRangersAnCount;
+    }
+
+    @Exclude
+    public String getPreetyCurrency() {
+        return new DoubleToCurrencyFormat().setStringValue(String.valueOf(totalSales));
+    }
+
+    @Exclude
+    public void setPreetyCurrency(String preetyCurrency) {
+        this.preetyCurrency = preetyCurrency;
     }
 
 }

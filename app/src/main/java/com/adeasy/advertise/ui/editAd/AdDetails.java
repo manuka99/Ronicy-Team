@@ -266,7 +266,7 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
             updatedAdvertisement.setTitle(postTitle.getEditText().getText().toString());
             updatedAdvertisement.setCondition(postCondition.getEditText().getText().toString());
             updatedAdvertisement.setDescription(postDescription.getEditText().getText().toString());
-            updatedAdvertisement.setPrice(Double.valueOf(postPrice.getEditText().getText().toString()));
+            updatedAdvertisement.setPrice(Double.valueOf(postPrice.getEditText().getText().toString().replace(",", "").replace("LKR", "")));
             updatedAdvertisement.setImageUrls(imagesUriArrayList);
 
             newPostViewModel.setAdvertisement(updatedAdvertisement);
