@@ -4,21 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/colorHome"
+    android:orientation="vertical"
     tools:context=".ui.advertisement.HomeAdSearch">
 
-    <include layout="@layout/toolbar_search_keyword" android:id="@+id/toolbar"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#33000000"/>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_search_keyword" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:background="@color/colorWhite"
         android:id="@+id/myaddsRecycle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite" />
 
 </LinearLayout>

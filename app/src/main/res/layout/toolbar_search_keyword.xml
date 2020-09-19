@@ -14,6 +14,9 @@
         android:textSize="@dimen/_14sdp"
         android:textColor="@color/colorBlackText"
         android:imeOptions="actionSearch"
+        android:textColorHint="@color/colorWhite"
+        android:textCursorDrawable="@drawable/cursur_black"
+        android:background="@android:color/transparent"
         android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

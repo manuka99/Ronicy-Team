@@ -97,6 +97,8 @@ dependencies {
 
     implementation 'de.codecrafters.tableview:tableview:2.8.0'
 
+    implementation 'com.algolia:algoliasearch-android:3.+'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

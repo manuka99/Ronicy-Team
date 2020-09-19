@@ -19,4 +19,8 @@ public class Configurations {
     //spring boot server
     public static final String SERVER_URL = "https://ronicy.herokuapp.com/user/get_token?tokenID=";
 
+    //Algolia Search Engine
+    public static final String ALGOLIA_APP_ID = "43D39I7H4Q";
+    public static final String ALGOLIA_SEARCH_KEY = "1067f2f27036d929447da00cb71bf4ce";
+
 }
