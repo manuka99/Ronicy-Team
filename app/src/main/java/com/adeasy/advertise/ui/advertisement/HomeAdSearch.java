@@ -86,10 +86,7 @@ public class HomeAdSearch extends AppCompatActivity implements TextWatcher, Adve
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     //Toast.makeText(getApplication(), search_keyword.getText().toString(), Toast.LENGTH_LONG).show();
                     //advertismentSearchManager.searchAdsHome(search_keyword.getText().toString());
-                    if (isHavingResult)
-                        openSearchIntent();
-                    else
-                        Toast.makeText(getApplication(), "No matching results found", Toast.LENGTH_LONG).show();
+                    openSearchIntent();
                     return true;
                 }
                 return false;
@@ -106,11 +103,12 @@ public class HomeAdSearch extends AppCompatActivity implements TextWatcher, Adve
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+        isHavingResult = false;
     }
 
     @Override
     public void afterTextChanged(Editable editable) {
+        isHavingResult = false;
         if (!search_keyword.getText().toString().trim().isEmpty())
             advertismentSearchManager.searchAdsHome(search_keyword.getText().toString().trim());
         else {
@@ -121,25 +119,27 @@ public class HomeAdSearch extends AppCompatActivity implements TextWatcher, Adve
 
     @Override
     public void onSearchComplete(List<String> ids, List<Advertisement> ads) {
-        if (!search_keyword.getText().toString().trim().isEmpty()) {
+        if (ids.size() > 0)
             isHavingResult = true;
+        if (!search_keyword.getText().toString().trim().isEmpty()) {
             recycleAdapterForSearchAds.setData(ads);
             recycleAdapterForSearchAds.notifyDataSetChanged();
         } else {
-            isHavingResult = false;
             recycleAdapterForSearchAds.setData(new ArrayList<Advertisement>());
             recycleAdapterForSearchAds.notifyDataSetChanged();
         }
     }
 
     private void openSearchIntent() {
-        if (!search_keyword.getText().toString().trim().isEmpty()) {
+        if (!search_keyword.getText().toString().trim().isEmpty() && isHavingResult) {
             Intent intentEnd = new Intent();
             intentEnd.putExtra(SEARCH_KEY, search_keyword.getText().toString().trim());
             setResult(RESULT_OK, intentEnd);
             finish();
-        } else
+        } else if (search_keyword.getText().toString().trim().isEmpty())
             Toast.makeText(context, "Search keyword cannot be empty", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(getApplication(), "No matching results found", Toast.LENGTH_LONG).show();
     }
 
 }

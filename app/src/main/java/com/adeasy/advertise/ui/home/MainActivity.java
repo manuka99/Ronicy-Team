@@ -98,9 +98,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         if (searchKey != null) {
             searchKey = null;
-            initializeAllFragments();
-            handleHomeFragment();
-        }else{
+            bottomNavigationView.setSelectedItemId(R.id.navHome);
+        } else {
             showExitDialog();
         }
     }
@@ -108,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private void showExitDialog() {
         new AlertDialog.Builder(this)
 
-                .setMessage("Are you sure you exit?")
+                .setMessage("Are you sure you want to exit?")
 
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
@@ -218,20 +217,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     onBackPressed();
                 }
             });
-            getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, home).commit();
         } else {
             changeToolbarHome();
-            getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, home).commit();
         }
+        getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, home).commit();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == SEARCH_BAR_RESULT && resultCode == RESULT_OK && data != null) {
             searchKey = data.getStringExtra(SEARCH_KEY);
-            handleHomeFragment();
             bottomNavigationView.setSelectedItemId(R.id.navHome);
         }
     }
