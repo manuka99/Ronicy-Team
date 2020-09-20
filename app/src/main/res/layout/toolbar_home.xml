@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/colorGreen"
     android:orientation="vertical"
-    android:paddingTop="4dp">
+    android:paddingTop="@dimen/_4sdp">
 
     <LinearLayout
         android:id="@+id/homeMainRonicy"
@@ -15,19 +15,18 @@
 
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:background="@drawable/icon_logo_notification"
             android:contentDescription="@string/image" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:fontFamily="serif"
+            android:layout_marginStart="@dimen/_4sdp"
             android:text="@string/app_name"
             android:textColor="@color/colorWhite"
-            android:textSize="18sp"
+            android:textSize="@dimen/_16sdp"
             android:textStyle="bold"></TextView>
     </LinearLayout>
 
@@ -39,7 +38,7 @@
         android:layout_centerHorizontal="true"
         android:fontFamily="serif"
         android:textColor="@color/colorWhite"
-        android:textSize="14sp"></TextView>
+        android:textSize="@dimen/_12sdp"></TextView>
 
     <!-- Manuka -->
 </RelativeLayout>

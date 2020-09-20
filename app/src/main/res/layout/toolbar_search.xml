@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorGreen"
-    android:padding="@dimen/_12sdp"
+    android:padding="@dimen/_4sdp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorWhite"
-        app:cardCornerRadius="@dimen/_16sdp">
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="@dimen/_14sdp">
 
         <LinearLayout
             android:layout_width="match_parent"

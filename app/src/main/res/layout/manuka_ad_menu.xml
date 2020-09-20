@@ -2,16 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:maxHeight="360dp">
-
-    <!-- Manuka -->
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardUseCompatPadding="true"
-        app:cardCornerRadius="@dimen/_6sdp">
+        app:cardCornerRadius="@dimen/_6sdp"
+        app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,22 +23,21 @@
                     android:id="@+id/adMenuImage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="@dimen/_140sdp"
+                    android:adjustViewBounds="true"
                     android:maxHeight="@dimen/_180sdp"
-                    android:scaleType="centerCrop"
-                    android:adjustViewBounds="true" />
+                    android:minHeight="@dimen/_140sdp"
+                    android:scaleType="centerCrop" />
 
                 <TextView
                     android:id="@+id/adMenuBuyNow"
                     android:layout_width="match_parent"
-                    android:layout_height="34dp"
+                    android:layout_height="@dimen/_24sdp"
                     android:layout_below="@+id/adMenuImage"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="-34dp"
+                    android:layout_marginTop="@dimen/_minus24sdp"
                     android:background="@color/colorGreen"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:paddingLeft="4dp"
                     android:text="Buy Now"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/_12sdp"
@@ -55,8 +51,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
                 android:text="ABCD"
                 android:textColor="#000000"
                 android:textSize="@dimen/_12sdp"
@@ -69,28 +65,28 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="start"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
                 android:text="ABCD"
-                android:textColor="#009664"
+                android:textColor="@color/colorGreen"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold"></TextView>
-
 
             <TextView
                 android:id="@+id/adMenuDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:layout_marginTop="@dimen/_4sdp"
                 android:layout_marginEnd="@dimen/_6sdp"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="@dimen/_4sdp"
                 android:fontFamily="sans-serif-medium"
                 android:text="ABCD"
                 android:textSize="@dimen/_8sdp"></TextView>
 
-
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
+
 </RelativeLayout>
