@@ -32,6 +32,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -43,6 +45,10 @@ public class Search extends Fragment implements CategoryCallback {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private static final String SEARCH_KEY = "search_key";
+
+    private static final int SEARCH_BAR_RESULT = 133;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -94,10 +100,9 @@ public class Search extends Fragment implements CategoryCallback {
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), HomeAdSearch.class));
+                getActivity().startActivityForResult(new Intent(getActivity(), HomeAdSearch.class), SEARCH_BAR_RESULT);
             }
         });
-
         //((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Search Category");
         return view;
     }
@@ -105,7 +110,6 @@ public class Search extends Fragment implements CategoryCallback {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         categoryManager = new CategoryManager(this);
         mSwipeRefreshLayout = view.findViewById(R.id.gridSwipeCat);
         recyclerView = view.findViewById(R.id.GridCategoryRecycle);
@@ -123,7 +127,6 @@ public class Search extends Fragment implements CategoryCallback {
     }
 
     public void loadData() {
-
         PagedList.Config config = new PagedList.Config.Builder()
                 .setInitialLoadSizeHint(4)
                 .setPageSize(4)

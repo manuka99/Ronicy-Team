@@ -128,9 +128,10 @@ public class HomeAdSearch extends AppCompatActivity implements TextWatcher, Adve
 
     private void openSearchIntent() {
         if (!search_keyword.getText().toString().trim().isEmpty()) {
-            Intent intent = new Intent(context, MainActivity.class);
-            intent.putExtra(SEARCH_KEY, search_keyword.getText().toString().trim());
-            startActivity(intent);
+            Intent intentEnd = new Intent();
+            intentEnd.putExtra(SEARCH_KEY, search_keyword.getText().toString().trim());
+            setResult(RESULT_OK,intentEnd);
+            finish();
         } else
             Toast.makeText(context, "Search keyword cannot be empty", Toast.LENGTH_LONG).show();
     }

@@ -1,6 +1,7 @@
 package com.adeasy.advertise.ui.home;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ui.newPost.NewAd;
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private static final String TAG = "MainActivity";
     private static final String SEARCH_KEY = "search_key";
+
+    private static final int SEARCH_BAR_RESULT = 133;
 
     BottomNavigationView bottomNavigationView;
     Toolbar toolbar;
@@ -82,16 +86,23 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void onBackPressed() {
-        ActivityManager mngr = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+//        ActivityManager mngr = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+//
+//        List<ActivityManager.RunningTaskInfo> taskList = mngr.getRunningTasks(10);
+//
+//        if (taskList.get(0).numActivities == 1 &&
+//                taskList.get(0).topActivity.getClassName().equals(this.getClass().getName())) {
+//            Log.i(TAG, "This is last activity in the stack");
+//            showExitDialog();
+//        } else
 
-        List<ActivityManager.RunningTaskInfo> taskList = mngr.getRunningTasks(10);
-
-        if (taskList.get(0).numActivities == 1 &&
-                taskList.get(0).topActivity.getClassName().equals(this.getClass().getName())) {
-            Log.i(TAG, "This is last activity in the stack");
+        if (searchKey != null) {
+            searchKey = null;
+            initializeAllFragments();
+            handleHomeFragment();
+        }else{
             showExitDialog();
-        } else
-            super.onBackPressed();
+        }
     }
 
     private void showExitDialog() {
@@ -164,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         getSupportActionBar().setDisplayShowCustomEnabled(true); // enable overriding the default toolbar_home layout
         //getSupportActionBar().setDisplayShowTitleEnabled(false); // disable the default title element here (for centered title)
         getSupportActionBar().setDisplayShowHomeEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     public void changeToolbarDefault() {
@@ -205,10 +217,38 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     onBackPressed();
                 }
             });
+            getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, home).commit();
         } else {
             changeToolbarHome();
+            getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, home).commit();
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, home).commit();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == SEARCH_BAR_RESULT && resultCode == RESULT_OK && data != null) {
+            searchKey = data.getStringExtra(SEARCH_KEY);
+            handleHomeFragment();
+        }
+    }
+
+    //    @Override
+//    public void onBackPressed() {
+//        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+//        int seletedItemId = bottomNavigationView.getSelectedItemId();
+//        if (R.id.home != seletedItemId) {
+//            setHomeItem(MainActivity.this);
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
+//
+//    public static void setHomeItem(Activity activity) {
+//        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+//                activity.findViewById(R.id.navigation);
+//        bottomNavigationView.setSelectedItemId(R.id.home);
+//    }
 
 }

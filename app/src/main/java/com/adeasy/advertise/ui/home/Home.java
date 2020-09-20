@@ -140,7 +140,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
 
     public void loadData(Query query) {
 
-        advertisementManager.getCount();
+        advertisementManager.getCount(query);
 
         PagedList.Config config = new PagedList.Config.Builder()
                 .setEnablePlaceholders(false)
@@ -314,7 +314,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                 if (adCountText != null)
                     adCountText.setText(task.getResult().size() + " results");
                 if (searchKey != null)
-                    toolbar.setSubtitle(getString(R.string.loading));
+                    toolbar.setSubtitle(task.getResult().size() + " results");
             } catch (NullPointerException e) {
                 Log.i(TAG, "fragments changed");
             }

@@ -351,9 +351,9 @@ public class AdvertisementManager {
     }
 
     //get the total ad count in home
-    public void getCount() {
+    public void getCount(Query query) {
         try {
-            FirebaseFirestore.getInstance().collection(childName).whereEqualTo("availability", true).whereEqualTo("approved", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (advertisementCallback != null)
@@ -364,7 +364,6 @@ public class AdvertisementManager {
             e.printStackTrace();
         }
     }
-
 
     public void getAllAdsByYear(int year) {
         //Date dateFrom = new Date(year, 1, 0); //  date from in string
