@@ -185,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         getSupportActionBar().setDisplayShowCustomEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setSubtitle("");
     }
 
     public void changeToolbarSearch() {
@@ -231,6 +232,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         if (requestCode == SEARCH_BAR_RESULT && resultCode == RESULT_OK && data != null) {
             searchKey = data.getStringExtra(SEARCH_KEY);
             handleHomeFragment();
+            bottomNavigationView.setSelectedItemId(R.id.navHome);
         }
     }
 

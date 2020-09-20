@@ -37,6 +37,7 @@ public class HomeAdSearch extends AppCompatActivity implements TextWatcher, Adve
     RecyclerView recyclerView;
     RecycleAdapterForSearchAds recycleAdapterForSearchAds;
     Context context;
+    Boolean isHavingResult = false;
 
     private static final String TAG = "HomeAdSearch";
     private static final String SEARCH_KEY = "search_key";
@@ -85,7 +86,10 @@ public class HomeAdSearch extends AppCompatActivity implements TextWatcher, Adve
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     //Toast.makeText(getApplication(), search_keyword.getText().toString(), Toast.LENGTH_LONG).show();
                     //advertismentSearchManager.searchAdsHome(search_keyword.getText().toString());
-                    openSearchIntent();
+                    if (isHavingResult)
+                        openSearchIntent();
+                    else
+                        Toast.makeText(getApplication(), "No matching results found", Toast.LENGTH_LONG).show();
                     return true;
                 }
                 return false;
@@ -118,9 +122,11 @@ public class HomeAdSearch extends AppCompatActivity implements TextWatcher, Adve
     @Override
     public void onSearchComplete(List<String> ids, List<Advertisement> ads) {
         if (!search_keyword.getText().toString().trim().isEmpty()) {
+            isHavingResult = true;
             recycleAdapterForSearchAds.setData(ads);
             recycleAdapterForSearchAds.notifyDataSetChanged();
         } else {
+            isHavingResult = false;
             recycleAdapterForSearchAds.setData(new ArrayList<Advertisement>());
             recycleAdapterForSearchAds.notifyDataSetChanged();
         }
@@ -130,7 +136,7 @@ public class HomeAdSearch extends AppCompatActivity implements TextWatcher, Adve
         if (!search_keyword.getText().toString().trim().isEmpty()) {
             Intent intentEnd = new Intent();
             intentEnd.putExtra(SEARCH_KEY, search_keyword.getText().toString().trim());
-            setResult(RESULT_OK,intentEnd);
+            setResult(RESULT_OK, intentEnd);
             finish();
         } else
             Toast.makeText(context, "Search keyword cannot be empty", Toast.LENGTH_LONG).show();
