@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_checked="true"
-        android:color="#00e600"
+        android:color="@color/colorGreen"
         ></item>
     <item android:state_checked="false"
         android:color="@color/cardview_dark_background"

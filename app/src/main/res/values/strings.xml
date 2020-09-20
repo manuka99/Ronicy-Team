@@ -27,8 +27,8 @@
     <string name="living">Living in</string>
 
     <!-- menu -->
-    <string name="menu_location">location</string>
-    <string name="menu_category">category</string>
+    <string name="menu_location">Location</string>
+    <string name="menu_category">Category</string>
     <string name="menu_filter">filter</string>
 
     <!-- enter code-->

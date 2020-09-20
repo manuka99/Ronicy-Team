@@ -29,6 +29,8 @@ import com.adeasy.advertise.helper.ViewHolderAdds;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.search_manager.AdvertismentSearchManager;
+import com.adeasy.advertise.ui.advertisement.CategoryPicker;
+import com.adeasy.advertise.ui.advertisement.HomeAdSearch;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.android.gms.tasks.Task;
@@ -48,7 +50,7 @@ import java.util.List;
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class Home extends Fragment implements AdvertisementCallback, AdvertismentSearchCallback {
+public class Home extends Fragment implements AdvertisementCallback, AdvertismentSearchCallback, View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,7 +62,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     private String mParam2;
 
     Toolbar toolbar;
-    TextView adCountText;
+    TextView adCountText, category_picker;
     RecyclerView recyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     FirestorePagingAdapter<Advertisement, ViewHolderAdds> firestorePagingAdapter;
@@ -68,6 +70,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     String searchKey;
     AdvertismentSearchManager advertismentSearchManager;
     private static final String SEARCH_KEY = "search_key";
+    private static final int CATEGORY_PICKER = 4662;
 
     public Home() {
         // Required empty public constructor
@@ -113,6 +116,9 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         advertisementManager = new AdvertisementManager(this);
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         adCountText = toolbar.findViewById(R.id.adResults);
+        category_picker = view.findViewById(R.id.category_picker);
+
+        category_picker.setOnClickListener(this);
 
         advertismentSearchManager = new AdvertismentSearchManager(this);
 
@@ -136,6 +142,12 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == category_picker)
+            getActivity().startActivityForResult(new Intent(getActivity(), CategoryPicker.class), CATEGORY_PICKER);
     }
 
     public void loadData(Query query) {
