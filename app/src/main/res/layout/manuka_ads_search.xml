@@ -15,10 +15,10 @@
         android:paddingEnd="@dimen/_14sdp">
 
         <ImageView
-            android:layout_width="@dimen/_16sdp"
-            android:layout_height="@dimen/_16sdp"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/icon_history" />
+            android:src="@drawable/icon_notif_post_another_ad" />
 
         <LinearLayout
             android:layout_width="match_parent"

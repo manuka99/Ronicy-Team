@@ -35,42 +35,45 @@ public class AdvertismentSearchManager {
     }
 
     public void searchAdsHome(String keyword) {
-        Query query = new Query(keyword)
-                .setAttributesToRetrieve("id", "title", "price", "placedDate")
-                .setHitsPerPage(50);
-        index.searchAsync(query, new CompletionHandler() {
-            @Override
-            public void requestCompleted(JSONObject content, AlgoliaException error) {
-                if (advertismentSearchCallback != null) {
-                    try {
-                        JSONArray hits = content.getJSONArray("hits");
-                        List<String> adIDs = new ArrayList<>();
+        if (keyword != null && !keyword.isEmpty()) {
+            Query query = new Query(keyword)
+                    .setAttributesToRetrieve("id", "title", "price", "placedDate", "categoryID")
+                    .setHitsPerPage(50);
+            index.searchAsync(query, new CompletionHandler() {
+                @Override
+                public void requestCompleted(JSONObject content, AlgoliaException error) {
+                    if (advertismentSearchCallback != null) {
+                        try {
+                            JSONArray hits = content.getJSONArray("hits");
+                            List<String> adIDs = new ArrayList<>();
 
-                        List<Advertisement> advertisements = new ArrayList<>();
+                            List<Advertisement> advertisements = new ArrayList<>();
 
-                        for(int i = 0; i < hits.length(); ++i){
-                            JSONObject hit_object = hits.getJSONObject(i);
-                            adIDs.add(hit_object.getString("id"));
+                            for (int i = 0; i < hits.length(); ++i) {
+                                JSONObject hit_object = hits.getJSONObject(i);
+                                adIDs.add(hit_object.getString("id"));
 
-                            Advertisement advertisement = new Advertisement();
-                            advertisement.setId(hit_object.getString("id"));
-                            advertisement.setTitle(hit_object.getString("title"));
-                            advertisement.setPrice(hit_object.getDouble("price"));
+                                Advertisement advertisement = new Advertisement();
+                                advertisement.setId(hit_object.getString("id"));
+                                advertisement.setTitle(hit_object.getString("title"));
+                                advertisement.setPrice(hit_object.getDouble("price"));
 
-                            String placedDate = hit_object.getString("placedDate");
-                            //advertisement.setPreetyTime(placedDate);
-                            //advertisement.setPlacedDate();
-                            advertisements.add(advertisement);
+                                String placedDate = hit_object.getString("placedDate");
+                                advertisement.setCategoryID(hit_object.getString("categoryID"));
+                                //advertisement.setPreetyTime(placedDate);
+                                //advertisement.setPlacedDate();
+                                advertisements.add(advertisement);
+                            }
+                            advertismentSearchCallback.onSearchComplete(adIDs, advertisements);
+                            //Log.i(TAG, " hits: " + content.getString("hits"));
+                            Log.i(TAG, " adIDs: " + adIDs);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                        advertismentSearchCallback.onSearchComplete(adIDs, advertisements);
-                        //Log.i(TAG, " hits: " + content.getString("hits"));
-                        Log.i(TAG, " adIDs: " + adIDs);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
                 }
-            }
-        });
+            });
+        }
     }
 
     public void destroy() {

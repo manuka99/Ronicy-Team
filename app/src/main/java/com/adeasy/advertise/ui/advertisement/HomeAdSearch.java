@@ -5,6 +5,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,6 +24,7 @@ import com.adeasy.advertise.adapter.RecycleAdapterForSearchAds;
 import com.adeasy.advertise.callback.AdvertismentSearchCallback;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.search_manager.AdvertismentSearchManager;
+import com.adeasy.advertise.ui.home.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +36,17 @@ public class HomeAdSearch extends AppCompatActivity implements TextWatcher, Adve
     AdvertismentSearchManager advertismentSearchManager;
     RecyclerView recyclerView;
     RecycleAdapterForSearchAds recycleAdapterForSearchAds;
+    Context context;
+
+    private static final String TAG = "HomeAdSearch";
+    private static final String SEARCH_KEY = "search_key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manuka_activity_home_ad_search);
+
+        context = this;
 
         toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.myaddsRecycle);
@@ -45,6 +54,9 @@ public class HomeAdSearch extends AppCompatActivity implements TextWatcher, Adve
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24_search_key);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        recycleAdapterForSearchAds = new RecycleAdapterForSearchAds(context);
+        recyclerView.setAdapter(recycleAdapterForSearchAds);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +75,7 @@ public class HomeAdSearch extends AppCompatActivity implements TextWatcher, Adve
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()) {
             @Override
             public boolean canScrollVertically() {
-                return false;
+                return true;
             }
         });
 
@@ -71,8 +83,9 @@ public class HomeAdSearch extends AppCompatActivity implements TextWatcher, Adve
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    Toast.makeText(getApplication(), search_keyword.getText().toString(), Toast.LENGTH_LONG).show();
-                    advertismentSearchManager.searchAdsHome(search_keyword.getText().toString());
+                    //Toast.makeText(getApplication(), search_keyword.getText().toString(), Toast.LENGTH_LONG).show();
+                    //advertismentSearchManager.searchAdsHome(search_keyword.getText().toString());
+                    openSearchIntent();
                     return true;
                 }
                 return false;
@@ -94,20 +107,32 @@ public class HomeAdSearch extends AppCompatActivity implements TextWatcher, Adve
 
     @Override
     public void afterTextChanged(Editable editable) {
-        if (editable.toString().length() > 0)
-            advertismentSearchManager.searchAdsHome(editable.toString());
+        if (!search_keyword.getText().toString().trim().isEmpty())
+            advertismentSearchManager.searchAdsHome(search_keyword.getText().toString().trim());
         else {
-            recycleAdapterForSearchAds = new RecycleAdapterForSearchAds(new ArrayList<Advertisement>());
-            recyclerView.setAdapter(recycleAdapterForSearchAds);
+            recycleAdapterForSearchAds.setData(new ArrayList<Advertisement>());
             recycleAdapterForSearchAds.notifyDataSetChanged();
         }
     }
 
     @Override
     public void onSearchComplete(List<String> ids, List<Advertisement> ads) {
-        recycleAdapterForSearchAds = new RecycleAdapterForSearchAds(ads);
-        recyclerView.setAdapter(recycleAdapterForSearchAds);
-        recycleAdapterForSearchAds.notifyDataSetChanged();
+        if (!search_keyword.getText().toString().trim().isEmpty()) {
+            recycleAdapterForSearchAds.setData(ads);
+            recycleAdapterForSearchAds.notifyDataSetChanged();
+        } else {
+            recycleAdapterForSearchAds.setData(new ArrayList<Advertisement>());
+            recycleAdapterForSearchAds.notifyDataSetChanged();
+        }
+    }
+
+    private void openSearchIntent() {
+        if (!search_keyword.getText().toString().trim().isEmpty()) {
+            Intent intent = new Intent(context, MainActivity.class);
+            intent.putExtra(SEARCH_KEY, search_keyword.getText().toString().trim());
+            startActivity(intent);
+        } else
+            Toast.makeText(context, "Search keyword cannot be empty", Toast.LENGTH_LONG).show();
     }
 
 }

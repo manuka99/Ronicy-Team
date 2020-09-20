@@ -1,5 +1,7 @@
 package com.adeasy.advertise.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +25,11 @@ import java.util.List;
 public class RecycleAdapterForSearchAds extends RecyclerView.Adapter<ViewHolderSearchAds> {
 
     private List<Advertisement> advertisementList;
+    private Context context;
 
-    public RecycleAdapterForSearchAds(List<Advertisement> advertisementList) {
-        if (advertisementList != null)
-            this.advertisementList = advertisementList;
-        else
-            this.advertisementList = new ArrayList<>();
+    public RecycleAdapterForSearchAds(Context context) {
+        this.context = context;
+        this.advertisementList = new ArrayList<>();
     }
 
     @NonNull
@@ -46,8 +47,10 @@ public class RecycleAdapterForSearchAds extends RecyclerView.Adapter<ViewHolderS
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                advertisementList.remove(position);
-                notifyDataSetChanged();
+                Intent intent = new Intent(context, com.adeasy.advertise.ui.advertisement.Advertisement.class);
+                intent.putExtra("adID", advertisementList.get(position).getId());
+                intent.putExtra("adCID", advertisementList.get(position).getCategoryID());
+                context.startActivity(intent);
             }
         });
     }
@@ -55,6 +58,13 @@ public class RecycleAdapterForSearchAds extends RecyclerView.Adapter<ViewHolderS
     @Override
     public int getItemCount() {
         return advertisementList.size();
+    }
+
+    public void setData(List<Advertisement> ads) {
+        if (advertisementList != null)
+            this.advertisementList = ads;
+        else
+            this.advertisementList = new ArrayList<>();
     }
 
 }

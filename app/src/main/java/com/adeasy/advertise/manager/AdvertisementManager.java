@@ -253,7 +253,11 @@ public class AdvertisementManager {
     }
 
     public Query viewAdds() {
-        return firebaseFirestore.collection(childName).whereEqualTo("availability", true).whereEqualTo("approved", true).orderBy("placedDate", Query.Direction.DESCENDING);
+        return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("availability", true).whereEqualTo("approved", true).orderBy("placedDate", Query.Direction.DESCENDING);
+    }
+
+    public Query viewAddsSearch(List<String> adIds) {
+        return FirebaseFirestore.getInstance().collection(childName).whereIn("id", adIds).whereEqualTo("availability", true).whereEqualTo("approved", true).orderBy("placedDate", Query.Direction.DESCENDING);
     }
 
     public Query viewMyAddsAll() {
@@ -349,7 +353,7 @@ public class AdvertisementManager {
     //get the total ad count in home
     public void getCount() {
         try {
-            firebaseFirestore.collection(childName).whereEqualTo("availability", true).whereEqualTo("approved", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            FirebaseFirestore.getInstance().collection(childName).whereEqualTo("availability", true).whereEqualTo("approved", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (advertisementCallback != null)

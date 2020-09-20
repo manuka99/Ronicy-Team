@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ActivityManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.ui.newPost.NewAd;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.List;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -26,6 +29,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
+    private static final String SEARCH_KEY = "search_key";
+
     BottomNavigationView bottomNavigationView;
     Toolbar toolbar;
     Home home;
@@ -33,11 +38,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     Chat chat;
     Account account;
     int selectedMenueID = 0;
+    String searchKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        try {
+            searchKey = getIntent().getStringExtra(SEARCH_KEY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -70,7 +82,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void onBackPressed() {
-        showExitDialog();
+        ActivityManager mngr = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+
+        List<ActivityManager.RunningTaskInfo> taskList = mngr.getRunningTasks(10);
+
+        if (taskList.get(0).numActivities == 1 &&
+                taskList.get(0).topActivity.getClassName().equals(this.getClass().getName())) {
+            Log.i(TAG, "This is last activity in the stack");
+            showExitDialog();
+        } else
+            super.onBackPressed();
     }
 
     private void showExitDialog() {
@@ -102,8 +123,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (menuItem.getItemId()) {
             case R.id.navHome:
                 selectedMenueID = menuItem.getItemId();
-                changeToolbarHome();
-                getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, home).commit();
+                handleHomeFragment();
                 return true;
 
             case R.id.navSearch:
@@ -170,6 +190,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         search = new Search();
         chat = new Chat();
         account = new Account();
+    }
+
+    private void handleHomeFragment() {
+        if (searchKey != null) {
+            changeToolbarDefault();
+            Bundle bundle = new Bundle();
+            bundle.putString(SEARCH_KEY, searchKey);
+            home.setArguments(bundle);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
+        } else {
+            changeToolbarHome();
+        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, home).commit();
     }
 
 }

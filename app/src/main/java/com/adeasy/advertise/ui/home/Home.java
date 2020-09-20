@@ -24,15 +24,18 @@ import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.AdvertisementCallback;
+import com.adeasy.advertise.callback.AdvertismentSearchCallback;
 import com.adeasy.advertise.helper.ViewHolderAdds;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
+import com.adeasy.advertise.search_manager.AdvertismentSearchManager;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -45,7 +48,7 @@ import java.util.List;
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class Home extends Fragment implements AdvertisementCallback {
+public class Home extends Fragment implements AdvertisementCallback, AdvertismentSearchCallback {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,6 +65,9 @@ public class Home extends Fragment implements AdvertisementCallback {
     SwipeRefreshLayout mSwipeRefreshLayout;
     FirestorePagingAdapter<Advertisement, ViewHolderAdds> firestorePagingAdapter;
     AdvertisementManager advertisementManager;
+    String searchKey;
+    AdvertismentSearchManager advertismentSearchManager;
+    private static final String SEARCH_KEY = "search_key";
 
     public Home() {
         // Required empty public constructor
@@ -98,12 +104,7 @@ public class Home extends Fragment implements AdvertisementCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         mSwipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
         recyclerView = view.findViewById(R.id.adMenuRecyclerView);
@@ -111,10 +112,33 @@ public class Home extends Fragment implements AdvertisementCallback {
         recyclerView.setHasFixedSize(false);
         advertisementManager = new AdvertisementManager(this);
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-         adCountText = toolbar.findViewById(R.id.adResults);
+        adCountText = toolbar.findViewById(R.id.adResults);
+
+        advertismentSearchManager = new AdvertismentSearchManager(this);
+
+        try {
+            searchKey = getArguments().getString(SEARCH_KEY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (searchKey != null) {
+            toolbar.setTitle(searchKey);
+            toolbar.setSubtitle(getString(R.string.loading));
+            advertismentSearchManager.searchAdsHome(searchKey);
+        } else {
+            loadData(advertisementManager.viewAdds());
+        }
+
+        return view;
     }
 
-    public void loadData() {
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    public void loadData(Query query) {
 
         advertisementManager.getCount();
 
@@ -126,7 +150,7 @@ public class Home extends Fragment implements AdvertisementCallback {
 
         FirestorePagingOptions<Advertisement> options = new FirestorePagingOptions.Builder<Advertisement>()
                 .setLifecycleOwner(this)
-                .setQuery(advertisementManager.viewAdds(), config, Advertisement.class)
+                .setQuery(query, config, Advertisement.class)
                 .build();
 
         advertisementManager.viewAdds().addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -161,7 +185,7 @@ public class Home extends Fragment implements AdvertisementCallback {
                         try {
                             Picasso.get().load(advertisement.getImageUrls().get(0)).into(holder.imageView);
 
-                        }catch (Exception e){
+                        } catch (Exception e) {
 
                         }
 
@@ -196,6 +220,7 @@ public class Home extends Fragment implements AdvertisementCallback {
                         super.onLoadingStateChanged(state);
                         switch (state) {
                             case LOADING_INITIAL:
+                                mSwipeRefreshLayout.setRefreshing(true);
                             case LOADING_MORE:
                                 // Do your loading animation
                                 mSwipeRefreshLayout.setRefreshing(true);
@@ -212,6 +237,7 @@ public class Home extends Fragment implements AdvertisementCallback {
                                 break;
 
                             case ERROR:
+                                mSwipeRefreshLayout.setRefreshing(false);
                                 retry();
                                 break;
                         }
@@ -230,27 +256,34 @@ public class Home extends Fragment implements AdvertisementCallback {
 
         firestorePagingAdapter.startListening();
         recyclerView.setAdapter(firestorePagingAdapter);
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        loadData();
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 firestorePagingAdapter.refresh();
             }
         });
-        firestorePagingAdapter.startListening();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (firestorePagingAdapter != null) {
+            mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    firestorePagingAdapter.refresh();
+                }
+            });
+            firestorePagingAdapter.startListening();
+        }
     }
 
     //Stop Listening Adapter
     @Override
     public void onStop() {
         super.onStop();
-        firestorePagingAdapter.stopListening();
+        if (firestorePagingAdapter != null)
+            firestorePagingAdapter.stopListening();
     }
 
 
@@ -278,8 +311,11 @@ public class Home extends Fragment implements AdvertisementCallback {
     public void onAdCount(Task<QuerySnapshot> task) {
         if (task.isSuccessful()) {
             try {
-                adCountText.setText(task.getResult().size() + " results");
-            }catch (NullPointerException e){
+                if (adCountText != null)
+                    adCountText.setText(task.getResult().size() + " results");
+                if (searchKey != null)
+                    toolbar.setSubtitle(getString(R.string.loading));
+            } catch (NullPointerException e) {
                 Log.i(TAG, "fragments changed");
             }
         } else {
@@ -301,6 +337,11 @@ public class Home extends Fragment implements AdvertisementCallback {
     public void onDestroyView() {
         super.onDestroyView();
         advertisementManager.destroy();
+    }
+
+    @Override
+    public void onSearchComplete(List<String> ids, List<Advertisement> advertisementList) {
+        loadData(advertisementManager.viewAddsSearch(ids));
     }
 
 }
