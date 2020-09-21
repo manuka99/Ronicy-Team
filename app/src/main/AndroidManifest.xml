@@ -29,7 +29,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.advertisement.CategoryPicker"></activity>
+        <activity android:name=".ui.advertisement.LocationPicker"></activity>
+        <activity android:name=".ui.advertisement.CategoryPicker" />
         <activity android:name=".ui.advertisement.HomeAdSearch" />
         <activity android:name=".ui.administration.order.SingleProductAnalysis" />
         <activity android:name=".ui.administration.order.MoreOnOrder" />

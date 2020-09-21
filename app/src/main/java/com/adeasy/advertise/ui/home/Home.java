@@ -32,6 +32,7 @@ import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.search_manager.AdvertismentSearchManager;
 import com.adeasy.advertise.ui.advertisement.CategoryPicker;
 import com.adeasy.advertise.ui.advertisement.HomeAdSearch;
+import com.adeasy.advertise.ui.advertisement.LocationPicker;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.android.gms.tasks.Task;
@@ -63,16 +64,18 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     private String mParam2;
 
     Toolbar toolbar;
-    TextView adCountText, category_picker;
+    TextView adCountText, category_picker, location_picker;
     RecyclerView recyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     FirestorePagingAdapter<Advertisement, ViewHolderAdds> firestorePagingAdapter;
     AdvertisementManager advertisementManager;
-    String searchKey;
+    String searchKey, location_selected;
     Category category_selected;
     AdvertismentSearchManager advertismentSearchManager;
     private static final String SEARCH_KEY = "search_key";
     private static final String CATEGORY_SELECTED = "category_selected";
+    private static final String LOCATION_SELECTED = "location_selected";
+    private static final int LOCATION_PICKER = 6512;
     private static final int CATEGORY_PICKER = 4662;
 
     public Home() {
@@ -120,9 +123,9 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         adCountText = toolbar.findViewById(R.id.adResults);
         category_picker = view.findViewById(R.id.category_picker);
-
+        location_picker = view.findViewById(R.id.location_picker);
         category_picker.setOnClickListener(this);
-
+        location_picker.setOnClickListener(this);
         advertismentSearchManager = new AdvertismentSearchManager(this);
 
         try {
@@ -137,14 +140,34 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             e.printStackTrace();
         }
 
+        try {
+            location_selected = getArguments().getString(LOCATION_SELECTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         if (searchKey != null) {
             toolbar.setTitle(searchKey);
             toolbar.setSubtitle(getString(R.string.loading));
             advertismentSearchManager.searchAdsHome(searchKey);
-        } else if (category_selected != null) {
+        } else if (category_selected != null && location_selected == null) {
             toolbar.setTitle(category_selected.getName());
+            category_picker.setText(category_selected.getName());
             toolbar.setSubtitle(getString(R.string.loading));
             loadData(advertisementManager.viewAddsByCategoryHome(category_selected.getId()));
+        } else if (category_selected == null && location_selected != null) {
+            location_picker.setText(location_selected);
+            toolbar.setSubtitle(getString(R.string.loading));
+            loadData(advertisementManager.viewAddsByLocation(location_selected));
+        } else if (category_selected == null && location_selected != null) {
+            toolbar.setTitle(location_selected);
+            toolbar.setSubtitle(getString(R.string.loading));
+            loadData(advertisementManager.viewAddsByLocation(location_selected));
+        } else if (category_selected != null && location_selected != null) {
+            toolbar.setTitle(category_selected.getName());
+            category_picker.setText(category_selected.getName());
+            toolbar.setSubtitle(getString(R.string.loading));
+            loadData(advertisementManager.viewAddsByLocationAndCategory(location_selected, category_selected.getId()));
         } else {
             loadData(advertisementManager.viewAdds());
         }
@@ -161,6 +184,8 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     public void onClick(View view) {
         if (view == category_picker)
             getActivity().startActivityForResult(new Intent(getActivity(), CategoryPicker.class), CATEGORY_PICKER);
+        if (view == location_picker)
+            getActivity().startActivityForResult(new Intent(getActivity(), LocationPicker.class), LOCATION_PICKER);
     }
 
     public void loadData(Query query) {
@@ -338,7 +363,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             try {
                 if (adCountText != null)
                     adCountText.setText(task.getResult().size() + " results");
-                if (searchKey != null || category_selected != null)
+                if (searchKey != null || category_selected != null || location_selected != null)
                     toolbar.setSubtitle(task.getResult().size() + " results");
             } catch (NullPointerException e) {
                 Log.i(TAG, "fragments changed");

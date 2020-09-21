@@ -37,9 +37,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private static final String TAG = "MainActivity";
     private static final String SEARCH_KEY = "search_key";
     private static final String CATEGORY_SELECTED = "category_selected";
+    private static final String LOCATION_SELECTED = "location_selected";
 
     private static final int SEARCH_BAR_RESULT = 133;
     private static final int CATEGORY_PICKER = 4662;
+    private static final int LOCATION_PICKER = 6512;
 
     BottomNavigationView bottomNavigationView;
     Toolbar toolbar;
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     Chat chat;
     Account account;
     int selectedMenueID = 0;
-    String searchKey;
+    String searchKey, location_selected;
     Category categorySelected;
 
     HomeViewModel homeViewModel;
@@ -76,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         bottomNavigationView.setSelectedItemId(R.id.navHome);
-
 
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
 
@@ -116,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //            showExitDialog();
 //        } else
 
-        if (searchKey != null || categorySelected != null) {
+        if (searchKey != null || categorySelected != null || location_selected != null) {
             searchKey = null;
             categorySelected = null;
             bottomNavigationView.setSelectedItemId(R.id.navHome);
@@ -210,8 +211,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public void changeToolbarSearch() {
         toolbar.setVisibility(View.GONE);
-
-
         getSupportActionBar().setDisplayShowCustomEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
@@ -226,12 +225,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void handleHomeFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putString(SEARCH_KEY, searchKey);
+        bundle.putSerializable(CATEGORY_SELECTED, categorySelected);
+        bundle.putString(LOCATION_SELECTED, location_selected);
+        home.setArguments(bundle);
         if (searchKey != null || categorySelected != null) {
             changeToolbarDefault();
-            Bundle bundle = new Bundle();
-            bundle.putString(SEARCH_KEY, searchKey);
-            bundle.putSerializable(CATEGORY_SELECTED, categorySelected);
-            home.setArguments(bundle);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -253,6 +253,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             bottomNavigationView.setSelectedItemId(R.id.navHome);
         } else if (requestCode == CATEGORY_PICKER && resultCode == RESULT_OK && data != null) {
             categorySelected = (Category) data.getSerializableExtra(CATEGORY_SELECTED);
+            bottomNavigationView.setSelectedItemId(R.id.navHome);
+        } else if (requestCode == LOCATION_PICKER && resultCode == RESULT_OK && data != null) {
+            location_selected = data.getStringExtra(LOCATION_SELECTED);
+            System.out.println("main: " + location_selected);
             bottomNavigationView.setSelectedItemId(R.id.navHome);
         }
     }

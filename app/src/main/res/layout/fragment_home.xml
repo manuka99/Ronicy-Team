@@ -28,18 +28,19 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/location_picker"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/colorWhite"
                     android:drawableStart="@drawable/ic_baseline_location_on_24"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="serif"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="@dimen/_16sdp"
                     android:text="@string/menu_location"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorBlackTextLite"
+                    android:textColor="@color/colorBlackText"
                     android:textSize="@dimen/_12sdp" />
 
 
@@ -59,12 +60,12 @@
                     android:layout_weight="1"
                     android:background="@color/colorWhite"
                     android:drawableStart="@drawable/ic_baseline_label_24"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="serif"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="@dimen/_16sdp"
                     android:text="@string/menu_category"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorBlackTextLite"
+                    android:textColor="@color/colorBlackText"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
