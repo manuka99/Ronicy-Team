@@ -48,11 +48,14 @@
 
             <TextView
                 android:id="@+id/adMenuTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_6sdp"
                 android:layout_marginEnd="@dimen/_6sdp"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:text="ABCD"
                 android:textColor="#000000"
                 android:textSize="@dimen/_12sdp"
@@ -60,7 +63,7 @@
 
             <TextView
                 android:id="@+id/adMenuPrice"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
@@ -68,6 +71,8 @@
                 android:layout_marginStart="@dimen/_6sdp"
                 android:layout_marginTop="@dimen/_2sdp"
                 android:layout_marginEnd="@dimen/_2sdp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="ABCD"
                 android:textColor="@color/colorGreen"
                 android:textSize="@dimen/_12sdp"

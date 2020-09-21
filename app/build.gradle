@@ -99,6 +99,7 @@ dependencies {
 
     implementation 'com.algolia:algoliasearch-android:3.+'
 
+    implementation 'com.github.irfaan008:IRBottomNavigationView:1.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

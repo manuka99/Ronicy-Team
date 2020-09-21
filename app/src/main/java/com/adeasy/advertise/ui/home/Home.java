@@ -133,7 +133,6 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         location_picker.setOnClickListener(this);
         advertismentSearchManager = new AdvertismentSearchManager(this);
 
-
         try {
             searchKey = getArguments().getString(SEARCH_KEY);
         } catch (Exception e) {
@@ -152,32 +151,6 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             e.printStackTrace();
         }
 
-//        if (searchKey != null) {
-//            toolbar.setTitle(searchKey);
-//            toolbar.setSubtitle(getString(R.string.loading));
-//            advertismentSearchManager.searchAdsHome(searchKey);
-//        } else if (category_selected != null && location_selected == null) {
-//            toolbar.setTitle(category_selected.getName());
-//            category_picker.setText(category_selected.getName());
-//            toolbar.setSubtitle(getString(R.string.loading));
-//            loadData(advertisementManager.viewAddsByCategoryHome(category_selected.getId()));
-//        } else if (category_selected == null && location_selected != null) {
-//            location_picker.setText(location_selected);
-//            toolbar.setSubtitle(getString(R.string.loading));
-//            loadData(advertisementManager.viewAddsByLocation(location_selected));
-//        } else if (category_selected == null && location_selected != null) {
-//            toolbar.setTitle(location_selected);
-//            toolbar.setSubtitle(getString(R.string.loading));
-//            loadData(advertisementManager.viewAddsByLocation(location_selected));
-//        } else if (category_selected != null && location_selected != null) {
-//            toolbar.setTitle(category_selected.getName());
-//            category_picker.setText(category_selected.getName());
-//            toolbar.setSubtitle(getString(R.string.loading));
-//            loadData(advertisementManager.viewAddsByLocationAndCategory(location_selected, category_selected.getId()));
-//        } else {
-//            loadData(advertisementManager.viewAdds());
-//        }
-
         toolbar.setSubtitle(getString(R.string.loading));
 
         if (category_selected != null) {
@@ -187,8 +160,10 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         if (location_selected != null)
             location_picker.setText(location_selected);
 
-        if (searchKey != null)
+        if (searchKey != null) {
             toolbar.setTitle(searchKey);
+            advertismentSearchManager.searchAdsHome(searchKey);
+        }
 
 
         loadData(advertisementManager.viewAddsHome(search_ids, category_selected, location_selected, aSwitch.isChecked()));
@@ -226,115 +201,117 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                 .setQuery(query, config, Advertisement.class)
                 .build();
 
-        advertisementManager.viewAdds().addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot snapshot,
-                                @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    // Handle error
-                    //...
-                    return;
-                }
+//        advertisementManager.viewAdds().addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot snapshot,
+//                                @Nullable FirebaseFirestoreException e) {
+//                if (e != null) {
+//                    // Handle error
+//                    return;
+//                }
+//
+//                // Convert query snapshot to a list of chats
+//                List<Advertisement> ads = snapshot.toObjects(Advertisement.class);
+//
+//            }
+//        });
 
-                // Convert query snapshot to a list of chats
-                List<Advertisement> chats = snapshot.toObjects(Advertisement.class);
+        if (firestorePagingAdapter != null)
+            firestorePagingAdapter.updateOptions(options);
 
-                // Update UI
-                // ...
-            }
-        });
+        else {
+            firestorePagingAdapter =
+                    new FirestorePagingAdapter<Advertisement, ViewHolderAdds>(
+                            options
+                    ) {
+                        @Override
+                        protected void onBindViewHolder(@NonNull final ViewHolderAdds holder, final int position, @NonNull Advertisement advertisement) {
 
-        firestorePagingAdapter =
-                new FirestorePagingAdapter<Advertisement, ViewHolderAdds>(
-                        options
-                ) {
-                    @Override
-                    protected void onBindViewHolder(@NonNull final ViewHolderAdds holder, final int position, @NonNull Advertisement advertisement) {
+                            holder.titleView.setText(advertisement.getTitle());
+                            holder.dateView.setText(advertisement.getPreetyTime());
+                            holder.priceView.setText(advertisement.getPreetyCurrency());
 
-                        holder.titleView.setText(advertisement.getTitle());
-                        holder.dateView.setText(advertisement.getPreetyTime());
-                        holder.priceView.setText(advertisement.getPreetyCurrency());
+                            try {
+                                Picasso.get().load(advertisement.getImageUrls().get(0)).into(holder.imageView);
 
-                        try {
-                            Picasso.get().load(advertisement.getImageUrls().get(0)).into(holder.imageView);
+                            } catch (Exception e) {
 
-                        } catch (Exception e) {
-
-                        }
-
-                        if (advertisement.isBuynow())
-                            holder.buyNow.setVisibility(View.VISIBLE);
-
-                        else
-                            holder.buyNow.setVisibility(View.GONE);
-
-                        holder.itemView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(getContext(), com.adeasy.advertise.ui.advertisement.Advertisement.class);
-                                intent.putExtra("adID", getItem(position).getId());
-                                intent.putExtra("adCID", (String) getItem(position).get("categoryID"));
-                                startActivity(intent);
-                                //Toast.makeText(view.getContext(), getItem(position).getId(), Toast.LENGTH_SHORT).show();
                             }
-                        });
 
-                    }
+                            if (advertisement.isBuynow())
+                                holder.buyNow.setVisibility(View.VISIBLE);
 
-                    @NonNull
-                    @Override
-                    public ViewHolderAdds onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manuka_ad_menu, parent, false);
-                        return new ViewHolderAdds(view);
-                    }
+                            else
+                                holder.buyNow.setVisibility(View.GONE);
 
-                    @Override
-                    protected void onLoadingStateChanged(@NonNull com.firebase.ui.firestore.paging.LoadingState state) {
-                        super.onLoadingStateChanged(state);
-                        switch (state) {
-                            case LOADING_INITIAL:
-                                mSwipeRefreshLayout.setRefreshing(true);
-                            case LOADING_MORE:
-                                // Do your loading animation
-                                mSwipeRefreshLayout.setRefreshing(true);
-                                break;
+                            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(getContext(), com.adeasy.advertise.ui.advertisement.Advertisement.class);
+                                    intent.putExtra("adID", getItem(position).getId());
+                                    intent.putExtra("adCID", (String) getItem(position).get("categoryID"));
+                                    startActivity(intent);
+                                    //Toast.makeText(view.getContext(), getItem(position).getId(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
-                            case LOADED:
-                                // Stop Animation
-                                mSwipeRefreshLayout.setRefreshing(false);
-                                break;
-
-                            case FINISHED:
-                                Toast.makeText(getContext(), "No more ads..", Toast.LENGTH_SHORT).show();
-                                mSwipeRefreshLayout.setRefreshing(false);
-                                break;
-
-                            case ERROR:
-                                mSwipeRefreshLayout.setRefreshing(false);
-                                retry();
-                                break;
                         }
-                    }
 
-                    @Override
-                    protected void onError(@NonNull Exception e) {
-                        super.onError(e);
-                        mSwipeRefreshLayout.setRefreshing(false);
-                        e.printStackTrace();
-                        //Handle Error
-                        refresh();
-                    }
+                        @NonNull
+                        @Override
+                        public ViewHolderAdds onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manuka_ad_menu, parent, false);
+                            return new ViewHolderAdds(view);
+                        }
 
-                };
+                        @Override
+                        protected void onLoadingStateChanged(@NonNull com.firebase.ui.firestore.paging.LoadingState state) {
+                            super.onLoadingStateChanged(state);
+                            switch (state) {
+                                case LOADING_INITIAL:
+                                    mSwipeRefreshLayout.setRefreshing(true);
+                                case LOADING_MORE:
+                                    // Do your loading animation
+                                    mSwipeRefreshLayout.setRefreshing(true);
+                                    break;
 
-        firestorePagingAdapter.startListening();
-        recyclerView.setAdapter(firestorePagingAdapter);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                firestorePagingAdapter.refresh();
-            }
-        });
+                                case LOADED:
+                                    // Stop Animation
+                                    mSwipeRefreshLayout.setRefreshing(false);
+                                    break;
+
+                                case FINISHED:
+                                    Toast.makeText(getContext(), "No more ads..", Toast.LENGTH_SHORT).show();
+                                    mSwipeRefreshLayout.setRefreshing(false);
+                                    break;
+
+                                case ERROR:
+                                    mSwipeRefreshLayout.setRefreshing(false);
+                                    retry();
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        protected void onError(@NonNull Exception e) {
+                            super.onError(e);
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            e.printStackTrace();
+                            //Handle Error
+                            refresh();
+                        }
+
+                    };
+
+            firestorePagingAdapter.startListening();
+            recyclerView.setAdapter(firestorePagingAdapter);
+            mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    firestorePagingAdapter.refresh();
+                }
+            });
+        }
     }
 
     @Override
@@ -353,10 +330,9 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                loadData(advertisementManager.viewAddsHome(search_ids, category_selected, location_selected, aSwitch.isChecked()));
+                loadData(advertisementManager.viewAddsHome(search_ids, category_selected, location_selected, b));
             }
         });
-
     }
 
     //Stop Listening Adapter
@@ -422,7 +398,9 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
 
     @Override
     public void onSearchComplete(List<String> ids, List<Advertisement> advertisementList) {
-        loadData(advertisementManager.viewAddsSearch(ids));
+        search_ids = ids;
+        Log.i(TAG, "ids: " + ids);
+        loadData(advertisementManager.viewAddsHome(ids, category_selected, location_selected, aSwitch.isChecked()));
     }
 
 }

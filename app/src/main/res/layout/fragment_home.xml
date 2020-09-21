@@ -13,7 +13,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="@dimen/_2sdp">
+        app:cardElevation="@dimen/_4sdp"
+        app:cardUseCompatPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +36,7 @@
                     <Button
                         android:id="@+id/location_picker"
                         style="?android:attr/borderlessButtonStyle"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/colorWhite"
@@ -59,8 +60,10 @@
 
                     <Button
                         android:id="@+id/category_picker"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         style="?android:attr/borderlessButtonStyle"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/colorWhite"
@@ -96,7 +99,7 @@
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_1sdp"
-                android:background="#A1CCCCCC" />
+                android:background="#75CCCCCC" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

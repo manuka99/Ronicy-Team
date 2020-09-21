@@ -54,8 +54,8 @@ public class AdvertisementManager {
     private FirebaseAuth firebaseAuth;
     private static final String FIREBASE_HOST = "firebasestorage.googleapis.com";
 
-    private List<String>newUploadedImagesUrls;
-    private List<String>oldfirebaseUnusedImages; //after updating
+    private List<String> newUploadedImagesUrls;
+    private List<String> oldfirebaseUnusedImages; //after updating
 
     public AdvertisementManager() {
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -92,7 +92,7 @@ public class AdvertisementManager {
                     advertisementCallback.onCompleteInsertAd(task);
 
                 //if it was failed to insert the ad
-                if(!task.isSuccessful())
+                if (!task.isSuccessful())
                     deleteMultipleImages(newUploadedImagesUrls);
 
                 //if success fiull and delete images not null then it will delete (this may be an update)
@@ -253,42 +253,22 @@ public class AdvertisementManager {
         }
     }
 
-    public Query viewAddsHome(List<String> adIdsFromSearch, Category category, String location, boolean buyNow){
-        Query query = FirebaseFirestore.getInstance().collection(childName).whereEqualTo("availability", true).whereEqualTo("approved", true).orderBy("placedDate", Query.Direction.DESCENDING);
+    public Query viewAddsHome(List<String> adIdsFromSearch, Category category, String location, boolean buyNow) {
+        Query query = FirebaseFirestore.getInstance().collection(childName);
 
-        if(category != null)
-           query = query.whereEqualTo("categoryID", category.getId());
+        if (category != null)
+            query = query.whereEqualTo("categoryID", category.getId());
 
-        if(location != null)
+        if (location != null)
             query = query.whereEqualTo("location", location);
 
-        if(adIdsFromSearch != null)
+        if (adIdsFromSearch != null && adIdsFromSearch.size() > 0)
             query = query.whereIn("id", adIdsFromSearch);
 
-        if(buyNow)
+        if (buyNow)
             query = query.whereEqualTo("buynow", buyNow);
 
-        return query;
-    }
-
-    public Query viewAdds() {
-        return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("availability", true).whereEqualTo("approved", true).orderBy("placedDate", Query.Direction.DESCENDING);
-    }
-
-    public Query viewAddsSearch(List<String> adIds) {
-        return FirebaseFirestore.getInstance().collection(childName).whereIn("id", adIds).whereEqualTo("availability", true).whereEqualTo("approved", true).orderBy("placedDate", Query.Direction.DESCENDING);
-    }
-
-    public Query viewAddsByCategoryHome(String catID) {
-        return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("categoryID", catID).whereEqualTo("availability", true).whereEqualTo("approved", true).orderBy("placedDate", Query.Direction.DESCENDING);
-    }
-
-    public Query viewAddsByLocation(String location) {
-        return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("location", location).whereEqualTo("availability", true).whereEqualTo("approved", true).orderBy("placedDate", Query.Direction.DESCENDING);
-    }
-
-    public Query viewAddsByLocationAndCategory(String location, String catID) {
-        return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("categoryID", catID).whereEqualTo("location", location).whereEqualTo("availability", true).whereEqualTo("approved", true).orderBy("placedDate", Query.Direction.DESCENDING);
+        return query.whereEqualTo("availability", true).whereEqualTo("approved", true).orderBy("placedDate", Query.Direction.DESCENDING);
     }
 
     public Query viewMyAddsAll() {
