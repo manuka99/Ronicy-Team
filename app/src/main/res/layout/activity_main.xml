@@ -4,38 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorHome"
     tools:context=".ui.home.MainActivity">
-   <include layout="@layout/toolbar"
-       android:id="@+id/toolbar"
-       ></include>
 
-   <!-- Manuka -->
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"></include>
 
-   <FrameLayout
-       android:id="@+id/navContainer"
-       android:layout_width="match_parent"
-       android:layout_height="0dp"
-       app:layout_constraintBottom_toTopOf="@+id/navBottm"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintHorizontal_bias="0.0"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toBottomOf="@+id/toolbar"
-       app:layout_constraintVertical_bias="0.505"
-       tools:ignore="MissingConstraints" />
+    <!-- Manuka -->
 
-   <com.google.android.material.bottomnavigation.BottomNavigationView
-       android:id="@+id/navBottm"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       app:menu="@menu/bottom_nav"
-       android:background="@color/colorWhite"
-       app:itemIconTint="@drawable/item_selected_nav_bottom"
-       app:itemTextColor="@drawable/item_selected_nav_bottom"
-       tools:ignore="MissingConstraints">
+    <FrameLayout
+        android:id="@+id/navContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.505"
+        tools:ignore="MissingConstraints" />
 
-   </com.google.android.material.bottomnavigation.BottomNavigationView>
+    <com.irfaan008.irbottomnavigation.SpaceNavigationView
+        android:id="@+id/space"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        app:active_item_color="@color/colorAccent"
+        app:centre_button_color="@color/centre_button_color"
+        app:inactive_item_color="@color/colorWhite"
+        app:space_background_color="@color/colorPrimary"
+        app:layout_behavior="@string/space_scrolling_view_behavior"
+        app:centre_button_icon="@drawable/icon_plus_upsbrown_24"
+        app:space_item_icon_size="@dimen/space_item_icon_default_size"
+        app:space_item_icon_only_size="@dimen/space_item_icon_only_size"
+        app:space_item_text_size="@dimen/space_item_text_default_size" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

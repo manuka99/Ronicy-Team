@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -24,6 +25,9 @@ import com.adeasy.advertise.ViewModel.HomeViewModel;
 import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.ui.newPost.NewAd;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.irfaan008.irbottomnavigation.SpaceItem;
+import com.irfaan008.irbottomnavigation.SpaceNavigationView;
+import com.irfaan008.irbottomnavigation.SpaceOnClickListener;
 
 import java.util.List;
 
@@ -32,7 +36,7 @@ import java.util.List;
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private static final String SEARCH_KEY = "search_key";
@@ -43,7 +47,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private static final int CATEGORY_PICKER = 4662;
     private static final int LOCATION_PICKER = 6512;
 
+    SpaceNavigationView spaceNavigationView;
     BottomNavigationView bottomNavigationView;
+
     Toolbar toolbar;
     Home home;
     Search search;
@@ -69,15 +75,73 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        bottomNavigationView = findViewById(R.id.navBottm);
+
+        spaceNavigationView = findViewById(R.id.space);
+        spaceNavigationView.initWithSaveInstanceState(savedInstanceState);
+        spaceNavigationView.addSpaceItem(new SpaceItem("", R.drawable.ic_baseline_home_24));
+        spaceNavigationView.addSpaceItem(new SpaceItem("", R.drawable.ic_baseline_search_24));
+        spaceNavigationView.addSpaceItem(new SpaceItem("", R.drawable.icon_chat_home));
+        spaceNavigationView.addSpaceItem(new SpaceItem("", R.drawable.ic_baseline_person_24));
+        spaceNavigationView.setSpaceBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite));
+        spaceNavigationView.setCentreButtonIcon(R.drawable.icon_plus_upsbrown_24);
+        spaceNavigationView.setCentreButtonColor(ContextCompat.getColor(this, R.color.colorWarningDark));
+        spaceNavigationView.setActiveSpaceItemColor(ContextCompat.getColor(this, R.color.colorGreen));
+        spaceNavigationView.setInActiveSpaceItemColor(ContextCompat.getColor(this, R.color.colorBlackText));
+        spaceNavigationView.showIconOnly();
+        spaceNavigationView.changeCurrentItem(0);
+        spaceNavigationView.setCentreButtonIconColorFilterEnabled(false);
+        spaceNavigationView.setSpaceOnClickListener(new SpaceOnClickListener() {
+            @Override
+            public void onCentreButtonClick() {
+                startActivity(new Intent(getApplicationContext(), NewAd.class));
+            }
+
+            @Override
+            public void onItemClick(int itemIndex, String itemName) {
+                initializeAllFragments();
+                switch (itemIndex) {
+                    case 0:
+                        selectedMenueID = itemIndex;
+                        handleHomeFragment();
+                        break;
+
+                    case 1:
+                        selectedMenueID = itemIndex;
+                        changeToolbarSearch();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, search).commit();
+                        break;
+
+                    case 2:
+                        selectedMenueID = itemIndex;
+                        changeToolbarDefault();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, chat).commit();
+                        break;
+
+                    case 3:
+                        selectedMenueID = itemIndex;
+                        changeToolbarDefault();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, account).commit();
+                        break;
+                }
+            }
+
+            @Override
+            public void onItemReselected(int itemIndex, String itemName) {
+                //Toast.makeText(MainActivity.this, itemIndex + " " + itemName, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         home = new Home();
         search = new Search();
         chat = new Chat();
         account = new Account();
-        bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
-        bottomNavigationView.setSelectedItemId(R.id.navHome);
+        handleHomeFragment();
+
+        //bottomNavigationView = findViewById(R.id.navBottm);
+        //bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+        //bottomNavigationView.setSelectedItemId(R.id.navHome);
 
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
 
@@ -92,16 +156,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        spaceNavigationView.onSaveInstanceState(outState);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         initializeAllFragments();
-        if (selectedMenueID != 0)
-            bottomNavigationView.setSelectedItemId(selectedMenueID);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        //getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -119,11 +188,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         if (searchKey != null) {
             searchKey = null;
-            bottomNavigationView.setSelectedItemId(R.id.navHome);
+            setSelectedHomeInSpaceMenu();
+            //bottomNavigationView.setSelectedItemId(R.id.navHome);
         } else if (categorySelected != null) {
             searchKey = null;
             categorySelected = null;
-            bottomNavigationView.setSelectedItemId(R.id.navHome);
+            setSelectedHomeInSpaceMenu();
+            //bottomNavigationView.setSelectedItemId(R.id.navHome);
         } else {
             showExitDialog();
         }
@@ -151,42 +222,42 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 .show();
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        Log.i(TAG, "seleected");
-        initializeAllFragments();
-        switch (menuItem.getItemId()) {
-            case R.id.navHome:
-                selectedMenueID = menuItem.getItemId();
-                handleHomeFragment();
-                return true;
-
-            case R.id.navSearch:
-                selectedMenueID = menuItem.getItemId();
-                changeToolbarSearch();
-                getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, search).commit();
-                return true;
-
-            case R.id.navAddPost:
-                changeToolbarDefault();
-                startActivity(new Intent(this, NewAd.class));
-                return true;
-
-            case R.id.navChat:
-                selectedMenueID = menuItem.getItemId();
-                changeToolbarDefault();
-                getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, chat).commit();
-                return true;
-
-            case R.id.navAccount:
-                selectedMenueID = menuItem.getItemId();
-                changeToolbarDefault();
-                getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, account).commit();
-                return true;
-        }
-
-        return false;
-    }
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//        Log.i(TAG, "seleected");
+//        initializeAllFragments();
+//        switch (menuItem.getItemId()) {
+//            case R.id.navHome:
+//                selectedMenueID = menuItem.getItemId();
+//                handleHomeFragment();
+//                return true;
+//
+//            case R.id.navSearch:
+//                selectedMenueID = menuItem.getItemId();
+//                changeToolbarSearch();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, search).commit();
+//                return true;
+//
+//            case R.id.navAddPost:
+//                changeToolbarDefault();
+//                startActivity(new Intent(this, NewAd.class));
+//                return true;
+//
+//            case R.id.navChat:
+//                selectedMenueID = menuItem.getItemId();
+//                changeToolbarDefault();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, chat).commit();
+//                return true;
+//
+//            case R.id.navAccount:
+//                selectedMenueID = menuItem.getItemId();
+//                changeToolbarDefault();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, account).commit();
+//                return true;
+//        }
+//
+//        return false;
+//    }
 
     public void changeToolbarHome() {
         toolbar.setVisibility(View.VISIBLE);
@@ -253,15 +324,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SEARCH_BAR_RESULT && resultCode == RESULT_OK && data != null) {
             searchKey = data.getStringExtra(SEARCH_KEY);
-            bottomNavigationView.setSelectedItemId(R.id.navHome);
+            setSelectedHomeInSpaceMenu();
+            //bottomNavigationView.setSelectedItemId(R.id.navHome);
         } else if (requestCode == CATEGORY_PICKER && resultCode == RESULT_OK && data != null) {
             categorySelected = (Category) data.getSerializableExtra(CATEGORY_SELECTED);
-            bottomNavigationView.setSelectedItemId(R.id.navHome);
+            setSelectedHomeInSpaceMenu();
+            // bottomNavigationView.setSelectedItemId(R.id.navHome);
         } else if (requestCode == LOCATION_PICKER && resultCode == RESULT_OK && data != null) {
             location_selected = data.getStringExtra(LOCATION_SELECTED);
             System.out.println("main: " + location_selected);
-            bottomNavigationView.setSelectedItemId(R.id.navHome);
+            setSelectedHomeInSpaceMenu();
+            // bottomNavigationView.setSelectedItemId(R.id.navHome);
         }
+    }
+
+    private void setSelectedHomeInSpaceMenu() {
+        home = new Home();
+        handleHomeFragment();
+        spaceNavigationView.changeCurrentItem(0);
     }
 
     //    @Override

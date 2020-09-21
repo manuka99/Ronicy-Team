@@ -17,6 +17,7 @@
     <color name="colorDangerDark">#F44336</color>
     <color name="colorDangerLight">#66F54336</color>
     <color name="colorWarning">#ffe066</color>
+    <color name="colorWarningDark">#FFC107</color>
     <color name="colorHome">#e6ecff</color>
     <color name="colorGreen">#009877</color>
     <color name="colorError">#FFAE0655</color>
