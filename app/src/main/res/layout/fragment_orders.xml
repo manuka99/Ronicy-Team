@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorHome"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/_80sdp"
     tools:context=".ui.home.Orders">
 
     <FrameLayout
