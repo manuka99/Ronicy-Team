@@ -19,6 +19,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,6 +74,8 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     String searchKey, location_selected;
     Category category_selected;
     AdvertismentSearchManager advertismentSearchManager;
+    Switch aSwitch;
+    List<String> search_ids;
     private static final String SEARCH_KEY = "search_key";
     private static final String CATEGORY_SELECTED = "category_selected";
     private static final String LOCATION_SELECTED = "location_selected";
@@ -117,6 +121,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
 
         mSwipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
         recyclerView = view.findViewById(R.id.adMenuRecyclerView);
+        aSwitch = view.findViewById(R.id.switchView);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, 1));
         recyclerView.setHasFixedSize(false);
         advertisementManager = new AdvertisementManager(this);
@@ -127,6 +132,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         category_picker.setOnClickListener(this);
         location_picker.setOnClickListener(this);
         advertismentSearchManager = new AdvertismentSearchManager(this);
+
 
         try {
             searchKey = getArguments().getString(SEARCH_KEY);
@@ -146,31 +152,46 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             e.printStackTrace();
         }
 
-        if (searchKey != null) {
-            toolbar.setTitle(searchKey);
-            toolbar.setSubtitle(getString(R.string.loading));
-            advertismentSearchManager.searchAdsHome(searchKey);
-        } else if (category_selected != null && location_selected == null) {
+//        if (searchKey != null) {
+//            toolbar.setTitle(searchKey);
+//            toolbar.setSubtitle(getString(R.string.loading));
+//            advertismentSearchManager.searchAdsHome(searchKey);
+//        } else if (category_selected != null && location_selected == null) {
+//            toolbar.setTitle(category_selected.getName());
+//            category_picker.setText(category_selected.getName());
+//            toolbar.setSubtitle(getString(R.string.loading));
+//            loadData(advertisementManager.viewAddsByCategoryHome(category_selected.getId()));
+//        } else if (category_selected == null && location_selected != null) {
+//            location_picker.setText(location_selected);
+//            toolbar.setSubtitle(getString(R.string.loading));
+//            loadData(advertisementManager.viewAddsByLocation(location_selected));
+//        } else if (category_selected == null && location_selected != null) {
+//            toolbar.setTitle(location_selected);
+//            toolbar.setSubtitle(getString(R.string.loading));
+//            loadData(advertisementManager.viewAddsByLocation(location_selected));
+//        } else if (category_selected != null && location_selected != null) {
+//            toolbar.setTitle(category_selected.getName());
+//            category_picker.setText(category_selected.getName());
+//            toolbar.setSubtitle(getString(R.string.loading));
+//            loadData(advertisementManager.viewAddsByLocationAndCategory(location_selected, category_selected.getId()));
+//        } else {
+//            loadData(advertisementManager.viewAdds());
+//        }
+
+        toolbar.setSubtitle(getString(R.string.loading));
+
+        if (category_selected != null) {
             toolbar.setTitle(category_selected.getName());
             category_picker.setText(category_selected.getName());
-            toolbar.setSubtitle(getString(R.string.loading));
-            loadData(advertisementManager.viewAddsByCategoryHome(category_selected.getId()));
-        } else if (category_selected == null && location_selected != null) {
-            location_picker.setText(location_selected);
-            toolbar.setSubtitle(getString(R.string.loading));
-            loadData(advertisementManager.viewAddsByLocation(location_selected));
-        } else if (category_selected == null && location_selected != null) {
-            toolbar.setTitle(location_selected);
-            toolbar.setSubtitle(getString(R.string.loading));
-            loadData(advertisementManager.viewAddsByLocation(location_selected));
-        } else if (category_selected != null && location_selected != null) {
-            toolbar.setTitle(category_selected.getName());
-            category_picker.setText(category_selected.getName());
-            toolbar.setSubtitle(getString(R.string.loading));
-            loadData(advertisementManager.viewAddsByLocationAndCategory(location_selected, category_selected.getId()));
-        } else {
-            loadData(advertisementManager.viewAdds());
         }
+        if (location_selected != null)
+            location_picker.setText(location_selected);
+
+        if (searchKey != null)
+            toolbar.setTitle(searchKey);
+
+
+        loadData(advertisementManager.viewAddsHome(search_ids, category_selected, location_selected, aSwitch.isChecked()));
 
         return view;
     }
@@ -178,13 +199,15 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        aSwitch.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         if (view == category_picker)
             getActivity().startActivityForResult(new Intent(getActivity(), CategoryPicker.class), CATEGORY_PICKER);
-        if (view == location_picker)
+        else if (view == location_picker)
             getActivity().startActivityForResult(new Intent(getActivity(), LocationPicker.class), LOCATION_PICKER);
     }
 
@@ -326,6 +349,14 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             });
             firestorePagingAdapter.startListening();
         }
+
+        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                loadData(advertisementManager.viewAddsHome(search_ids, category_selected, location_selected, aSwitch.isChecked()));
+            }
+        });
+
     }
 
     //Stop Listening Adapter

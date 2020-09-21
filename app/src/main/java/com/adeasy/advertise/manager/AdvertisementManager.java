@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 
 import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.model.Advertisement;
+import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.util.ImageQualityReducer;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -250,6 +251,24 @@ public class AdvertisementManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Query viewAddsHome(List<String> adIdsFromSearch, Category category, String location, boolean buyNow){
+        Query query = FirebaseFirestore.getInstance().collection(childName).whereEqualTo("availability", true).whereEqualTo("approved", true).orderBy("placedDate", Query.Direction.DESCENDING);
+
+        if(category != null)
+           query = query.whereEqualTo("categoryID", category.getId());
+
+        if(location != null)
+            query = query.whereEqualTo("location", location);
+
+        if(adIdsFromSearch != null)
+            query = query.whereIn("id", adIdsFromSearch);
+
+        if(buyNow)
+            query = query.whereEqualTo("buynow", buyNow);
+
+        return query;
     }
 
     public Query viewAdds() {

@@ -117,7 +117,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //            showExitDialog();
 //        } else
 
-        if (searchKey != null || categorySelected != null || location_selected != null) {
+        if (searchKey != null) {
+            searchKey = null;
+            bottomNavigationView.setSelectedItemId(R.id.navHome);
+        } else if (categorySelected != null) {
             searchKey = null;
             categorySelected = null;
             bottomNavigationView.setSelectedItemId(R.id.navHome);

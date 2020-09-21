@@ -43,6 +43,10 @@
         <item name="dialogActionButtonColor">@color/com_facebook_messenger_blue</item>
     </style>
 
+    <style name="doorstep" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/colorGreen</item>
+    </style>
+
     <!-- Divya -->
 
 
