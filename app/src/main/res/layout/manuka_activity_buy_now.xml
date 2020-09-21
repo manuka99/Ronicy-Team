@@ -1,95 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="@color/colorHome"
-android:orientation="vertical"
-    tools:context=".ui.Order.BuyNow"
-tools:ignore="LabelFor">
-
-<!-- Manuka -->
-
-<include
-    android:id="@+id/toolbar"
-    layout="@layout/toolbar"></include>
-
-<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_weight="1"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorHome"
+    android:orientation="vertical"
+    tools:context=".ui.Order.BuyNow"
+    tools:ignore="LabelFor">
 
-    <LinearLayout
+    <!-- Manuka -->
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"></include>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
         <LinearLayout
-            android:id="@+id/steperWraper"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:orientation="vertical"
-            android:background="@color/colorWhite"
-            android:padding="10dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/steperHeader"
-                android:padding="10dp"
+            <LinearLayout
+                android:id="@+id/steperWraper"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/orderStepHeader"
-                android:textSize="16sp"></TextView>
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/colorWhite"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                app:cardUseCompatPadding="true"
-                app:cardCornerRadius="10dp"
-                android:elevation="8dp"
-                android:layout_height="wrap_content">
-                <com.shuhart.stepview.StepView
-                    android:id="@+id/step_view"
-                    android:padding="14dp"
+                <TextView
+                    android:id="@+id/steperHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#03A9F4"/>
-            </androidx.cardview.widget.CardView>
+                    android:padding="10dp"
+                    android:text="@string/orderStepHeader"
+                    android:textSize="16sp"></TextView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="8dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardUseCompatPadding="true">
+
+                    <com.shuhart.stepview.StepView
+                        android:id="@+id/step_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#03A9F4"
+                        android:padding="14dp" />
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/orderStepContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></FrameLayout>
+
+
         </LinearLayout>
+    </ScrollView>
 
-        <FrameLayout
-            android:id="@+id/orderStepContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </FrameLayout>
-
-
-    </LinearLayout>
-</ScrollView>
-
-<LinearLayout
-    android:id="@+id/continueWrapOrder"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="0"
-    android:background="@color/colorWhite"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <Button
-        android:id="@+id/continueOrder"
+    <LinearLayout
+        android:id="@+id/continueWrapOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorGreen"
-        android:gravity="center"
-        android:padding="8dp"
-        android:text="@string/continueBtn"
-        android:textAllCaps="false"
-        android:textColor="@color/colorWhite"
-        android:textSize="24sp"
-        android:onClick="onClick"
-        android:textStyle="bold"></Button>
-</LinearLayout>
+        android:layout_weight="0"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/continueOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGreen"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:padding="8dp"
+            android:text="@string/continueBtn"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="24sp"
+            android:textStyle="bold"></Button>
+    </LinearLayout>
 
 </LinearLayout>

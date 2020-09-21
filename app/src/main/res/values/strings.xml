@@ -207,6 +207,21 @@
         <item>Refunded</item>
     </string-array>
 
+    <!--- sort by-->
+    <string-array name="ads_sort_by_array">
+        <item>Price: Lowest to Highest</item>
+        <item>Price: Highest to Lowest</item>
+        <item>Date: Oldest first</item>
+        <item>Price: Newest first</item>
+    </string-array>
+
+    <!--- types of posters-->
+    <string-array name="type_of_posters_array">
+        <item>All posters</item>
+        <item>Only members</item>
+        <item>Authorized dealers</item>
+    </string-array>
+
     <!-- Divya -->
 
     <!-- wishlist.xml-->

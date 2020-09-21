@@ -257,6 +257,11 @@ public class MoreOnOrder extends AppCompatActivity implements OrderCallback, Ada
 
     }
 
+    @Override
+    public void onOrderCount(Task<QuerySnapshot> task) {
+
+    }
+
     private void deleteOrder() {
         if (isDeleting)
             Toast.makeText(context, "Please wait...", Toast.LENGTH_LONG).show();

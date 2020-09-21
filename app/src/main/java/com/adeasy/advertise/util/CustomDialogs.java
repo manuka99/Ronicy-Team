@@ -36,11 +36,13 @@ public class CustomDialogs {
             final Dialog dialog = new Dialog(context);
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.setContentView(R.layout.manuka_custom_no_access_dialog);
-            TextView title = (TextView) dialog.findViewById(R.id.title);
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+            TextView title = dialog.findViewById(R.id.title);
             title.setText("Opps! Permission denied /404");
-            TextView message = (TextView) dialog.findViewById(R.id.message);
+            TextView message = dialog.findViewById(R.id.message);
             message.setText("Dear " + username + " , We could not authorize you for the content that you requested. This may be due to requesting content which need administrative permissions, if you think this is by mistake please sign in again. If you have any issues please contact Ronicy Team for support. Thank you.");
-            Button signOut = (Button) dialog.findViewById(R.id.button);
+            Button signOut = dialog.findViewById(R.id.button);
             signOut.setText("Sign In/Out");
             signOut.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -49,7 +51,7 @@ public class CustomDialogs {
                     openNewActivity();
                 }
             });
-            TextView close = (TextView) dialog.findViewById(R.id.close);
+            TextView close = dialog.findViewById(R.id.close);
             close.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

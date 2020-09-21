@@ -17,4 +17,5 @@ public interface OrderCallback {
     public void onHideOrderByID(Task<Void> task);
     public void onDeleteOrderByID(Task<Void> task);
     public void getAllOrdersByYear(Task<QuerySnapshot> task);
+    public void onOrderCount(Task<QuerySnapshot> task);
 }

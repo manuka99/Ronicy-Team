@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -160,6 +161,25 @@ public class OrderManager {
         //data.put(order );
         firebaseFirestore.collection(childName).document(order.getId())
                 .set(data, SetOptions.merge());
+    }
+
+    //get the total orders count in by query
+    public void getCount(Query query) {
+        try {
+            query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (orderCallback != null)
+                        orderCallback.onOrderCount(task);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Query myOrders() {
+        return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("customer.uid", FirebaseAuth.getInstance().getCurrentUser().getUid()).orderBy("placedDate", Query.Direction.DESCENDING);
     }
 
     public Query recentOrders() {

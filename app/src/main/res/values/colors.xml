@@ -12,6 +12,7 @@
     <color name="colorGreyText">#8B000000</color>
     <color name="colorSucess">#00ff80</color>
     <color name="colorWhite">#ffffff</color>
+    <color name="colorWhiteHome">#C9FFFFFF</color>
     <color name="colorWhiteLite">#CCCCCC</color>
     <color name="colorDanger">#ff1a1a</color>
     <color name="colorDangerDark">#F44336</color>

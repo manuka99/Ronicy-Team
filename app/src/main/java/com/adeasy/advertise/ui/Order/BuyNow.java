@@ -434,6 +434,11 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     }
 
     @Override
+    public void onOrderCount(Task<QuerySnapshot> task) {
+
+    }
+
+    @Override
     public void onCompleteNumberInserted(Task<Void> task) {
 
     }

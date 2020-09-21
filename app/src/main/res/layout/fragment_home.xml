@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
     android:background="@color/colorHome"
     android:orientation="vertical"
+    android:paddingBottom="@dimen/_60sdp"
     tools:context=".ui.home.Home">
 
     <!-- Manuka -->
@@ -85,6 +86,7 @@
                         android:background="@color/colorWhiteLite" />
 
                     <ImageView
+                        android:id="@+id/filters"
                         android:layout_width="@dimen/_24sdp"
                         android:layout_height="@dimen/_24sdp"
                         android:layout_gravity="center"
@@ -149,13 +151,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/adMenuRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:padding="@dimen/_6sdp">
 
             </androidx.recyclerview.widget.RecyclerView>

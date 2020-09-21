@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.search_manager.AdvertismentSearchManager;
 import com.adeasy.advertise.ui.advertisement.CategoryPicker;
+import com.adeasy.advertise.ui.advertisement.FilterSearchResult;
 import com.adeasy.advertise.ui.advertisement.HomeAdSearch;
 import com.adeasy.advertise.ui.advertisement.LocationPicker;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
@@ -76,11 +78,13 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     AdvertismentSearchManager advertismentSearchManager;
     Switch aSwitch;
     List<String> search_ids;
+    ImageView filters;
     private static final String SEARCH_KEY = "search_key";
     private static final String CATEGORY_SELECTED = "category_selected";
     private static final String LOCATION_SELECTED = "location_selected";
     private static final int LOCATION_PICKER = 6512;
     private static final int CATEGORY_PICKER = 4662;
+    private static final int FILTER_PICKER = 8825;
 
     public Home() {
         // Required empty public constructor
@@ -129,8 +133,10 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         adCountText = toolbar.findViewById(R.id.adResults);
         category_picker = view.findViewById(R.id.category_picker);
         location_picker = view.findViewById(R.id.location_picker);
+        filters = view.findViewById(R.id.filters);
         category_picker.setOnClickListener(this);
         location_picker.setOnClickListener(this);
+        filters.setOnClickListener(this);
         advertismentSearchManager = new AdvertismentSearchManager(this);
 
         try {
@@ -184,6 +190,8 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             getActivity().startActivityForResult(new Intent(getActivity(), CategoryPicker.class), CATEGORY_PICKER);
         else if (view == location_picker)
             getActivity().startActivityForResult(new Intent(getActivity(), LocationPicker.class), LOCATION_PICKER);
+        else if (view == filters)
+            getActivity().startActivityForResult(new Intent(getActivity(), FilterSearchResult.class), FILTER_PICKER);
     }
 
     public void loadData(Query query) {
@@ -281,7 +289,11 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                                     break;
 
                                 case FINISHED:
-                                    Toast.makeText(getContext(), "No more ads..", Toast.LENGTH_SHORT).show();
+                                    try {
+                                        Toast.makeText(getActivity(), "No more ads..", Toast.LENGTH_SHORT).show();
+                                    } catch (Exception e) {
+                                        Log.i(TAG, "Exception at toast");
+                                    }
                                     mSwipeRefreshLayout.setRefreshing(false);
                                     break;
 
@@ -301,6 +313,10 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                             refresh();
                         }
 
+                        @Override
+                        public int getItemCount() {
+                            return super.getItemCount();
+                        }
                     };
 
             firestorePagingAdapter.startListening();
@@ -368,10 +384,12 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     public void onAdCount(Task<QuerySnapshot> task) {
         if (task.isSuccessful()) {
             try {
-                if (adCountText != null)
-                    adCountText.setText(task.getResult().size() + " results");
-                if (searchKey != null || category_selected != null || location_selected != null)
-                    toolbar.setSubtitle(task.getResult().size() + " results");
+                adCountText.setText(task.getResult().size() + " results");
+            } catch (NullPointerException e) {
+                Log.i(TAG, "fragments changed");
+            }
+            try {
+                toolbar.setSubtitle(task.getResult().size() + " results");
             } catch (NullPointerException e) {
                 Log.i(TAG, "fragments changed");
             }

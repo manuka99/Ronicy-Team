@@ -211,6 +211,11 @@ public class ProductStatisticsFragment extends Fragment implements OrderCallback
         }
     }
 
+    @Override
+    public void onOrderCount(Task<QuerySnapshot> task) {
+
+    }
+
     private class SalesCountComparator implements Comparator<ProductSales> {
         @Override
         public int compare(ProductSales productSales1, ProductSales productSales2) {

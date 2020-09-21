@@ -9,16 +9,11 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.app.ActivityManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.HomeViewModel;
@@ -28,8 +23,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.irfaan008.irbottomnavigation.SpaceItem;
 import com.irfaan008.irbottomnavigation.SpaceNavigationView;
 import com.irfaan008.irbottomnavigation.SpaceOnClickListener;
-
-import java.util.List;
 
 /**
  * Created by Manuka yasas,
@@ -53,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     Home home;
     Search search;
-    Chat chat;
+    Orders orders;
     Account account;
     int selectedMenueID = 0;
     String searchKey, location_selected;
@@ -75,12 +68,11 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         spaceNavigationView = findViewById(R.id.space);
         spaceNavigationView.initWithSaveInstanceState(savedInstanceState);
         spaceNavigationView.addSpaceItem(new SpaceItem("", R.drawable.ic_baseline_home_24));
         spaceNavigationView.addSpaceItem(new SpaceItem("", R.drawable.ic_baseline_search_24));
-        spaceNavigationView.addSpaceItem(new SpaceItem("", R.drawable.icon_chat_home));
+        spaceNavigationView.addSpaceItem(new SpaceItem("", R.drawable.ic_baseline_shopping_cart_24_orders));
         spaceNavigationView.addSpaceItem(new SpaceItem("", R.drawable.ic_baseline_person_24));
         spaceNavigationView.setSpaceBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite));
         spaceNavigationView.setCentreButtonIcon(R.drawable.icon_plus_upsbrown_24);
@@ -114,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     case 2:
                         selectedMenueID = itemIndex;
                         changeToolbarDefault();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, chat).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, orders).commit();
                         break;
 
                     case 3:
@@ -133,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
         home = new Home();
         search = new Search();
-        chat = new Chat();
+        orders = new Orders();
         account = new Account();
 
         handleHomeFragment();
@@ -246,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
 //            case R.id.navChat:
 //                selectedMenueID = menuItem.getItemId();
 //                changeToolbarDefault();
-//                getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, chat).commit();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, orders).commit();
 //                return true;
 //
 //            case R.id.navAccount:
@@ -294,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
     private void initializeAllFragments() {
         home = new Home();
         search = new Search();
-        chat = new Chat();
+        orders = new Orders();
         account = new Account();
     }
 

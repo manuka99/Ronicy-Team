@@ -155,7 +155,7 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
             if (customClaims.isContact_manager())
                 rolesDescription += "Contact Manager, ";
             if (customClaims.isChat_manager())
-                rolesDescription += "Chat Manager, ";
+                rolesDescription += "Orders Manager, ";
             if (customClaims.isUser_manager())
                 rolesDescription += "User Manager, ";
             if (customClaims.isGuest_admin())

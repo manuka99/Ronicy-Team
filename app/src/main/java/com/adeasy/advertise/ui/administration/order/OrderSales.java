@@ -332,6 +332,11 @@ public class OrderSales extends Fragment implements View.OnClickListener, OrderC
         }
     }
 
+    @Override
+    public void onOrderCount(Task<QuerySnapshot> task) {
+
+    }
+
     private void showUpdatingUi() {
         update.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
