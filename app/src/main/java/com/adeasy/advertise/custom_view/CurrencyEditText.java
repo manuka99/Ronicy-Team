@@ -16,11 +16,10 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 /**
- * Some note <br/>
- * <li>Always use locale US instead of default to make DecimalFormat work well in all language</li>
- */
-
-//android.support.v7.widget.AppCompatEditText
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class CurrencyEditText extends androidx.appcompat.widget.AppCompatEditText {
     private static String prefix = "LKR ";
     private static final int MAX_LENGTH = 20;

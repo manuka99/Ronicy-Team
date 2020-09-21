@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class CategoryPicker extends AppCompatActivity {
 
     Toolbar toolbar;
@@ -30,6 +35,8 @@ public class CategoryPicker extends AppCompatActivity {
     RecyclerView recyclerView;
     CategoryManager categoryManager;
     FirestoreRecyclerOptions<Category> options;
+
+    private static final String CATEGORY_SELECTED = "category_selected";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +70,17 @@ public class CategoryPicker extends AppCompatActivity {
         loadData();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        all_cat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                endActivityForResult(null);
+            }
+        });
+    }
+
     private void loadData() {
         options = new FirestoreRecyclerOptions.Builder<Category>()
                 .setQuery(categoryManager.viewCategoryAll(), Category.class).build();
@@ -72,7 +90,7 @@ public class CategoryPicker extends AppCompatActivity {
                         options
                 ) {
                     @Override
-                    protected void onBindViewHolder(@NonNull ViewHolderPostCats holder, final int position, @NonNull Category category) {
+                    protected void onBindViewHolder(@NonNull ViewHolderPostCats holder, final int position, @NonNull final Category category) {
 
                         holder.titleView.setText(category.getName());
                         Picasso.get().load(category.getImageUrl()).into(holder.imageView);
@@ -80,7 +98,7 @@ public class CategoryPicker extends AppCompatActivity {
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-
+                                endActivityForResult(category);
                             }
                         });
                     }
@@ -96,6 +114,13 @@ public class CategoryPicker extends AppCompatActivity {
 
         firestoreRecyclerAdapter.startListening();
         recyclerView.setAdapter(firestoreRecyclerAdapter);
+    }
+
+    private void endActivityForResult(Category category) {
+        Intent intent = new Intent();
+        intent.putExtra(CATEGORY_SELECTED, category);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
 }

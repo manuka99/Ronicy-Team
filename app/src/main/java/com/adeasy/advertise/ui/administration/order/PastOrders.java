@@ -40,10 +40,10 @@ import com.squareup.picasso.Picasso;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link PastOrders#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class PastOrders extends Fragment implements View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match

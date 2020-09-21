@@ -33,7 +33,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class SingleProductAnalysis extends AppCompatActivity {
 
     ProductSales productSales;

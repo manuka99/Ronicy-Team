@@ -17,10 +17,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link EnterNumber#newInstance} factory method to
- * create an instance of this fragment.
- *//**
  * Created by Manuka yasas,
  * University Sliit
  * Email manukayasas99@gmail.com

@@ -8,7 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adeasy.advertise.R;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class ViewHolderOrderItem extends RecyclerView.ViewHolder {
 
     public TextView name, category, price, placed_date, payment_mode, payment_status, total;

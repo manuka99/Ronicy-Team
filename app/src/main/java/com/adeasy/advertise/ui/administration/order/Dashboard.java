@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 import com.adeasy.advertise.R;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link Dashboard#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class Dashboard extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match

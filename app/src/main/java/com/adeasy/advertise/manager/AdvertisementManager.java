@@ -260,6 +260,10 @@ public class AdvertisementManager {
         return FirebaseFirestore.getInstance().collection(childName).whereIn("id", adIds).whereEqualTo("availability", true).whereEqualTo("approved", true).orderBy("placedDate", Query.Direction.DESCENDING);
     }
 
+    public Query viewAddsByCategoryHome(String catID) {
+        return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("categoryID", catID).whereEqualTo("availability", true).whereEqualTo("approved", true).orderBy("placedDate", Query.Direction.DESCENDING);
+    }
+
     public Query viewMyAddsAll() {
         return firebaseFirestore.collection(childName).whereEqualTo("userID", firebaseAuth.getCurrentUser().getUid()).orderBy("placedDate", Query.Direction.DESCENDING);
     }

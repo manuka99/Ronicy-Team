@@ -28,7 +28,11 @@ import com.adeasy.advertise.ui.home.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class HomeAdSearch extends AppCompatActivity implements TextWatcher, AdvertismentSearchCallback {
 
     Toolbar toolbar;

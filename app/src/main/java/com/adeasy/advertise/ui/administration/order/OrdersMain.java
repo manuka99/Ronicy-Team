@@ -15,7 +15,11 @@ import android.widget.FrameLayout;
 
 import com.adeasy.advertise.R;
 import com.google.android.material.navigation.NavigationView;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class OrdersMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     FrameLayout frameLayout;

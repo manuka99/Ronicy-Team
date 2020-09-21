@@ -22,21 +22,16 @@
             android:orientation="vertical"
             tools:context=".ui.administration.advertisement.SelectCategoryAndFilter">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_14sdp"
-                android:background="@color/colorHome" />
-
             <TextView
                 android:id="@+id/allCatSeleted"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@color/com_facebook_button_background_color"
-                android:gravity="center_vertical"
-                android:paddingStart="@dimen/_20sdp"
-                android:text="@string/all_categories"
-                android:textStyle="bold"
-                android:textColor="@color/colorWhite"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
+                android:drawablePadding="@dimen/_4sdp"
+                android:text="Go to all ads"
+                android:textColor="@color/colorBlackText"
                 android:textSize="@dimen/_14sdp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -47,4 +42,5 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
 </RelativeLayout>

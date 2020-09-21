@@ -23,13 +23,12 @@
 
             <TextView
                 android:id="@+id/all_cat"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_12sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
                 android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
                 android:drawablePadding="@dimen/_4sdp"
-                android:paddingStart="@dimen/_12sdp"
+                android:padding="@dimen/_12sdp"
                 android:text="Go to all ads"
                 android:textColor="@color/colorBlackText"
                 android:textSize="@dimen/_14sdp" />

@@ -6,7 +6,11 @@ import com.google.firebase.firestore.Exclude;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class ProductSales implements Serializable {
 
     private Order_Item order_item;

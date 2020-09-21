@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.app.ActivityManager;
 import android.content.DialogInterface;
@@ -18,6 +20,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.ViewModel.HomeViewModel;
+import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.ui.newPost.NewAd;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -32,8 +36,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private static final String TAG = "MainActivity";
     private static final String SEARCH_KEY = "search_key";
+    private static final String CATEGORY_SELECTED = "category_selected";
 
     private static final int SEARCH_BAR_RESULT = 133;
+    private static final int CATEGORY_PICKER = 4662;
 
     BottomNavigationView bottomNavigationView;
     Toolbar toolbar;
@@ -43,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     Account account;
     int selectedMenueID = 0;
     String searchKey;
+    Category categorySelected;
+
+    HomeViewModel homeViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +76,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         bottomNavigationView.setSelectedItemId(R.id.navHome);
+
+
+        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+
+        homeViewModel.getCategoryMutableLiveData().observe(this, new Observer<Category>() {
+            @Override
+            public void onChanged(Category category) {
+                categorySelected = category;
+                bottomNavigationView.setSelectedItemId(R.id.navHome);
+            }
+        });
 
     }
 
@@ -96,8 +116,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //            showExitDialog();
 //        } else
 
-        if (searchKey != null) {
+        if (searchKey != null || categorySelected != null) {
             searchKey = null;
+            categorySelected = null;
             bottomNavigationView.setSelectedItemId(R.id.navHome);
         } else {
             showExitDialog();
@@ -205,10 +226,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void handleHomeFragment() {
-        if (searchKey != null) {
+        if (searchKey != null || categorySelected != null) {
             changeToolbarDefault();
             Bundle bundle = new Bundle();
             bundle.putString(SEARCH_KEY, searchKey);
+            bundle.putSerializable(CATEGORY_SELECTED, categorySelected);
             home.setArguments(bundle);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -228,6 +250,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SEARCH_BAR_RESULT && resultCode == RESULT_OK && data != null) {
             searchKey = data.getStringExtra(SEARCH_KEY);
+            bottomNavigationView.setSelectedItemId(R.id.navHome);
+        } else if (requestCode == CATEGORY_PICKER && resultCode == RESULT_OK && data != null) {
+            categorySelected = (Category) data.getSerializableExtra(CATEGORY_SELECTED);
             bottomNavigationView.setSelectedItemId(R.id.navHome);
         }
     }

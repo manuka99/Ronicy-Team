@@ -5,7 +5,11 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class DoubleToCurrencyFormat {
     private static String prefix = "LKR ";
     private static final int MAX_DECIMAL = 3;

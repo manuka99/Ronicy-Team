@@ -13,7 +13,11 @@ import com.adeasy.advertise.model.ProductSales;
 import de.codecrafters.tableview.TableDataAdapter;
 import de.codecrafters.tableview.TableHeaderAdapter;
 import de.codecrafters.tableview.model.TableColumnModel;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class ProductAnalysisTableHeaderAdapter extends TableHeaderAdapter {
 
     private Context context;

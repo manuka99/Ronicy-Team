@@ -57,10 +57,10 @@ import ir.androidexception.datatable.model.DataTableHeader;
 import ir.androidexception.datatable.model.DataTableRow;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProductStatisticsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class ProductStatisticsFragment extends Fragment implements OrderCallback, View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match

@@ -28,6 +28,7 @@ import com.adeasy.advertise.callback.AdvertismentSearchCallback;
 import com.adeasy.advertise.helper.ViewHolderAdds;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
+import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.search_manager.AdvertismentSearchManager;
 import com.adeasy.advertise.ui.advertisement.CategoryPicker;
 import com.adeasy.advertise.ui.advertisement.HomeAdSearch;
@@ -68,8 +69,10 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     FirestorePagingAdapter<Advertisement, ViewHolderAdds> firestorePagingAdapter;
     AdvertisementManager advertisementManager;
     String searchKey;
+    Category category_selected;
     AdvertismentSearchManager advertismentSearchManager;
     private static final String SEARCH_KEY = "search_key";
+    private static final String CATEGORY_SELECTED = "category_selected";
     private static final int CATEGORY_PICKER = 4662;
 
     public Home() {
@@ -128,10 +131,20 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             e.printStackTrace();
         }
 
+        try {
+            category_selected = (Category) getArguments().getSerializable(CATEGORY_SELECTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         if (searchKey != null) {
             toolbar.setTitle(searchKey);
             toolbar.setSubtitle(getString(R.string.loading));
             advertismentSearchManager.searchAdsHome(searchKey);
+        } else if (category_selected != null) {
+            toolbar.setTitle(category_selected.getName());
+            toolbar.setSubtitle(getString(R.string.loading));
+            loadData(advertisementManager.viewAddsByCategoryHome(category_selected.getId()));
         } else {
             loadData(advertisementManager.viewAdds());
         }
@@ -325,7 +338,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             try {
                 if (adCountText != null)
                     adCountText.setText(task.getResult().size() + " results");
-                if (searchKey != null)
+                if (searchKey != null || category_selected != null)
                     toolbar.setSubtitle(task.getResult().size() + " results");
             } catch (NullPointerException e) {
                 Log.i(TAG, "fragments changed");

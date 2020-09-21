@@ -12,7 +12,11 @@ import com.adeasy.advertise.util.DoubleToCurrencyFormat;
 import java.util.List;
 
 import de.codecrafters.tableview.TableDataAdapter;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class ProductAnalysisTableAdapter extends TableDataAdapter<ProductSales> {
 
     private Context context;

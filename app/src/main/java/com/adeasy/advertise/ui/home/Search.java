@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.ViewModel.HomeViewModel;
 import com.adeasy.advertise.callback.CategoryCallback;
 import com.adeasy.advertise.helper.ViewHolderCatGrid;
 import com.adeasy.advertise.manager.CategoryManager;
@@ -58,6 +60,7 @@ public class Search extends Fragment implements CategoryCallback {
     CategoryManager categoryManager;
     FirestorePagingAdapter<Category, ViewHolderCatGrid> firestorePagingAdapter;
     SwipeRefreshLayout mSwipeRefreshLayout;
+    HomeViewModel homeViewModel;
 
     public Search() {
         // Required empty public constructor
@@ -103,6 +106,7 @@ public class Search extends Fragment implements CategoryCallback {
                 getActivity().startActivityForResult(new Intent(getActivity(), HomeAdSearch.class), SEARCH_BAR_RESULT);
             }
         });
+        homeViewModel = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
         //((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Search Category");
         return view;
     }
@@ -142,7 +146,7 @@ public class Search extends Fragment implements CategoryCallback {
                         options
                 ) {
                     @Override
-                    protected void onBindViewHolder(@NonNull ViewHolderCatGrid holder, final int position, @NonNull Category category) {
+                    protected void onBindViewHolder(@NonNull ViewHolderCatGrid holder, final int position, @NonNull final Category category) {
 
                         holder.getTitleView().setText(category.getName());
                         Picasso.get().load(category.getImageUrl()).into(holder.getImageView());
@@ -153,8 +157,8 @@ public class Search extends Fragment implements CategoryCallback {
                                 //Intent intent = new Intent(getContext(), NewAdvertisement.class);
                                 //intent.putExtra("key", getRef(position).getKey());
                                 //startActivity(intent);
-
-                                Toast.makeText(view.getContext(), getItem(position).getId(), Toast.LENGTH_SHORT).show();
+                                homeViewModel.setCategoryMutableLiveData(category);
+                                //Toast.makeText(view.getContext(), getItem(position).getId(), Toast.LENGTH_SHORT).show();
                             }
                         });
 

@@ -1,5 +1,9 @@
 package com.adeasy.advertise.util;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class CommonConstants {
     //order payment types
     public static final String PAYMENT_COD = "COD";

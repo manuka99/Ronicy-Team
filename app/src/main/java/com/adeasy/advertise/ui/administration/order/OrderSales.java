@@ -61,10 +61,10 @@ import java.util.List;
 import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link OrderSales#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class OrderSales extends Fragment implements View.OnClickListener, OrderCallback {
 
     // TODO: Rename parameter arguments, choose names that match
