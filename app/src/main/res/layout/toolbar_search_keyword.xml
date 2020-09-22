@@ -12,6 +12,7 @@
     <EditText
         android:id="@+id/search_keyword"
         android:textSize="@dimen/_14sdp"
+        android:focusableInTouchMode="true"
         android:textColor="@color/colorBlackText"
         android:imeOptions="actionSearch"
         android:textColorHint="@color/colorWhite"

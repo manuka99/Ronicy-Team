@@ -19,6 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
@@ -28,6 +29,7 @@ import com.adeasy.advertise.helper.ViewHolderCatGrid;
 import com.adeasy.advertise.manager.CategoryManager;
 import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.ui.advertisement.HomeAdSearch;
+import com.adeasy.advertise.ui.advertisement.LocationPicker;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.android.gms.tasks.Task;
@@ -41,7 +43,7 @@ import static android.app.Activity.RESULT_OK;
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class Search extends Fragment implements CategoryCallback {
+public class Search extends Fragment implements CategoryCallback, View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,8 +51,10 @@ public class Search extends Fragment implements CategoryCallback {
     private static final String ARG_PARAM2 = "param2";
 
     private static final String SEARCH_KEY = "search_key";
+    private static final String LOCATION_SELECTED = "location_selected";
 
     private static final int SEARCH_BAR_RESULT = 133;
+    private static final int LOCATION_PICKER = 7896;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -61,6 +65,8 @@ public class Search extends Fragment implements CategoryCallback {
     FirestorePagingAdapter<Category, ViewHolderCatGrid> firestorePagingAdapter;
     SwipeRefreshLayout mSwipeRefreshLayout;
     HomeViewModel homeViewModel;
+
+    TextView locationPicker, locationName;
 
     public Search() {
         // Required empty public constructor
@@ -100,6 +106,11 @@ public class Search extends Fragment implements CategoryCallback {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
+        locationPicker = view.findViewById(R.id.locationPicker);
+        locationName = view.findViewById(R.id.locationName);
+
+        locationPicker.setOnClickListener(this);
+
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,6 +118,14 @@ public class Search extends Fragment implements CategoryCallback {
             }
         });
         homeViewModel = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
+
+        try {
+            if (getArguments().getString(LOCATION_SELECTED) != null)
+                locationName.setText(getArguments().getString(LOCATION_SELECTED));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         //((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Search Category");
         return view;
     }
@@ -218,6 +237,12 @@ public class Search extends Fragment implements CategoryCallback {
     public void onStart() {
         super.onStart();
         firestorePagingAdapter.startListening();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == locationPicker)
+            getActivity().startActivityForResult(new Intent(getActivity(), LocationPicker.class), LOCATION_PICKER);
     }
 
     //Stop Listening Adapter

@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int SEARCH_BAR_RESULT = 133;
     private static final int CATEGORY_PICKER = 4662;
     private static final int LOCATION_PICKER = 6512;
+    private static final int LOCATION_PICKER_SEARCH = 7896;
 
     SpaceNavigationView spaceNavigationView;
     BottomNavigationView bottomNavigationView;
@@ -326,6 +327,17 @@ public class MainActivity extends AppCompatActivity {
             location_selected = data.getStringExtra(LOCATION_SELECTED);
             System.out.println("main: " + location_selected);
             setSelectedHomeInSpaceMenu();
+            // bottomNavigationView.setSelectedItemId(R.id.navHome);
+        } else if (requestCode == LOCATION_PICKER_SEARCH && resultCode == RESULT_OK && data != null) {
+            initializeAllFragments();
+            location_selected = data.getStringExtra(LOCATION_SELECTED);
+            System.out.println("search: " + location_selected);
+            spaceNavigationView.changeCurrentItem(1);
+            changeToolbarSearch();
+            Bundle bundle = new Bundle();
+            bundle.putString(LOCATION_SELECTED, location_selected);
+            search.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, search).commit();
             // bottomNavigationView.setSelectedItemId(R.id.navHome);
         }
     }

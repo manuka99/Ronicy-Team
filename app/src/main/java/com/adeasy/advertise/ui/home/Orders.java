@@ -285,19 +285,23 @@ public class Orders extends Fragment implements OrderCallback {
 
     @Override
     public void onOrderCount(Task<QuerySnapshot> task) {
-        if (task.isSuccessful()) {
-            if (task.getResult().size() == 0) {
-                getFragmentManager().beginTransaction().replace(frameLayout.getId(), new NoData()).commit();
-                frameLayout.setVisibility(View.VISIBLE);
+        try {
+            if (task.isSuccessful()) {
+                if (task.getResult().size() == 0) {
+                    getFragmentManager().beginTransaction().replace(frameLayout.getId(), new NoData()).commit();
+                    frameLayout.setVisibility(View.VISIBLE);
+                } else {
+                    frameLayout.setVisibility(View.GONE);
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Total orders: " + task.getResult().size());
+                }
             } else {
-                frameLayout.setVisibility(View.GONE);
-                ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Total orders: " + task.getResult().size());
+                Log.d(TAG, "Error getting documents: ", task.getException());
+                Exception e = task.getException();
+                if (e instanceof FirebaseFirestoreException && ((FirebaseFirestoreException) e).getCode().equals(FirebaseFirestoreException.Code.PERMISSION_DENIED))
+                    customDialogs.showPermissionDeniedStorage();
             }
-        } else {
-            Log.d(TAG, "Error getting documents: ", task.getException());
-            Exception e = task.getException();
-            if (e instanceof FirebaseFirestoreException && ((FirebaseFirestoreException) e).getCode().equals(FirebaseFirestoreException.Code.PERMISSION_DENIED))
-                customDialogs.showPermissionDeniedStorage();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

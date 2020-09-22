@@ -18,16 +18,18 @@
         android:padding="@dimen/_12sdp">
 
         <TextView
+            android:id="@+id/locationName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:drawablePadding="@dimen/_4sdp"
             android:textColor="@color/colorBlackText"
             android:drawableStart="@drawable/ic_baseline_location_on_24"
-            android:text="Colombo"
+            android:text="Location"
             android:textSize="@dimen/_12sdp" />
 
         <TextView
+            android:id="@+id/locationPicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
