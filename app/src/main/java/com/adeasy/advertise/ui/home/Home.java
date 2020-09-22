@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -80,6 +81,8 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     Switch aSwitch;
     List<String> search_ids;
     ImageView filters;
+    FrameLayout frameLayout;
+
     private static final String SEARCH_KEY = "search_key";
     private static final String CATEGORY_SELECTED = "category_selected";
     private static final String LOCATION_SELECTED = "location_selected";
@@ -135,6 +138,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         advertisementManager = new AdvertisementManager(this);
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         adCountText = toolbar.findViewById(R.id.adResults);
+        frameLayout = view.findViewById(R.id.frameLayout);
         category_picker = view.findViewById(R.id.category_picker);
         location_picker = view.findViewById(R.id.location_picker);
         filters = view.findViewById(R.id.filters);
@@ -397,6 +401,12 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             } catch (NullPointerException e) {
                 Log.i(TAG, "fragments changed");
             }
+
+            if (task.getResult().size() == 0) {
+                getFragmentManager().beginTransaction().replace(frameLayout.getId(), new NoData()).commit();
+                frameLayout.setVisibility(View.VISIBLE);
+            } else
+                frameLayout.setVisibility(View.GONE);
         } else {
             Log.d(TAG, "Error getting documents: ", task.getException());
         }

@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ import com.adeasy.advertise.ui.home.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -98,6 +100,13 @@ public class HomeAdSearch extends AppCompatActivity implements TextWatcher, Adve
         });
 
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (search_keyword.requestFocus())
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 
     @Override

@@ -1,69 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_10sdp"
-    android:background="@color/colorWhite"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="@dimen/_20sdp"
-    tools:context=".ui.home.NoData">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/header"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="No results! "
-        android:textColor="@color/colorBlackText"
-        android:textSize="@dimen/_16sdp" />
-
-    <ImageView
-        android:layout_width="@dimen/_120sdp"
-        android:layout_height="@dimen/_120sdp"
-        android:layout_gravity="center"
-        android:adjustViewBounds="true"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_no_results" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Start buying and selling!"
-        android:textSize="@dimen/_14sdp"
-        android:textStyle="italic" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_marginTop="@dimen/_18sdp"
-        android:layout_marginBottom="@dimen/_16sdp"
-        android:background="@color/colorWhiteLite" />
-
-    <TextView
-        android:id="@+id/allAds"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
-        android:drawableTint="@color/colorGreen"
-        android:padding="@dimen/_10sdp"
-        android:text="Go to all ads"
-        android:textColor="@color/colorGreen"
-        android:textSize="@dimen/_14sdp"
-        android:textStyle="italic" />
-
-    <TextView
-        android:id="@+id/postAd"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
-        android:background="@color/colorWarningDark"
-        android:padding="@dimen/_8sdp"
-        android:text="Post your ad"
-        android:textColor="#613D0D"
-        android:textSize="@dimen/_16sdp"
-        android:textStyle="bold" />
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/_20sdp"
+        tools:context=".ui.home.NoData">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="No results! "
+            android:textColor="@color/colorBlackText"
+            android:textSize="@dimen/_16sdp" />
+
+        <ImageView
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_no_results" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Start buying and selling!"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="italic" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:background="@color/colorWhiteLite" />
+
+        <TextView
+            android:id="@+id/allAds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:drawableTint="@color/colorGreen"
+            android:padding="@dimen/_10sdp"
+            android:text="Go to all ads"
+            android:textColor="@color/colorGreen"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/postAd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/colorWarningDark"
+            android:padding="@dimen/_8sdp"
+            android:text="Post your ad"
+            android:textColor="#613D0D"
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
