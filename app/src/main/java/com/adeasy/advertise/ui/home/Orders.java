@@ -71,6 +71,9 @@ public class Orders extends Fragment implements OrderCallback {
     CustomDialogs customDialogs;
     SwipeRefreshLayout swipeRefreshRecycle_view;
 
+    LoginRegister loginRegister;
+    Bundle bundle;
+
     public Orders() {
         // Required empty public constructor
     }
@@ -120,16 +123,24 @@ public class Orders extends Fragment implements OrderCallback {
         customDialogs = new CustomDialogs(getActivity());
         orderManager = new OrderManager(this, getActivity());
 
+        bundle = new Bundle();
+        bundle.putString("frame", "chat");
+
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (firebaseAuth.getCurrentUser() != null)
+        if (firebaseAuth.getCurrentUser() != null) {
+            frameLayout.setVisibility(View.GONE);
             loadData();
-        else
-            getFragmentManager().beginTransaction().replace(frameLayout.getId(), new LoginRegister()).commit();
+        } else {
+            frameLayout.setVisibility(View.VISIBLE);
+            loginRegister = new LoginRegister();
+            loginRegister.setArguments(bundle);
+            getFragmentManager().beginTransaction().replace(frameLayout.getId(), loginRegister).commit();
+        }
     }
 
     public void loadData() {
@@ -168,11 +179,15 @@ public class Orders extends Fragment implements OrderCallback {
 
                             holder.orderItemName.setText(order.getItem().getItemName());
                             holder.orderItemCat.setText(order.getItem().getCategoryName());
-                            holder.orderItemPrice.setText(String.valueOf(order.getItem().getPrice()));
+                            holder.orderItemPrice.setText(String.valueOf(order.getItem().getPreetyCurrency()));
 
                             holder.address.setText(order.getCustomer().getAddress());
                             holder.email.setText(order.getCustomer().getEmail());
                             holder.mobile.setText(String.valueOf(order.getCustomer().getPhone()));
+
+                            holder.orderPaymentTotal.setText(String.valueOf(order.getPayment().getPreetyCurrency()));
+
+                            holder.estimatedDate.setText(String.valueOf(order.getDeliveryEstimatedDate()));
 
                             Picasso.get().load(order.getItem().getImageUrl()).fit().into(holder.imageView);
                         }
@@ -271,7 +286,13 @@ public class Orders extends Fragment implements OrderCallback {
     @Override
     public void onOrderCount(Task<QuerySnapshot> task) {
         if (task.isSuccessful()) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Total orders: " + task.getResult().size());
+            if (task.getResult().size() == 0) {
+                getFragmentManager().beginTransaction().replace(frameLayout.getId(), new NoData()).commit();
+                frameLayout.setVisibility(View.VISIBLE);
+            } else {
+                frameLayout.setVisibility(View.GONE);
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Total orders: " + task.getResult().size());
+            }
         } else {
             Log.d(TAG, "Error getting documents: ", task.getException());
             Exception e = task.getException();

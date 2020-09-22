@@ -13,31 +13,41 @@
 
     <!-- Manuka -->
 
-    <FrameLayout
-        android:id="@+id/navContainer"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/main_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/_84sdp"
-        app:layout_constraintBottom_toTopOf="@+id/space"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints" />
-
-    <com.irfaan008.irbottomnavigation.SpaceNavigationView
-        android:id="@+id/space"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        app:layout_behavior="@string/space_scrolling_view_behavior"
-        app:centre_button_icon="@drawable/icon_plus_upsbrown_24"
-        app:space_item_icon_size="@dimen/space_item_icon_default_size"
-        app:space_item_icon_only_size="@dimen/space_item_icon_only_size"
-        app:space_item_text_size="@dimen/space_item_text_default_size" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <FrameLayout
+            android:id="@+id/navContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/space"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints" />
+
+        <com.irfaan008.irbottomnavigation.SpaceNavigationView
+            android:id="@+id/space"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:centre_button_icon="@drawable/icon_plus_upsbrown_24"
+            app:layout_behavior="@string/space_scrolling_view_behavior"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:space_item_icon_only_size="@dimen/space_item_icon_only_size"
+            app:space_item_icon_size="@dimen/space_item_icon_default_size"
+            app:space_item_text_size="@dimen/space_item_text_default_size" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

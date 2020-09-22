@@ -27,7 +27,7 @@
                 android:text="Order has been Delivered"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/_14sdp"
                 android:textStyle="bold|italic" />
 
             <LinearLayout
@@ -35,7 +35,10 @@
                 android:layout_height="wrap_content"
                 android:baselineAligned="false"
                 android:orientation="horizontal"
-                android:padding="@dimen/_12sdp">
+                android:paddingStart="@dimen/_12sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingEnd="@dimen/_12sdp"
+                android:paddingBottom="@dimen/_4sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -238,6 +241,14 @@
                         android:text="Customer Mobile"
                         android:textSize="@dimen/_10sdp" />
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Estimated Delivery "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_10sdp" />
+
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -281,6 +292,18 @@
                         android:textColor="@color/colorBlackText"
                         android:textSize="@dimen/_10sdp" />
 
+                    <TextView
+                        android:id="@+id/estimatedDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="serif"
+                        android:gravity="end"
+                        android:maxLines="1"
+                        android:text="@string/loading"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_10sdp" />
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -304,7 +327,7 @@
                     android:paddingEnd="@dimen/_12sdp"
                     android:text="@string/orderItemPaymentTotal"
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_12sdp"
+                    android:textSize="@dimen/_14sdp"
                     android:textStyle="bold"></TextView>
 
                 <TextView
@@ -317,7 +340,7 @@
                     android:paddingStart="@dimen/_12sdp"
                     android:paddingEnd="@dimen/_12sdp"
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_12sdp"
+                    android:textSize="@dimen/_14sdp"
                     android:textStyle="bold"></TextView>
 
             </LinearLayout>

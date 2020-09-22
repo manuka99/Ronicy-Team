@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -126,8 +127,11 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         mSwipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
         recyclerView = view.findViewById(R.id.adMenuRecyclerView);
         aSwitch = view.findViewById(R.id.switchView);
+        //recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, 1));
-        recyclerView.setHasFixedSize(false);
+        //recyclerView.setHasFixedSize(false);
+
+
         advertisementManager = new AdvertisementManager(this);
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         adCountText = toolbar.findViewById(R.id.adResults);

@@ -16,7 +16,7 @@ import com.adeasy.advertise.R;
  **/
 public class ViewHolderOrderItemHome extends RecyclerView.ViewHolder {
 
-    public TextView deliveredLayout, orderID, order_time, orderType, orderStatus, orderPaymentMode, orderItemName, orderItemCat, orderItemPrice, address, email, mobile, orderPaymentTotal;
+    public TextView deliveredLayout, orderID, order_time, orderType, orderStatus, orderPaymentMode, orderItemName, orderItemCat, orderItemPrice, address, email, mobile, orderPaymentTotal, estimatedDate;
     public ImageView imageView;
 
     public ViewHolderOrderItemHome(@NonNull View itemView) {
@@ -36,6 +36,8 @@ public class ViewHolderOrderItemHome extends RecyclerView.ViewHolder {
         email = itemView.findViewById(R.id.email);
         mobile = itemView.findViewById(R.id.mobile);
         orderPaymentTotal = itemView.findViewById(R.id.orderPaymentTotal);
+
+        estimatedDate = itemView.findViewById(R.id.estimatedDate);
 
         imageView = itemView.findViewById(R.id.orderItemImage);
     }
