@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(Category category) {
                 categorySelected = category;
-                bottomNavigationView.setSelectedItemId(R.id.navHome);
+                setSelectedHomeInSpaceMenu();
             }
         });
 

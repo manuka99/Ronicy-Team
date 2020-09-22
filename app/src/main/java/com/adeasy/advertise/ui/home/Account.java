@@ -36,6 +36,7 @@ import com.adeasy.advertise.ui.administration.home.DashboardHome;
 import com.adeasy.advertise.ui.advertisement.Donations;
 import com.adeasy.advertise.ui.advertisement.Myadds;
 import com.adeasy.advertise.ui.athentication.LoginRegister;
+import com.adeasy.advertise.ui.chat.ChatMainActivity;
 import com.adeasy.advertise.ui.favaourite.divya_MActivity;
 import com.adeasy.advertise.ui.getintouch.GetInTouchActivity;
 import com.adeasy.advertise.ui.profile.Profile;
@@ -78,7 +79,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
 
     private FirebaseAuth mAuth;
     TextView username;
-    Button myads, favaourite, membership, profile, faq, donateUs, logout, linkfb;
+    Button myads, myChats, favaourite, membership, profile, faq, donateUs, logout, linkfb;
     FrameLayout noAuthFragment, snackView;
     LinearLayout authContent;
     LoginRegister loginRegister;
@@ -139,6 +140,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
 
         username = view.findViewById(R.id.userName);
         myads = view.findViewById(R.id.myads);
+        myChats = view.findViewById(R.id.myChats);
         membership = view.findViewById(R.id.accountMember);
         favaourite = view.findViewById(R.id.favourite);
         profile = view.findViewById(R.id.myprofile);
@@ -159,6 +161,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         favaourite.setOnClickListener(this);
         linkfb.setOnClickListener(this);
         profile.setOnClickListener(this);
+        myChats.setOnClickListener(this);
 
         facebookAuthManager = new FacebookAuthManager(this);
         customAuthTokenManager = new CustomAuthTokenManager(this);
@@ -229,6 +232,8 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
     public void onClick(View view) {
         if (view == myads)
             startActivity(new Intent(getContext(), Myadds.class));
+        if (view == myChats)
+            startActivity(new Intent(getContext(), ChatMainActivity.class));
         else if (view == donateUs)
             startActivity(new Intent(getContext(), Donations.class));
         else if (view == logout)

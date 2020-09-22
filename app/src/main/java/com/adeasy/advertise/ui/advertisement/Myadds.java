@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
@@ -27,6 +28,7 @@ import com.adeasy.advertise.helper.ViewHolderListAdds;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.ui.editAd.EditAd;
+import com.adeasy.advertise.ui.home.NoData;
 import com.adeasy.advertise.util.CustomDialogs;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
@@ -57,6 +59,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
     FirestorePagingAdapter<Advertisement, ViewHolderListAdds> firestorePagingAdapter;
     FirebaseAuth firebaseAuth;
     CustomDialogs customErrorDialogs;
+    FrameLayout frameLayout;
     private static final String TAG = "Myadds";
 
     @Override
@@ -80,6 +83,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
 
         swipeRefreshLayout = findViewById(R.id.swipeRefreshMyadds);
 
+        frameLayout = findViewById(R.id.frameLayout);
         recyclerView = findViewById(R.id.myaddsRecycle);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
@@ -96,6 +100,8 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
     }
 
     public void loadData() {
+
+        advertisementManager.getCount(advertisementManager.viewMyAddsAll());
 
         PagedList.Config config = new PagedList.Config.Builder()
                 .setEnablePlaceholders(false)
@@ -294,10 +300,10 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
 
     @Override
     public void onCompleteInsertAd(Task<Void> task) {
-        if(task != null && task.isSuccessful()){
+        if (task != null && task.isSuccessful()) {
             Toast.makeText(context, "Success: All changes were saved", Toast.LENGTH_LONG).show();
             firestorePagingAdapter.refresh();
-        }else if(task != null){
+        } else if (task != null) {
             Toast.makeText(context, "Error, " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
 
             if (task.getException() instanceof FirebaseFirestoreException) {
@@ -318,7 +324,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
             }
             firestorePagingAdapter.refresh();
             Toast.makeText(context, "Success: Your advertisement was deleted", Toast.LENGTH_LONG).show();
-        }else if(task != null){
+        } else if (task != null) {
             Toast.makeText(context, "Error: Your advertisement was not deleted", Toast.LENGTH_LONG).show();
             if (task.getException() instanceof FirebaseFirestoreException) {
                 ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
@@ -330,7 +336,15 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
 
     @Override
     public void onAdCount(Task<QuerySnapshot> task) {
-        Toast.makeText(context, "Error: Changes were not saved", Toast.LENGTH_LONG).show();
+        if (task.isSuccessful()) {
+            if (task.getResult().size() == 0) {
+                getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), new NoData()).commit();
+                frameLayout.setVisibility(View.VISIBLE);
+            } else {
+                frameLayout.setVisibility(View.GONE);
+                getSupportActionBar().setSubtitle("Total ads: " + task.getResult().size());
+            }
+        }
     }
 
     @Override
