@@ -101,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
                     case 1:
                         selectedMenueID = itemIndex;
                         changeToolbarSearch();
+                        Bundle bundle = new Bundle();
+                        bundle.putString(LOCATION_SELECTED, location_selected);
+                        search.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, search).commit();
                         break;
 
