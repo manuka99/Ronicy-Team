@@ -355,7 +355,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
     private void endVerificationDisplay() {
         Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
         progressBarVerifyBtn.setVisibility(View.GONE);
-        verifyBtn.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+        verifyBtn.setBackgroundColor(getResources().getColor(R.color.mainUiColour));
         verifyTextView.setVisibility(View.VISIBLE);
         verifyTextView.startAnimation(aniSlide);
     }
@@ -385,7 +385,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
             verifyBtn.setBackgroundResource(R.color.colorGreyBtn);
 
         else
-            verifyBtn.setBackgroundResource(R.color.colorGreen);
+            verifyBtn.setBackgroundResource(R.color.mainUiColour);
 
     }
 

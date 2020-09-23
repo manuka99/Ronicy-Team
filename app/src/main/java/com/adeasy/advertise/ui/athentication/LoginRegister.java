@@ -432,7 +432,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
 
     private void endSigninUi() {
         Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
-        loginBtnLayout.setBackgroundResource(R.color.colorGreen);
+        loginBtnLayout.setBackgroundResource(R.color.mainUiColour);
         login.setVisibility(View.VISIBLE);
         loginProgress.setVisibility(View.GONE);
         login.startAnimation(aniSlide);
@@ -448,7 +448,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
 
     private void endSignupUi() {
         Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
-        signupBtnLayout.setBackgroundResource(R.color.colorGreen);
+        signupBtnLayout.setBackgroundResource(R.color.mainUiColour);
         signUp.setVisibility(View.VISIBLE);
         signUpProgress.setVisibility(View.GONE);
         signUpProgress.startAnimation(aniSlide);

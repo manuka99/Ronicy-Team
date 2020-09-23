@@ -208,7 +208,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
                 .selectedTextColor(ContextCompat.getColor(this, R.color.colorWhite))
                 .animationType(StepView.ANIMATION_CIRCLE)
                 .selectedCircleColor(ContextCompat.getColor(this, R.color.colorWhite))
-                .selectedCircleRadius(34)
+                //.selectedCircleRadius(34)
                 .selectedStepNumberColor(ContextCompat.getColor(this, R.color.colorBlack))
                 .steps(new ArrayList<String>() {{
                     add("Delivery");
@@ -216,9 +216,9 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
                     add("Payment");
                 }})
                 .animationDuration(getResources().getInteger(android.R.integer.config_shortAnimTime))
-                .stepLineWidth(14)
-                .textSize(30)
-                .stepNumberTextSize(34)
+                //.stepLineWidth(14)
+                //.textSize(30)
+                //.stepNumberTextSize(34)
                 .typeface(ResourcesCompat.getFont(context, R.font.pt_serif))
                 // other state methods are equal to the corresponding xml attributes
                 .commit();

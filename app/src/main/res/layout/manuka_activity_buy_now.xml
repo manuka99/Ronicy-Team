@@ -55,6 +55,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#03A9F4"
+                        app:sv_stepLineWidth="@dimen/_4sdp"
+                        app:sv_doneCircleRadius="@dimen/_12sdp"
+                        app:sv_selectedCircleRadius="@dimen/_10sdp"
+                        app:sv_textSize="@dimen/_12sdp"
+                        app:sv_stepNumberTextSize="@dimen/_12sdp"
                         android:padding="14dp" />
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
@@ -81,7 +86,7 @@
             android:id="@+id/continueOrder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorGreen"
+            android:background="@color/mainUiColour"
             android:gravity="center"
             android:onClick="onClick"
             android:padding="8dp"

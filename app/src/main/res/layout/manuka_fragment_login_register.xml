@@ -52,14 +52,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:errorEnabled="true"
-                app:hintTextColor="@color/colorGreen">
+                app:hintTextColor="@color/mainUiColour">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/donate_email"
                     android:inputType="textEmailAddress"
-                    android:textColorHint="@color/colorGreen" />
+                    android:textColorHint="@color/mainUiColour" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@color/colorGreen"
+                android:background="@color/mainUiColour"
                 android:orientation="horizontal"
                 android:padding="8dp">
 
@@ -121,7 +121,7 @@
                 android:layout_margin="20dp"
                 android:gravity="center"
                 android:text="@string/forgot_password"
-                android:textColor="@color/colorGreen"
+                android:textColor="@color/mainUiColour"
                 android:textSize="16sp" />
 
             <TextView
@@ -145,7 +145,7 @@
                 android:layout_margin="6dp"
                 android:gravity="center"
                 android:text="@string/sign_upNow"
-                android:textColor="@color/colorGreen"
+                android:textColor="@color/mainUiColour"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -162,14 +162,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:errorEnabled="true"
-                app:hintTextColor="@color/colorGreen">
+                app:hintTextColor="@color/mainUiColour">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/orderName"
                     android:inputType="textEmailAddress"
-                    android:textColorHint="@color/colorGreen" />
+                    android:textColorHint="@color/mainUiColour" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -178,14 +178,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:errorEnabled="true"
-                app:hintTextColor="@color/colorGreen">
+                app:hintTextColor="@color/mainUiColour">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/donate_email"
                     android:inputType="textEmailAddress"
-                    android:textColorHint="@color/colorGreen" />
+                    android:textColorHint="@color/mainUiColour" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -195,7 +195,7 @@
                 android:layout_height="wrap_content"
                 app:counterMaxLength="20"
                 app:errorEnabled="true"
-                app:hintTextColor="@color/colorGreen"
+                app:hintTextColor="@color/mainUiColour"
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -204,7 +204,7 @@
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:maxLength="20"
-                    android:textColorHint="@color/colorGreen" />
+                    android:textColorHint="@color/mainUiColour" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -213,7 +213,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorGreen"
+                android:background="@color/mainUiColour"
                 android:orientation="horizontal"
                 android:padding="8dp">
 
@@ -263,7 +263,7 @@
                 android:layout_margin="6dp"
                 android:gravity="center"
                 android:text="@string/login"
-                android:textColor="@color/colorGreen"
+                android:textColor="@color/mainUiColour"
                 android:textSize="16sp" />
 
         </LinearLayout>

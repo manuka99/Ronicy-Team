@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         spaceNavigationView.setSpaceBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite));
         spaceNavigationView.setCentreButtonIcon(R.drawable.icon_plus_upsbrown_24);
         spaceNavigationView.setCentreButtonColor(ContextCompat.getColor(this, R.color.colorWarningDark));
-        spaceNavigationView.setActiveSpaceItemColor(ContextCompat.getColor(this, R.color.colorGreen));
+        spaceNavigationView.setActiveSpaceItemColor(ContextCompat.getColor(this, R.color.mainUiColour));
         spaceNavigationView.setInActiveSpaceItemColor(ContextCompat.getColor(this, R.color.colorBlackText));
         spaceNavigationView.showIconOnly();
         spaceNavigationView.changeCurrentItem(0);

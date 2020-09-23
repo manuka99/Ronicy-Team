@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="mainUiColour">#0074ba</color>
+    <color name="mainUiColourDark">#00547e</color>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorBlue">#CC1043DE</color>
@@ -21,6 +23,7 @@
     <color name="colorWarningDark">#FFC107</color>
     <color name="colorHome">#e6ecff</color>
     <color name="colorGreen">#009877</color>
+    <color name="colorGreenDark">#007f63</color>
     <color name="colorError">#FFAE0655</color>
     <color name="colorError2">#DE041E</color>
 

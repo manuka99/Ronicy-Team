@@ -90,7 +90,7 @@
                         android:layout_height="@dimen/_24sdp"
                         android:layout_gravity="center"
                         android:layout_margin="10dp"
-                        android:background="@drawable/icon_filter_24"
+                        android:background="@drawable/icon_filter_blue_home"
                         android:contentDescription="@string/image" />
 
                 </LinearLayout>

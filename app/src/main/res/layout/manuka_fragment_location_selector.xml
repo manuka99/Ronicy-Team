@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/colorWhite"
             android:textAllCaps="false"
-            android:background="@color/colorGreen"
+            android:background="@color/mainUiColour"
             android:textSize="16sp"
             android:text="@string/useLocationBtn"/>
 

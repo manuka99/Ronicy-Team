@@ -35,8 +35,8 @@ tools:context=".ui.Order.StepSuccess">
         android:layout_marginBottom="4dp"
         android:fontFamily="serif"
         android:text="@string/orderIDText"
-        android:textColor="@color/colorGreen"
-        android:textSize="18sp"></TextView>
+        android:textColor="@color/mainUiColour"
+        android:textSize="18sp"/>
 
 
     <TextView
@@ -48,8 +48,8 @@ tools:context=".ui.Order.StepSuccess">
         android:layout_height="wrap_content"
         android:layout_marginBottom="14dp"
         android:fontFamily="serif"
-        android:textColor="@color/colorGreen"
-        android:textSize="18sp"></TextView>
+        android:textColor="@color/mainUiColour"
+        android:textSize="18sp"/>
 
 </LinearLayout>
 
@@ -136,7 +136,7 @@ tools:context=".ui.Order.StepSuccess">
                     android:fontFamily="serif"
                     android:gravity="start"
                     android:text="@string/loading"
-                    android:textColor="#088F83"
+                    android:textColor="@color/mainUiColour"
                     android:textSize="16sp"
                     android:textStyle="bold"></TextView>
 
@@ -201,7 +201,7 @@ tools:context=".ui.Order.StepSuccess">
                     android:fontFamily="serif"
                     android:gravity="end"
                     android:text="@string/orderItemDeliveryFee"
-                    android:textColor="#088F83"
+                    android:textColor="@color/mainUiColour"
                     android:textSize="16sp"
                     android:textStyle="bold"></TextView>
 
@@ -295,7 +295,7 @@ tools:context=".ui.Order.StepSuccess">
         android:layout_gravity="center_vertical"
         android:fontFamily="serif"
         android:text="@string/company_phone"
-        android:textColor="@color/colorGreen"
+        android:textColor="@color/mainUiColour"
         android:textSize="22sp"></TextView>
 
 </LinearLayout>

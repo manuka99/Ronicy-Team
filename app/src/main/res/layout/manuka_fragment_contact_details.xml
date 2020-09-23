@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:gravity="start"
             android:text="@string/contact_detailsName"
-            android:textColor="@color/colorGreen"
+            android:textColor="@color/mainUiColour"
             android:textSize="14sp" />
 
         <TextView
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:text="@string/phoneNumbers"
-                    android:textColor="@color/colorGreen"
+                    android:textColor="@color/mainUiColour"
                     android:textSize="14sp" />
 
                 <TextView
@@ -88,7 +88,7 @@
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:background="@drawable/icon_add_in_circle" />
+                        android:background="@drawable/icon_add_medium_ad" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -132,7 +132,7 @@
             android:layout_marginTop="20dp"
             android:gravity="start"
             android:text="@string/contact_detailsEmail"
-            android:textColor="@color/colorGreen"
+            android:textColor="@color/mainUiColour"
             android:textSize="14sp" />
 
         <TextView
@@ -149,7 +149,7 @@
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorGreen"
+            android:background="@color/mainUiColour"
             android:textColor="@color/colorWhite"
             android:text="@string/post_new_btn"
             android:textAllCaps="false"
