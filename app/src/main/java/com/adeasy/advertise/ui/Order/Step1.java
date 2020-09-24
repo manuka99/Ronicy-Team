@@ -35,6 +35,7 @@ public class Step1 extends Fragment implements TextWatcher {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "Step1";
+    private static final String CUSTOMER = "customer";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -94,9 +95,26 @@ public class Step1 extends Fragment implements TextWatcher {
         phoneView.getEditText().addTextChangedListener(this);
         addressView.getEditText().addTextChangedListener(this);
 
+
         customer = new Order_Customer();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        try {
+            customer = (Order_Customer) getArguments().getSerializable(CUSTOMER);
+            updateUiOnCustomerRecieve();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         return view;
+    }
+
+    private void updateUiOnCustomerRecieve() {
+        nameView.getEditText().setText(customer.getName());
+        phoneView.getEditText().setText(String.valueOf(customer.getPhone()));
+        emailView.getEditText().setText(customer.getEmail());
+        addressView.getEditText().setText(customer.getAddress());
     }
 
     @Override

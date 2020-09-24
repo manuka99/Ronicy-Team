@@ -79,7 +79,9 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     private BuynowViewModel buynowViewModel;
 
     private static final String TAG = "BuyNow";
+    private static final String CUSTOMER = "customer";
     private static final int PAYHERE_REQUEST = 11010;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,7 +176,8 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
             ft.commit();
 
             stepView.go(0, true);
-            super.onBackPressed();
+            // super.onBackPressed();
+            handelStep1Fragment();
         } else
             finish();
 
@@ -298,6 +301,16 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
         }
 
+    }
+
+    private void handelStep1Fragment() {
+        Bundle bundle = new Bundle();
+        if (order != null && order.getCustomer() != null && order.getCustomer().getEmail() != null) {
+            bundle.putSerializable(CUSTOMER, order.getCustomer());
+        }
+        Step1 step1 = new Step1();
+        step1.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.orderStepContainer, step1).commit();
     }
 
     public boolean validateUserBefourPayment() {
