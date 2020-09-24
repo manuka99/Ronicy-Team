@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#CCFFFFFF"
+    android:background="@color/whiteLogin"
     tools:context=".ui.athentication.LoginRegister">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/_16sdp">
 
         <TextView
             android:id="@+id/fragmentHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="@dimen/_20sdp"
             android:gravity="center"
             android:textColor="@color/colorBlackText"
             android:textSize="@dimen/_16sdp" />
@@ -27,23 +27,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"
-            android:text="@string/continueWithFb"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:background="@drawable/button_round_fb"
             android:drawableStart="@drawable/com_facebook_button_icon"
             android:drawablePadding="@dimen/_10sdp"
-            android:textAllCaps="false"
-            android:textColor="@color/colorWhite"
-            android:background="@drawable/button_round_fb"
-            android:textSize="@dimen/_14sdp"
             android:paddingStart="@dimen/_20sdp"
             android:paddingEnd="@dimen/_20sdp"
+            android:text="@string/continueWithFb"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_14sdp"
             android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/loginLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -59,7 +59,9 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/donate_email"
                     android:inputType="textEmailAddress"
-                    android:textColorHint="@color/mainUiColour" />
+                    android:textColorHint="@color/mainUiColour"
+                    android:textCursorDrawable="@drawable/cursor_main_ui"
+                    android:theme="@style/EditTextMainUiTheme" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -68,14 +70,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:errorEnabled="true"
-                app:hintTextColor="@color/colorGreen"
+                app:hintTextColor="@color/mainUiColour"
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textCursorDrawable="@drawable/cursor_main_ui"
+                    android:theme="@style/EditTextMainUiTheme" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,15 +87,15 @@
                 android:id="@+id/loginBtnLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@color/mainUiColour"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="@dimen/_4sdp">
 
                 <ProgressBar
                     android:id="@+id/progressBarLogin"
                     android:layout_width="match_parent"
-                    android:layout_height="24dp"
+                    android:layout_height="@dimen/_26sdp"
                     android:layout_gravity="center"
                     android:indeterminate="true"
                     android:indeterminateTint="@color/colorWhite"
@@ -101,13 +105,14 @@
                 <TextView
                     android:id="@+id/login"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_26sdp"
                     android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:text="@string/login"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/_16sdp"
                     android:textStyle="bold"
                     android:visibility="visible" />
 
@@ -118,11 +123,11 @@
                 android:id="@+id/forgotPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="@dimen/_10sdp"
                 android:gravity="center"
                 android:text="@string/forgot_password"
                 android:textColor="@color/mainUiColour"
-                android:textSize="16sp" />
+                android:textSize="@dimen/_14sdp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -132,21 +137,21 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/_14sdp"
                 android:gravity="center"
                 android:text="@string/no_account"
                 android:textColor="@color/colorBlackText"
-                android:textSize="16sp" />
+                android:textSize="@dimen/_14sdp" />
 
             <TextView
                 android:id="@+id/signUpNow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="6dp"
+                android:layout_margin="@dimen/_6sdp"
                 android:gravity="center"
                 android:text="@string/sign_upNow"
                 android:textColor="@color/mainUiColour"
-                android:textSize="16sp" />
+                android:textSize="@dimen/_14sdp" />
 
         </LinearLayout>
 
@@ -168,8 +173,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/orderName"
-                    android:inputType="textEmailAddress"
-                    android:textColorHint="@color/mainUiColour" />
+                    android:inputType="textPersonName"
+                    android:textColorHint="@color/mainUiColour"
+                    android:textCursorDrawable="@drawable/cursor_main_ui"
+                    android:theme="@style/EditTextMainUiTheme" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -185,7 +192,9 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/donate_email"
                     android:inputType="textEmailAddress"
-                    android:textColorHint="@color/mainUiColour" />
+                    android:textColorHint="@color/mainUiColour"
+                    android:textCursorDrawable="@drawable/cursor_main_ui"
+                    android:theme="@style/EditTextMainUiTheme" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -204,7 +213,9 @@
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:maxLength="20"
-                    android:textColorHint="@color/mainUiColour" />
+                    android:textColorHint="@color/mainUiColour"
+                    android:textCursorDrawable="@drawable/cursor_main_ui"
+                    android:theme="@style/EditTextMainUiTheme" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -212,15 +223,15 @@
                 android:id="@+id/signupBtnLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/_6sdp"
                 android:background="@color/mainUiColour"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="@dimen/_6sdp">
 
                 <ProgressBar
                     android:id="@+id/progressBarsignup"
                     android:layout_width="match_parent"
-                    android:layout_height="24dp"
+                    android:layout_height="@dimen/_24sdp"
                     android:layout_gravity="center"
                     android:indeterminate="true"
                     android:indeterminateTint="@color/colorWhite"
@@ -230,13 +241,14 @@
                 <TextView
                     android:id="@+id/signUp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_24sdp"
                     android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:text="@string/signUp"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/_18sdp"
                     android:textStyle="bold"
                     android:visibility="visible" />
 
@@ -245,7 +257,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="@dimen/_20sdp"
                 android:background="#33000000" />
 
             <TextView
@@ -254,17 +266,17 @@
                 android:gravity="center"
                 android:text="@string/already_have_anAccount"
                 android:textColor="@color/colorBlackText"
-                android:textSize="16sp" />
+                android:textSize="@dimen/_14sdp" />
 
             <TextView
                 android:id="@+id/loginNow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="6dp"
+                android:layout_margin="@dimen/_6sdp"
                 android:gravity="center"
                 android:text="@string/login"
                 android:textColor="@color/mainUiColour"
-                android:textSize="16sp" />
+                android:textSize="@dimen/_14sdp" />
 
         </LinearLayout>
 

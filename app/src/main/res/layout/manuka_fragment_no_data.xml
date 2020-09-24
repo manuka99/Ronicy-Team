@@ -51,10 +51,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
-            android:drawableTint="@color/colorGreen"
+            android:drawableTint="@color/mainUiColour"
             android:padding="@dimen/_10sdp"
             android:text="Go to all ads"
-            android:textColor="@color/colorGreen"
+            android:textColor="@color/mainUiColour"
             android:textSize="@dimen/_14sdp"
             android:textStyle="italic" />
 

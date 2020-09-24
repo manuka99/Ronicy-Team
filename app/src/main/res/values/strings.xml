@@ -277,6 +277,8 @@
     <string name="placed_date">Placed date</string>
     <string name="payment_mode">Payment mode</string>
     <string name="payment_status">Payment Status</string>
+    <string name="go_to_all_ads">Go to all ads</string>
+    <string name="my_chats">My chats</string>
 
     <!-- Ashan -->
 </resources>

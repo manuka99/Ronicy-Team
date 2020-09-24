@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorHome"
-    tools:context=".ui.home.Account">
+    tools:context=".ui.home.Account"
+    tools:targetApi="m">
 
     <!-- Manuka -->
 
@@ -30,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/_14sdp"
                 android:paddingTop="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_14sdp"
                 android:paddingBottom="@dimen/_10sdp"
                 android:text="@string/loading"
                 android:textSize="@dimen/_20sdp" />
@@ -39,9 +41,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_28sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="@dimen/_20sdp"
                 android:background="@drawable/button_round_fb"
-                android:drawableLeft="@drawable/com_facebook_button_icon"
+                android:drawableStart="@drawable/com_facebook_button_icon"
                 android:drawablePadding="@dimen/_6sdp"
                 android:gravity="center"
                 android:paddingStart="@dimen/_10sdp"
@@ -83,7 +85,7 @@
                 android:fontFamily="@font/droid_sans"
                 android:paddingStart="@dimen/_6sdp"
                 android:paddingEnd="@dimen/_6sdp"
-                android:text="My chats"
+                android:text="@string/my_chats"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
                 android:textSize="@dimen/_14sdp" />

@@ -23,6 +23,12 @@
         <item name="colorControlHighlight">@color/colorBlue</item>
     </style>
 
+    <style name="EditTextMainUiTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/colorGreyBtn</item>
+        <item name="colorControlActivated">@color/mainUiColour</item>
+        <item name="colorControlHighlight">@color/mainUiColour</item>
+    </style>
+
     <style name="EditTextErrorTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlNormal">@color/colorGreyBtn</item>
         <item name="colorControlActivated">@color/colorDangerDark</item>
