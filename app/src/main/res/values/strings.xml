@@ -226,7 +226,6 @@
     <string name="placed_date">Placed date</string>
     <string name="payment_mode">Payment mode</string>
     <string name="payment_status">Payment Status</string>
-    <string name="go_to_all_ads">Go to all ads</string>
     <string name="my_chats">My chats</string>
     <string name="verification_code">Verification Code</string>
     <string name="code_sent_successfully">Verification code sent sucessfully</string>
@@ -288,6 +287,18 @@
     <string name="getInTouchString">Get In Touch</string>
     <string name="bugs">Bugs</string>
     <string name="colombo">Colombo</string>
+    <string name="note_these_ads_are_filtered_considering_the_filter_options_only_therefore_the_approval_status_of_the_advertisements_are_not_considered">Note: These Ads are filtered considering the filter options only therefore the approval status of the advertisements are not considered.</string>
+    <string name="rejected_reason">Rejected reason</string>
+    <string name="contacts">Contacts</string>
+    <string name="note">* Note</string>
+    <string name="this_message_will_be_displayed_to_the_user_as_the_unapproved_reason_please_make_sure_that_you_enter_a_valid_reason">This message will be displayed to the user as the unapproved reason, please make sure that you enter a valid reason.</string>
+    <string name="buynow_ad">BuyNow Ad</string>
+    <string name="approve_ad">Approve Ad</string>
+    <string name="ad_available">Ad Available</string>
+    <string name="hide_all_numbers">Hide all numbers</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
+    <string name="go_to_all_ads">Go to all ads</string>
 
     <!-- Ashan -->
 </resources>

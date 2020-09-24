@@ -28,7 +28,8 @@ tools:context=".ui.administration.advertisement.NewAds">
         android:id="@+id/myaddsRecycle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="3dp"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_4sdp"/>
+
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

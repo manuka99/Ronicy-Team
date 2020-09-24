@@ -17,8 +17,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_6sdp"
         android:paddingStart="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_12sdp"
         android:paddingBottom="@dimen/_4sdp"
-        android:text="Note: These Ads are filtered considering the filter options only therefore the approval status of the advertisements are not considered."
+        android:text="@string/note_these_ads_are_filtered_considering_the_filter_options_only_therefore_the_approval_status_of_the_advertisements_are_not_considered"
         android:textSize="@dimen/_10sdp"
         android:textStyle="italic" />
 
@@ -32,7 +33,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_4sdp"
-            android:layout_marginEnd="@dimen/_4sdp"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_marginEnd="@dimen/_4sdp"/>
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>

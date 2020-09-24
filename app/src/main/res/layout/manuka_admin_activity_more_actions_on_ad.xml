@@ -12,7 +12,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar_admin"></include>
+        layout="@layout/toolbar_admin" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -45,37 +45,37 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:padding="@dimen/_6sdp">
 
                 <TextView
                     android:id="@+id/adDetailsID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="@dimen/_8sdp"
                     android:background="@drawable/button_round_fb"
                     android:fontFamily="serif"
                     android:gravity="center"
-                    android:padding="4dp"
+                    android:padding="@dimen/_4sdp"
                     android:text="@string/loading"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/_14sdp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/adDetailsTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginBottom="@dimen/_4sdp"
                     android:fontFamily="serif"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/_22sdp"
-                    android:textStyle="bold"></TextView>
+                    android:textSize="@dimen/_18sdp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/adDetailsPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@drawable/ad_price_yellow_frame"
                     android:fontFamily="serif"
                     android:paddingStart="@dimen/_6sdp"
@@ -84,15 +84,14 @@
                     android:paddingBottom="@dimen/_4sdp"
                     android:text="@string/loading"
                     android:textColor="@color/colorBlackText"
-                    android:textSize="16sp"></TextView>
+                    android:textSize="@dimen/_14sdp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_4sdp"
-                    android:fontFamily="serif"
                     android:text="@string/adForSale"
-                    android:textSize="14sp"></TextView>
+                    android:textSize="@dimen/_12sdp" />
 
                 <View style="@style/Divider" />
 
@@ -100,26 +99,26 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/_4sdp"
                         android:text="@string/adLocation"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="14sp"
-                        android:textStyle="bold"></TextView>
+                        android:textColor="@color/colorBlackText"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_gravity="center_vertical"
                         android:text="@string/adLocationText"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="14sp"></TextView>
+                        android:textColor="@color/colorBlackText"
+                        android:textSize="@dimen/_12sdp" />
 
 
                 </LinearLayout>
@@ -127,26 +126,26 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/_4sdp"
                         android:text="@string/adCondition"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="14sp"
-                        android:textStyle="bold"></TextView>
+                        android:textColor="@color/colorBlackText"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/adDetailsCondition"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="14sp"></TextView>
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/colorBlackText"
+                        android:textSize="14sp" />
 
 
                 </LinearLayout>
@@ -155,25 +154,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/_4sdp"
                         android:text="@string/adCategory"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="14sp"
-                        android:textStyle="bold"></TextView>
+                        android:textColor="@color/colorBlackText"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/adDetailsCategoryName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="14sp"></TextView>
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/colorBlackText"
+                        android:textSize="@dimen/_12sdp" />
 
 
                 </LinearLayout>
@@ -182,29 +182,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/_4sdp"
                         android:text="@string/adPosted"
                         android:textColor="@color/colorBlack"
-                        android:textSize="14sp"
-                        android:textStyle="bold"></TextView>
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/adDetailsTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_gravity="center_vertical"
                         android:textColor="@color/colorBlack"
-                        android:textSize="14sp"></TextView>
-
+                        android:textSize="@dimen/_12sdp" />
 
                 </LinearLayout>
-
 
             </LinearLayout>
 
@@ -212,28 +211,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:background="@color/colorWhite"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:padding="@dimen/_8sdp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:text="@string/adDescription"
                     android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
-                    android:textStyle="bold"></TextView>
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/adDetailsDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="serif"
                     android:textColor="@color/colorBlack"
-                    android:textSize="16sp"></TextView>
+                    android:textSize="@dimen/_12sdp" />
 
             </LinearLayout>
 
@@ -242,28 +241,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:background="@color/colorWhite"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:padding="@dimen/_8sdp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="Contacts"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:text="@string/contacts"
                     android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
-                    android:textStyle="bold"></TextView>
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/adDetailsContacts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="serif"
                     android:textColor="@color/colorBlack"
-                    android:textSize="16sp"></TextView>
+                    android:textSize="@dimen/_12sdp" />
 
             </LinearLayout>
 
@@ -271,27 +270,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:background="@color/colorWhite"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:padding="@dimen/_8sdp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="* Note"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:text="@string/note"
                     android:textColor="@color/colorDangerDark"
                     android:textSize="@dimen/_12sdp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="This message will be displayed to the user as the unapproved reason, please make sure that you enter a valid reason."
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:text="@string/this_message_will_be_displayed_to_the_user_as_the_unapproved_reason_please_make_sure_that_you_enter_a_valid_reason"
                     android:textSize="@dimen/_10sdp"
-                    android:textStyle="italic"></TextView>
+                    android:textStyle="italic" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/unApprovalMessage"
@@ -304,7 +303,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Rejected reason"
+                        android:hint="@string/rejected_reason"
                         android:textCursorDrawable="@color/colorDangerDark"
                         android:textSize="@dimen/_12sdp"
                         android:theme="@style/EditTextErrorTheme" />
@@ -317,7 +316,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
                 android:background="@color/colorWhite"
                 android:orientation="vertical"
@@ -331,7 +330,7 @@
                     android:layout_margin="@dimen/_4sdp"
                     android:drawableStart="@drawable/ic_baseline_check_box_outline_blank_24_ad"
                     android:drawablePadding="@dimen/_4sdp"
-                    android:text="BuyNow Ad"
+                    android:text="@string/buynow_ad"
                     android:textSize="@dimen/_14sdp"
                     android:textStyle="italic" />
 
@@ -343,7 +342,7 @@
                     android:layout_margin="@dimen/_4sdp"
                     android:drawableStart="@drawable/ic_baseline_check_box_outline_blank_24_ad"
                     android:drawablePadding="@dimen/_4sdp"
-                    android:text="Approve Ad"
+                    android:text="@string/approve_ad"
                     android:textSize="@dimen/_14sdp"
                     android:textStyle="italic" />
 
@@ -355,7 +354,7 @@
                     android:layout_margin="@dimen/_4sdp"
                     android:drawableStart="@drawable/ic_baseline_check_box_outline_blank_24_ad"
                     android:drawablePadding="@dimen/_4sdp"
-                    android:text="Ad Available"
+                    android:text="@string/ad_available"
                     android:textSize="@dimen/_14sdp"
                     android:textStyle="italic" />
 
@@ -367,12 +366,11 @@
                     android:layout_margin="@dimen/_4sdp"
                     android:drawableStart="@drawable/ic_baseline_check_box_outline_blank_24_ad"
                     android:drawablePadding="@dimen/_4sdp"
-                    android:text="Hide all numbers"
+                    android:text="@string/hide_all_numbers"
                     android:textSize="@dimen/_14sdp"
                     android:textStyle="italic" />
 
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -388,54 +386,54 @@
 
         <ProgressBar
             android:id="@+id/progressBarDelete"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginStart="@dimen/_4sdp"
             android:layout_weight="1"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_marginStart="6dp"
+            android:background="@color/colorDangerDark"
             android:indeterminate="true"
             android:indeterminateTint="@color/colorWhite"
             android:indeterminateTintMode="src_atop"
             android:padding="@dimen/_4sdp"
-            android:background="@color/colorDangerDark"
-            android:layout_height="@dimen/_32sdp"/>
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/delete"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="@dimen/_32sdp"
-            android:layout_marginEnd="6dp"
+            android:layout_marginEnd="@dimen/_4sdp"
             android:layout_weight="1"
             android:background="@color/colorDangerDark"
-            android:text="Delete"
+            android:text="@string/delete"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/_14sdp"></Button>
 
         <Button
             android:id="@+id/update"
-            android:visibility="visible"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="@dimen/_32sdp"
-            android:layout_marginStart="6dp"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_weight="1"
             android:background="@color/com_facebook_button_background_color"
-            android:text="Update"
+            android:text="@string/update"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_14sdp"></Button>
+            android:textSize="@dimen/_14sdp"
+            android:visibility="visible"></Button>
 
         <ProgressBar
             android:id="@+id/progressBar"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginStart="@dimen/_4sdp"
             android:layout_weight="1"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_marginStart="6dp"
+            android:background="@color/com_facebook_button_background_color"
             android:indeterminate="true"
             android:indeterminateTint="@color/colorWhite"
             android:indeterminateTintMode="src_atop"
             android:padding="@dimen/_4sdp"
-            android:background="@color/com_facebook_button_background_color"
-            android:layout_height="@dimen/_32sdp"/>
+            android:visibility="gone" />
 
     </LinearLayout>
 
