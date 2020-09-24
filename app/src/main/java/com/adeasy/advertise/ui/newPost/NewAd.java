@@ -1,6 +1,7 @@
 package com.adeasy.advertise.ui.newPost;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,8 +13,10 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -31,6 +34,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -58,6 +62,7 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
     Advertisement advertisement;
 
     private static final String TAG = "NewAd";
+    private static final int LOCATION_PICKER = 5654;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +138,7 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
             }
         });
 
-            startShowAllCategories();
+        startShowAllCategories();
     }
 
     @Override
@@ -281,11 +286,11 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
 
     @Override
     public void onCompleteInsertAd(Task<Void> task) {
-        if(task != null && task.isSuccessful()){
+        if (task != null && task.isSuccessful()) {
             progressDialog.dismiss();
             Toast.makeText(NewAd.this, "Success: Your advertisement was submited", Toast.LENGTH_LONG).show();
             finish();
-        }else if(task != null){
+        } else if (task != null) {
             progressDialog.dismiss();
             Toast.makeText(this, "error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
         }
@@ -295,7 +300,7 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
     public void onCompleteDeleteAd(Task<Void> task) {
 
     }
-    
+
     @Override
     public void onAdCount(Task<QuerySnapshot> task) {
 
@@ -309,6 +314,17 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
     @Override
     public void onSuccessGetAllAdsByYear(Task<QuerySnapshot> task) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            if (resultCode == RESULT_OK && requestCode == LOCATION_PICKER && data != null)
+                locationSelector.onActivityResult(requestCode, resultCode, data);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

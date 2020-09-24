@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e6ecff"
+    android:background="@color/colorHome"
     android:orientation="vertical"
     tools:context=".ui.newPost.AllCategoriesNewPost">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"></include>
-    <!-- Manuka -->
+        layout="@layout/toolbar" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -22,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <FrameLayout
                 android:id="@+id/newPostFragmentCont"
                 android:layout_width="match_parent"
@@ -43,6 +43,7 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

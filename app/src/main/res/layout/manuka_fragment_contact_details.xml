@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="32dp"
+    android:layout_marginBottom="@dimen/_20sdp"
     android:background="@color/colorHome"
     android:orientation="vertical"
     tools:context=".ui.newPost.ContactDetails">
@@ -14,16 +14,16 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/contact_details"
-        android:textColor="#CC000000"
-        android:textSize="20sp" />
+        android:textColor="@color/colorBlackText"
+        android:textSize="@dimen/_16sdp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:background="@color/colorWhite"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/_14sdp">
 
         <TextView
             android:layout_width="match_parent"
@@ -31,21 +31,21 @@
             android:gravity="start"
             android:text="@string/contact_detailsName"
             android:textColor="@color/mainUiColour"
-            android:textSize="14sp" />
+            android:textSize="@dimen/_12sdp" />
 
         <TextView
             android:id="@+id/contactDetailsName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/contact_detailsName"
             android:gravity="start"
-            android:textSize="16sp" />
+            android:text="@string/contact_detailsName"
+            android:textSize="@dimen/_12sdp" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:elevation="6dp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:elevation="@dimen/_6sdp"
             app:cardUseCompatPadding="true">
 
             <LinearLayout
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="@dimen/_14sdp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -61,13 +61,13 @@
                     android:gravity="start"
                     android:text="@string/phoneNumbers"
                     android:textColor="@color/mainUiColour"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/_1sdp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:background="#52000000" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -81,59 +81,64 @@
                     android:id="@+id/addAnewNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:background="@color/colorWhite"
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/icon_add_medium_ad" />
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
+                        android:layout_gravity="center_vertical"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/icon_add_medium_ad" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/contact_detailsAdd" />
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:text="@string/contact_detailsAdd"
+                        android:textSize="@dimen/_12sdp" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/hideAllNumbers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="@dimen/_14sdp"
                     android:background="@color/colorWhite"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/numbersHideBox"
-                        android:layout_width="30dp"
-                        android:layout_height="22dp"
+                        android:layout_width="@dimen/_26sdp"
+                        android:layout_height="@dimen/_20sdp"
                         android:background="@drawable/ic_checkbox_normal" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/contact_detailsHide" />
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:text="@string/contact_detailsHide"
+                        android:textSize="@dimen/_12sdp" />
+
                 </LinearLayout>
 
-
             </LinearLayout>
-
 
         </androidx.cardview.widget.CardView>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/_14sdp"
             android:gravity="start"
             android:text="@string/contact_detailsEmail"
             android:textColor="@color/mainUiColour"
-            android:textSize="14sp" />
+            android:textSize="@dimen/_12sdp" />
 
         <TextView
             android:id="@+id/contactDetailsEmail"
@@ -141,34 +146,33 @@
             android:layout_height="wrap_content"
             android:gravity="start"
             android:text="@string/post_new_btn"
-            android:textSize="16sp" />
+            android:textSize="@dimen/_12sdp" />
 
 
         <Button
             android:id="@+id/postNewAd"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_14sdp"
             android:background="@color/mainUiColour"
-            android:textColor="@color/colorWhite"
             android:text="@string/post_new_btn"
             android:textAllCaps="false"
-            android:textSize="20sp"/>
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_18sdp" />
 
     </LinearLayout>
-
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/_12sdp"
         android:gravity="center"
         android:text="@string/contact_detailsTermsAndConditions"
-        android:textSize="12sp" />
+        android:textSize="@dimen/_10sdp" />
 
     <FrameLayout
         android:id="@+id/snackbar_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

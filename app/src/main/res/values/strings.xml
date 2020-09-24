@@ -136,7 +136,7 @@
     <string name="orderThankyou">Thank you for placing  your order!</string>
     <string name="orderContactYou">We will contact you during working hours to confirm your details and arrange for delivery</string>
     <string name="orderHelp">Need help or want to cancel your order? </string>
-    <string name="orderCallus">Call Ronici.lk </string>
+    <string name="orderCallus">Call Ronicy.lk </string>
 
     <!-- donations -->
     <string name="donate_header">Help us make a bigger impact</string>
@@ -234,8 +234,6 @@
     <string name="chack_phone_auth_credentials">Verification code was not sent. Please check your credentials</string>
     <string name="phone_code_time_up">An error occurred when validating, Try again</string>
 
-    
-
 
     <!-- Divya -->
 
@@ -289,6 +287,7 @@
     <string name="AppGivingTroubleString">App giving trouble?</string>
     <string name="getInTouchString">Get In Touch</string>
     <string name="bugs">Bugs</string>
+    <string name="colombo">Colombo</string>
 
     <!-- Ashan -->
 </resources>

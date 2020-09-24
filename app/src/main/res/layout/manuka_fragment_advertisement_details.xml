@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
+    android:layout_marginBottom="@dimen/_10sdp"
     android:background="@color/colorHome"
     android:orientation="vertical"
     tools:context=".ui.newPost.AdvertisementDetails">
@@ -12,24 +12,25 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
         android:gravity="center"
         android:text="@string/post_add_1_image"
-        android:textColor="#CC000000"
-        android:textSize="20sp" />
+        android:textColor="@color/colorBlackText"
+        android:textSize="@dimen/_16sdp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
         android:background="@color/colorWhite"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="@dimen/_20sdp">
 
         <ImageView
             android:id="@+id/imageCamera"
-            android:layout_width="80dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/_72sdp"
+            android:layout_height="@dimen/_56sdp"
             android:layout_gravity="center"
             android:background="@drawable/ic_camera"
             android:contentDescription="@string/image" />
@@ -37,18 +38,18 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/imageRecycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/btn_add_photo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:background="@color/mainUiColour"
             android:text="@string/post_add_image_btn"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
-            android:textSize="16sp" />
+            android:textSize="@dimen/_14sdp" />
 
     </LinearLayout>
 
@@ -57,17 +58,17 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/post_details"
-        android:textColor="#CC000000"
-        android:textSize="20sp" />
+        android:textColor="@color/colorBlackText"
+        android:textSize="@dimen/_16sdp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        android:background="#ffffff"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:background="@color/colorWhite"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="@dimen/_20sdp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/newAdTitle"
@@ -76,7 +77,7 @@
             app:counterEnabled="true"
             app:counterMaxLength="35"
             app:errorEnabled="true"
-            app:hintTextColor="@color/colorGreen">
+            app:hintTextColor="@color/mainUiColour">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -84,8 +85,10 @@
                 android:hint="@string/post_title"
                 android:inputType="textPersonName"
                 android:maxLength="35"
-                android:textColorHint="@color/colorGreen"
-                android:textSize="18sp" />
+                android:textColorHint="@color/mainUiColour"
+                android:textCursorDrawable="@drawable/cursor_main_ui"
+                android:textSize="@dimen/_16sdp"
+                android:theme="@style/EditTextMainUiTheme" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -96,7 +99,7 @@
             app:counterEnabled="true"
             app:counterMaxLength="15"
             app:errorEnabled="true"
-            app:hintTextColor="@color/colorGreen">
+            app:hintTextColor="@color/mainUiColour">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -104,8 +107,10 @@
                 android:hint="@string/post_condition"
                 android:inputType="textPersonName"
                 android:maxLength="15"
-                android:textColorHint="@color/colorGreen"
-                android:textSize="18sp" />
+                android:textColorHint="@color/mainUiColour"
+                android:textCursorDrawable="@drawable/cursor_main_ui"
+                android:textSize="@dimen/_16sdp"
+                android:theme="@style/EditTextMainUiTheme" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,7 +121,7 @@
             app:counterEnabled="true"
             app:counterMaxLength="500"
             app:errorEnabled="true"
-            app:hintTextColor="@color/colorGreen">
+            app:hintTextColor="@color/mainUiColour">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -124,8 +129,10 @@
                 android:hint="@string/adDescription"
                 android:inputType="textMultiLine"
                 android:maxLength="500"
-                android:textColorHint="@color/colorGreen"
-                android:textSize="18sp" />
+                android:textColorHint="@color/mainUiColour"
+                android:textCursorDrawable="@drawable/cursor_main_ui"
+                android:textSize="@dimen/_16sdp"
+                android:theme="@style/EditTextMainUiTheme" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -136,7 +143,7 @@
             app:counterEnabled="true"
             app:counterMaxLength="15"
             app:errorEnabled="true"
-            app:hintTextColor="@color/colorGreen">
+            app:hintTextColor="@color/mainUiColour">
 
             <com.adeasy.advertise.custom_view.CurrencyTextInputEditText
                 android:layout_width="match_parent"
@@ -144,8 +151,10 @@
                 android:hint="@string/post_price"
                 android:inputType="number"
                 android:maxLength="15"
-                android:textColorHint="@color/colorGreen"
-                android:textSize="18sp" />
+                android:textColorHint="@color/mainUiColour"
+                android:textCursorDrawable="@drawable/cursor_main_ui"
+                android:textSize="@dimen/_16sdp"
+                android:theme="@style/EditTextMainUiTheme" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -154,5 +163,6 @@
     <FrameLayout
         android:id="@+id/snackbar_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

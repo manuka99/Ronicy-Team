@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.adeasy.advertise.R;
+import com.google.android.material.textfield.TextInputLayout;
 
 /**
  * Created by Manuka yasas,
@@ -31,7 +32,7 @@ public class LocationSelector extends Fragment {
 
     LinearLayout extraLayout;
     String location;
-    EditText locationSelectNewPost;
+    TextInputLayout locationSelectNewPost;
     ProgressBar locationSelectorProgress;
 
     public LocationSelector() {
@@ -78,8 +79,8 @@ public class LocationSelector extends Fragment {
         locationSelectorProgress = view.findViewById(R.id.locationSelectorProgress);
 
         extraLayout.setVisibility(View.GONE);
-        locationSelectNewPost.setText(location);
-        locationSelectNewPost.setTextColor(getResources().getColor(R.color.colorWhiteLite));
+        locationSelectNewPost.getEditText().setText(location);
+        locationSelectNewPost.getEditText().setTextColor(getResources().getColor(R.color.colorWhiteLite));
 
         locationSelectorProgress.setVisibility(View.GONE);
 
