@@ -32,7 +32,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.4"
                 android:clickable="true"
-                android:textColorHint="@color/colorBlue">
+                android:textColorHint="@color/colorBlue"
+                android:focusable="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/yearEditText"
@@ -41,12 +42,13 @@
                     android:clickable="true"
                     android:enabled="true"
                     android:focusableInTouchMode="false"
-                    android:hint="Select year..."
+                    android:hint="@string/select_year"
                     android:inputType="number"
                     android:textColorHint="@color/colorBlue"
                     android:textCursorDrawable="@drawable/blue_cursur"
                     android:textSize="@dimen/_12sdp"
-                    android:theme="@style/EditTextBlueTheme" />
+                    android:theme="@style/EditTextBlueTheme"
+                    android:focusable="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,7 +75,7 @@
                 android:indeterminateTint="@color/colorWhite"
                 android:indeterminateTintMode="src_atop"
                 android:padding="@dimen/_4sdp"
-                android:text="Update"
+                android:text="@string/update"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_10sdp"
                 android:visibility="gone" />
@@ -99,7 +101,7 @@
         android:layout_weight="2">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_8sdp"

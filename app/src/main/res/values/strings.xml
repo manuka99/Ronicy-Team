@@ -222,7 +222,6 @@
         <item>Authorized dealers</item>
     </string-array>
 
-
     <string name="placed_date">Placed date</string>
     <string name="payment_mode">Payment mode</string>
     <string name="payment_status">Payment Status</string>
@@ -232,6 +231,52 @@
     <string name="enter_verify_code">Please enter the verification code</string>
     <string name="chack_phone_auth_credentials">Verification code was not sent. Please check your credentials</string>
     <string name="phone_code_time_up">An error occurred when validating, Try again</string>
+
+    <string name="colombo">Colombo</string>
+    <string name="note_these_ads_are_filtered_considering_the_filter_options_only_therefore_the_approval_status_of_the_advertisements_are_not_considered">Note: These Ads are filtered considering the filter options only therefore the approval status of the advertisements are not considered.</string>
+    <string name="rejected_reason">Rejected reason</string>
+    <string name="contacts">Contacts</string>
+    <string name="note">* Note</string>
+    <string name="this_message_will_be_displayed_to_the_user_as_the_unapproved_reason_please_make_sure_that_you_enter_a_valid_reason">This message will be displayed to the user as the unapproved reason, please make sure that you enter a valid reason.</string>
+    <string name="buynow_ad">BuyNow Ad</string>
+    <string name="approve_ad">Approve Ad</string>
+    <string name="ad_available">Ad Available</string>
+    <string name="hide_all_numbers">Hide all numbers</string>
+    <string name="delete">Delete</string>
+    <string name="go_to_all_ads">Go to all ads</string>
+    <string name="item_details">Item Details</string>
+    <string name="item_name">Item Name:</string>
+    <string name="item_id">Item ID:</string>
+    <string name="item_category">Item Category:</string>
+    <string name="item_price">Item Price:</string>
+    <string name="name">Name:</string>
+    <string name="customer_details">Customer Details</string>
+    <string name="address">Address:</string>
+    <string name="email_order">Email:</string>
+    <string name="phone">Phone:</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="payment_amount">Payment Amount:</string>
+    <string name="payment_type">Payment Type:</string>
+    <string name="placed_date_adfmin_order">Placed Date:</string>
+    <string name="delivered_date">Delivered Date:</string>
+    <string name="order_status">Order Status</string>
+    <string name="estimated_delivery_date">Estimated Delivery Date</string>
+    <string name="order_description">Order Description</string>
+    <string name="hidden_for_user">Hidden for user</string>
+    <string name="order_details">Order Details</string>
+    <string name="confirm_delivered">Confirm Delivered</string>
+    <string name="update">Update</string>
+
+    <string name="online_payments">Online Payments</string>
+    <string name="cod_orders">COD Orders</string>
+    <string name="note_these_orders">Note: These Orders are filtered considering the approval status and visibility of the advertisements are not considered.</string>
+    <string name="select_year">Select year...</string>
+    <string name="this_data_will_represent_the_product_sales_of_the_particular_item_that_was_selected_also_if_the_product_price_changed_frequently_you_will_be_able_to_see_the_graphs_and_charts_based_on_the_price_vs_its_respective_sales">This data will represent the product sales of the particular item that was selected also if the product price changed frequently you will be able to see the graphs and charts based on the price vs its respective sales.</string>
+    <string name="productid">ProductID</string>
+    <string name="no_of_sales">No of sales</string>
+    <string name="total_sales_lkr">Total Sales(LKR)</string>
+    <string name="this_pie_chart_represent_the_orders_that_were_completed_based_on_the_above_product_also_this_chart_represents_data_based_on_the_prices_of_the_product_and_its_corresponding_sales">This Pie chart represent the orders that were completed based on the above product also this chart represents data based on the prices of the product and its corresponding sales.</string>
+    <string name="this_line_chart_represent_the_orders_that_were_completed_based_on_the_above_product_also_this_chart_represents_data_based_on_the_prices_of_the_product_and_its_corresponding_sales">This Line chart represent the orders that were completed based on the above product also this chart represents data based on the prices of the product and its corresponding sales.</string>
 
 
     <!-- Divya -->
@@ -286,19 +331,6 @@
     <string name="AppGivingTroubleString">App giving trouble?</string>
     <string name="getInTouchString">Get In Touch</string>
     <string name="bugs">Bugs</string>
-    <string name="colombo">Colombo</string>
-    <string name="note_these_ads_are_filtered_considering_the_filter_options_only_therefore_the_approval_status_of_the_advertisements_are_not_considered">Note: These Ads are filtered considering the filter options only therefore the approval status of the advertisements are not considered.</string>
-    <string name="rejected_reason">Rejected reason</string>
-    <string name="contacts">Contacts</string>
-    <string name="note">* Note</string>
-    <string name="this_message_will_be_displayed_to_the_user_as_the_unapproved_reason_please_make_sure_that_you_enter_a_valid_reason">This message will be displayed to the user as the unapproved reason, please make sure that you enter a valid reason.</string>
-    <string name="buynow_ad">BuyNow Ad</string>
-    <string name="approve_ad">Approve Ad</string>
-    <string name="ad_available">Ad Available</string>
-    <string name="hide_all_numbers">Hide all numbers</string>
-    <string name="delete">Delete</string>
-    <string name="update">Update</string>
-    <string name="go_to_all_ads">Go to all ads</string>
 
     <!-- Ashan -->
 </resources>

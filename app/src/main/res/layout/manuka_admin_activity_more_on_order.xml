@@ -41,31 +41,31 @@
                     android:id="@+id/orderID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="@dimen/_8sdp"
                     android:background="@drawable/button_round_fb"
                     android:fontFamily="serif"
                     android:gravity="center"
-                    android:padding="4dp"
+                    android:padding="@dimen/_4sdp"
                     android:text="@string/loading"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/_14sdp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/itemTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginBottom="@dimen/_4sdp"
                     android:fontFamily="serif"
                     android:textColor="@color/colorBlackText"
-                    android:textSize="22sp"
-                    android:textStyle="bold"></TextView>
+                    android:textSize="@dimen/_20sdp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/orderTotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@drawable/ad_price_yellow_frame"
                     android:fontFamily="serif"
                     android:paddingStart="@dimen/_6sdp"
@@ -74,16 +74,15 @@
                     android:paddingBottom="@dimen/_4sdp"
                     android:text="@string/loading"
                     android:textColor="@color/colorBlackText"
-                    android:textSize="16sp"></TextView>
+                    android:textSize="@dimen/_14sdp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_4sdp"
-                    android:fontFamily="serif"
-                    android:text="Item Details"
-                    android:textSize="14sp"></TextView>
+                    android:text="@string/item_details"
+                    android:textSize="@dimen/_14sdp" />
 
                 <View style="@style/Divider" />
 
@@ -91,111 +90,105 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="Item ID: "
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:text="@string/item_id"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"
-                        android:textStyle="bold"></TextView>
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/itemID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginTop="6dp"
                         android:textColor="@color/com_facebook_button_background_color"
-                        android:textSize="@dimen/_14sdp"
-                        android:textStyle="bold|italic"></TextView>
-
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold|italic" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="Item Name:"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:text="@string/item_name"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"
-                        android:textStyle="bold"></TextView>
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/itemName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_gravity="center_vertical"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"></TextView>
-
+                        android:textSize="@dimen/_12sdp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="Item Category:"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:text="@string/item_category"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"
-                        android:textStyle="bold"></TextView>
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_gravity="center_vertical"
                         android:textColor="@color/colorBlack"
-                        android:textSize="14sp"></TextView>
-
+                        android:textSize="@dimen/_12sdp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="Item Price:"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:text="@string/item_price"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"
-                        android:textStyle="bold"></TextView>
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/itemPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_gravity="center_vertical"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"></TextView>
-
+                        android:textSize="@dimen/_12sdp" />
 
                 </LinearLayout>
 
@@ -215,34 +208,34 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_4sdp"
                     android:fontFamily="serif"
-                    android:text="Customer Details"
-                    android:textSize="14sp" />
+                    android:text="@string/customer_details"
+                    android:textSize="@dimen/_14sdp" />
 
                 <View style="@style/Divider" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="Name: "
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:text="@string/name"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"
-                        android:textStyle="bold"></TextView>
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/customerName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_gravity="center_vertical"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"></TextView>
+                        android:textSize="@dimen/_12sdp" />
 
 
                 </LinearLayout>
@@ -250,26 +243,26 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="Address:"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:text="@string/address"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"
-                        android:textStyle="bold"></TextView>
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/customerAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_gravity="center_vertical"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"></TextView>
+                        android:textSize="@dimen/_12sdp" />
 
 
                 </LinearLayout>
@@ -277,26 +270,26 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="Email: "
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:text="@string/email_order"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"
-                        android:textStyle="bold"></TextView>
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/customerEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_gravity="center_vertical"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"></TextView>
+                        android:textSize="@dimen/_12sdp" />
 
 
                 </LinearLayout>
@@ -304,26 +297,26 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="Phone: "
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:text="@string/phone"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"
-                        android:textStyle="bold"></TextView>
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/customerPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_gravity="center_vertical"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"></TextView>
+                        android:textSize="@dimen/_12sdp" />
 
                 </LinearLayout>
 
@@ -343,34 +336,34 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_4sdp"
                     android:fontFamily="serif"
-                    android:text="Payment Details"
-                    android:textSize="14sp" />
+                    android:text="@string/payment_details"
+                    android:textSize="@dimen/_14sdp" />
 
                 <View style="@style/Divider" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="Payment Amount: "
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:text="@string/payment_amount"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"
-                        android:textStyle="bold"></TextView>
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/paymentAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_gravity="center_vertical"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"></TextView>
+                        android:textSize="@dimen/_12sdp" />
 
 
                 </LinearLayout>
@@ -378,27 +371,26 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="Payment Type:"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:text="@string/payment_type"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"
-                        android:textStyle="bold"></TextView>
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/paymentType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_gravity="center_vertical"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"></TextView>
-
+                        android:textSize="@dimen/_12sdp" />
 
                 </LinearLayout>
 
@@ -418,35 +410,37 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_4sdp"
                     android:fontFamily="serif"
-                    android:text="Order Details"
-                    android:textSize="14sp" />
+                    android:text="@string/order_details"
+                    android:textSize="@dimen/_14sdp" />
 
                 <View style="@style/Divider" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/_4sdp"
                         android:layout_weight="1"
-                        android:text="Placed Date:"
+                        android:text="@string/placed_date_adfmin_order"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"
-                        android:textStyle="bold"></TextView>
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/orderPlacedDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"></TextView>
+                        android:textSize="@dimen/_12sdp" />
 
                 </LinearLayout>
 
@@ -454,30 +448,32 @@
                     android:id="@+id/layoutDelivered"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/_4sdp"
                         android:layout_weight="0.1"
-                        android:text="Delivered Date: "
+                        android:text="@string/delivered_date"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"
-                        android:textStyle="bold"></TextView>
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/orderDeliveredDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/_4sdp"
                         android:layout_weight="0.9"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="14sp"
-                        android:textStyle="bold"></TextView>
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -487,7 +483,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:background="@color/colorWhite"
                 android:orientation="vertical"
                 android:padding="@dimen/_8sdp">
@@ -495,8 +491,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="* Note"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:text="@string/note"
                     android:textColor="@color/colorDangerDark"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
@@ -504,9 +500,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
-                    android:text="This message will be displayed to the user as the unapproved reason, please make sure that you enter a valid reason."
+                    android:text="@string/this_message_will_be_displayed_to_the_user_as_the_unapproved_reason_please_make_sure_that_you_enter_a_valid_reason"
                     android:textSize="@dimen/_10sdp"
                     android:textStyle="italic" />
 
@@ -527,7 +523,7 @@
                         android:enabled="true"
                         android:focusable="true"
                         android:focusableInTouchMode="false"
-                        android:hint="Estimated Delivery Date"
+                        android:hint="@string/estimated_delivery_date"
                         android:inputType="date"
                         android:textCursorDrawable="@drawable/blue_cursur"
                         android:textSize="@dimen/_12sdp"
@@ -546,7 +542,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Order Description"
+                        android:hint="@string/order_description"
                         android:inputType="textMultiLine"
                         android:textCursorDrawable="@drawable/blue_cursur"
                         android:textSize="@dimen/_12sdp"
@@ -569,7 +565,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:text="Order Status"
+                        android:text="@string/order_status"
                         android:textColor="@color/colorBlackText"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
@@ -598,7 +594,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:text="Payment Status"
+                        android:text="@string/payment_status"
                         android:textColor="@color/colorBlackText"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
@@ -617,7 +613,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
                 android:background="@color/colorWhite"
                 android:orientation="vertical"
@@ -631,7 +627,7 @@
                     android:layout_margin="@dimen/_4sdp"
                     android:drawableStart="@drawable/ic_baseline_check_box_outline_blank_24_ad"
                     android:drawablePadding="@dimen/_4sdp"
-                    android:text="Hidden for user"
+                    android:text="@string/hidden_for_user"
                     android:textSize="@dimen/_14sdp"
                     android:textStyle="italic" />
 
@@ -654,7 +650,7 @@
             android:id="@+id/progressBarDelivered"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_32sdp"
-            android:layout_marginStart="6dp"
+            android:layout_marginStart="@dimen/_4sdp"
             android:layout_weight="1"
             android:background="@color/colorDangerDark"
             android:indeterminate="true"
@@ -670,10 +666,10 @@
             android:layout_marginEnd="@dimen/_2sdp"
             android:layout_weight="1"
             android:background="@color/colorDangerDark"
-            android:text="Confirm Delivered"
+            android:text="@string/confirm_delivered"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_14sdp"></Button>
+            android:textSize="@dimen/_14sdp" />
 
         <Button
             android:id="@+id/update"
@@ -682,17 +678,17 @@
             android:layout_marginStart="@dimen/_2sdp"
             android:layout_weight="1"
             android:background="@color/com_facebook_button_background_color"
-            android:text="Update"
+            android:text="@string/update"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/_14sdp"
-            android:visibility="visible"></Button>
+            android:visibility="visible" />
 
         <ProgressBar
             android:id="@+id/progressBarUpdate"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_32sdp"
-            android:layout_marginStart="6dp"
+            android:layout_marginStart="@dimen/_4sdp"
             android:layout_weight="1"
             android:background="@color/com_facebook_button_background_color"
             android:indeterminate="true"

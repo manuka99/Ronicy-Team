@@ -14,6 +14,7 @@
         android:layout_marginTop="@dimen/_6sdp"
         android:layout_marginBottom="@dimen/_2sdp"
         android:paddingStart="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_12sdp"
         android:paddingBottom="@dimen/_4sdp"
         android:text="@string/reviewAdsTitle"
         android:textSize="@dimen/_10sdp"
