@@ -13,7 +13,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"></include>
+        layout="@layout/toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -29,25 +29,25 @@
                 android:id="@+id/steperWraper"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
                 android:background="@color/colorWhite"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:padding="@dimen/_8sdp">
 
                 <TextView
                     android:id="@+id/steperHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
+                    android:padding="@dimen/_6sdp"
                     android:text="@string/orderStepHeader"
-                    android:textSize="16sp"></TextView>
+                    android:textSize="@dimen/_12sdp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:elevation="8dp"
-                    app:cardCornerRadius="10dp"
+                    android:elevation="@dimen/_4sdp"
+                    app:cardCornerRadius="@dimen/_8sdp"
                     app:cardUseCompatPadding="true">
 
                     <com.shuhart.stepview.StepView
@@ -55,22 +55,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#03A9F4"
+                        android:padding="@dimen/_8sdp"
+                        app:sv_doneCircleRadius="@dimen/_10sdp"
+                        app:sv_selectedCircleRadius="@dimen/_8sdp"
                         app:sv_stepLineWidth="@dimen/_4sdp"
-                        app:sv_doneCircleRadius="@dimen/_12sdp"
-                        app:sv_selectedCircleRadius="@dimen/_10sdp"
-                        app:sv_textSize="@dimen/_12sdp"
-                        app:sv_stepNumberTextSize="@dimen/_12sdp"
-                        android:padding="14dp" />
+                        app:sv_stepNumberTextSize="@dimen/_10sdp"
+                        app:sv_textSize="@dimen/_12sdp" />
+
                 </androidx.cardview.widget.CardView>
+
             </LinearLayout>
 
             <FrameLayout
                 android:id="@+id/orderStepContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></FrameLayout>
-
+                android:layout_height="match_parent" />
 
         </LinearLayout>
+
     </ScrollView>
 
     <LinearLayout
@@ -80,21 +82,22 @@
         android:layout_weight="0"
         android:background="@color/colorWhite"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/_12sdp">
 
         <Button
             android:id="@+id/continueOrder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/mainUiColour"
+            android:background="@drawable/button_round_fb"
             android:gravity="center"
             android:onClick="onClick"
-            android:padding="8dp"
+            android:padding="@dimen/_6sdp"
             android:text="@string/continueBtn"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
-            android:textSize="24sp"
-            android:textStyle="bold"></Button>
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
 </LinearLayout>

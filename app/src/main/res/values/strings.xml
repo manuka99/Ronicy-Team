@@ -222,6 +222,21 @@
         <item>Authorized dealers</item>
     </string-array>
 
+
+    <string name="placed_date">Placed date</string>
+    <string name="payment_mode">Payment mode</string>
+    <string name="payment_status">Payment Status</string>
+    <string name="go_to_all_ads">Go to all ads</string>
+    <string name="my_chats">My chats</string>
+    <string name="verification_code">Verification Code</string>
+    <string name="code_sent_successfully">Verification code sent sucessfully</string>
+    <string name="enter_verify_code">Please enter the verification code</string>
+    <string name="chack_phone_auth_credentials">Verification code was not sent. Please check your credentials</string>
+    <string name="phone_code_time_up">An error occurred when validating, Try again</string>
+
+    
+
+
     <!-- Divya -->
 
     <!-- wishlist.xml-->
@@ -274,11 +289,6 @@
     <string name="AppGivingTroubleString">App giving trouble?</string>
     <string name="getInTouchString">Get In Touch</string>
     <string name="bugs">Bugs</string>
-    <string name="placed_date">Placed date</string>
-    <string name="payment_mode">Payment mode</string>
-    <string name="payment_status">Payment Status</string>
-    <string name="go_to_all_ads">Go to all ads</string>
-    <string name="my_chats">My chats</string>
 
     <!-- Ashan -->
 </resources>

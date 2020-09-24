@@ -9,6 +9,8 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import android.widget.EditText;
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.BuynowViewModel;
 import com.adeasy.advertise.model.Order_Customer;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -25,7 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class Step1 extends Fragment {
+public class Step1 extends Fragment implements TextWatcher {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,7 +40,7 @@ public class Step1 extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private EditText nameView, phoneView, emailView, addressView;
+    private TextInputLayout nameView, phoneView, emailView, addressView;
     private String name, email, address;
     private Integer phone;
     private Order_Customer customer;
@@ -84,6 +87,13 @@ public class Step1 extends Fragment {
         emailView = view.findViewById(R.id.orderEmail);
         phoneView = view.findViewById(R.id.orderPhone);
         addressView = view.findViewById(R.id.orderAddress);
+
+        //set watchers
+        nameView.getEditText().addTextChangedListener(this);
+        emailView.getEditText().addTextChangedListener(this);
+        phoneView.getEditText().addTextChangedListener(this);
+        addressView.getEditText().addTextChangedListener(this);
+
         customer = new Order_Customer();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         return view;
@@ -101,7 +111,7 @@ public class Step1 extends Fragment {
         buynowViewModel.getValidateCustomerDetails().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                if(getViewLifecycleOwner().getLifecycle().getCurrentState()== Lifecycle.State.RESUMED){
+                if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                     if (aBoolean)
                         startValidation();
                 }
@@ -124,12 +134,12 @@ public class Step1 extends Fragment {
 
         boolean result = false;
 
-        name = nameView.getText().toString();
-        email = emailView.getText().toString();
-        address = addressView.getText().toString();
+        name = nameView.getEditText().getText().toString();
+        email = emailView.getEditText().getText().toString();
+        address = addressView.getEditText().getText().toString();
 
         try {
-            phone = Integer.parseInt(phoneView.getText().toString().trim());
+            phone = Integer.parseInt(phoneView.getEditText().getText().toString().trim());
         } catch (Exception e) {
             phoneView.setError("Please fill out a valid phone number");
             return false;
@@ -138,7 +148,7 @@ public class Step1 extends Fragment {
         if (name.isEmpty())
             nameView.setError("Please fill out your name");
 
-        else if (phoneView.getText().toString().trim().length() != 9)
+        else if (phoneView.getEditText().getText().toString().trim().length() != 9)
             phoneView.setError("Incorrect format! ex: 771234567");
 
         else if (email.isEmpty())
@@ -158,6 +168,24 @@ public class Step1 extends Fragment {
         }
 
         return result;
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        nameView.setError(null);
+        phoneView.setError(null);
+        emailView.setError(null);
+        addressView.setError(null);
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
     }
 
 }
