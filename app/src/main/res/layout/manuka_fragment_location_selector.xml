@@ -69,13 +69,14 @@
                 android:id="@+id/setLocationNewAd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_14sdp"
                 android:background="@color/mainUiColour"
                 android:text="@string/useLocationBtn"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_16sdp" />
 
             <TextView
                 android:layout_width="match_parent"

@@ -43,10 +43,7 @@
             app:layout_behavior="@string/space_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:space_item_icon_only_size="@dimen/_22sdp"
-            app:space_item_icon_size="@dimen/_22sdp"
-            app:space_item_text_size="@dimen/_20sdp" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--app -->
     <string name="app_name">Ronicy</string>
@@ -278,6 +278,17 @@
     <string name="this_pie_chart_represent_the_orders_that_were_completed_based_on_the_above_product_also_this_chart_represents_data_based_on_the_prices_of_the_product_and_its_corresponding_sales">This Pie chart represent the orders that were completed based on the above product also this chart represents data based on the prices of the product and its corresponding sales.</string>
     <string name="this_line_chart_represent_the_orders_that_were_completed_based_on_the_above_product_also_this_chart_represents_data_based_on_the_prices_of_the_product_and_its_corresponding_sales">This Line chart represent the orders that were completed based on the above product also this chart represents data based on the prices of the product and its corresponding sales.</string>
 
+    <!-- navigation overridden -->
+    <dimen name="badge_left_margin" tools:override="true">@dimen/_4sdp</dimen>
+    <dimen name="centre_content_width" tools:override="true">@dimen/_80sdp</dimen>
+    <dimen name="main_content_height" tools:override="true">@dimen/_46sdp</dimen>
+    <dimen name="space_centre_button_default_size" tools:override="true">@dimen/_56sdp</dimen>
+    <dimen name="space_centre_button_margin" tools:override="true">@dimen/_6sdp</dimen>
+    <dimen name="space_item_icon_default_size" tools:override="true">@dimen/_18sdp</dimen>
+    <dimen name="space_item_icon_only_size" tools:override="true">@dimen/_22sdp</dimen>
+    <dimen name="space_item_text_default_size" tools:override="true">@dimen/_14sdp</dimen>
+    <dimen name="space_navigation_height" tools:override="true">@dimen/_66sdp</dimen>
+    <dimen name="view_bottom_margin" tools:override="true">@dimen/_40sdp</dimen>
 
     <!-- Divya -->
 

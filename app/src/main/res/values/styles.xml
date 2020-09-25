@@ -51,7 +51,7 @@
     </style>
 
     <style name="doorstep" parent="Theme.AppCompat.Light">
-        <item name="colorControlActivated">@color/colorGreen</item>
+        <item name="colorControlActivated">@color/mainUiColour</item>
     </style>
 
     <style name="Toolbar.title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">

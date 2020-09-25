@@ -34,7 +34,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="@dimen/_56sdp"
                 android:background="@color/com_facebook_button_background_color"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/_14sdp"
