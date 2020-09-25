@@ -47,7 +47,7 @@
                         android:text="@string/menu_location"
                         android:textAllCaps="false"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="@dimen/_13sdp" />
+                        android:textSize="@dimen/_14sdp" />
 
 
                     <TextView
@@ -74,7 +74,7 @@
                         android:text="@string/menu_category"
                         android:textAllCaps="false"
                         android:textColor="@color/colorBlackText"
-                        android:textSize="@dimen/_13sdp" />
+                        android:textSize="@dimen/_14sdp" />
 
                     <TextView
                         android:layout_width="@dimen/_1sdp"

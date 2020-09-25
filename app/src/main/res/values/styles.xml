@@ -54,6 +54,10 @@
         <item name="colorControlActivated">@color/colorGreen</item>
     </style>
 
+    <style name="Toolbar.title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/_16sdp</item>
+    </style>
+
     <!-- Divya -->
 
 

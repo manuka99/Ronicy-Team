@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"></include>
+        layout="@layout/toolbar"/>
 
     <!-- Manuka -->
 
@@ -44,9 +44,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:space_item_icon_only_size="@dimen/space_item_icon_only_size"
-            app:space_item_icon_size="@dimen/space_item_icon_default_size"
-            app:space_item_text_size="@dimen/space_item_text_default_size" />
+            app:space_item_icon_only_size="@dimen/_22sdp"
+            app:space_item_icon_size="@dimen/_22sdp"
+            app:space_item_text_size="@dimen/_20sdp" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

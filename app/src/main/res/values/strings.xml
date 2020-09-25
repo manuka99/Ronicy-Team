@@ -331,6 +331,7 @@
     <string name="AppGivingTroubleString">App giving trouble?</string>
     <string name="getInTouchString">Get In Touch</string>
     <string name="bugs">Bugs</string>
+    <string name="search">Search</string>
 
     <!-- Ashan -->
 </resources>

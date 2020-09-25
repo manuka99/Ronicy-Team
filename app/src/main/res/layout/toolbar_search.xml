@@ -30,7 +30,7 @@
                 android:drawableStart="@drawable/ic_baseline_search_24_toolbar"
                 android:drawablePadding="@dimen/_4sdp"
                 android:drawableTint="@color/colorBlackTextLite"
-                android:text="Search"
+                android:text="@string/search"
                 android:textColor="@color/colorBlackTextLite"
                 android:textSize="@dimen/_12sdp" />
 
