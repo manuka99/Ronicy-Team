@@ -35,13 +35,13 @@
                     android:layout_below="@+id/adMenuImage"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/_minus28sdp"
-                    android:background="@color/mainUiColour"
+                    android:background="@color/colorGreen"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="Buy Now"
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_12sdp"
-                    android:textStyle="bold"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold|italic"
                     android:visibility="visible" />
 
             </RelativeLayout>
