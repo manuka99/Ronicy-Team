@@ -31,7 +31,7 @@
                 app:layout_columnWeight="1">
 
                 <LinearLayout
-                    android:id="@+id/advertisement"
+                    android:id="@+id/recent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -61,7 +61,7 @@
                 app:layout_columnWeight="1">
 
                 <LinearLayout
-                    android:id="@+id/orders"
+                    android:id="@+id/onlinePending"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -92,7 +92,7 @@
                 app:layout_columnWeight="1">
 
                 <LinearLayout
-                    android:id="@+id/favourite"
+                    android:id="@+id/codPending"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -123,7 +123,7 @@
                 app:layout_columnWeight="1">
 
                 <LinearLayout
-                    android:id="@+id/chat"
+                    android:id="@+id/cancelled"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -139,6 +139,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Cancelled Orders" />
+
                 </LinearLayout>
 
 
@@ -153,7 +154,7 @@
                 app:layout_columnWeight="1">
 
                 <LinearLayout
-                    android:id="@+id/getInTouch"
+                    android:id="@+id/completed"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -170,6 +171,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Completed Orders" />
+
                 </LinearLayout>
 
 
@@ -184,7 +186,7 @@
                 app:layout_columnWeight="1">
 
                 <LinearLayout
-                    android:id="@+id/users"
+                    android:id="@+id/documentation"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -215,7 +217,7 @@
                 app:layout_columnWeight="1">
 
                 <LinearLayout
-                    android:id="@+id/categories"
+                    android:id="@+id/monthAnalysis"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -232,6 +234,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Sales Analysis" />
+
                 </LinearLayout>
 
 
@@ -246,7 +249,7 @@
                 app:layout_columnWeight="1">
 
                 <LinearLayout
-                    android:id="@+id/otp"
+                    android:id="@+id/productAnalysis"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"

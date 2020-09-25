@@ -7,6 +7,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,7 +16,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.ViewModel.OrderDashboardViewModel;
 import com.google.android.material.navigation.NavigationView;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -32,6 +36,7 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
     PastOrders pastOrders;
     OrderSales orderSales;
     ProductStatisticsFragment productStatisticsFragment;
+    OrderDashboardViewModel orderDashboardViewModel;
 
     private static final String FRAGMENT_SECTION_KEY = "pending_order_section";
     private static final String RECENT = "recent";
@@ -84,6 +89,18 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
         onNavigationItemSelected(navigationView.getMenu().findItem(R.id.home));
         navigationView.setCheckedItem(R.id.home);
 
+        orderDashboardViewModel = ViewModelProviders.of(this).get(OrderDashboardViewModel.class);
+        orderDashboardViewModel.getSelectedCategory().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer itemId) {
+                onDrawerMenuItemSelected(itemId);
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override
@@ -104,13 +121,19 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int itemID = item.getItemId();
+        onDrawerMenuItemSelected(item.getItemId());
         //destroyCurrentFragment();
         getSupportFragmentManager().popBackStack();
+
+        return true;
+    }
+
+    private void onDrawerMenuItemSelected(int itemID) {
         switch (itemID) {
             case R.id.home:
                 drawerLayout.closeDrawer(GravityCompat.START);
                 getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), dashboard).commit();
+                navigationView.setCheckedItem(itemID);
                 break;
             case R.id.recent:
                 recentOrders = new PendingOrders();
@@ -120,6 +143,7 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
                 drawerLayout.closeDrawer(GravityCompat.START);
                 getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), recentOrders).commit();
                 drawerLayout.closeDrawer(GravityCompat.START);
+                navigationView.setCheckedItem(itemID);
                 break;
 
             case R.id.onlinePending:
@@ -129,6 +153,7 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
                 recentOrders.setArguments(bundle2);
                 getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), recentOrders).commit();
                 drawerLayout.closeDrawer(GravityCompat.START);
+                navigationView.setCheckedItem(itemID);
                 break;
 
             case R.id.codPending:
@@ -138,6 +163,7 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
                 recentOrders.setArguments(bundle3);
                 getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), recentOrders).commit();
                 drawerLayout.closeDrawer(GravityCompat.START);
+                navigationView.setCheckedItem(itemID);
                 break;
 
             case R.id.completed:
@@ -147,6 +173,7 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
                 pastOrders.setArguments(bundle4);
                 getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), pastOrders).commit();
                 drawerLayout.closeDrawer(GravityCompat.START);
+                navigationView.setCheckedItem(itemID);
                 break;
 
             case R.id.cancelled:
@@ -156,21 +183,23 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
                 pastOrders.setArguments(bundle5);
                 getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), pastOrders).commit();
                 drawerLayout.closeDrawer(GravityCompat.START);
+                navigationView.setCheckedItem(itemID);
                 break;
 
             case R.id.monthAnalysis:
                 orderSales = new OrderSales();
                 getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), orderSales).commit();
                 drawerLayout.closeDrawer(GravityCompat.START);
+                navigationView.setCheckedItem(itemID);
                 break;
 
             case R.id.productAnalysis:
                 productStatisticsFragment = new ProductStatisticsFragment();
                 getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), productStatisticsFragment).commit();
                 drawerLayout.closeDrawer(GravityCompat.START);
+                navigationView.setCheckedItem(itemID);
                 break;
         }
-        return true;
     }
 
     private void destroyCurrentFragment() {
