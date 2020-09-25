@@ -129,7 +129,7 @@
 
                 <Switch
                     android:id="@+id/switchView"
-                    android:layout_width="@dimen/_40sdp"
+                    android:layout_width="@dimen/_48sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"

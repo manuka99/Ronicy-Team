@@ -31,10 +31,10 @@
         android:id="@+id/roles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/_40sdp"
-        android:paddingEnd="@dimen/_40sdp"
         android:layout_marginTop="@dimen/_2sdp"
         android:layout_marginBottom="@dimen/_16sdp"
+        android:paddingStart="@dimen/_40sdp"
+        android:paddingEnd="@dimen/_40sdp"
         android:text="@string/loading"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
@@ -46,22 +46,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <GridLayout
+        <androidx.gridlayout.widget.GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:alignmentMode="alignBounds"
-            android:columnCount="2"
-            android:columnOrderPreserved="true"
-            android:rowCount="4">
+            app:columnCount="2"
+            app:columnOrderPreserved="false"
+            app:rowCount="4"
+            app:rowOrderPreserved="false">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
                 android:layout_margin="@dimen/_10sdp"
                 android:elevation="@dimen/_14sdp"
-                app:cardCornerRadius="@dimen/_14sdp">
+                app:cardCornerRadius="@dimen/_14sdp"
+                app:layout_columnWeight="1">
 
                 <LinearLayout
                     android:id="@+id/advertisement"
@@ -80,6 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Advertisements" />
+
                 </LinearLayout>
 
 
@@ -88,11 +88,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
                 android:layout_margin="@dimen/_10sdp"
                 android:elevation="@dimen/_14sdp"
-                app:cardCornerRadius="@dimen/_14sdp">
+                app:cardCornerRadius="@dimen/_14sdp"
+                app:layout_columnWeight="1">
 
                 <LinearLayout
                     android:id="@+id/orders"
@@ -120,11 +119,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
                 android:layout_margin="@dimen/_10sdp"
                 android:elevation="@dimen/_14sdp"
-                app:cardCornerRadius="@dimen/_14sdp">
+                app:cardCornerRadius="@dimen/_14sdp"
+                app:layout_columnWeight="1">
 
                 <LinearLayout
                     android:id="@+id/favourite"
@@ -152,11 +150,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
                 android:layout_margin="@dimen/_10sdp"
                 android:elevation="@dimen/_14sdp"
-                app:cardCornerRadius="@dimen/_14sdp">
+                app:cardCornerRadius="@dimen/_14sdp"
+                app:layout_columnWeight="1">
 
                 <LinearLayout
                     android:id="@+id/chat"
@@ -183,11 +180,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
                 android:layout_margin="@dimen/_10sdp"
                 android:elevation="@dimen/_14sdp"
-                app:cardCornerRadius="@dimen/_14sdp">
+                app:cardCornerRadius="@dimen/_14sdp"
+                app:layout_columnWeight="1">
 
                 <LinearLayout
                     android:id="@+id/getInTouch"
@@ -215,11 +211,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
                 android:layout_margin="@dimen/_10sdp"
                 android:elevation="@dimen/_14sdp"
-                app:cardCornerRadius="@dimen/_14sdp">
+                app:cardCornerRadius="@dimen/_14sdp"
+                app:layout_columnWeight="1">
 
                 <LinearLayout
                     android:id="@+id/users"
@@ -247,11 +242,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
                 android:layout_margin="@dimen/_10sdp"
                 android:elevation="@dimen/_14sdp"
-                app:cardCornerRadius="@dimen/_14sdp">
+                app:cardCornerRadius="@dimen/_14sdp"
+                app:layout_columnWeight="1">
 
                 <LinearLayout
                     android:id="@+id/categories"
@@ -279,11 +273,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
                 android:layout_margin="@dimen/_10sdp"
                 android:elevation="@dimen/_14sdp"
-                app:cardCornerRadius="@dimen/_14sdp">
+                app:cardCornerRadius="@dimen/_14sdp"
+                app:layout_columnWeight="1">
 
                 <LinearLayout
                     android:id="@+id/otp"
@@ -308,7 +301,7 @@
 
             </androidx.cardview.widget.CardView>
 
-        </GridLayout>
+        </androidx.gridlayout.widget.GridLayout>
 
     </ScrollView>
 

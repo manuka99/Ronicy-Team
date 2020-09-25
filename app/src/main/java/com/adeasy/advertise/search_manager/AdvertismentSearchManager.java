@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -71,7 +72,7 @@ public class AdvertismentSearchManager {
                             advertismentSearchCallback.onSearchComplete(adIDs, advertisements);
                             //Log.i(TAG, " hits: " + content.getString("hits"));
                             Log.i(TAG, " adIDs: " + adIDs);
-                        } catch (JSONException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
