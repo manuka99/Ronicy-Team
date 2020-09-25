@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_32sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:background="@color/mainUiColour"
+            android:background="@drawable/button_round_fb"
             android:text="@string/post_add_image_btn"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"

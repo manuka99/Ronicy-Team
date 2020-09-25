@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.adeasy.advertise.manager.FirebasePhoneAuthentication;
 import com.adeasy.advertise.manager.VerifiedNumbersManager;
 import com.adeasy.advertise.model.User;
 import com.adeasy.advertise.model.UserVerifiedNumbers;
+import com.adeasy.advertise.util.HideSoftKeyboard;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -72,6 +74,7 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
     PhoneAuthProvider.ForceResendingToken resendingToken;
     AddNewPhoneViewModel addNewPhoneViewModel;
     VerifiedNumbersManager verifiedNumbersManager;
+    boolean isVerificationInProgress = false;
 
     public EnterCode() {
         // Required empty public constructor
@@ -172,9 +175,21 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
 
         showVerifyProgress();
 
-        if (firebaseAuth.getCurrentUser() != null)
+        if (firebaseAuth.getCurrentUser() != null) {
             firebasePhoneAuthentication.linkMobileWithCurrentUser(credential, firebaseAuth.getCurrentUser());
-
+            isVerificationInProgress = true;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (isVerificationInProgress) {
+                        HideSoftKeyboard.hideKeyboard(getActivity());
+                        endVerifyProgress();
+                        showErrorSnackbar(R.string.phone_code_time_up);
+                    }
+                }
+            }, 8000);
+        }
         else {
             showErrorSnackbar(R.string.not_loggedIn);
             codeEntered.setError(getString(R.string.not_loggedIn));
@@ -195,7 +210,7 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
 
     public void endVerifyProgress() {
         Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
-        phoneVerifyLayout.setBackgroundResource(R.color.colorGreen);
+        phoneVerifyLayout.setBackgroundResource(R.color.mainUiColour);
         phoneVerifyTextView.setVisibility(View.VISIBLE);
         progressBarCodeVerify.setVisibility(View.GONE);
         phoneVerifyTextView.startAnimation(aniSlide);
@@ -208,7 +223,7 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
     }
 
     public void verificationEnabled() {
-        phoneVerifyLayout.setBackgroundResource(R.color.colorGreen);
+        phoneVerifyLayout.setBackgroundResource(R.color.mainUiColour);
         phoneVerifyTextView.setVisibility(View.VISIBLE);
         progressBarCodeVerify.setVisibility(View.GONE);
     }
@@ -272,6 +287,7 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
 
     @Override
     public void onVerificationFailed(FirebaseException e) {
+        isVerificationInProgress = false;
         if (e instanceof FirebaseAuthInvalidCredentialsException)
             showErrorSnackbar(R.string.invalid_mobile);
         else if (e instanceof FirebaseTooManyRequestsException)
@@ -283,6 +299,7 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
     @Override
     public void onCompleteLinkingMobileWithUser(@NonNull Task<AuthResult> task) {
         endVerifyProgress();
+        isVerificationInProgress = false;
         if (task.isSuccessful()) {
             firebasePhoneAuthentication.unlinkPhoneAuth(task.getResult().getUser());
             verifiedNumbersManager.insertVerifiedNumber(new UserVerifiedNumbers(firebaseAuth.getCurrentUser(), phoneNumber), firebaseAuth.getCurrentUser());

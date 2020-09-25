@@ -233,6 +233,8 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onVerificationFailed(FirebaseException e) {
+        isVerificationInProgress = false;
+        endVerificationDisplay();
         if (e instanceof FirebaseAuthInvalidCredentialsException)
             showErrorSnackbar(getString(R.string.invalid_mobile));
         else if (e instanceof FirebaseTooManyRequestsException)

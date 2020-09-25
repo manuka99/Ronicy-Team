@@ -6,25 +6,25 @@
     android:layout_height="wrap_content"
     android:background="@color/colorWhite"
     android:orientation="vertical"
-    android:padding="20dp"
+    android:padding="@dimen/_16sdp"
     tools:context=".ui.addphone.EnterNumber">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/_12sdp"
         android:gravity="center"
         android:text="@string/enterNumber"
-        android:textColor="#CC000000"
-        android:textSize="18sp" />
+        android:textColor="@color/colorBlackText"
+        android:textSize="@dimen/_16sdp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:gravity="center"
         android:text="@string/haveNotVerified"
-        android:textSize="16sp" />
+        android:textSize="@dimen/_12sdp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputNumber"
@@ -32,14 +32,17 @@
         android:layout_height="wrap_content"
         app:counterEnabled="true"
         app:counterMaxLength="9"
-        app:hintTextColor="@color/colorGreen"
+        app:hintTextColor="@color/mainUiColour"
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/phoneNumberText"
-            android:textColorHint="@color/colorGreen"
+            android:textSize="@dimen/_14sdp"
+            android:textColorHint="@color/mainUiColour"
+            android:theme="@style/EditTextMainUiTheme"
+            android:textCursorDrawable="@drawable/cursor_main_ui"
             android:inputType="number" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -47,14 +50,14 @@
     <Button
         android:id="@+id/numberEnteredBtn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@color/colorGreen"
+        android:layout_height="@dimen/_34sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:background="@color/mainUiColour"
         android:text="@string/addAPhoneButton"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
-        android:textSize="18sp"
+        android:textSize="@dimen/_16sdp"
         android:textStyle="bold" />
 
 </LinearLayout>
