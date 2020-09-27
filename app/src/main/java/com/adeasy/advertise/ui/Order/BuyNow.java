@@ -30,12 +30,9 @@ import com.adeasy.advertise.manager.VerifiedNumbersManager;
 import com.adeasy.advertise.model.User;
 import com.adeasy.advertise.manager.OrderManager;
 import com.adeasy.advertise.model.Order;
-import com.adeasy.advertise.model.Order_Customer;
 import com.adeasy.advertise.model.Order_Item;
 import com.adeasy.advertise.model.Order_Payment;
 import com.adeasy.advertise.model.UserVerifiedNumbers;
-import com.adeasy.advertise.service.MailService;
-import com.adeasy.advertise.service.MailServiceImpl;
 import com.adeasy.advertise.util.CommonConstants;
 import com.adeasy.advertise.util.UniqueIdBasedOnName;
 import com.google.android.gms.tasks.Task;
@@ -119,9 +116,9 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
         buynowViewModel = ViewModelProviders.of(this).get(BuynowViewModel.class);
 
-        buynowViewModel.getCustomer().observe(this, new Observer<Order_Customer>() {
+        buynowViewModel.getCustomer().observe(this, new Observer<User>() {
             @Override
-            public void onChanged(Order_Customer order_customer) {
+            public void onChanged(User order_customer) {
                 order.setCustomer(order_customer);
 
                 if (mAuth.getCurrentUser() != null)
@@ -318,7 +315,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
             if (order.getItem().getItemName().isEmpty() || order.getItem().getPrice() == 0 || order.getItem().getImageUrl().isEmpty() || order.getItem().getCategoryName().isEmpty())
                 return false;
 
-            if (order.getCustomer().getName().isEmpty() || order.getCustomer().getEmail().isEmpty() || order.getCustomer().getPhone() == 0 || order.getCustomer().getAddress().isEmpty())
+            if (order.getCustomer().getName().isEmpty() || order.getCustomer().getEmail().isEmpty() || order.getCustomer().getPhone() == null || order.getCustomer().getPhone().isEmpty() || order.getCustomer().getAddress().isEmpty())
                 return false;
 
             else

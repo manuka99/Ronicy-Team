@@ -179,15 +179,15 @@ public class Orders extends Fragment implements OrderCallback {
 
                             holder.orderItemName.setText(order.getItem().getItemName());
                             holder.orderItemCat.setText(order.getItem().getCategoryName());
-                            holder.orderItemPrice.setText(String.valueOf(order.getItem().getPreetyCurrency()));
+                            holder.orderItemPrice.setText(order.getItem().getPreetyCurrency());
 
                             holder.address.setText(order.getCustomer().getAddress());
                             holder.email.setText(order.getCustomer().getEmail());
-                            holder.mobile.setText(String.valueOf(order.getCustomer().getPhone()));
+                            holder.mobile.setText(order.getCustomer().getPhone());
 
-                            holder.orderPaymentTotal.setText(String.valueOf(order.getPayment().getPreetyCurrency()));
+                            holder.orderPaymentTotal.setText(order.getPayment().getPreetyCurrency());
 
-                            holder.estimatedDate.setText(String.valueOf(order.getDeliveryEstimatedDate()));
+                            holder.estimatedDate.setText(order.getDeliveryEstimatedDate());
 
                             Picasso.get().load(order.getItem().getImageUrl()).fit().into(holder.imageView);
                         }

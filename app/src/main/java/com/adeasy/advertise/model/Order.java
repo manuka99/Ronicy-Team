@@ -27,7 +27,7 @@ public class Order implements Serializable {
     private String deliveryEstimatedDate;
     private Date deliveredDate;
 
-    private Order_Customer customer;
+    private User customer;
     private Order_Payment payment;
     private Order_Item item;
 
@@ -45,7 +45,7 @@ public class Order implements Serializable {
         this.placedDate = new Date();
         this.avalability = avalability;
         this.orderStatus = CommonConstants.ORDER_PROCESSING;
-        this.customer = new Order_Customer();
+        this.customer = new User();
         this.payment = new Order_Payment();
         this.item = new Order_Item();
         this.deliveryEstimatedDate =  dateFormat.format(c.getTime());
@@ -107,11 +107,11 @@ public class Order implements Serializable {
         this.deliveredDate = deliveredDate;
     }
 
-    public Order_Customer getCustomer() {
+    public User getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Order_Customer customer) {
+    public void setCustomer(User customer) {
         this.customer = customer;
     }
 

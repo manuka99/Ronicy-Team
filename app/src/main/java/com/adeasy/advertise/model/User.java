@@ -3,6 +3,7 @@ package com.adeasy.advertise.model;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class User {
+public class User implements Serializable {
 
     private String uid;
     private String name;

@@ -266,7 +266,8 @@
     <string name="order_details">Order Details</string>
     <string name="confirm_delivered">Confirm Delivered</string>
     <string name="update">Update</string>
-
+    <string name="search">Search</string>
+    <string name="apply_filters">Apply filters</string>
     <string name="online_payments">Online Payments</string>
     <string name="cod_orders">COD Orders</string>
     <string name="note_these_orders">Note: These Orders are filtered considering the approval status and visibility of the advertisements are not considered.</string>
@@ -342,7 +343,6 @@
     <string name="AppGivingTroubleString">App giving trouble?</string>
     <string name="getInTouchString">Get In Touch</string>
     <string name="bugs">Bugs</string>
-    <string name="search">Search</string>
 
     <!-- Ashan -->
 </resources>

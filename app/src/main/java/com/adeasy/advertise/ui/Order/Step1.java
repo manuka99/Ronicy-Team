@@ -14,11 +14,10 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.BuynowViewModel;
-import com.adeasy.advertise.model.Order_Customer;
+import com.adeasy.advertise.model.User;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,7 +43,7 @@ public class Step1 extends Fragment implements TextWatcher {
     private TextInputLayout nameView, phoneView, emailView, addressView;
     private String name, email, address;
     private Integer phone;
-    private Order_Customer customer;
+    private User customer;
     private FirebaseUser firebaseUser;
     private BuynowViewModel buynowViewModel;
 
@@ -96,11 +95,11 @@ public class Step1 extends Fragment implements TextWatcher {
         addressView.getEditText().addTextChangedListener(this);
 
 
-        customer = new Order_Customer();
+        customer = new User();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         try {
-            customer = (Order_Customer) getArguments().getSerializable(CUSTOMER);
+            customer = (User) getArguments().getSerializable(CUSTOMER);
             updateUiOnCustomerRecieve();
         } catch (Exception e) {
             e.printStackTrace();
@@ -179,7 +178,7 @@ public class Step1 extends Fragment implements TextWatcher {
             result = true;
             customer.setAddress(address);
             customer.setEmail(email);
-            customer.setPhone(phone);
+            customer.setPhone(phone.toString());
             customer.setName(name);
             if (firebaseUser != null)
                 customer.setUid(firebaseUser.getUid());

@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.adeasy.advertise.model.Order_Customer;
-import com.adeasy.advertise.model.Order_Item;
 /**
  * Created by Manuka yasas,
  * University Sliit
