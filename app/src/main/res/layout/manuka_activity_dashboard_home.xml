@@ -12,10 +12,10 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileImage"
-        android:layout_width="@dimen/_72sdp"
-        android:layout_height="@dimen/_72sdp"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
         android:layout_marginTop="@dimen/_16sdp"
-        android:background="@drawable/spinner_48_inner_holo" />
+        android:background="@drawable/round_user" />
 
     <TextView
         android:id="@+id/name"

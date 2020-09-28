@@ -25,11 +25,11 @@
         <Button
             android:id="@+id/FB_login_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_36sdp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/_20sdp"
             android:background="@drawable/button_round_fb"
-            android:drawableStart="@drawable/com_facebook_button_icon"
+            android:drawableStart="@drawable/custom_fb_icon"
             android:drawablePadding="@dimen/_10sdp"
             android:paddingStart="@dimen/_20sdp"
             android:paddingEnd="@dimen/_20sdp"

@@ -49,12 +49,13 @@ public class CustomAuthTokenManager {
 
     public void GetTokenResultAndAddClaims() {
         if (firebaseAuth.getCurrentUser() != null) {
+            //get the id token from the auth object
             firebaseAuth.getCurrentUser().getIdToken(true)
                     .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                         public void onComplete(@NonNull Task<GetTokenResult> task) {
                             if (task.isSuccessful()) {
                                 String idToken = task.getResult().getToken();
-                                // Send token to your backend via HTTPS
+                                // Send token to backend via HTTPS
                                 requestCustomClaimsToken(idToken);
 
                                 Log.i(TAG, idToken);
