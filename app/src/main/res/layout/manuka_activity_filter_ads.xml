@@ -12,6 +12,7 @@
         layout="@layout/toolbar_admin" />
 
     <TextView
+        android:id="@+id/filter_ads_text"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

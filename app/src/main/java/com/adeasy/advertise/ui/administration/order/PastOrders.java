@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
@@ -67,6 +68,8 @@ public class PastOrders extends Fragment implements View.OnClickListener {
     Boolean completed;
     CustomDialogs customDialogs;
 
+    TextView textHeader;
+
     private static final String FRAGMENT_SECTION_KEY = "pending_order_section";
     private static final String COMPLETED = "completed";
     private static final String CANCELLED = "cancelled";
@@ -111,6 +114,7 @@ public class PastOrders extends Fragment implements View.OnClickListener {
         recyclerView = view.findViewById(R.id.myaddsRecycle);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshMyadds);
 
+        textHeader = view.findViewById(R.id.textHeader);
         online = view.findViewById(R.id.online);
         cod = view.findViewById(R.id.cod);
 
@@ -128,12 +132,15 @@ public class PastOrders extends Fragment implements View.OnClickListener {
             pending_order_section = COMPLETED;
         }
 
-        if (pending_order_section.equals(COMPLETED))
+        if (pending_order_section.equals(COMPLETED)){
             completed = true;
+            textHeader.setText(R.string.completed_past_orders);
+        }
 
-        else
+        else {
             completed = false;
-
+            textHeader.setText(R.string.cancelled_past_orders);
+        }
         onOnlineOrdersUi();
 
         return view;

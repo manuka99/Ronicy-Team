@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_4sdp"
-        android:text="This bar graph represent Approved posted advertisements per month based on the selected year. Visibility of the advertisements are not considered."
+        android:text="@string/product_sales"
         android:textSize="@dimen/_10sdp"
         android:textStyle="italic" />
 

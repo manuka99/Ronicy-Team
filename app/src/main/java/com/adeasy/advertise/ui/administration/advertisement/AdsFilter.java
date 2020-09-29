@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
@@ -49,6 +50,7 @@ public class AdsFilter extends AppCompatActivity {
     Context context;
 
     Toolbar toolbar;
+    TextView filter_ads_text;
     SwipeRefreshLayout swipeRefreshLayout;
     RecyclerView recyclerView;
     FirestorePagingAdapter<Advertisement, ViewHolderListAdds> firestorePagingAdapter;
@@ -66,6 +68,7 @@ public class AdsFilter extends AppCompatActivity {
 
         context = this;
 
+        filter_ads_text = findViewById(R.id.filter_ads_text);
         recyclerView = findViewById(R.id.myaddsRecycle);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshMyadds);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -129,6 +132,7 @@ public class AdsFilter extends AppCompatActivity {
 
             case "trash":
                 query = advertisementManager.viewAllAdsInTrash();
+                filter_ads_text.setText(R.string.trash_ads);
                 isTrashDelete = true;
                 break;
 
@@ -154,6 +158,7 @@ public class AdsFilter extends AppCompatActivity {
 
             case "trash":
                 query = advertisementManager.viewAdsInTrashByCategory(category);
+                filter_ads_text.setText(R.string.trash_ads);
                 isTrashDelete = true;
                 break;
 

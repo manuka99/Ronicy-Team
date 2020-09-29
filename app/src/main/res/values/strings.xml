@@ -291,6 +291,20 @@
     <dimen name="space_navigation_height" tools:override="true">@dimen/_66sdp</dimen>
     <dimen name="view_bottom_margin" tools:override="true">@dimen/_40sdp</dimen>
 
+    <!-- orders admin charts -->
+    <string name="trash_ads">Note: These advertisements are deleted by users/administrators and are not available anymore.</string>
+    <string name="cancelled_past_orders">Note: These orders have been cancelled therefore please consider before updating an Order.</string>
+    <string name="completed_past_orders">Note: These orders have been completed(Delivered) therefore please consider before updating an Order.</string>
+    <string name="pending_online_orders">Note: These orders have not been either cancelled or completed. These orders are placed via the payment gateway. Check the payments in the gateway before any confirmations.</string>
+    <string name="pending_cod_orders">Note: These orders have not been either cancelled or completed. These orders are placed to pay via cash on delivery therefore please contact the customer before any confirmations.</string>
+    <string name="pending_recent_orders">Note: These orders have not been either cancelled or completed. These orders are placed recently(last 24 hours). Payment status is not considered.</string>
+    <string name="product_sales">These is the complete sales analysis for the particular year selected also user can sort the total sales count as well as by amount of total sales.</string>
+    <string name="orders_completed_bar">These are the orders that were completed based on the month for the selected year. Payment status also considered.</string>
+    <string name="order_piechart_ratio_order_status">This Pie chart represent the ratio between the order status on the selected year. Payment status is also considered here. Even if the payment was made and the order is not delivered it will be categorized under cancelled orders.</string>
+    <string name="order_completed_ratio_payment">This Pie chart represents the orders that were completed and ratios between payment modes selected by customers.</string>
+    <string name="order_cancelled_ratio_payment">This Pie chart represents the orders that were cancelled and ratios between payment modes selected by customers.</string>
+    <string name="orders_stat_line">This Line graph represent the orders that were completed based on the month for the selected year. Payment status also considered.</string>
+
     <!-- Divya -->
 
     <!-- wishlist.xml-->

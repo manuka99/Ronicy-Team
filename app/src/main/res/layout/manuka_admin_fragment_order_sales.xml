@@ -78,7 +78,7 @@
                     android:indeterminateTint="@color/colorWhite"
                     android:indeterminateTintMode="src_atop"
                     android:padding="@dimen/_4sdp"
-                    android:text="Update"
+                    android:text="@string/update"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/_10sdp"
                     android:visibility="gone" />
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_12sdp"
-            android:text="This bar graph represent Approved posted advertisements per month based on the selected year. Visibility of the advertisements are not considered."
+            android:text="@string/orders_completed_bar"
             android:textSize="@dimen/_10sdp"
             android:textStyle="italic" />
 
@@ -118,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_14sdp"
-            android:text="This Pie chart represent the ratio between Approved Ads and Rejected Ads from all the advertisements posted/updated on the selected year."
+            android:text="@string/order_piechart_ratio_order_status"
             android:textSize="@dimen/_10sdp"
             android:textStyle="italic" />
 
@@ -144,7 +144,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_14sdp"
-            android:text="This Pie chart represents the Ad types from the approved ads on the selected year. Ad types such live, hidden and buynow are only considered."
+            android:text="@string/order_completed_ratio_payment"
             android:textSize="@dimen/_10sdp"
             android:textStyle="italic" />
 
@@ -170,7 +170,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_14sdp"
-            android:text="This Pie chart represents the Ad types from the rejected ads on the selected year. Ad types such live, hidden and buynow are only considered."
+            android:text="@string/order_cancelled_ratio_payment"
             android:textSize="@dimen/_10sdp"
             android:textStyle="italic" />
 
@@ -196,7 +196,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_14sdp"
-            android:text="This Line graph represent Approved posted advertisements per month based on the selected year. Visibility of the advertisements are not considered."
+            android:text="@string/orders_stat_line"
             android:textSize="@dimen/_10sdp"
             android:textStyle="italic" />
 

@@ -72,6 +72,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
     private static final String Chat = "Log in to chat with buyers and sellers on ronicy.lk";
     private static final String Account = "Log in to manage your account:";
 
+
     LinearLayout loginLayout, signUpLayout;
 
     //topHeader

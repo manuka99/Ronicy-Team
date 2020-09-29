@@ -14,6 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.helper.ViewHolderOrderItem;
@@ -53,6 +54,8 @@ public class PendingOrders extends Fragment {
     FirestoreRecyclerAdapter adapter;
     SwipeRefreshLayout swipeRefreshLayout;
     CustomDialogs customDialogs;
+
+    TextView header;
 
     //this is to save the bundle value in order to show which content
     String pending_order_section;
@@ -95,6 +98,7 @@ public class PendingOrders extends Fragment {
         View view = inflater.inflate(R.layout.manuka_admin_orders_fragment_recent_orders, container, false);
         recyclerView = view.findViewById(R.id.myaddsRecycle);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshMyadds);
+        header = view.findViewById(R.id.header);
 
         try {
             pending_order_section = getArguments().getString(FRAGMENT_SECTION_KEY);
@@ -208,12 +212,16 @@ public class PendingOrders extends Fragment {
     }
 
     private void setToolbarSubTitle() {
-        if (pending_order_section.equals(ONLINE_PAYMENTS))
+        if (pending_order_section.equals(ONLINE_PAYMENTS)) {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Pending orders - Online Payments");
-        else if (pending_order_section.equals(COD_DELIVERY))
+            header.setText(R.string.pending_online_orders);
+        } else if (pending_order_section.equals(COD_DELIVERY)) {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Pending orders - COD Orders");
-        else
+            header.setText(R.string.pending_cod_orders);
+        } else {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Pending orders - Recent");
+            header.setText(R.string.pending_recent_orders);
+        }
     }
 
     @Override
