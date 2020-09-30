@@ -28,6 +28,7 @@ import com.adeasy.advertise.manager.VerifiedNumbersManager;
 import com.adeasy.advertise.model.User;
 import com.adeasy.advertise.model.UserVerifiedNumbers;
 import com.adeasy.advertise.ui.addphone.AddNewNumber;
+import com.adeasy.advertise.util.HideSoftKeyboard;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -178,8 +179,10 @@ public class ContactDetails extends Fragment implements VerifiedNumbersCallback,
             newPostViewModel.setContactDetailsValidation(null);
         else if (verifiedNumbers != null && verifiedNumbers.size() > 0)
             newPostViewModel.setContactDetailsValidation(verifiedNumbers);
-        else
+        else {
             showErrorSnackBar(R.string.contact_details_error);
+            HideSoftKeyboard.hideKeyboard(getActivity());
+        }
     }
 
     private void showErrorSnackBar(int error) {

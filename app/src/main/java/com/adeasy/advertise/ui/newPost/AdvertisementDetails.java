@@ -31,6 +31,7 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.NewPostViewModel;
 import com.adeasy.advertise.adapter.RecycleAdapterForImages;
 import com.adeasy.advertise.model.Advertisement;
+import com.adeasy.advertise.util.HideSoftKeyboard;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -140,7 +141,7 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
         newPostViewModel.getAdDetailsValidation().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                if(aBoolean)
+                if (aBoolean)
                     validateAdDetails();
             }
         });
@@ -185,7 +186,7 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
 
     }
 
-    private void showErrorSnackBar(int error){
+    private void showErrorSnackBar(int error) {
         Snackbar snackbar = Snackbar
                 .make(snackbarView, error, 4000)
                 .setAction("x", new View.OnClickListener() {
@@ -212,18 +213,18 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
             imageCamera.setVisibility(View.VISIBLE);
     }
 
-    private void validateAdDetails(){
-        if(imagesUriArrayList.size() < 1)
+    private void validateAdDetails() {
+        if (imagesUriArrayList.size() < 1) {
             showErrorSnackBar(R.string.post_add_1_image);
-        else if(postTitle.getEditText().getText().length() < 10)
+        } else if (postTitle.getEditText().getText().length() < 10) {
             postTitle.setError(getString(R.string.tile_error));
-        else if(postCondition.getEditText().getText().length() < 3)
+        } else if (postCondition.getEditText().getText().length() < 3) {
             postCondition.setError(getString(R.string.condition_error));
-        else if(postDescription.getEditText().getText().length() < 20)
+        } else if (postDescription.getEditText().getText().length() < 20) {
             postDescription.setError(getString(R.string.description_error));
-        else if(postPrice.getEditText().getText().length() < 2)
+        } else if (postPrice.getEditText().getText().length() < 2) {
             postPrice.setError(getString(R.string.price_error));
-        else{
+        } else {
             advertisement = new Advertisement();
             advertisement.setTitle(postTitle.getEditText().getText().toString());
             advertisement.setCondition(postCondition.getEditText().getText().toString());
@@ -232,7 +233,10 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
             advertisement.setImageUrls(imagesUriArrayList);
 
             newPostViewModel.setAdvertisement(advertisement);
+            return;
         }
+        HideSoftKeyboard.hideKeyboard(getActivity());
+        showErrorSnackBar(R.string.post_issues_ad);
     }
 
     @Override

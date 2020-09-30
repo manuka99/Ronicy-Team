@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,6 +58,8 @@ public class PendingOrders extends Fragment {
 
     TextView header;
 
+    CardView noDataLayout;
+
     //this is to save the bundle value in order to show which content
     String pending_order_section;
 
@@ -97,6 +100,7 @@ public class PendingOrders extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.manuka_admin_orders_fragment_recent_orders, container, false);
         recyclerView = view.findViewById(R.id.myaddsRecycle);
+        noDataLayout = view.findViewById(R.id.noDataLayout);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshMyadds);
         header = view.findViewById(R.id.header);
 
@@ -172,6 +176,11 @@ public class PendingOrders extends Fragment {
                 // ...
                 if (getSnapshots().size() == getItemCount())
                     swipeRefreshLayout.setRefreshing(false);
+
+                if (getSnapshots().size() == 0)
+                    noDataLayout.setVisibility(View.VISIBLE);
+                else
+                    noDataLayout.setVisibility(View.GONE);
             }
 
             @Override

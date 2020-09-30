@@ -21,7 +21,7 @@
 
     <include
         android:id="@+id/noDataFragment"
-        layout="@layout/manuka_fragment_no_data" />
+        layout="@layout/manuka_empty_data_indicator" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshMyadds"

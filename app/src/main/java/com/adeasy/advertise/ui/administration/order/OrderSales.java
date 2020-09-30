@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -114,6 +116,9 @@ public class OrderSales extends Fragment implements View.OnClickListener, OrderC
     boolean isBarChartVisible = true;
     boolean isLineChartVisible = false;
 
+    LinearLayout chartsLayout;
+    CardView noDataLayout;
+
     private static final String TAG = "OrderSales";
 
     public OrderSales() {
@@ -157,6 +162,9 @@ public class OrderSales extends Fragment implements View.OnClickListener, OrderC
 
         //init arays
         intitArrays();
+
+        chartsLayout = view.findViewById(R.id.chartLayout);
+        noDataLayout = view.findViewById(R.id.noDataLayout);
 
         yearLayout = view.findViewById(R.id.yearLayout);
         yearEditText = view.findViewById(R.id.yearEditText);
@@ -320,10 +328,14 @@ public class OrderSales extends Fragment implements View.OnClickListener, OrderC
         if (task != null && task.isSuccessful() && task.getResult() != null) {
             List<Order> orders = task.getResult().toObjects(Order.class);
             //Log.i(TAG, advertisements.toString());
-            if (orders.size() > 0)
+            if (orders.size() > 0) {
                 sortDataByAdvertisemntList(orders);
-            else
-                Toast.makeText(context, "No data available", Toast.LENGTH_LONG).show();
+                chartsLayout.setVisibility(View.VISIBLE);
+                noDataLayout.setVisibility(View.GONE);
+            } else {
+                chartsLayout.setVisibility(View.GONE);
+                noDataLayout.setVisibility(View.VISIBLE);
+            }
         } else if (task != null) {
             if (task.getException() instanceof FirebaseFirestoreException) {
                 ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.paging.PagedList;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.callback.OrderCallback;
 import com.adeasy.advertise.helper.ViewHolderListAdds;
 import com.adeasy.advertise.helper.ViewHolderOrderItem;
 import com.adeasy.advertise.manager.AdvertisementManager;
@@ -33,9 +35,12 @@ import com.adeasy.advertise.ui.editAd.EditAd;
 import com.adeasy.advertise.util.CustomDialogs;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -45,7 +50,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class PastOrders extends Fragment implements View.OnClickListener {
+public class PastOrders extends Fragment implements View.OnClickListener, OrderCallback {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,6 +74,8 @@ public class PastOrders extends Fragment implements View.OnClickListener {
     CustomDialogs customDialogs;
 
     TextView textHeader;
+
+    CardView noDataLayout;
 
     private static final String FRAGMENT_SECTION_KEY = "pending_order_section";
     private static final String COMPLETED = "completed";
@@ -112,6 +119,7 @@ public class PastOrders extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.manuka_admin_fragment_past_orders, container, false);
 
         recyclerView = view.findViewById(R.id.myaddsRecycle);
+        noDataLayout = view.findViewById(R.id.noDataLayout);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshMyadds);
 
         textHeader = view.findViewById(R.id.textHeader);
@@ -119,7 +127,7 @@ public class PastOrders extends Fragment implements View.OnClickListener {
         cod = view.findViewById(R.id.cod);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        orderManager = new OrderManager();
+        orderManager = new OrderManager(this, getActivity());
         customDialogs = new CustomDialogs(getActivity());
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -132,12 +140,10 @@ public class PastOrders extends Fragment implements View.OnClickListener {
             pending_order_section = COMPLETED;
         }
 
-        if (pending_order_section.equals(COMPLETED)){
+        if (pending_order_section.equals(COMPLETED)) {
             completed = true;
             textHeader.setText(R.string.completed_past_orders);
-        }
-
-        else {
+        } else {
             completed = false;
             textHeader.setText(R.string.cancelled_past_orders);
         }
@@ -156,8 +162,8 @@ public class PastOrders extends Fragment implements View.OnClickListener {
     }
 
     private void onOnlineOrdersUi() {
-        if(completed)
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Past completed orders - Payhere Orders");
+        if (completed)
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Past completed orders - Payhere Orders");
         else
             ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Past cancelled orders - Payhere Orders");
         online.setBackgroundResource(R.drawable.grey_btn_half_left_round);
@@ -167,7 +173,7 @@ public class PastOrders extends Fragment implements View.OnClickListener {
     }
 
     private void onCodOrdersUi() {
-        if(completed)
+        if (completed)
             ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Past completed orders - COD Orders");
         else
             ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Past cancelled orders - COD Orders");
@@ -178,6 +184,8 @@ public class PastOrders extends Fragment implements View.OnClickListener {
     }
 
     public void loadData() {
+        orderManager.getCount(query);
+
         if (query == null)
             Toast.makeText(getActivity(), "Error: please try again later", Toast.LENGTH_LONG).show();
         else {
@@ -230,6 +238,7 @@ public class PastOrders extends Fragment implements View.OnClickListener {
                             super.onLoadingStateChanged(state);
                             switch (state) {
                                 case LOADING_INITIAL:
+                                    orderManager.getCount(query);
                                 case LOADING_MORE:
                                     // Do your loading animation
                                     swipeRefreshLayout.setRefreshing(true);
@@ -242,7 +251,7 @@ public class PastOrders extends Fragment implements View.OnClickListener {
 
                                 case FINISHED:
                                     swipeRefreshLayout.setRefreshing(false);
-                                    Toast.makeText(getApplicationContext(), "last..fg", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getApplicationContext(), "last..fg", Toast.LENGTH_SHORT).show();
                                     break;
 
                                 case ERROR:
@@ -278,5 +287,38 @@ public class PastOrders extends Fragment implements View.OnClickListener {
         }
     }
 
+
+    @Override
+    public void onCompleteInsertOrder(Task<Void> task) {
+
+    }
+
+    @Override
+    public void onGetOrderByID(Task<DocumentSnapshot> task) {
+
+    }
+
+    @Override
+    public void onHideOrderByID(Task<Void> task) {
+
+    }
+
+    @Override
+    public void onDeleteOrderByID(Task<Void> task) {
+
+    }
+
+    @Override
+    public void getAllOrdersByYear(Task<QuerySnapshot> task) {
+
+    }
+
+    @Override
+    public void onOrderCount(Task<QuerySnapshot> task) {
+        if (task != null && task.isSuccessful() && task.getResult().size() > 0)
+            noDataLayout.setVisibility(View.GONE);
+        else
+            noDataLayout.setVisibility(View.VISIBLE);
+    }
 
 }

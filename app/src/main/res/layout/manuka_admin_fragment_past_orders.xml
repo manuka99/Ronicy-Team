@@ -15,8 +15,8 @@
         android:background="@color/colorHome"
         android:orientation="horizontal"
         android:paddingStart="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_10sdp"
         android:paddingTop="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
         android:paddingBottom="@dimen/_4sdp">
 
         <Button
@@ -54,6 +54,11 @@
         android:text="@string/note_these_orders"
         android:textSize="@dimen/_10sdp"
         android:textStyle="italic" />
+
+    <include
+        android:id="@+id/noDataLayout"
+        layout="@layout/manuka_empty_data_indicator"
+        android:visibility="visible" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshMyadds"

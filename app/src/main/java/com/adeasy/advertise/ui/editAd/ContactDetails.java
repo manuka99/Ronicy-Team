@@ -28,6 +28,7 @@ import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.User;
 import com.adeasy.advertise.ui.addphone.AddNewNumber;
 import com.adeasy.advertise.util.CustomDialogs;
+import com.adeasy.advertise.util.HideSoftKeyboard;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -181,8 +182,10 @@ public class ContactDetails extends Fragment implements View.OnClickListener, Pr
             newPostViewModel.setContactDetailsValidation(null);
         else if (verifiedNumbers != null && verifiedNumbers.size() > 0)
             newPostViewModel.setContactDetailsValidation(verifiedNumbers);
-        else
+        else {
             showErrorSnackBar(R.string.contact_details_error);
+            HideSoftKeyboard.hideKeyboard(getActivity());
+        }
     }
 
     private void showErrorSnackBar(int error) {
@@ -244,11 +247,12 @@ public class ContactDetails extends Fragment implements View.OnClickListener, Pr
             user = task.getResult().toObject(User.class);
             nameView.setText(user.getName());
             emailView.setText(user.getEmail());
-        }else if (task != null) {
+        } else if (task != null) {
             if (task.getException() instanceof FirebaseFirestoreException) {
                 ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
                 customErrorDialogs.showPermissionDeniedStorage();
-            };
+            }
+            ;
         }
     }
 

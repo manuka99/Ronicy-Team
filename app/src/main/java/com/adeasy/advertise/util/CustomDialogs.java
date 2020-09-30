@@ -8,8 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ui.home.MainActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -57,6 +61,53 @@ public class CustomDialogs {
                 public void onClick(View v) {
                     //dialog.dismiss();
                     ((Activity) context).finish();
+                }
+            });
+            dialog.show();
+        }
+    }
+
+    public void showVerifyEmail() {
+        if (context != null) {
+            String username = "user";
+
+            if (FirebaseAuth.getInstance().getCurrentUser() != null)
+                username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+
+            final Dialog dialog = new Dialog(context);
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.setContentView(R.layout.manuka_custom_no_access_dialog);
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+            TextView title = dialog.findViewById(R.id.title);
+            title.setText("Email Not Verified!");
+            TextView message = dialog.findViewById(R.id.message);
+            message.setText("Dear " + username + " in order to continue you need to verify your email. Click below to send an email to " + FirebaseAuth.getInstance().getCurrentUser().getEmail() + ".");
+            final Button signOut = dialog.findViewById(R.id.button);
+            signOut.setText("Send verification email");
+            signOut.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    signOut.setText("Sending...");
+                    FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                signOut.setBackgroundResource(R.drawable.rount_sucess);
+                                signOut.setText("Email was sent");
+                            } else {
+                                signOut.setBackgroundResource(R.drawable.round_danger);
+                                signOut.setText(task.getException().getMessage());
+                            }
+                        }
+                    });
+                }
+            });
+            TextView close = dialog.findViewById(R.id.close);
+            close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
                 }
             });
             dialog.show();

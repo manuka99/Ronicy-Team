@@ -238,7 +238,7 @@
     <string name="enter_verify_code">Please enter the verification code</string>
     <string name="chack_phone_auth_credentials">Verification code was not sent. Please check your credentials</string>
     <string name="phone_code_time_up">An error occurred when validating, Try again</string>
-
+    <string name="post_issues_ad">Please fix the above issues before posting an ad.</string>
     <string name="colombo">Colombo</string>
     <string name="note_these_ads_are_filtered_considering_the_filter_options_only_therefore_the_approval_status_of_the_advertisements_are_not_considered">Note: These Ads are filtered considering the filter options only therefore the approval status of the advertisements are not considered.</string>
     <string name="rejected_reason">Rejected reason</string>

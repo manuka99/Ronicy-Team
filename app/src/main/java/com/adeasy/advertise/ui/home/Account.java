@@ -40,6 +40,7 @@ import com.adeasy.advertise.ui.chat.ChatMainActivity;
 import com.adeasy.advertise.ui.favaourite.divya_MActivity;
 import com.adeasy.advertise.ui.getintouch.GetInTouchActivity;
 import com.adeasy.advertise.ui.profile.Profile;
+import com.adeasy.advertise.util.CustomDialogs;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -90,6 +91,8 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
     CustomAuthTokenManager customAuthTokenManager;
     CustomClaims customClaims;
 
+    CustomDialogs customDialogs;
+
     Toolbar toolbar;
 
     public Account() {
@@ -134,7 +137,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.account);
 
         mAuth = FirebaseAuth.getInstance();
-
+        customDialogs = new CustomDialogs(getActivity());
         noAuthFragment = view.findViewById(R.id.noAuthFragment);
         authContent = view.findViewById(R.id.authContent);
 
@@ -194,7 +197,10 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.action_admin) {
-            startActivity(new Intent(getActivity(), DashboardHome.class));
+            if (mAuth.getCurrentUser() != null && mAuth.getCurrentUser().isEmailVerified())
+                startActivity(new Intent(getActivity(), DashboardHome.class));
+            else
+                customDialogs.showVerifyEmail();
             return true;
         }
 

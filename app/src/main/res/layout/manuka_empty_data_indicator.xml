@@ -4,7 +4,7 @@
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="@dimen/_12sdp"
     android:elevation="@dimen/_12sdp"
-    android:layout_margin="@dimen/_12sdp"
+    android:layout_margin="@dimen/_4sdp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -63,7 +64,7 @@ public class NewAds extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     CustomDialogs customDialogs;
 
-    NestedScrollView noDataFragment;
+    CardView noDataFragment;
 
     public NewAds() {
         // Required empty public constructor

@@ -25,6 +25,7 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.NewPostViewModel;
 import com.adeasy.advertise.adapter.RecycleAdapterForImages;
 import com.adeasy.advertise.model.Advertisement;
+import com.adeasy.advertise.util.HideSoftKeyboard;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -271,7 +272,10 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
 
             newPostViewModel.setAdvertisement(updatedAdvertisement);
             newPostViewModel.setDeletedFirebaseUriImages(deletedFirebaseUriArrayList);
+            return;
         }
+        HideSoftKeyboard.hideKeyboard(getActivity());
+        showErrorSnackBar(R.string.post_issues_ad);
     }
 
 }
