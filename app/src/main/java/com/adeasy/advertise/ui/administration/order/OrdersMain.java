@@ -2,6 +2,7 @@ package com.adeasy.advertise.ui.administration.order;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -114,10 +116,27 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START))
             drawerLayout.closeDrawer(GravityCompat.START);
-        else
-            super.onBackPressed();
+        if (getCurrentFragment() instanceof Dashboard)
+            showExitDialog();
+        else {
+            onNavigationItemSelected(navigationView.getMenu().findItem(R.id.home));
+            navigationView.setCheckedItem(R.id.home);
+        }
     }
 
+    private void showExitDialog() {
+        new AlertDialog.Builder(this).setTitle("Exit from Order Management Dashboard ?").setNegativeButton("yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        }).setPositiveButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        }).show();
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -206,6 +225,12 @@ public class OrdersMain extends AppCompatActivity implements NavigationView.OnNa
         Fragment fragment = getSupportFragmentManager().findFragmentById(frameLayout.getId());
         if (fragment != null)
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+    }
+
+    private Fragment getCurrentFragment() {
+        Fragment currentFragment = getSupportFragmentManager()
+                .findFragmentById(frameLayout.getId());
+        return currentFragment;
     }
 
 }
