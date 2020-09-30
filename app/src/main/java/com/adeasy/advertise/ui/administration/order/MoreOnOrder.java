@@ -29,6 +29,7 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.OrderCallback;
 import com.adeasy.advertise.manager.OrderManager;
 import com.adeasy.advertise.model.Order;
+import com.adeasy.advertise.util.CommonConstants;
 import com.adeasy.advertise.util.CustomDialogs;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -175,7 +176,7 @@ public class MoreOnOrder extends AppCompatActivity implements OrderCallback, Ada
 
         //set adapter for order status and payment status array
         adapter_order_status = ArrayAdapter.createFromResource(this,
-                R.array.order_status_array, android.R.layout.simple_spinner_item);
+                R.array.order_status_no_delivered_array, android.R.layout.simple_spinner_item);
         adapter_payment_status = ArrayAdapter.createFromResource(this,
                 R.array.payment_status_array, android.R.layout.simple_spinner_item);
 

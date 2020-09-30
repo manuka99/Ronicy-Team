@@ -156,7 +156,10 @@ public class PastOrders extends Fragment implements View.OnClickListener {
     }
 
     private void onOnlineOrdersUi() {
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Past orders - Payhere Orders");
+        if(completed)
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Past completed orders - Payhere Orders");
+        else
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Past cancelled orders - Payhere Orders");
         online.setBackgroundResource(R.drawable.grey_btn_half_left_round);
         cod.setBackgroundResource(R.drawable.red_btn_half_round);
         query = orderManager.codPastOrders(completed, false);
@@ -164,7 +167,10 @@ public class PastOrders extends Fragment implements View.OnClickListener {
     }
 
     private void onCodOrdersUi() {
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Past orders - COD Orders");
+        if(completed)
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Past completed orders - COD Orders");
+        else
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("Past cancelled orders - COD Orders");
         cod.setBackgroundResource(R.drawable.grey_btn_half_right_round);
         online.setBackgroundResource(R.drawable.blue_btn_half_round);
         query = orderManager.codPastOrders(completed, true);

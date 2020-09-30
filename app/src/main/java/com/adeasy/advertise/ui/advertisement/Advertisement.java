@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -140,12 +141,11 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
     }
 
     private void initBuyNow() {
-
         FirebaseUser user = auth.getCurrentUser();
 
         if (user == null) {
 
-            AlertDialog alertDialog = new AlertDialog.Builder(Advertisement.this)
+            new AlertDialog.Builder(Advertisement.this)
 
                     .setIcon(android.R.drawable.ic_dialog_alert)
 
@@ -165,7 +165,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
                     .setNegativeButton("Proceed as a guest", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                           placeBuyNow();
+                            placeBuyNow();
                         }
                     })
 
@@ -180,8 +180,6 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
         } else
             placeBuyNow();
-
-
     }
 
     private void placeBuyNow() {
@@ -218,7 +216,6 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
     @Override
     public void getAdbyID(@NonNull Task<DocumentSnapshot> task) {
-
         if (task.isSuccessful()) {
             DocumentSnapshot document = task.getResult();
             if (document.exists()) {
@@ -236,7 +233,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
                     else
                         adBuyNow.setVisibility(View.GONE);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
@@ -259,15 +256,25 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
 
         } else if (view == callText) {
-            Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:212145425"));
-            startActivity(intent);
+            callAdCustomer();
         } else if (view == adBuyNow)
             initBuyNow();
 
     }
 
-    private void displayImageSlider(){
+    private void callAdCustomer() {
+        ArrayAdapter<Integer> phone_numbers = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        phone_numbers.addAll(advertisement.getNumbers());
+
+        new AlertDialog.Builder(this).setTitle(getString(R.string.phoneNumbers)).setAdapter(phone_numbers, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + advertisement.getNumbers().get(i).toString())));
+            }
+        }).show();
+    }
+
+    private void displayImageSlider() {
         advertisementSliderAdapter.renewItems(advertisement.getImageUrls());
         sliderView.setSliderAdapter(advertisementSliderAdapter);
         sliderView.setIndicatorAnimation(IndicatorAnimationType.SLIDE); //set indicator animation by using IndicatorAnimationType. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!

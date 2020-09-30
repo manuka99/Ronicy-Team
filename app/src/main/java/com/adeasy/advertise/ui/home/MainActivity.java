@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -104,19 +105,19 @@ public class MainActivity extends AppCompatActivity {
                         Bundle bundle = new Bundle();
                         bundle.putString(LOCATION_SELECTED, location_selected);
                         search.setArguments(bundle);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, search).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, search).addToBackStack(search.getClass().getName()).commit();
                         break;
 
                     case 2:
                         selectedMenueID = itemIndex;
                         changeToolbarDefault();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, orders).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, orders).addToBackStack(orders.getClass().getName()).commit();
                         break;
 
                     case 3:
                         selectedMenueID = itemIndex;
                         changeToolbarDefault();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, account).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, account).addToBackStack(account.getClass().getName()).commit();
                         break;
                 }
             }
@@ -132,7 +133,8 @@ public class MainActivity extends AppCompatActivity {
         orders = new Orders();
         account = new Account();
 
-        handleHomeFragment();
+        changeToolbarHome();
+        getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, home).commit();
 
         //bottomNavigationView = findViewById(R.id.navBottm);
         //bottomNavigationView.setOnNavigationItemSelectedListener(this);
@@ -192,7 +194,33 @@ public class MainActivity extends AppCompatActivity {
             setSelectedHomeInSpaceMenu();
             //bottomNavigationView.setSelectedItemId(R.id.navHome);
         } else {
-            showExitDialog();
+            //showExitDialog();
+
+            if (getCurrentFragment() instanceof Home)
+                showExitDialog();
+
+            else
+                super.onBackPressed();
+
+            if (getCurrentFragment() instanceof Home) {
+                spaceNavigationView.changeCurrentItem(0);
+                handleHomeFragment();
+            }
+
+            if (getCurrentFragment() instanceof Search) {
+                spaceNavigationView.changeCurrentItem(1);
+                changeToolbarSearch();
+            }
+
+            if (getCurrentFragment() instanceof Orders) {
+                spaceNavigationView.changeCurrentItem(2);
+                changeToolbarDefault();
+            }
+
+            if (getCurrentFragment() instanceof Account) {
+                spaceNavigationView.changeCurrentItem(3);
+                changeToolbarDefault();
+            }
         }
     }
 
@@ -312,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             changeToolbarHome();
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, home).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.navContainer, home).addToBackStack(home.getClass().getName()).commit();
     }
 
     @Override
@@ -367,5 +395,11 @@ public class MainActivity extends AppCompatActivity {
 //                activity.findViewById(R.id.navigation);
 //        bottomNavigationView.setSelectedItemId(R.id.home);
 //    }
+
+    private Fragment getCurrentFragment() {
+        Fragment currentFragment = getSupportFragmentManager()
+                .findFragmentById(R.id.navContainer);
+        return currentFragment;
+    }
 
 }

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Base64;
 import android.util.Log;
@@ -306,6 +307,16 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
         else {
             showSigninUi();
             firebaseAuthentication.signInWithEmailAndPassword(login_email.getEditText().getText().toString(), login_password.getEditText().getText().toString());
+
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    HideSoftKeyboard.hideKeyboard(getActivity());
+                    endSigninUi();
+                    showErrorSnackbar(getString(R.string.phone_code_time_up));
+                }
+            }, 8000);
         }
     }
 
@@ -320,6 +331,16 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
             showSignupUi();
             name = signUp_name.getEditText().getText().toString();
             firebaseAuthentication.createAccount(signUp_email.getEditText().getText().toString(), signUp_password.getEditText().getText().toString(), name);
+
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    HideSoftKeyboard.hideKeyboard(getActivity());
+                    endSignupUi();
+                    showErrorSnackbar(getString(R.string.phone_code_time_up));
+                }
+            }, 8000);
         }
     }
 
@@ -335,7 +356,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(callbackManager.onActivityResult(requestCode, resultCode, data)){
+        if (callbackManager.onActivityResult(requestCode, resultCode, data)) {
             return;
         }
     }

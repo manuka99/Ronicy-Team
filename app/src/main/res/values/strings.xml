@@ -191,6 +191,13 @@
     <string name="close">close</string>
     <string name="open">open</string>
 
+    <!--- order status without delivered-->
+    <string-array name="order_status_no_delivered_array">
+        <item>Processing</item>
+        <item>Shipped</item>
+        <item>Delivered</item>
+        <item>Cancelled</item>
+    </string-array>
 
     <!--- order status-->
     <string-array name="order_status_array">
@@ -304,6 +311,16 @@
     <string name="order_completed_ratio_payment">This Pie chart represents the orders that were completed and ratios between payment modes selected by customers.</string>
     <string name="order_cancelled_ratio_payment">This Pie chart represents the orders that were cancelled and ratios between payment modes selected by customers.</string>
     <string name="orders_stat_line">This Line graph represent the orders that were completed based on the month for the selected year. Payment status also considered.</string>
+
+    <string name="estimated_delivery">Estimated Delivery</string>
+    <string name="customer_mobile">Customer Mobile</string>
+    <string name="customer_email">Customer Email</string>
+    <string name="delivery_address">Delivery Address</string>
+    <string name="order_type">Order type</string>
+    <string name="order_time">Order Time</string>
+    <string name="order_id">Order ID</string>
+    <string name="order_has_been_delivered">Order has been Delivered</string>
+
 
     <!-- Divya -->
 

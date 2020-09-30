@@ -1,9 +1,11 @@
 package com.adeasy.advertise.ui.home;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.paging.PagedList;
@@ -23,8 +25,10 @@ import com.adeasy.advertise.callback.OrderCallback;
 import com.adeasy.advertise.helper.ViewHolderOrderItem;
 import com.adeasy.advertise.helper.ViewHolderOrderItemHome;
 import com.adeasy.advertise.manager.OrderManager;
+import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.Order;
 import com.adeasy.advertise.ui.administration.order.MoreOnOrder;
+import com.adeasy.advertise.ui.advertisement.Myadds;
 import com.adeasy.advertise.ui.athentication.LoginRegister;
 import com.adeasy.advertise.util.CommonConstants;
 import com.adeasy.advertise.util.CustomDialogs;
@@ -40,6 +44,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -164,7 +170,7 @@ public class Orders extends Fragment implements OrderCallback {
                             options
                     ) {
                         @Override
-                        protected void onBindViewHolder(@NonNull ViewHolderOrderItemHome holder, final int position, @NonNull Order order) {
+                        protected void onBindViewHolder(@NonNull ViewHolderOrderItemHome holder, final int position, @NonNull final Order order) {
 
                             if (order.getOrderStatus().equals(CommonConstants.ORDER_DELIVERED))
                                 holder.deliveredLayout.setVisibility(View.VISIBLE);
@@ -190,6 +196,36 @@ public class Orders extends Fragment implements OrderCallback {
                             holder.estimatedDate.setText(order.getDeliveryEstimatedDate());
 
                             Picasso.get().load(order.getItem().getImageUrl()).fit().into(holder.imageView);
+
+                            holder.clear.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    new AlertDialog.Builder(getActivity())
+
+                                            .setIcon(getResources().getDrawable(R.drawable.ic_baseline_info_24_red))
+
+                                            .setTitle("Are you sure you want to clear this order")
+
+                                            .setMessage("Note any changes made cannot be revert.")
+
+                                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    orderManager.hideOrder(order.getId(), false);
+                                                }
+                                            })
+
+                                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                                }
+                                            })
+
+                                            .show();
+
+                                }
+                            });
                         }
 
                         @NonNull
@@ -270,7 +306,10 @@ public class Orders extends Fragment implements OrderCallback {
 
     @Override
     public void onHideOrderByID(Task<Void> task) {
-
+        if (task != null && task.isSuccessful()) {
+            firestorePagingAdapter.refresh();
+        } else
+            Toast.makeText(getActivity(), "Error: Order was not cleared....", Toast.LENGTH_LONG).show();
     }
 
     @Override

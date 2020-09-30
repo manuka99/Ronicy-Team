@@ -179,7 +179,7 @@ public class OrderManager {
     }
 
     public Query myOrders() {
-        return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("customer.uid", FirebaseAuth.getInstance().getCurrentUser().getUid()).orderBy("placedDate", Query.Direction.DESCENDING);
+        return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("customer.uid", FirebaseAuth.getInstance().getCurrentUser().getUid()).whereEqualTo("avalability", true).orderBy("placedDate", Query.Direction.DESCENDING);
     }
 
     public Query recentOrders() {
@@ -232,7 +232,7 @@ public class OrderManager {
         try {
             // Update one field
             Map<String, Object> data = new HashMap<>();
-            data.put("availability", visibility);
+            data.put("avalability", visibility);
             firebaseFirestore.collection(childName).document(id)
                     .set(data, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override

@@ -163,9 +163,9 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                                                 public void onClick(DialogInterface dialogInterface, int i) {
 
 
-                                                    AlertDialog alertDialog = new AlertDialog.Builder(Myadds.this)
+                                                    new AlertDialog.Builder(Myadds.this)
 
-                                                            .setIcon(android.R.drawable.ic_dialog_alert)
+                                                            .setIcon(getResources().getDrawable(R.drawable.ic_baseline_info_24_red))
 
                                                             .setTitle("Are you sure you want to delete your advertisement - " + getItem(position).get("title"))
 
@@ -311,8 +311,8 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                 firestorePagingAdapter.stopListening();
                 customErrorDialogs.showPermissionDeniedStorage();
             }
-
         }
+        advertisementManager.getCount(advertisementManager.viewMyAddsAll());
     }
 
     @Override
@@ -332,6 +332,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                 customErrorDialogs.showPermissionDeniedStorage();
             }
         }
+        advertisementManager.getCount(advertisementManager.viewMyAddsAll());
     }
 
     @Override
