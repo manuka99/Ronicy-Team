@@ -51,6 +51,10 @@
         android:textSize="@dimen/_10sdp"
         android:textStyle="italic" />
 
+    <include
+        android:id="@+id/noDataFragment"
+        layout="@layout/manuka_empty_data_indicator" />
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshMyadds"
         android:layout_width="match_parent"

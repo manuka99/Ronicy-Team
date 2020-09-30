@@ -298,7 +298,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
 
                                 case FINISHED:
                                     try {
-                                        Toast.makeText(getActivity(), "No more ads..", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(getActivity(), "No more ads..", Toast.LENGTH_SHORT).show();
                                     } catch (Exception e) {
                                         Log.i(TAG, "Exception at toast");
                                     }

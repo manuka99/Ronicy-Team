@@ -199,7 +199,6 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     }
 
     private void startDeliveryDetailsFragment() {
-
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.orderStepContainer, step1);
         ft.commit();

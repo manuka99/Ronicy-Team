@@ -33,7 +33,7 @@
             android:layout_alignParentStart="false"
             android:layout_alignParentLeft="false"
             android:layout_alignParentEnd="true"
-            android:text="Ops, It seems like there is no data found, please try again with a different selection."
+            android:text="Ops, It seems like there is no data found, please try again."
             android:textColor="@color/colorBlackText"
             android:textSize="@dimen/_10sdp"
             android:textStyle="italic|bold" />

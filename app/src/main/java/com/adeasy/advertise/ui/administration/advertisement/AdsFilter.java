@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.helper.ViewHolderListAdds;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
@@ -29,9 +33,12 @@ import com.adeasy.advertise.ui.editAd.EditAd;
 import com.adeasy.advertise.util.CustomDialogs;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -42,7 +49,7 @@ import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERM
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class AdsFilter extends AppCompatActivity {
+public class AdsFilter extends AppCompatActivity implements AdvertisementCallback {
 
     String filterType, category, categoryName;
     AdvertisementManager advertisementManager;
@@ -56,6 +63,8 @@ public class AdsFilter extends AppCompatActivity {
     FirestorePagingAdapter<Advertisement, ViewHolderListAdds> firestorePagingAdapter;
     FirestorePagingOptions<Advertisement> options;
 
+    CardView noDataFragment;
+
     boolean isTrashDelete = false;
 
     private static final String TAG = "AdsFilter";
@@ -68,6 +77,7 @@ public class AdsFilter extends AppCompatActivity {
 
         context = this;
 
+        noDataFragment = findViewById(R.id.noDataFragment);
         filter_ads_text = findViewById(R.id.filter_ads_text);
         recyclerView = findViewById(R.id.myaddsRecycle);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshMyadds);
@@ -81,7 +91,7 @@ public class AdsFilter extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        advertisementManager = new AdvertisementManager();
+        advertisementManager = new AdvertisementManager(this);
 
         if (filterType != null && category != null)
             getQueryForFilters();
@@ -270,6 +280,7 @@ public class AdsFilter extends AppCompatActivity {
                         super.onLoadingStateChanged(state);
                         switch (state) {
                             case LOADING_INITIAL:
+                                advertisementManager.getCount(query);
                             case LOADING_MORE:
                                 // Do your loading animation
                                 swipeRefreshLayout.setRefreshing(true);
@@ -282,7 +293,7 @@ public class AdsFilter extends AppCompatActivity {
 
                             case FINISHED:
                                 swipeRefreshLayout.setRefreshing(false);
-                                Toast.makeText(getApplicationContext(), "last..fg", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(), "last..fg", Toast.LENGTH_SHORT).show();
                                 break;
 
                             case ERROR:
@@ -316,4 +327,44 @@ public class AdsFilter extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onUploadImage(@NonNull Task<Uri> task) {
+
+    }
+
+    @Override
+    public void onTaskFull(boolean result) {
+
+    }
+
+    @Override
+    public void onCompleteInsertAd(Task<Void> task) {
+
+    }
+
+    @Override
+    public void onCompleteDeleteAd(Task<Void> task) {
+
+    }
+
+    @Override
+    public void onAdCount(Task<QuerySnapshot> task) {
+        if (task != null && task.isSuccessful() && task.getResult().size() > 0) {
+            noDataFragment.setVisibility(View.GONE);
+            getSupportActionBar().setSubtitle(categoryName + " - " + task.getResult().size() + " results");
+        } else {
+            noDataFragment.setVisibility(View.VISIBLE);
+            getSupportActionBar().setSubtitle(categoryName + " - " + " no results");
+        }
+    }
+
+    @Override
+    public void getAdbyID(@NonNull Task<DocumentSnapshot> task) {
+
+    }
+
+    @Override
+    public void onSuccessGetAllAdsByYear(Task<QuerySnapshot> task) {
+
+    }
 }

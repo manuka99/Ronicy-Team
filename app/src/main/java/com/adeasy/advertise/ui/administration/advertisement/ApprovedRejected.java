@@ -3,11 +3,14 @@ package com.adeasy.advertise.ui.administration.advertisement;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,14 +24,18 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.helper.ViewHolderListAdds;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.ui.editAd.EditAd;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -38,7 +45,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class ApprovedRejected extends Fragment implements View.OnClickListener {
+public class ApprovedRejected extends Fragment implements View.OnClickListener, AdvertisementCallback {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -57,6 +64,8 @@ public class ApprovedRejected extends Fragment implements View.OnClickListener {
     FirestorePagingOptions<Advertisement> options;
     Button approved, rejected;
     Query query;
+
+    CardView noDataFragment;
 
     public ApprovedRejected() {
         // Required empty public constructor
@@ -94,6 +103,7 @@ public class ApprovedRejected extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.manuka_admin_fragment_approved_rejected, container, false);
+        noDataFragment = view.findViewById(R.id.noDataFragment);
         recyclerView = view.findViewById(R.id.myaddsRecycle);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshMyadds);
 
@@ -101,7 +111,7 @@ public class ApprovedRejected extends Fragment implements View.OnClickListener {
         rejected = view.findViewById(R.id.rejected);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        advertisementManager = new AdvertisementManager();
+        advertisementManager = new AdvertisementManager(this);
         firebaseAuth = FirebaseAuth.getInstance();
 
         approved.setOnClickListener(this);
@@ -212,6 +222,7 @@ public class ApprovedRejected extends Fragment implements View.OnClickListener {
                         super.onLoadingStateChanged(state);
                         switch (state) {
                             case LOADING_INITIAL:
+                                advertisementManager.getCount(query);
                             case LOADING_MORE:
                                 // Do your loading animation
                                 swipeRefreshLayout.setRefreshing(true);
@@ -276,6 +287,45 @@ public class ApprovedRejected extends Fragment implements View.OnClickListener {
         approved.setBackgroundResource(R.drawable.blue_btn_half_round);
         query = advertisementManager.viewRejectedAdds();
         loadData();
+    }
+
+    @Override
+    public void onUploadImage(@NonNull Task<Uri> task) {
+
+    }
+
+    @Override
+    public void onTaskFull(boolean result) {
+
+    }
+
+    @Override
+    public void onCompleteInsertAd(Task<Void> task) {
+
+    }
+
+    @Override
+    public void onCompleteDeleteAd(Task<Void> task) {
+
+    }
+
+    @Override
+    public void onAdCount(Task<QuerySnapshot> task) {
+        if (task != null && task.isSuccessful() && task.getResult().size() > 0) {
+            noDataFragment.setVisibility(View.GONE);
+        } else {
+            noDataFragment.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void getAdbyID(@NonNull Task<DocumentSnapshot> task) {
+
+    }
+
+    @Override
+    public void onSuccessGetAllAdsByYear(Task<QuerySnapshot> task) {
+
     }
 
 }

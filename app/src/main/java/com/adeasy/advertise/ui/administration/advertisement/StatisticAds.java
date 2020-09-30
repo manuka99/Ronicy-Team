@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -115,6 +117,9 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
     boolean isBarChartVisible = true;
     boolean isLineChartVisible = false;
 
+    CardView noDataLayout;
+    LinearLayout chartLayout;
+
     public StatisticAds() {
         // Required empty public constructor
     }
@@ -155,6 +160,9 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
         //init arays
         intitArrays();
 
+        noDataLayout = view.findViewById(R.id.noDataLayout);
+
+        chartLayout = view.findViewById(R.id.chartLayout);
         yearLayout = view.findViewById(R.id.yearLayout);
         yearEditText = view.findViewById(R.id.yearEditText);
         progressBar = view.findViewById(R.id.progressBar);
@@ -607,11 +615,15 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
         if (task != null && task.isSuccessful() && task.getResult() != null) {
             List<Advertisement> advertisements = task.getResult().toObjects(Advertisement.class);
             //Log.i(TAG, advertisements.toString());
-            if (advertisements.size() > 0)
+            if (advertisements.size() > 0) {
+                chartLayout.setVisibility(View.VISIBLE);
+                noDataLayout.setVisibility(View.GONE);
                 sortDataByAdvertisemntList(advertisements);
-            else
-                Toast.makeText(context, "No data available", Toast.LENGTH_LONG).show();
-        }else if(task != null){
+            } else {
+                chartLayout.setVisibility(View.GONE);
+                noDataLayout.setVisibility(View.VISIBLE);
+            }
+        } else if (task != null) {
             if (task.getException() instanceof FirebaseFirestoreException) {
                 ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
                 customDialogs.showPermissionDeniedStorage();

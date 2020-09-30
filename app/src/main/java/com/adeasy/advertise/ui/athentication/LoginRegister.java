@@ -107,6 +107,8 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
 
     String name;
 
+    boolean isInprogress = false;
+
     public LoginRegister() {
         // Required empty public constructor
     }
@@ -308,15 +310,22 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
             showSigninUi();
             firebaseAuthentication.signInWithEmailAndPassword(login_email.getEditText().getText().toString(), login_password.getEditText().getText().toString());
 
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    HideSoftKeyboard.hideKeyboard(getActivity());
-                    endSigninUi();
-                    showErrorSnackbar(getString(R.string.phone_code_time_up));
-                }
-            }, 8000);
+            isInprogress = true;
+
+            try {
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (isInprogress) {
+                            endSigninUi();
+                            showErrorSnackbar(getString(R.string.phone_code_time_up));
+                        }
+                    }
+                }, 8000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -332,15 +341,21 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
             name = signUp_name.getEditText().getText().toString();
             firebaseAuthentication.createAccount(signUp_email.getEditText().getText().toString(), signUp_password.getEditText().getText().toString(), name);
 
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    HideSoftKeyboard.hideKeyboard(getActivity());
-                    endSignupUi();
-                    showErrorSnackbar(getString(R.string.phone_code_time_up));
-                }
-            }, 8000);
+            isInprogress = true;
+            try {
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (isInprogress) {
+                            endSignupUi();
+                            showErrorSnackbar(getString(R.string.phone_code_time_up));
+                        }
+                    }
+                }, 8000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -362,17 +377,21 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
     }
 
     private void showErrorSnackbar(String error) {
-        HideSoftKeyboard.hideKeyboard(requireActivity());
-        Snackbar snackbar = Snackbar.make(snackbar_text, error, Snackbar.LENGTH_INDEFINITE).setAction("x", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        }).setActionTextColor(getResources().getColor(R.color.colorWhite));
-        View snackbarView = snackbar.getView();
-        TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
-        textView.setMaxLines(5);
-        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorError2));
-        snackbar.show();
+        try {
+            HideSoftKeyboard.hideKeyboard(requireActivity());
+            Snackbar snackbar = Snackbar.make(snackbar_text, error, Snackbar.LENGTH_INDEFINITE).setAction("x", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                }
+            }).setActionTextColor(getResources().getColor(R.color.colorWhite));
+            View snackbarView = snackbar.getView();
+            TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+            textView.setMaxLines(5);
+            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorError2));
+            snackbar.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void showSuccessSnackbar(String message) {
@@ -389,6 +408,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
 
     @Override
     public void onCompleteSignIn(@NonNull Task<AuthResult> task) {
+        isInprogress = false;
         if (task.isSuccessful()) {
             // Sign in success, update UI with the signed-in user's information
             Log.d(TAG, "signInWithEmail:success");
@@ -408,6 +428,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
 
     @Override
     public void onCompleteCreateAccount(@NonNull Task<AuthResult> task) {
+        isInprogress = false;
         endSignupUi();
         if (task.isSuccessful()) {
             // Sign in success, update UI with the signed-in user's information
@@ -437,43 +458,63 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
     }
 
     private void openNewActivity() {
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        getActivity().finishAffinity();
-        getActivity().finish();
+        try {
+            Intent intent = new Intent(getContext(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            getActivity().finishAffinity();
+            getActivity().finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void showSigninUi() {
-        Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
-        loginBtnLayout.setBackgroundResource(R.color.colorGreyBtn);
-        login.setVisibility(View.GONE);
-        loginProgress.setVisibility(View.VISIBLE);
-        loginProgress.startAnimation(aniSlide);
+        try {
+            Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
+            loginBtnLayout.setBackgroundResource(R.color.colorGreyBtn);
+            login.setVisibility(View.GONE);
+            loginProgress.setVisibility(View.VISIBLE);
+            loginProgress.startAnimation(aniSlide);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void endSigninUi() {
-        Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
-        loginBtnLayout.setBackgroundResource(R.color.mainUiColour);
-        login.setVisibility(View.VISIBLE);
-        loginProgress.setVisibility(View.GONE);
-        login.startAnimation(aniSlide);
+        try {
+            Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
+            loginBtnLayout.setBackgroundResource(R.color.mainUiColour);
+            login.setVisibility(View.VISIBLE);
+            loginProgress.setVisibility(View.GONE);
+            login.startAnimation(aniSlide);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void showSignupUi() {
-        Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
-        signupBtnLayout.setBackgroundResource(R.color.colorGreyBtn);
-        signUp.setVisibility(View.GONE);
-        signUpProgress.setVisibility(View.VISIBLE);
-        signUpProgress.startAnimation(aniSlide);
+        try {
+            Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
+            signupBtnLayout.setBackgroundResource(R.color.colorGreyBtn);
+            signUp.setVisibility(View.GONE);
+            signUpProgress.setVisibility(View.VISIBLE);
+            signUpProgress.startAnimation(aniSlide);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void endSignupUi() {
-        Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
-        signupBtnLayout.setBackgroundResource(R.color.mainUiColour);
-        signUp.setVisibility(View.VISIBLE);
-        signUpProgress.setVisibility(View.GONE);
-        signUpProgress.startAnimation(aniSlide);
+        try {
+            Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.zoom_in);
+            signupBtnLayout.setBackgroundResource(R.color.mainUiColour);
+            signUp.setVisibility(View.VISIBLE);
+            signUpProgress.setVisibility(View.GONE);
+            signUpProgress.startAnimation(aniSlide);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -485,6 +526,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
 
     @Override
     public void onCompleteSignInWithFacebook(@NonNull Task<AuthResult> task) {
+        isInprogress = false;
         if (task.isSuccessful()) {
             // Sign in success, update UI with the signed-in user's information
             Log.d(TAG, "signInWithCredential:success");
@@ -513,5 +555,10 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        isInprogress = false;
+    }
 
 }

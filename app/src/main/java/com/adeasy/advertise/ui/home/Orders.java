@@ -306,6 +306,7 @@ public class Orders extends Fragment implements OrderCallback {
 
     @Override
     public void onHideOrderByID(Task<Void> task) {
+        orderManager.getCount(orderManager.myOrders());
         if (task != null && task.isSuccessful()) {
             firestorePagingAdapter.refresh();
         } else

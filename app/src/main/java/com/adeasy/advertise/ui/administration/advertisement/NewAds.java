@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
@@ -61,6 +63,8 @@ public class NewAds extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     CustomDialogs customDialogs;
 
+    NestedScrollView noDataFragment;
+
     public NewAds() {
         // Required empty public constructor
     }
@@ -99,6 +103,7 @@ public class NewAds extends Fragment {
         View view = inflater.inflate(R.layout.manuka_admin_fragment_new_ads, container, false);
         recyclerView = view.findViewById(R.id.myaddsRecycle);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshMyadds);
+        noDataFragment = view.findViewById(R.id.noDataFragment);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         advertisementManager = new AdvertisementManager();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -215,6 +220,11 @@ public class NewAds extends Fragment {
                 // ...
                 if (getSnapshots().size() == getItemCount())
                     swipeRefreshLayout.setRefreshing(false);
+
+                if (getSnapshots().size() == 0)
+                    noDataFragment.setVisibility(View.VISIBLE);
+                else
+                    noDataFragment.setVisibility(View.GONE);
             }
 
             @Override
