@@ -60,6 +60,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@color/colorWhite"
                     android:orientation="vertical"
                     android:padding="@dimen/_8sdp">
@@ -215,11 +216,19 @@
 
                 </LinearLayout>
 
+                <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/adView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    ads:adSize="LARGE_BANNER"
+                    ads:adUnitId="ca-app-pub-2612826891658748/5962491746"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@color/colorWhite"
                     android:orientation="vertical"
                     android:padding="@dimen/_8sdp">
@@ -245,11 +254,25 @@
 
                 </LinearLayout>
 
+                <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/adView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    ads:adSize="LARGE_BANNER"
+                    ads:adUnitId="ca-app-pub-2612826891658748/5962491746"/>
+
+                <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/adView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    ads:adSize="LARGE_BANNER"
+                    ads:adUnitId="ca-app-pub-2612826891658748/2737029777"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/colorWhite"
                     android:orientation="vertical">
 
@@ -264,14 +287,14 @@
                         android:textStyle="bold" />
 
                     <View
-                        android:background="@color/colorWhiteLite"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"/>
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/colorWhiteLite" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/similarAds"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 

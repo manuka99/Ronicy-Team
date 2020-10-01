@@ -46,6 +46,13 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -86,6 +93,8 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
     FirestoreRecyclerAdapter adapter;
 
     CustomDialogs customDialogs;
+
+    AdView adView1, adView2, adView3;
 
     private static final String TAG = "EditAdvertisement";
 
@@ -144,6 +153,19 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         categoryManager.getCategorybyID(adCID);
         advertisementSliderAdapter = new AdvertisementSliderAdapter();
 
+        //display ads
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        adView1 = findViewById(R.id.adView1);
+        adView2 = findViewById(R.id.adView2);
+        adView3 = findViewById(R.id.adView3);
+        adView1.loadAd(new AdRequest.Builder().build());
+        adView2.loadAd(new AdRequest.Builder().build());
+        adView3.loadAd(new AdRequest.Builder().build());
+
         loadData();
     }
 
@@ -155,6 +177,42 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
         similarAds.setAdapter(adapter);
         adapter.startListening();
+
+        adView1.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+                Toast.makeText(context, "ad loaded", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onAdFailedToLoad(LoadAdError adError) {
+                // Code to be executed when an ad request fails.
+                Toast.makeText(context, adError.getMessage() + "Code : " + adError.getCode() , Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+
+            @Override
+            public void onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+            }
+        });
     }
 
     @Override

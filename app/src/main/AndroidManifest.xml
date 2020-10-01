@@ -31,7 +31,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.chat.ChatMainActivity"></activity>
+        <activity android:name=".ui.chat.ChatMainActivity"/>
         <activity android:name=".ui.advertisement.FilterSearchResult" />
         <activity android:name=".ui.advertisement.LocationPicker" />
         <activity android:name=".ui.advertisement.CategoryPicker" />
@@ -72,6 +72,10 @@
         <activity android:name=".ui.advertisement.Advertisement" />
         <activity android:name=".ui.advertisement.Myadds" />
         <activity android:name=".ui.home.MainActivity" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-2612826891658748~3883957460"/>
 
         <meta-data
             android:name="preloaded_fonts"

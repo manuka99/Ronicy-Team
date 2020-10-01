@@ -21,6 +21,9 @@ import com.adeasy.advertise.ViewModel.HomeViewModel;
 import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.ui.newPost.NewAd;
 import com.adeasy.advertise.util.InternetValidation;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.irfaan008.irbottomnavigation.SpaceItem;
 import com.irfaan008.irbottomnavigation.SpaceNavigationView;
@@ -61,6 +64,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
 
         try {
             searchKey = getIntent().getStringExtra(SEARCH_KEY);

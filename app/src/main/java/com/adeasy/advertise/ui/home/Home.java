@@ -221,21 +221,6 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                 .setQuery(query, config, Advertisement.class)
                 .build();
 
-//        advertisementManager.viewAdds().addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot snapshot,
-//                                @Nullable FirebaseFirestoreException e) {
-//                if (e != null) {
-//                    // Handle error
-//                    return;
-//                }
-//
-//                // Convert query snapshot to a list of chats
-//                List<Advertisement> ads = snapshot.toObjects(Advertisement.class);
-//
-//            }
-//        });
-
         if (firestorePagingAdapter != null)
             firestorePagingAdapter.updateOptions(options);
 
