@@ -17,6 +17,7 @@ import com.adeasy.advertise.callback.ProfileManagerCallback;
 import com.adeasy.advertise.manager.ProfileManager;
 import com.adeasy.advertise.model.User;
 import com.adeasy.advertise.util.CustomDialogs;
+import com.adeasy.advertise.util.InternetValidation;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -116,6 +117,13 @@ public class UserDetails extends Fragment implements ProfileManagerCallback {
         userDetailsLayout.setVisibility(View.GONE);
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!new InternetValidation().validateInternet(getActivity()))
+            customErrorDialogs.showNoInternetDialog();
     }
 
     @Override

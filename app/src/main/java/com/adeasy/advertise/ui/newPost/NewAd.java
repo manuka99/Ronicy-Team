@@ -28,6 +28,8 @@ import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.ui.athentication.LoginRegister;
+import com.adeasy.advertise.util.CustomDialogs;
+import com.adeasy.advertise.util.InternetValidation;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -60,6 +62,8 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
     String location;
 
     Advertisement advertisement;
+
+    CustomDialogs customDialogs;
 
     private static final String TAG = "NewAd";
     private static final int LOCATION_PICKER = 5654;
@@ -138,6 +142,8 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
             }
         });
 
+        customDialogs = new CustomDialogs(this);
+
         startShowAllCategories();
     }
 
@@ -147,6 +153,9 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
 
         if (firebaseAuth.getCurrentUser() == null)
             showLoginRegisterFragment();
+
+        if (!new InternetValidation().validateInternet(getApplicationContext()))
+            customDialogs.showNoInternetDialog();
 
     }
 

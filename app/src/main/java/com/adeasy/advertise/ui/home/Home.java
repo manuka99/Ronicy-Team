@@ -39,6 +39,8 @@ import com.adeasy.advertise.ui.advertisement.CategoryPicker;
 import com.adeasy.advertise.ui.advertisement.FilterSearchResult;
 import com.adeasy.advertise.ui.advertisement.HomeAdSearch;
 import com.adeasy.advertise.ui.advertisement.LocationPicker;
+import com.adeasy.advertise.util.CustomDialogs;
+import com.adeasy.advertise.util.InternetValidation;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.android.gms.tasks.Task;
@@ -82,6 +84,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     List<String> search_ids;
     ImageView filters;
     FrameLayout frameLayout;
+    CustomDialogs customDialogs;
 
     private static final String SEARCH_KEY = "search_key";
     private static final String CATEGORY_SELECTED = "category_selected";
@@ -134,6 +137,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, 1));
         //recyclerView.setHasFixedSize(false);
 
+        customDialogs = new CustomDialogs(getActivity());
 
         advertisementManager = new AdvertisementManager(this);
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
@@ -208,7 +212,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
 
         PagedList.Config config = new PagedList.Config.Builder()
                 .setEnablePlaceholders(false)
-                .setInitialLoadSizeHint(4)
+                .setInitialLoadSizeHint(3)
                 .setPageSize(3)
                 .build();
 
@@ -248,8 +252,12 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                             holder.priceView.setText(advertisement.getPreetyCurrency());
 
                             try {
-                                Picasso.get().load(advertisement.getImageUrls().get(0)).into(holder.imageView);
+                                if(position%2 == 0)
+                                    holder.imageView.setRatio(1.4f);
+                                else
+                                    holder.imageView.setRatio(1f);
 
+                                Picasso.get().load(advertisement.getImageUrls().get(0)).into(holder.imageView);
                             } catch (Exception e) {
 
                             }
@@ -341,6 +349,8 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     @Override
     public void onStart() {
         super.onStart();
+        if (!new InternetValidation().validateInternet(getActivity()))
+            customDialogs.showNoInternetDialog();
         if (firestorePagingAdapter != null) {
             mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override

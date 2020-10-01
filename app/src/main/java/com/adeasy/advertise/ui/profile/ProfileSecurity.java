@@ -20,6 +20,7 @@ import com.adeasy.advertise.callback.ProfileManagerCallback;
 import com.adeasy.advertise.manager.ProfileManager;
 import com.adeasy.advertise.util.CustomDialogs;
 import com.adeasy.advertise.util.HideSoftKeyboard;
+import com.adeasy.advertise.util.InternetValidation;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -126,6 +127,8 @@ public class ProfileSecurity extends Fragment implements TextWatcher, View.OnCli
         super.onStart();
         if (firebaseAuth.getCurrentUser() == null)
             getActivity().onBackPressed();
+        if (!new InternetValidation().validateInternet(getActivity()))
+            customErrorDialogs.showNoInternetDialog();
     }
 
     @Override

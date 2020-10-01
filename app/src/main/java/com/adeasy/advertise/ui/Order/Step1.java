@@ -110,10 +110,12 @@ public class Step1 extends Fragment implements TextWatcher {
     }
 
     private void updateUiOnCustomerRecieve() {
-        nameView.getEditText().setText(customer.getName());
-        phoneView.getEditText().setText(String.valueOf(customer.getPhone()));
-        emailView.getEditText().setText(customer.getEmail());
-        addressView.getEditText().setText(customer.getAddress());
+        if(customer != null) {
+            nameView.getEditText().setText(customer.getName());
+            phoneView.getEditText().setText(String.valueOf(customer.getPhone()));
+            emailView.getEditText().setText(customer.getEmail());
+            addressView.getEditText().setText(customer.getAddress());
+        }
     }
 
     @Override

@@ -31,6 +31,7 @@ import com.adeasy.advertise.ui.editAd.ContactDetails;
 import com.adeasy.advertise.ui.editAd.LocationSelector;
 import com.adeasy.advertise.ui.newPost.NewAd;
 import com.adeasy.advertise.util.CustomDialogs;
+import com.adeasy.advertise.util.InternetValidation;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -135,6 +136,13 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!new InternetValidation().validateInternet(getApplicationContext()))
+            customDialogs.showNoInternetDialog();
     }
 
     @Override

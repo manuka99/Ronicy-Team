@@ -271,6 +271,10 @@ public class AdvertisementManager {
         return query.whereEqualTo("availability", true).whereEqualTo("approved", true).orderBy("placedDate", Query.Direction.DESCENDING);
     }
 
+    public Query homeSimilarAds(String cid) {
+        return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("categoryID", cid).whereEqualTo("availability", true).whereEqualTo("approved", true).limit(6);
+    }
+
     public Query viewMyAddsAll() {
         return firebaseFirestore.collection(childName).whereEqualTo("userID", firebaseAuth.getCurrentUser().getUid()).orderBy("placedDate", Query.Direction.DESCENDING);
     }

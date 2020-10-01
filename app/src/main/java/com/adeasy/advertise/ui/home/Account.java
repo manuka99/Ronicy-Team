@@ -41,6 +41,7 @@ import com.adeasy.advertise.ui.favaourite.divya_MActivity;
 import com.adeasy.advertise.ui.getintouch.GetInTouchActivity;
 import com.adeasy.advertise.ui.profile.Profile;
 import com.adeasy.advertise.util.CustomDialogs;
+import com.adeasy.advertise.util.InternetValidation;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -182,6 +183,8 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
     public void onStart() {
         super.onStart();
         setHasOptionsMenu(true);
+        if (!new InternetValidation().validateInternet(getActivity()))
+            customDialogs.showNoInternetDialog();
         if (FirebaseAuth.getInstance().getCurrentUser() != null)
             customAuthTokenManager.getCustomClaimsInLoggedinUser();
     }

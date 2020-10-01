@@ -30,6 +30,7 @@ import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.ui.editAd.EditAd;
 import com.adeasy.advertise.ui.home.NoData;
 import com.adeasy.advertise.util.CustomDialogs;
+import com.adeasy.advertise.util.InternetValidation;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.android.gms.tasks.Task;
@@ -60,6 +61,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
     FirebaseAuth firebaseAuth;
     CustomDialogs customErrorDialogs;
     FrameLayout frameLayout;
+    CustomDialogs customDialogs;
     private static final String TAG = "Myadds";
 
     @Override
@@ -94,9 +96,18 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        customDialogs = new CustomDialogs(this);
+
         if (firebaseAuth.getCurrentUser() != null)
             loadData();
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!new InternetValidation().validateInternet(getApplicationContext()))
+            customDialogs.showNoInternetDialog();
     }
 
     public void loadData() {
@@ -230,7 +241,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                     @NonNull
                     @Override
                     public ViewHolderListAdds onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manuka_ads_row, parent, false);
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manuka_ads_row_card, parent, false);
                         return new ViewHolderListAdds(view);
                     }
 

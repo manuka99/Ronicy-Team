@@ -271,7 +271,7 @@ public class AdsFilter extends AppCompatActivity implements AdvertisementCallbac
                     @NonNull
                     @Override
                     public ViewHolderListAdds onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manuka_ads_row, parent, false);
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manuka_ads_row_card, parent, false);
                         return new ViewHolderListAdds(view);
                     }
 

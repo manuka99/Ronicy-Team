@@ -19,14 +19,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
+                <com.santalu.aspectratioimageview.AspectRatioImageView
                     android:id="@+id/adMenuImage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:maxHeight="@dimen/_180sdp"
-                    android:minHeight="@dimen/_140sdp"
-                    android:scaleType="centerCrop" />
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/spinner_48_inner_holo"
+                    app:ari_ratio="1"/>
 
                 <TextView
                     android:id="@+id/adMenuBuyNow"

@@ -33,6 +33,7 @@ import com.adeasy.advertise.model.User;
 import com.adeasy.advertise.util.CustomDialogs;
 import com.adeasy.advertise.util.HideSoftKeyboard;
 import com.adeasy.advertise.util.ImageQualityReducer;
+import com.adeasy.advertise.util.InternetValidation;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -189,6 +190,8 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
     public void onStart() {
         super.onStart();
         //profileManager.getUser();
+        if (!new InternetValidation().validateInternet(getActivity()))
+            customErrorDialogs.showNoInternetDialog();
     }
 
     @Override

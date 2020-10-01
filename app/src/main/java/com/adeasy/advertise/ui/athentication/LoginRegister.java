@@ -33,7 +33,9 @@ import com.adeasy.advertise.manager.CustomAuthTokenManager;
 import com.adeasy.advertise.manager.FacebookAuthManager;
 import com.adeasy.advertise.manager.FirebaseAuthentication;
 import com.adeasy.advertise.ui.home.MainActivity;
+import com.adeasy.advertise.util.CustomDialogs;
 import com.adeasy.advertise.util.HideSoftKeyboard;
+import com.adeasy.advertise.util.InternetValidation;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -104,6 +106,8 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
     LoginManager loginManager;
 
     CustomAuthTokenManager customAuthTokenManager;
+
+    CustomDialogs customDialogs;
 
     String name;
 
@@ -210,7 +214,16 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
         //display Login layout
         showLogin();
 
+        customDialogs = new CustomDialogs(getActivity());
+
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!new InternetValidation().validateInternet(getActivity()))
+            customDialogs.showNoInternetDialog();
     }
 
     @Override

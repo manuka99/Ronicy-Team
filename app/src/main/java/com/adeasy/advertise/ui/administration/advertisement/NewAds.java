@@ -208,7 +208,7 @@ public class NewAds extends Fragment {
             public ViewHolderListAdds onCreateViewHolder(ViewGroup group, int i) {
                 // Create a new instance of the ViewHolder, in this case we are using a custom
                 View view = LayoutInflater.from(group.getContext())
-                        .inflate(R.layout.manuka_ads_row, group, false);
+                        .inflate(R.layout.manuka_ads_row_card, group, false);
 
                 return new ViewHolderListAdds(view);
             }

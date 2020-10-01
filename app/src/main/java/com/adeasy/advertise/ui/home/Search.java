@@ -30,6 +30,8 @@ import com.adeasy.advertise.manager.CategoryManager;
 import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.ui.advertisement.HomeAdSearch;
 import com.adeasy.advertise.ui.advertisement.LocationPicker;
+import com.adeasy.advertise.util.CustomDialogs;
+import com.adeasy.advertise.util.InternetValidation;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.android.gms.tasks.Task;
@@ -67,6 +69,8 @@ public class Search extends Fragment implements CategoryCallback, View.OnClickLi
     HomeViewModel homeViewModel;
 
     TextView locationPicker, locationName;
+
+    CustomDialogs customDialogs;
 
     public Search() {
         // Required empty public constructor
@@ -147,6 +151,7 @@ public class Search extends Fragment implements CategoryCallback, View.OnClickLi
             }
         });
 
+        customDialogs = new CustomDialogs(getActivity());
     }
 
     public void loadData() {
@@ -237,6 +242,9 @@ public class Search extends Fragment implements CategoryCallback, View.OnClickLi
     public void onStart() {
         super.onStart();
         firestorePagingAdapter.startListening();
+
+        if (!new InternetValidation().validateInternet(getActivity()))
+            customDialogs.showNoInternetDialog();
     }
 
     @Override

@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adeasy.advertise.R;
+import com.santalu.aspectratioimageview.AspectRatioImageView;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -16,7 +18,7 @@ import com.adeasy.advertise.R;
 public class ViewHolderAdds extends RecyclerView.ViewHolder {
 
     public TextView titleView, priceView, dateView, buyNow;
-    public ImageView imageView;
+    public AspectRatioImageView imageView;
 
     public ViewHolderAdds(@NonNull View itemView) {
         super(itemView);

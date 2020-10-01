@@ -4,6 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.paging.PagedList;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,9 +17,11 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,22 +30,35 @@ import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.adapter.AdvertisementSliderAdapter;
+import com.adeasy.advertise.helper.ViewHolderAdds;
+import com.adeasy.advertise.helper.ViewHolderListAdds;
+import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.ui.Order.BuyNow;
 import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.callback.CategoryCallback;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.manager.CategoryManager;
+import com.adeasy.advertise.ui.administration.advertisement.MoreActionsOnAd;
+import com.adeasy.advertise.ui.editAd.EditAd;
+import com.adeasy.advertise.util.CustomDialogs;
+import com.adeasy.advertise.util.InternetValidation;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
+import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED;
 
 /**
@@ -61,6 +81,12 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
     com.adeasy.advertise.model.Advertisement advertisement;
     com.adeasy.advertise.model.Category category;
     private static final int requestCodeImage = 1456;
+
+    RecyclerView similarAds;
+    FirestoreRecyclerAdapter adapter;
+
+    CustomDialogs customDialogs;
+
     private static final String TAG = "EditAdvertisement";
 
     @Override
@@ -88,6 +114,17 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
         sliderView = findViewById(R.id.imageSlider);
 
+        customDialogs = new CustomDialogs(this);
+
+        similarAds = findViewById(R.id.similarAds);
+        similarAds.setNestedScrollingEnabled(false);
+        similarAds.setLayoutManager(new LinearLayoutManager(getApplicationContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+
         adCatName = findViewById(R.id.adDetailsCategoryName);
         adTime = findViewById(R.id.adDetailsTime);
         AdTitle = findViewById(R.id.adDetailsTitle);
@@ -107,12 +144,25 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         categoryManager.getCategorybyID(adCID);
         advertisementSliderAdapter = new AdvertisementSliderAdapter();
 
+        loadData();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        if (!new InternetValidation().validateInternet(getApplicationContext()))
+            customDialogs.showNoInternetDialog();
+
+        similarAds.setAdapter(adapter);
+        adapter.startListening();
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.startListening();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -307,6 +357,67 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         } else {
             Log.d(TAG, "get failed with ", task.getException());
         }
+    }
+
+    public void loadData() {
+        FirestoreRecyclerOptions<com.adeasy.advertise.model.Advertisement> options =
+                new FirestoreRecyclerOptions.Builder<com.adeasy.advertise.model.Advertisement>()
+                        .setQuery(advertisementManager.homeSimilarAds(adCID), com.adeasy.advertise.model.Advertisement.class)
+                        .build();
+
+        adapter = new FirestoreRecyclerAdapter<com.adeasy.advertise.model.Advertisement, ViewHolderListAdds>(options) {
+            @Override
+            public void onBindViewHolder(ViewHolderListAdds holder, final int position, com.adeasy.advertise.model.Advertisement advertisement) {
+                try {
+                    holder.getMyadsTitle().setText(advertisement.getTitle());
+                    holder.getMyadsPrice().setText(advertisement.getPreetyCurrency());
+                    holder.getMyaddsDate().setText(advertisement.getPreetyTime());
+                    Picasso.get().load(advertisement.getImageUrls().get(0)).fit().into(holder.getImageView());
+                    holder.getMyadsAprooved().setVisibility(View.GONE);
+
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getApplicationContext(), com.adeasy.advertise.ui.advertisement.Advertisement.class);
+                            intent.putExtra("adID", getItem(position).getId());
+                            intent.putExtra("adCID", (String) getItem(position).getCategoryID());
+                            startActivity(intent);
+                            //Toast.makeText(view.getContext(), getItem(position).getId(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public ViewHolderListAdds onCreateViewHolder(ViewGroup group, int i) {
+                // Create a new instance of the ViewHolder, in this case we are using a custom
+                View view = LayoutInflater.from(group.getContext())
+                        .inflate(R.layout.manuka_ads_row, group, false);
+
+                return new ViewHolderListAdds(view);
+            }
+
+            @Override
+            public void onDataChanged() {
+
+                //if (getSnapshots().size() == 0)
+
+            }
+
+            @Override
+            public void onError(FirebaseFirestoreException e) {
+                // Called when there is an error getting a query snapshot. You may want to update
+                // your UI to display an error message to the user.
+                // ...
+                e.printStackTrace();
+            }
+
+        };
+
+        adapter.startListening();
+        similarAds.setAdapter(adapter);
     }
 
 }

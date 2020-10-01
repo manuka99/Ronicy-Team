@@ -14,7 +14,7 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
@@ -45,7 +45,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_40sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
                 android:orientation="vertical">
 
                 <Button
@@ -73,7 +73,7 @@
                         android:fontFamily="serif"
                         android:maxLines="2"
                         android:padding="@dimen/_2sdp"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/colorBlackText"
                         android:textSize="@dimen/_18sdp"
                         android:textStyle="bold" />
 
@@ -115,7 +115,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="@string/adLocation"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@color/colorBlackText"
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold" />
 
@@ -126,7 +126,7 @@
                             android:paddingStart="@dimen/_8sdp"
                             android:paddingEnd="@dimen/_8sdp"
                             android:text="@string/adLocationText"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@color/colorBlackText"
                             android:textSize="@dimen/_12sdp" />
 
                     </LinearLayout>
@@ -142,7 +142,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="@string/adCondition"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@color/colorBlackText"
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold" />
 
@@ -153,7 +153,7 @@
                             android:layout_gravity="center_vertical"
                             android:paddingStart="@dimen/_8sdp"
                             android:paddingEnd="@dimen/_8sdp"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@color/colorBlackText"
                             android:textSize="@dimen/_12sdp" />
 
 
@@ -170,7 +170,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="@string/adCategory"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@color/colorBlackText"
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold" />
 
@@ -181,7 +181,7 @@
                             android:layout_gravity="center_vertical"
                             android:paddingStart="@dimen/_8sdp"
                             android:paddingEnd="@dimen/_8sdp"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@color/colorBlackText"
                             android:textSize="@dimen/_12sdp" />
 
                     </LinearLayout>
@@ -197,7 +197,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="@string/adPosted"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@color/colorBlackText"
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold" />
 
@@ -208,7 +208,7 @@
                             android:layout_gravity="center_vertical"
                             android:paddingStart="@dimen/_8sdp"
                             android:paddingEnd="@dimen/_8sdp"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@color/colorBlackText"
                             android:textSize="@dimen/_12sdp" />
 
                     </LinearLayout>
@@ -230,7 +230,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginTop="@dimen/_4sdp"
                         android:text="@string/adDescription"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/colorBlackText"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
 
@@ -240,8 +240,38 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:fontFamily="serif"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/colorBlackText"
                         android:textSize="@dimen/_14sdp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="@dimen/_6sdp"
+                        android:text="@string/similar_ads"
+                        android:textColor="@color/colorBlackText"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:background="@color/colorWhiteLite"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/similarAds"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 
@@ -249,7 +279,7 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -32,6 +32,7 @@ import com.adeasy.advertise.ui.advertisement.Myadds;
 import com.adeasy.advertise.ui.athentication.LoginRegister;
 import com.adeasy.advertise.util.CommonConstants;
 import com.adeasy.advertise.util.CustomDialogs;
+import com.adeasy.advertise.util.InternetValidation;
 import com.facebook.common.Common;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -138,6 +139,9 @@ public class Orders extends Fragment implements OrderCallback {
     @Override
     public void onStart() {
         super.onStart();
+        if (!new InternetValidation().validateInternet(getActivity()))
+            customDialogs.showNoInternetDialog();
+
         if (firebaseAuth.getCurrentUser() != null) {
             frameLayout.setVisibility(View.GONE);
             loadData();

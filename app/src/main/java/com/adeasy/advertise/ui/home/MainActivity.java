@@ -20,6 +20,7 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.HomeViewModel;
 import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.ui.newPost.NewAd;
+import com.adeasy.advertise.util.InternetValidation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.irfaan008.irbottomnavigation.SpaceItem;
 import com.irfaan008.irbottomnavigation.SpaceNavigationView;
@@ -162,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         initializeAllFragments();
-
     }
 
     @Override
