@@ -212,6 +212,8 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     public void onBackPressed() {
         if (getCurrentFragment() instanceof Step1)
             showExitDialog();
+        if (getCurrentFragment() instanceof StepSuccess)
+            finish();
         else {
             stepView.go(0, true);
             handelStep1Fragment();
