@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorHome"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".ui.getintouch.AddNewSuggestionActivity"
-    android:background="@color/colorHome">
+    tools:context=".AddNewSuggestionActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,12 +21,14 @@
     </TextView>
 
     <EditText
+        android:id="@+id/EditTextSuggestions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </EditText>
 
     <Button
+        android:id="@+id/btnSubmitSuggesstions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_button_blue"
@@ -34,7 +36,6 @@
         android:text="@string/submitButtonText">
 
     </Button>
-
 
 
 </LinearLayout>

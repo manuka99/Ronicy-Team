@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.adeasy.advertise.R;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.adeasy.advertise.R;
 
 public class BugsActionsActivity extends AppCompatActivity {
 
     Button viewBugsBtn, addBugsBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,8 @@ public class BugsActionsActivity extends AppCompatActivity {
         viewBugsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BugsActionsActivity.this, BugsActivity.class);
+                Intent intent = new Intent(BugsActionsActivity.this, BugsActivity2.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });

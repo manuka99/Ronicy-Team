@@ -375,5 +375,26 @@
     <string name="getInTouchString">Get In Touch</string>
     <string name="bugs">Bugs</string>
 
+    <!--These were added later by ravindu-->
+    <string name="strBuginput">Describe your issue here</string>
+    <string name="strDeleteConfirm">Are you sure you want to delete the following?</string>
+    <string name="adminStr">Admin</string>
+    <string name="strAdmin">Admin</string>
+    <string name="ravinduBugs_str">Bugs</string>
+    <string name="ravinduBugCountStr">"Bug Count : "</string>
+    <string name="ravinduViewBugsStr">View Bugs</string>
+    <string name="ravindu_SuggestionsStr">Suggestions</string>
+    <string name="ravindu_suggestionCountStr">Suggestion Count : </string>
+    <string name="ravindu_viewSuggestionsStr">View Suggestions</string>
+    <string name="ravindu_idStr">"ID : "</string>
+    <string name="ravindu_filedDateStr">"Filed Date : "</string>
+    <string name="ravindu_bugDescriptionStr">Description : </string>
+    <string name="ravindu_statusStr">Status : </string>
+    <string name="ravindu_userStr">User : </string>
+    <string name="ravindu_acknowledgeStr">Acknowledge</string>
+    <string name="ravindu_fixedStr">Fixed</string>
+    <string name="ravindu_revokeToPendingStr">Revoke to Pending</string>
+    <string name="ravindu_revokeToReceivedStr">Revoke To Received</string>
+
     <!-- Ashan -->
 </resources>

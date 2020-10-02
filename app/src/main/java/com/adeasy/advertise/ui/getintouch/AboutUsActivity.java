@@ -2,9 +2,9 @@ package com.adeasy.advertise.ui.getintouch;
 
 import android.os.Bundle;
 
-import com.adeasy.advertise.R;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.adeasy.advertise.R;
 
 public class AboutUsActivity extends AppCompatActivity {
 

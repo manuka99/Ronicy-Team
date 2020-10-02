@@ -59,7 +59,9 @@
         </activity>
         <activity android:name=".ui.Order.BuyNow" />
         <activity android:name=".ui.favaourite.divya_Edit" />
-        <activity android:name=".ui.favaourite.divya_MActivity" /> <!-- Ravindu -->
+        <activity android:name=".ui.favaourite.divya_MActivity" />
+
+        <!-- Ravindu -->
         <activity android:name=".ui.getintouch.GetInTouchActivity" />
         <activity android:name=".ui.getintouch.AboutUsActivity" />
         <activity android:name=".ui.getintouch.AddNewBugActivity" />
@@ -68,6 +70,21 @@
         <activity android:name=".ui.getintouch.BugsActivity" />
         <activity android:name=".ui.getintouch.EditBugActivity" />
         <activity android:name=".ui.getintouch.ViewBugActivity" />
+
+
+        <activity android:name=".ui.getintouch.BugsActivity2" />
+
+        <activity android:name=".ui.getintouch.DeleteBugActivity" />
+
+
+
+        <activity android:name=".ui.getintouch.ViewSuggestionAdmin"></activity>
+        <activity android:name=".ui.getintouch.ViewAllSuggestionsAdmin" />
+        <activity android:name=".ui.getintouch.ViewBugAdmin" />
+        <activity android:name=".ui.getintouch.ViewAllBugsAdmin" />
+        <activity android:name=".ui.getintouch.GetInTouchAdminPanel" />
+
+
         <activity android:name=".ui.advertisement.Donations" />
         <activity android:name=".ui.advertisement.Advertisement" />
         <activity android:name=".ui.advertisement.Myadds" />

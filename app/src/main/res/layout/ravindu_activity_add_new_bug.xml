@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorHome"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".ui.getintouch.AddNewBugActivity"
-    android:background="@color/colorHome">
+    tools:context=".AddNewBugActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,8 +26,12 @@
         </TextView>
 
         <EditText
+            android:id="@+id/EtDescribeBug"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="@string/strBuginput"
+            android:importantForAutofill="no"
+            android:inputType="textLongMessage|text">
 
         </EditText>
 
@@ -35,11 +39,12 @@
 
 
     <Button
+        android:id="@+id/btnNewBugSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/custom_button_red"
-        android:elevation="10dp"
+        android:gravity="center"
         android:text="@string/submitButtonText">
 
     </Button>

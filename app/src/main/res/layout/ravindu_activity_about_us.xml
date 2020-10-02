@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorHome"
     android:orientation="vertical"
-    tools:context=".ui.getintouch.AboutUsActivity"
-    android:background="@color/colorHome">
+    tools:context=".AboutUsActivity">
 
     <TextView
         android:layout_width="wrap_content"
