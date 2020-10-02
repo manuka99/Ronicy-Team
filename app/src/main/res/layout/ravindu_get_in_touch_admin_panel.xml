@@ -15,6 +15,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
         app:cardBackgroundColor="#FB8C00"
+        app:cardCornerRadius="10dp"
         app:contentPadding="20dp">
 
         <LinearLayout
@@ -74,6 +75,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
         app:cardBackgroundColor="@color/colorBlue"
+        app:cardCornerRadius="10dp"
         app:contentPadding="20dp">
 
         <LinearLayout
