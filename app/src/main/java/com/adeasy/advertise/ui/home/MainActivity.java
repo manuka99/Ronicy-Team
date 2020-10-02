@@ -192,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         initializeAllFragments();
+        validateFragmentSelected();
     }
 
     @Override
@@ -400,8 +401,19 @@ public class MainActivity extends AppCompatActivity {
 
     private Fragment getCurrentFragment() {
         Fragment currentFragment = getSupportFragmentManager()
-                .findFragmentById(R.id.orderStepContainer);
+                .findFragmentById(R.id.navContainer);
         return currentFragment;
+    }
+
+    private void validateFragmentSelected(){
+        if(getCurrentFragment() instanceof Home)
+            spaceNavigationView.changeCurrentItem(0);
+        else if(getCurrentFragment() instanceof Search)
+            spaceNavigationView.changeCurrentItem(1);
+        else if(getCurrentFragment() instanceof Orders)
+            spaceNavigationView.changeCurrentItem(2);
+        else if(getCurrentFragment() instanceof Account)
+            spaceNavigationView.changeCurrentItem(3);
     }
 
 }

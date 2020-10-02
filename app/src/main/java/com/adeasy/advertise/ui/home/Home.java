@@ -93,6 +93,8 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     private static final int CATEGORY_PICKER = 4662;
     private static final int FILTER_PICKER = 8825;
 
+    Float imageRatio = 0.8f;
+
     public Home() {
         // Required empty public constructor
     }
@@ -237,10 +239,10 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                             holder.priceView.setText(advertisement.getPreetyCurrency());
 
                             try {
-                                if(position%2 == 0)
-                                    holder.imageView.setRatio(1.4f);
-                                else
-                                    holder.imageView.setRatio(1f);
+                                if (imageRatio >= 1.4f)
+                                    imageRatio = 0.8f;
+                                holder.imageView.setRatio(imageRatio);
+                                imageRatio += 0.1f;
 
                                 Picasso.get().load(advertisement.getImageUrls().get(0)).into(holder.imageView);
                             } catch (Exception e) {

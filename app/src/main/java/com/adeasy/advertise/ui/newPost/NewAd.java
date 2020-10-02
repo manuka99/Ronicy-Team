@@ -150,13 +150,12 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
     @Override
     protected void onStart() {
         super.onStart();
-
         if (firebaseAuth.getCurrentUser() == null)
             showLoginRegisterFragment();
-
-        if (!new InternetValidation().validateInternet(getApplicationContext()))
+        else if (!new InternetValidation().validateInternet(getApplicationContext()))
             customDialogs.showNoInternetDialog();
-
+        else
+            validateFragmentsOnStart();
     }
 
     @Override
@@ -168,18 +167,22 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
     }
 
     private void showLoginRegisterFragment() {
-        Bundle bundle = new Bundle();
-        bundle.putString("frame", "post");
-        loginRegister.setArguments(bundle);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(frameLayout.getId(), loginRegister);
-        fragmentTransaction.remove(locationSelector);
-        fragmentTransaction.remove(categorySelected);
-        fragmentTransaction.remove(contactDetails);
-        fragmentTransaction.remove(advertisementDetails);
-        fragmentTransaction.remove(allCategoriesNewPost);
-        fragmentTransaction.commit();
+        try {
+            Bundle bundle = new Bundle();
+            bundle.putString("frame", "post");
+            loginRegister.setArguments(bundle);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(frameLayout.getId(), loginRegister);
+            fragmentTransaction.remove(locationSelector);
+            fragmentTransaction.remove(categorySelected);
+            fragmentTransaction.remove(contactDetails);
+            fragmentTransaction.remove(advertisementDetails);
+            fragmentTransaction.remove(allCategoriesNewPost);
+            fragmentTransaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void startShowAllCategories() {
@@ -191,6 +194,12 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(frameLayout.getId(), allCategoriesNewPost);
+
+        fragmentTransaction.remove(locationSelector);
+        fragmentTransaction.remove(categorySelected);
+        fragmentTransaction.remove(contactDetails);
+        fragmentTransaction.remove(advertisementDetails);
+
         fragmentTransaction.commit();
     }
 
@@ -203,6 +212,10 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(frameLayout2.getId(), locationSelector);
         fragmentTransaction.replace(frameLayout.getId(), categorySelected);
+
+        fragmentTransaction.remove(contactDetails);
+        fragmentTransaction.remove(advertisementDetails);
+
         fragmentTransaction.commit();
     }
 
@@ -331,6 +344,19 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
         try {
             if (resultCode == RESULT_OK && requestCode == LOCATION_PICKER && data != null)
                 locationSelector.onActivityResult(requestCode, resultCode, data);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void validateFragmentsOnStart() {
+        try {
+            if (category.getId() == null)
+                startShowAllCategories();
+            else if (location == null)
+                startSelectLocation();
+            else
+                startShowAdAndContactDetails();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -24,11 +24,14 @@ import android.widget.TextView;
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.BuynowViewModel;
 import com.adeasy.advertise.callback.PhoneAuthenticationCallback;
+import com.adeasy.advertise.callback.VerifiedNumbersCallback;
 import com.adeasy.advertise.manager.FirebasePhoneAuthentication;
 import com.adeasy.advertise.manager.VerifiedNumbersManager;
 import com.adeasy.advertise.model.User;
 import com.adeasy.advertise.model.UserVerifiedNumbers;
+import com.adeasy.advertise.util.CustomDialogs;
 import com.adeasy.advertise.util.HideSoftKeyboard;
+import com.adeasy.advertise.util.InternetValidation;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -39,13 +42,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
 
 /**
  * Created by Manuka yasas,
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class OrderPhoneVerify extends Fragment implements View.OnClickListener, PhoneAuthenticationCallback, TextWatcher {
+public class OrderPhoneVerify extends Fragment implements View.OnClickListener, PhoneAuthenticationCallback, VerifiedNumbersCallback, TextWatcher {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,7 +65,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private FirebaseAuth mAuth;
     private BuynowViewModel buynowViewModel;
-
+    CustomDialogs customDialogs;
 
     Integer phoneNum = 0;
     //String phoneNum = "+940721146092";
@@ -126,7 +133,9 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
             e.printStackTrace();
         }
 
-        verifiedNumbersManager = new VerifiedNumbersManager();
+        customDialogs = new CustomDialogs(getActivity());
+
+        verifiedNumbersManager = new VerifiedNumbersManager(this);
 
         order_phone_number = view.findViewById(R.id.order_phone_number);
         codeInput = view.findViewById(R.id.orderCodeVerify);
@@ -154,8 +163,6 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        order_phone_number.setText(phoneNum.toString());
-        firebasePhoneAuthentication.sendMobileVerifycode("+94" + phoneNum, getActivity());
     }
 
     @Override
@@ -164,6 +171,15 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
         buynowViewModel.setVisibilityContinue(false);
         verifyBtn.setBackgroundResource(R.color.colorGreyBtn);
         codeInput.getEditText().setText(null);
+        if (!new InternetValidation().validateInternet(getActivity()))
+            customDialogs.showNoInternetDialog();
+        else {
+            order_phone_number.setText(phoneNum.toString());
+            if (mAuth.getCurrentUser() != null)
+                verifiedNumbersManager.validateNumber(phoneNum, mAuth.getCurrentUser());
+            else
+                firebasePhoneAuthentication.sendMobileVerifycode("+94" + phoneNum, getActivity());
+        }
     }
 
     @Override
@@ -188,24 +204,24 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
             startVerificationDisplay();
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationID, verificationCodeInput);
             verifyPhoneNumberWithPhoneAuthCredential(credential);
-
-            isVerificationInProgress = true;
-
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (isVerificationInProgress) {
-                        HideSoftKeyboard.hideKeyboard(getActivity());
-                        endVerificationDisplay();
-                        showErrorSnackbar(getString(R.string.phone_code_time_up));
-                    }
-                }
-            }, 8000);
         }
     }
 
     private void verifyPhoneNumberWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        isVerificationInProgress = true;
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (isVerificationInProgress) {
+                    HideSoftKeyboard.hideKeyboard(getActivity());
+                    endVerificationDisplay();
+                    showErrorSnackbar(getString(R.string.phone_code_time_up));
+                }
+            }
+        }, 8000);
+
         if (mAuth.getCurrentUser() != null)
             firebasePhoneAuthentication.linkMobileWithCurrentUser(credential, mAuth.getCurrentUser());
 
@@ -240,7 +256,8 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
         else if (e instanceof FirebaseTooManyRequestsException)
             showErrorSnackbar(getString(R.string.quota_exceeded));
         else
-            showErrorSnackbar(getString(R.string.virtual_env_exception));
+            showErrorSnackbar(e.getMessage());
+            //showErrorSnackbar(getString(R.string.virtual_env_exception));
     }
 
     @Override
@@ -250,9 +267,9 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
         if (task.isSuccessful()) {
             Log.d(TAG, "linkWithCredential: success");
             //FirebaseUser user = task.getResult().getUser();
-            buynowViewModel.setMobileNumberVerifyStatus(true);
             firebasePhoneAuthentication.unlinkPhoneAuth(task.getResult().getUser());
             verifiedNumbersManager.insertVerifiedNumber(new UserVerifiedNumbers(mAuth.getCurrentUser(), phoneNum), task.getResult().getUser());
+            buynowViewModel.setMobileNumberVerifyStatus(true);
         } else {
             showErrorSnackbar(getString(R.string.invalid_mobile_code));
             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
@@ -292,9 +309,8 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
 
             // Sign in success, update UI with the signed-in user's information
             Log.d(TAG, "signInWithCredential:success");
-            buynowViewModel.setMobileNumberVerifyStatus(true);
             firebasePhoneAuthentication.deletePhoneAuthAccout(task.getResult().getUser());
-
+            buynowViewModel.setMobileNumberVerifyStatus(true);
         } else {
             showErrorSnackbar(getString(R.string.invalid_mobile_code));
             // Sign in failed, display a message and update the UI
@@ -330,12 +346,14 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
     }
 
     private void showErrorSnackbar(String error) {
-        Snackbar snackbar = Snackbar.make(linearLayout, error, Snackbar.LENGTH_LONG).setAction("x", new View.OnClickListener() {
+        Snackbar snackbar = Snackbar.make(linearLayout, error, Snackbar.LENGTH_INDEFINITE).setAction("x", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             }
         }).setActionTextColor(getResources().getColor(R.color.colorWhite));
-
+        View snackbarView = snackbar.getView();
+        TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+        textView.setMaxLines(12);
         snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorError2));
         snackbar.show();
     }
@@ -400,6 +418,37 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
 
     @Override
     public void afterTextChanged(Editable editable) {
+
+    }
+
+    @Override
+    public void onCompleteNumberInserted(Task<Void> task) {
+
+    }
+
+    @Override
+    public void onCompleteSearchNumberInUser(Task<QuerySnapshot> task) {
+        if (task != null && task.isSuccessful() && task.getResult().getDocuments().isEmpty() == false) {
+            List<UserVerifiedNumbers> numbers = task.getResult().toObjects(UserVerifiedNumbers.class);
+            Log.i(TAG, numbers.get(0).getVerifiedNumbers().toString());
+            Log.i(TAG, task.getResult().getDocuments().toString());
+            boolean statusVerified = false;
+
+            for (UserVerifiedNumbers userVerifiedNumbers : numbers) {
+                if (userVerifiedNumbers.getVerifiedNumbers().contains(phoneNum)) {
+                    buynowViewModel.setMobileNumberVerifyStatus(true);
+                    statusVerified = true;
+                }
+            }
+
+            if (!statusVerified)
+                firebasePhoneAuthentication.sendMobileVerifycode("+94" + phoneNum, getActivity());
+        } else
+            firebasePhoneAuthentication.sendMobileVerifycode("+94" + phoneNum, getActivity());
+    }
+
+    @Override
+    public void onCompleteRecieveAllNumbersInUser(Task<DocumentSnapshot> task) {
 
     }
 

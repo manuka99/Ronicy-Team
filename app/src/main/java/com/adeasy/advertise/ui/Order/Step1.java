@@ -178,6 +178,7 @@ public class Step1 extends Fragment implements TextWatcher {
 
         else {
             result = true;
+            customer = new User();
             customer.setAddress(address);
             customer.setEmail(email);
             customer.setPhone(phone.toString());

@@ -65,7 +65,7 @@ import lk.payhere.androidsdk.model.StatusResponse;
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class BuyNow extends AppCompatActivity implements View.OnClickListener, OrderCallback, VerifiedNumbersCallback, ProfileManagerCallback {
+public class BuyNow extends AppCompatActivity implements View.OnClickListener, OrderCallback, ProfileManagerCallback {
 
     Button continueOrder;
     String advertisementID, categoryId;
@@ -78,7 +78,9 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     Step2 step2;
     StepSuccess orderSuccess;
     Boolean isCODSelected = false;
-    VerifiedNumbersManager verifiedNumbersManager;
+    Boolean isNumberVerified = false;
+    Boolean isUpdatingDeliveryDetails = true;
+
     User user;
 
     CustomDialogs customDialogs;
@@ -146,8 +148,6 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
             }
         });
 
-        verifiedNumbersManager = new VerifiedNumbersManager(this);
-
         if (mAuth.getCurrentUser() != null)
             profileManager.getUser();
 
@@ -156,19 +156,17 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
         buynowViewModel.getCustomer().observe(this, new Observer<User>() {
             @Override
             public void onChanged(User order_customer) {
+                isNumberVerified = false;
+                isUpdatingDeliveryDetails = false;
                 order.setCustomer(order_customer);
-
-                if (mAuth.getCurrentUser() != null)
-                    verifiedNumbersManager.validateNumber(Integer.parseInt(String.valueOf(order_customer.getPhone())), mAuth.getCurrentUser());
-
-                else
-                    startVerifyNumberFragment();
+                startVerifyNumberFragment();
             }
         });
 
         buynowViewModel.getMobileNumberVerifyStatus().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
+                isNumberVerified = aBoolean;
                 if (aBoolean)
                     startPaymentSelectFragment();
             }
@@ -206,6 +204,8 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
         super.onStart();
         if (!new InternetValidation().validateInternet(context))
             customDialogs.showNoInternetDialog();
+        else
+            validateFragmentOnStart();
     }
 
     @Override
@@ -217,6 +217,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
         else {
             stepView.go(0, true);
             handelStep1Fragment();
+            isUpdatingDeliveryDetails = true;
         }
     }
 
@@ -228,14 +229,12 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     }
 
     public void validateAndContinue() {
-
         if (getCurrentFragment() instanceof Step1) {
             buynowViewModel.setValidateCustomerDetails(true);
 
         } else if (getCurrentFragment() instanceof Step2) {
             processPayment(isCODSelected);
         }
-
     }
 
     private void startVerifyNumberFragment() {
@@ -465,27 +464,6 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     }
 
     @Override
-    public void onCompleteNumberInserted(Task<Void> task) {
-
-    }
-
-    @Override
-    public void onCompleteSearchNumberInUser(Task<QuerySnapshot> task) {
-        if (task != null && task.isSuccessful() && task.getResult().getDocuments().isEmpty() == false) {
-            List<UserVerifiedNumbers> numbers = task.getResult().toObjects(UserVerifiedNumbers.class);
-            Log.i(TAG, numbers.get(0).getVerifiedNumbers().toString());
-            Log.i(TAG, task.getResult().getDocuments().toString());
-            startPaymentSelectFragment();
-        } else
-            startVerifyNumberFragment();
-    }
-
-    @Override
-    public void onCompleteRecieveAllNumbersInUser(Task<DocumentSnapshot> task) {
-
-    }
-
-    @Override
     public void onSuccessUpdateProfile(Void aVoid) {
 
     }
@@ -530,6 +508,15 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
 
             }
         }).show();
+    }
+
+    private void validateFragmentOnStart() {
+        if (order.getCustomer().getEmail() == null || isUpdatingDeliveryDetails)
+            handelStep1Fragment();
+        else if (!isNumberVerified)
+            startVerifyNumberFragment();
+        else
+            startPaymentSelectFragment();
     }
 
 }

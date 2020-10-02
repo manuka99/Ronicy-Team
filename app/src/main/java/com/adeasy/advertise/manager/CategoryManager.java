@@ -26,6 +26,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -83,33 +84,31 @@ public class CategoryManager {
     }
 
     public void uploadImage(final Advertisement advertisement, byte[] data) {
-        if (storageTask != null && storageTask.isInProgress()){
+        if (storageTask != null && storageTask.isInProgress()) {
             //categoryCallback.onTaskFull(true);
-        }
-
-        else{
+        } else {
             //categoryCallback.onTaskFull(false);
         }
 
-            String imageID = documentReference.getId();
-            final StorageReference ref = storageReference.child(imageID);
-            storageTask = ref.putBytes(data);
+        String imageID = documentReference.getId();
+        final StorageReference ref = storageReference.child(imageID);
+        storageTask = ref.putBytes(data);
 
-            Task<Uri> urlTask = storageTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-                    // Continue with the task to get the download URL
-                    return ref.getDownloadUrl();
+        Task<Uri> urlTask = storageTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
                 }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    //categoryCallback.onUploadImage(task);
-                }
-            });
+                // Continue with the task to get the download URL
+                return ref.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                //categoryCallback.onUploadImage(task);
+            }
+        });
     }
 
     public void deleteCategory(String id) {
@@ -134,14 +133,18 @@ public class CategoryManager {
     }
 
     public void getCategorybyID(String id) {
-
-        firebaseFirestore.collection(childName).document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                categoryCallback.getCategoryByID(task);
-            }
-        });
-
+        try {
+            firebaseFirestore.collection(childName).document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (categoryCallback != null)
+                        categoryCallback.getCategoryByID(task);
+                }
+            });
+        } catch (Exception e) {
+            if (categoryCallback != null)
+                categoryCallback.getCategoryByID(null);
+        }
     }
 
     public void deletePreviousImage(String url) {

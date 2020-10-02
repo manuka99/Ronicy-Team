@@ -19,6 +19,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -38,12 +39,14 @@ public class FirebasePhoneAuthentication extends PhoneAuthProvider.OnVerificatio
     }
 
     public void sendMobileVerifycode(String phoneNum, Activity activity) {
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                phoneNum,        // Phone number to verify
-                60,                 // Timeout duration
-                TimeUnit.SECONDS,   // Unit of timeout
-                activity,               // Activity (for callback binding)
-                this);        // OnVerificationStateChangedCallbacks
+        if (callback != null) {
+            PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                    phoneNum,        // Phone number to verify
+                    60,                 // Timeout duration
+                    TimeUnit.SECONDS,   // Unit of timeout
+                    activity,               // Activity (for callback binding)
+                    this);        // OnVerificationStateChangedCallbacks
+        }
     }
 
     public void linkMobileWithCurrentUser(PhoneAuthCredential credential, FirebaseUser user) {
@@ -52,10 +55,10 @@ public class FirebasePhoneAuthentication extends PhoneAuthProvider.OnVerificatio
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            if (callback != null)
-                                callback.onCompleteLinkingMobileWithUser(task);
-                        }
+                        Log.i(TAG, "task was dfone");
+                        if (callback != null)
+                            callback.onCompleteLinkingMobileWithUser(task);
+                        Log.i(TAG, "callback was sent");
                     }
                 });
 
@@ -80,10 +83,8 @@ public class FirebasePhoneAuthentication extends PhoneAuthProvider.OnVerificatio
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            if (callback != null)
-                                callback.onCompleteSignInWithPhoneAuthCredential(task);
-                        }
+                        if (callback != null)
+                            callback.onCompleteSignInWithPhoneAuthCredential(task);
                     }
                 });
     }

@@ -348,7 +348,7 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void getCategoryByID(@NonNull Task<DocumentSnapshot> task) {
-        if (task.isSuccessful()) {
+        if (task!= null && task.isSuccessful()) {
             DocumentSnapshot document = task.getResult();
             if (document.exists()) {
                 category = new com.adeasy.advertise.model.Category();
