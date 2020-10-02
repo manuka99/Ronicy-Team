@@ -51,6 +51,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.RequestConfiguration;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -64,6 +65,8 @@ import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnima
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
+
+import java.util.Arrays;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED;
@@ -94,7 +97,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
     CustomDialogs customDialogs;
 
-    AdView adView1, adView2, adView3;
+    AdView adView1, adView2, adView3, adView4;
 
     private static final String TAG = "EditAdvertisement";
 
@@ -154,17 +157,15 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         advertisementSliderAdapter = new AdvertisementSliderAdapter();
 
         //display ads
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
+
         adView1 = findViewById(R.id.adView1);
         adView2 = findViewById(R.id.adView2);
         adView3 = findViewById(R.id.adView3);
+        adView4 = findViewById(R.id.adView4);
         adView1.loadAd(new AdRequest.Builder().build());
         adView2.loadAd(new AdRequest.Builder().build());
         adView3.loadAd(new AdRequest.Builder().build());
+        adView4.loadAd(new AdRequest.Builder().build());
 
         loadData();
     }
@@ -182,7 +183,6 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
             @Override
             public void onAdLoaded() {
                 // Code to be executed when an ad finishes loading.
-                Toast.makeText(context, "ad loaded", Toast.LENGTH_LONG).show();
             }
 
             @Override

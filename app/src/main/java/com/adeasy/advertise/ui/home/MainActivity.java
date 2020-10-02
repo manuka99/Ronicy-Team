@@ -13,6 +13,9 @@ import androidx.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
@@ -22,12 +25,20 @@ import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.ui.newPost.NewAd;
 import com.adeasy.advertise.util.InternetValidation;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.RequestConfiguration;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.irfaan008.irbottomnavigation.SpaceItem;
 import com.irfaan008.irbottomnavigation.SpaceNavigationView;
 import com.irfaan008.irbottomnavigation.SpaceOnClickListener;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.logging.Logger;
+
+import static com.adeasy.advertise.util.CommonFunctions.md5;
 
 /**
  * Created by Manuka yasas,
@@ -70,6 +81,15 @@ public class MainActivity extends AppCompatActivity {
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
+
+        String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        Log.i(TAG, android_id);
+
+        String deviceId = md5(android_id).toUpperCase();
+
+        RequestConfiguration configuration = new RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList(deviceId)).build();
+        MobileAds.setRequestConfiguration(configuration);
 
         try {
             searchKey = getIntent().getStringExtra(SEARCH_KEY);
