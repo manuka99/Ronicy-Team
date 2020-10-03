@@ -40,6 +40,7 @@ import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.manager.CategoryManager;
 import com.adeasy.advertise.ui.administration.advertisement.MoreActionsOnAd;
 import com.adeasy.advertise.ui.editAd.EditAd;
+import com.adeasy.advertise.ui.favaourite.AddToFavourite;
 import com.adeasy.advertise.util.CustomDialogs;
 import com.adeasy.advertise.util.InternetValidation;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -99,6 +100,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
     AdView adView1, adView2, adView3, adView4;
 
+    private static final String ADVERTISEMENTID = "adID";
     private static final String TAG = "EditAdvertisement";
 
     @Override
@@ -188,7 +190,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
             @Override
             public void onAdFailedToLoad(LoadAdError adError) {
                 // Code to be executed when an ad request fails.
-                Toast.makeText(context, adError.getMessage() + "Code : " + adError.getCode() , Toast.LENGTH_LONG).show();
+                Toast.makeText(context, adError.getMessage() + "Code : " + adError.getCode(), Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -238,7 +240,11 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_favorite) {
-            Toast.makeText(Advertisement.this, "Action clicked", Toast.LENGTH_LONG).show();
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                Intent fav_intent = new Intent(getApplicationContext(), AddToFavourite.class);
+                fav_intent.putExtra(ADVERTISEMENTID, adID);
+                startActivity(fav_intent);
+            }
             return true;
         } else if (id == R.id.action_share) {
             Toast.makeText(Advertisement.this, "Action clicked", Toast.LENGTH_LONG).show();

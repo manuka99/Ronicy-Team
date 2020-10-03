@@ -8,6 +8,8 @@ import android.util.Log;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Manuka yasas,
@@ -17,7 +19,7 @@ import java.security.NoSuchAlgorithmException;
 public class CommonFunctions {
 
     private static final String TAG = "CommonFunctions";
-    
+
     public static final String md5(final String s) {
         try {
             // Create MD5 Hash
@@ -41,4 +43,14 @@ public class CommonFunctions {
         }
         return "";
     }
+
+    public static final Date getDateONMonthAndYear(int month, int year) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.YEAR, year);
+        Date date = calendar.getTime();
+        return date;
+    }
+
 }
