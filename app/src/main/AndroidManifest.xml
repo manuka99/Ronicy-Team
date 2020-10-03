@@ -31,8 +31,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.getintouch.BugStatisticsActivity"></activity>
-        <activity android:name=".ui.chat.ChatMainActivity" />
+        <activity android:name=".ui.getintouch.BugStatisticsActivity"/>
+        <activity android:name=".ui.chat.AboutUsMainActivity" />
         <activity android:name=".ui.advertisement.FilterSearchResult" />
         <activity android:name=".ui.advertisement.LocationPicker" />
         <activity android:name=".ui.advertisement.CategoryPicker" />
@@ -60,6 +60,8 @@
         </activity>
         <activity android:name=".ui.Order.BuyNow" />
         <activity android:name=".ui.favaourite.divya_Edit" />
+        <activity android:name=".ui.favaourite.MyFavourites" />
+        <activity android:name=".ui.favaourite.AddToFavourite" />
         <activity android:name=".ui.favaourite.divya_MActivity" /> <!-- Ravindu -->
         <activity android:name=".ui.getintouch.GetInTouchActivity" />
         <activity android:name=".ui.getintouch.AboutUsActivity" />
