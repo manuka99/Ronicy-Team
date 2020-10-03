@@ -31,9 +31,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.favaourite.MyFavourites"></activity>
-        <activity android:name=".ui.favaourite.AddToFavourite" />
-        <activity android:name=".ui.chat.ChatMainActivity" />
+        <activity android:name=".ui.chat.AboutUsActivity"></activity>
+        <activity android:name=".ui.chat.AboutUsMainActivity" />
         <activity android:name=".ui.advertisement.FilterSearchResult" />
         <activity android:name=".ui.advertisement.LocationPicker" />
         <activity android:name=".ui.advertisement.CategoryPicker" />
