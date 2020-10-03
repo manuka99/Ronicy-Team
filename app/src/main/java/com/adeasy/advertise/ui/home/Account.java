@@ -24,7 +24,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.CustomClaimsCallback;
@@ -36,27 +35,23 @@ import com.adeasy.advertise.ui.administration.home.DashboardHome;
 import com.adeasy.advertise.ui.advertisement.Donations;
 import com.adeasy.advertise.ui.advertisement.Myadds;
 import com.adeasy.advertise.ui.athentication.LoginRegister;
-import com.adeasy.advertise.ui.chat.ChatMainActivity;
+import com.adeasy.advertise.ui.chat.AboutUsMainActivity;
 import com.adeasy.advertise.ui.favaourite.divya_MActivity;
 import com.adeasy.advertise.ui.getintouch.GetInTouchActivity;
 import com.adeasy.advertise.ui.profile.Profile;
 import com.adeasy.advertise.util.CustomDialogs;
 import com.adeasy.advertise.util.InternetValidation;
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GetTokenResult;
-import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserInfo;
 
 import java.util.Arrays;
@@ -242,7 +237,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         if (view == myads)
             startActivity(new Intent(getContext(), Myadds.class));
         if (view == myChats)
-            startActivity(new Intent(getContext(), ChatMainActivity.class));
+            startActivity(new Intent(getContext(), AboutUsMainActivity.class));
         else if (view == donateUs)
             startActivity(new Intent(getContext(), Donations.class));
         else if (view == logout)
