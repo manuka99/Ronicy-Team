@@ -526,7 +526,7 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
                 .show();
     }
 
-    private List<int[]> sortDataByAdvertisemntList(List<Advertisement> advertisements) {
+    public List<int[]> sortDataByAdvertisemntList(List<Advertisement> advertisements) {
         List<int[]> calculations = new ArrayList<>();
         intitArrays();
         for (Advertisement advertisement : advertisements) {
@@ -568,12 +568,6 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
         calculations.add(otherFlagsFromApprovedAds);
         calculations.add(otherFlagsFromUnApprovedAds);
         calculations.add(months);
-
-        showBargraph();
-        approvalStatusPieDataSet();
-        approvalMoredataPieDataSet();
-        rejectedMoredataPieDataSet();
-        showLineChart();
 
         return calculations;
     }
@@ -628,6 +622,13 @@ public class StatisticAds extends Fragment implements View.OnClickListener, Adve
                 chartLayout.setVisibility(View.VISIBLE);
                 noDataLayout.setVisibility(View.GONE);
                 sortDataByAdvertisemntList(advertisements);
+
+                showBargraph();
+                approvalStatusPieDataSet();
+                approvalMoredataPieDataSet();
+                rejectedMoredataPieDataSet();
+                showLineChart();
+
             } else {
                 chartLayout.setVisibility(View.GONE);
                 noDataLayout.setVisibility(View.VISIBLE);
