@@ -21,6 +21,11 @@ public class Order_Payment implements Serializable {
         this.status = CommonConstants.PAYMENT_NOT_PAID;
     }
 
+    public Order_Payment(String paymentStatus, String paymentType) {
+        this.status = paymentStatus;
+        this.type = paymentType;
+    }
+
     public String getType() {
         return type;
     }

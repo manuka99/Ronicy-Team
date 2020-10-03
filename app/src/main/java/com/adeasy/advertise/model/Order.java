@@ -51,6 +51,16 @@ public class Order implements Serializable {
         this.deliveryEstimatedDate =  dateFormat.format(c.getTime());
     }
 
+    public Order( Date placedDate, String orderStatus, String paymentStatus, String paymentType) {
+        this.placedDate = placedDate;
+        this.orderStatus = orderStatus;
+        this.payment = new Order_Payment(paymentStatus, paymentType);
+    }
+
+    public Order(String itemID, double itemPrice) {
+        this.item = new Order_Item(itemID, itemPrice);
+    }
+
     public String getId() {
         return id;
     }

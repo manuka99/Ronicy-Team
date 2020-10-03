@@ -329,7 +329,14 @@ public class OrderSales extends Fragment implements View.OnClickListener, OrderC
             List<Order> orders = task.getResult().toObjects(Order.class);
             //Log.i(TAG, advertisements.toString());
             if (orders.size() > 0) {
-                sortDataByAdvertisemntList(orders);
+                sortDataByOrderList(orders);
+
+                showBargraph();
+                completedStatusPieDataSet();
+                completedMoredataPieDataSet();
+                cancelledMoredataPieDataSet();
+                showLineChart();
+
                 chartsLayout.setVisibility(View.VISIBLE);
                 noDataLayout.setVisibility(View.GONE);
             } else {
@@ -359,8 +366,9 @@ public class OrderSales extends Fragment implements View.OnClickListener, OrderC
         progressBar.setVisibility(View.GONE);
     }
 
-    private void sortDataByAdvertisemntList(List<Order> orders) {
+    public List<int[]> sortDataByOrderList(List<Order> orders) {
         intitArrays();
+        List<int[]> data = new ArrayList<>();
         for (Order order : orders) {
             if (order.getOrderStatus().equals(CommonConstants.ORDER_DELIVERED) && order.getPayment().getStatus().equals(CommonConstants.PAYMENT_PAID)) {
                 completedStatus[0] += 1;
@@ -387,15 +395,16 @@ public class OrderSales extends Fragment implements View.OnClickListener, OrderC
 
                 else if (order.getPayment().getType().equals(CommonConstants.PAYMENT_COD))
                     otherFlagsFromCancelledOrders[1] += 1;
-
             }
 
         }
-        showBargraph();
-        completedStatusPieDataSet();
-        completedMoredataPieDataSet();
-        cancelledMoredataPieDataSet();
-        showLineChart();
+
+        data.add(completedStatus);
+        data.add(otherFlagsFromDeliveredOrders);
+        data.add(otherFlagsFromCancelledOrders);
+        data.add(months);
+
+        return data;
     }
 
     private void showBargraph() {

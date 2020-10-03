@@ -17,7 +17,7 @@
         <ImageView
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
-            android:background="@drawable/icon_logo_notification"
+            android:background="@drawable/pngwing"
             android:contentDescription="@string/image" />
 
         <TextView
@@ -27,7 +27,7 @@
             android:text="@string/app_name"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/_16sdp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <TextView
@@ -38,7 +38,7 @@
         android:layout_centerHorizontal="true"
         android:fontFamily="serif"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/_12sdp"></TextView>
+        android:textSize="@dimen/_12sdp"/>
 
     <!-- Manuka -->
 </RelativeLayout>

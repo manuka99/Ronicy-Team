@@ -21,6 +21,11 @@ public class Order_Item implements Serializable {
     public Order_Item() {
     }
 
+    public Order_Item(String itemID, double itemPrice) {
+        this.id = itemID;
+        this.price = itemPrice;
+    }
+
     public String getItemName() {
         return itemName;
     }

@@ -74,7 +74,7 @@ public class ProductStatisticsFragment extends Fragment implements OrderCallback
 
     Context context;
     List<ProductSales> productSalesList;
-    List<Order> orderList;
+    //List<Order> orderList;
     OrderManager orderManager;
     CustomDialogs customDialogs;
     FrameLayout snackBarLayout;
@@ -142,7 +142,6 @@ public class ProductStatisticsFragment extends Fragment implements OrderCallback
 
         context = getActivity();
         productSalesList = new ArrayList<>();
-        orderList = new ArrayList<>();
         orderManager = new OrderManager(this, context);
         customDialogs = new CustomDialogs(context);
 
@@ -200,8 +199,22 @@ public class ProductStatisticsFragment extends Fragment implements OrderCallback
         endUpdatingUi();
         if (task != null && task.isSuccessful()) {
             progressDialog.setMessage("Calculating results using algorithms");
-            orderList = task.getResult().toObjects(Order.class);
-            loadData();
+            productSalesList = calculateProductSales(task.getResult().toObjects(Order.class));
+
+            if (productSalesList != null && productSalesList.size() > 0) {
+                snackBarLayout.removeAllViews();
+                tableView.setVisibility(View.VISIBLE);
+                showTable();
+            } else {
+                tableView.setVisibility(View.GONE);
+                LayoutInflater factory = LayoutInflater.from(context);
+                View myView = factory.inflate(R.layout.manuka_empty_data_indicator, null);
+                snackBarLayout.addView(myView);
+            }
+
+            progressDialog.dismiss();
+
+
         } else if (task != null && task.getException() instanceof FirebaseFirestoreException && ((FirebaseFirestoreException) task.getException()).getCode().equals(FirebaseFirestoreException.Code.PERMISSION_DENIED)) {
             progressDialog.dismiss();
             customDialogs.showPermissionDeniedStorage();
@@ -242,15 +255,15 @@ public class ProductStatisticsFragment extends Fragment implements OrderCallback
         }
     }
 
-    private void loadData() {
+    public List<ProductSales> calculateProductSales(List<Order> orders) {
 
         //initialize the list of statistic object
-        productSalesList = new ArrayList<>();
+        List<ProductSales> productSalesListData = new ArrayList<>();
 
         //create a map to store data related to a product id and its statistic object which is ProductSales
         Map<String, ProductSales> mapOfProductIDAndSalesCount = new HashMap<>();
 
-        for (Order order : orderList) {
+        for (Order order : orders) {
             String orderItemID = order.getItem().getId();
 
             int totalSalesCountOfProduct = 1;
@@ -297,21 +310,10 @@ public class ProductStatisticsFragment extends Fragment implements OrderCallback
         }
 
         for (String itemID : mapOfProductIDAndSalesCount.keySet()) {
-            productSalesList.add(mapOfProductIDAndSalesCount.get(itemID));
+            productSalesListData.add(mapOfProductIDAndSalesCount.get(itemID));
         }
 
-        if (productSalesList.size() == 0) {
-            tableView.setVisibility(View.GONE);
-            LayoutInflater factory = LayoutInflater.from(context);
-            View myView = factory.inflate(R.layout.manuka_empty_data_indicator, null);
-            snackBarLayout.addView(myView);
-        } else {
-            snackBarLayout.removeAllViews();
-            tableView.setVisibility(View.VISIBLE);
-            showTable();
-        }
-
-        progressDialog.dismiss();
+        return productSalesListData;
     }
 
     private void showTable() {
