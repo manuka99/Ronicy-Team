@@ -40,6 +40,8 @@ public class ExampleUnitTest {
 
         ads.add(new Advertisement());
 
+
+
     }
 
 
