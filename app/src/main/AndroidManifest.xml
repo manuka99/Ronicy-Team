@@ -59,7 +59,10 @@
         </activity>
         <activity android:name=".ui.Order.BuyNow" />
         <activity android:name=".ui.favaourite.divya_Edit" />
-        <activity android:name=".ui.favaourite.divya_MActivity" /> <!-- Ravindu -->
+        <activity android:name=".ui.favaourite.AddToFavourite" />
+        <activity android:name=".ui.favaourite.MyFavourites" />
+        <activity android:name=".ui.favaourite.divya_MActivity" />
+        <!-- Ravindu -->
         <activity android:name=".ui.getintouch.GetInTouchActivity" />
         <activity android:name=".ui.getintouch.AboutUsActivity" />
         <activity android:name=".ui.getintouch.AddNewBugActivity" />

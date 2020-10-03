@@ -36,6 +36,7 @@ import com.adeasy.advertise.ui.advertisement.Donations;
 import com.adeasy.advertise.ui.advertisement.Myadds;
 import com.adeasy.advertise.ui.athentication.LoginRegister;
 import com.adeasy.advertise.ui.chat.AboutUsMainActivity;
+import com.adeasy.advertise.ui.favaourite.MyFavourites;
 import com.adeasy.advertise.ui.favaourite.divya_MActivity;
 import com.adeasy.advertise.ui.getintouch.GetInTouchActivity;
 import com.adeasy.advertise.ui.profile.Profile;
@@ -245,7 +246,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         else if (view == faq)
             startActivity(new Intent(getContext(), GetInTouchActivity.class));
         else if (view == favaourite)
-            startActivity(new Intent(getContext(), divya_MActivity.class));
+            startActivity(new Intent(getContext(), MyFavourites.class));
         else if (view == linkfb)
             linkWithFb();
         else if (view == profile)
