@@ -5,6 +5,7 @@ import com.adeasy.advertise.ui.administration.advertisement.StatisticAds;
 import com.adeasy.advertise.ui.administration.order.OrderSales;
 import com.adeasy.advertise.ui.administration.order.ProductStatisticsFragment;
 import com.adeasy.advertise.ui.administration.order.SingleProductAnalysis;
+import com.adeasy.advertise.util.CommonFunctions;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,10 +38,11 @@ public class ExampleUnitTest {
     @Test
     private void is_sortDataByAdvertisemntList_correct(){
         List<Advertisement> ads = new ArrayList<>();
-
-        ads.add(new Advertisement());
-
-
+        ads.add(new Advertisement(CommonFunctions.getDateONMonthAndYear(2, 2020),true, true, true));
+        ads.add(new Advertisement(CommonFunctions.getDateONMonthAndYear(2, 2020),true, true, true));
+        ads.add(new Advertisement(CommonFunctions.getDateONMonthAndYear(2, 2020),true, true, true));
+        ads.add(new Advertisement(CommonFunctions.getDateONMonthAndYear(2, 2020),true, true, true));
+        ads.add(new Advertisement(CommonFunctions.getDateONMonthAndYear(2, 2020),true, true, true));
 
     }
 
