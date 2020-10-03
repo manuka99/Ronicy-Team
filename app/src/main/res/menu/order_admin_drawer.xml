@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="Dashboard Orders" />
+    </group>
+
+    <item android:title="Pending Orders">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/recent"
+                    android:icon="@drawable/ic_baseline_refresh_24"
+                    android:title="Recent Orders" />
+                <item
+                    android:id="@+id/onlinePending"
+                    android:icon="@drawable/ic_baseline_credit_card_24"
+                    android:title="Online purchased Orders" />
+                <item
+                    android:id="@+id/codPending"
+                    android:icon="@drawable/mcash"
+                    android:title="Cash on delivery Orders" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Past orders">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/cancelled"
+                    android:icon="@drawable/ic_baseline_cancel_24"
+                    android:title="Cancelled Orders" />
+                <item
+                    android:id="@+id/completed"
+                    android:icon="@drawable/ic_baseline_check_circle_outline_24"
+                    android:title="Completed Orders" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Statistics">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/monthAnalysis"
+                    android:icon="@drawable/ic_baseline_bar_chart_24__orders"
+                    android:title="Sales per month and other" />
+                <item
+                    android:id="@+id/productAnalysis"
+                    android:icon="@drawable/ic_baseline_table_chart_24"
+                    android:title="Product sales analysis" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="More">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/newfeatures"
+                    android:icon="@drawable/ic_baseline_fiber_new_24_order_admin"
+                    android:title="New Features" />
+                <item
+                    android:id="@+id/documentation"
+                    android:icon="@drawable/ic_baseline_menu_book_24_order_admin"
+                    android:title="Documentation" />
+                <item
+                    android:id="@+id/about"
+                    android:icon="@drawable/ic_baseline_new_releases_24_order_admin"
+                    android:title="About" />
+            </group>
+        </menu>
+    </item>
+
+</menu>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.adeasy.advertise">
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".ui.chat.ChatMainActivity"/>
+        <activity android:name=".ui.advertisement.FilterSearchResult" />
+        <activity android:name=".ui.advertisement.LocationPicker" />
+        <activity android:name=".ui.advertisement.CategoryPicker" />
+        <activity android:name=".ui.advertisement.HomeAdSearch" />
+        <activity android:name=".ui.administration.order.SingleProductAnalysis" />
+        <activity android:name=".ui.administration.order.MoreOnOrder" />
+        <activity android:name=".ui.administration.order.OrdersMain" />
+        <activity android:name=".ui.administration.advertisement.AdsFilter" />
+        <activity android:name=".ui.administration.advertisement.SelectCategoryAndFilter" />
+        <activity android:name=".ui.administration.advertisement.MoreActionsOnAd" />
+        <activity android:name=".ui.administration.advertisement.AdvertisementMain" />
+        <activity android:name=".ui.administration.home.DashboardHome" />
+        <activity android:name=".ui.profile.Profile" />
+        <activity android:name=".ui.editAd.EditAd" />
+        <activity android:name=".ui.addphone.AddNewNumber" />
+        <activity
+            android:name=".ui.newPost.NewAd"
+            android:parentActivityName=".ui.home.MainActivity" />
+        <activity android:name=".ui.SplashMainAppActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.Order.BuyNow" />
+        <activity android:name=".ui.favaourite.divya_Edit" />
+        <activity android:name=".ui.favaourite.divya_MActivity" />
+
+        <!-- Ravindu -->
+        <activity android:name=".ui.getintouch.GetInTouchActivity" />
+        <activity android:name=".ui.getintouch.AboutUsActivity" />
+        <activity android:name=".ui.getintouch.AddNewBugActivity" />
+        <activity android:name=".ui.getintouch.AddNewSuggestionActivity" />
+        <activity android:name=".ui.getintouch.BugsActionsActivity" />
+        <activity android:name=".ui.getintouch.BugsActivity" />
+        <activity android:name=".ui.getintouch.EditBugActivity" />
+        <activity android:name=".ui.getintouch.ViewBugActivity" />
+
+
+        <activity android:name=".ui.getintouch.BugsActivity2" />
+
+        <activity android:name=".ui.getintouch.DeleteBugActivity" />
+
+
+
+        <activity android:name=".ui.getintouch.ViewSuggestionAdmin"></activity>
+        <activity android:name=".ui.getintouch.ViewAllSuggestionsAdmin" />
+        <activity android:name=".ui.getintouch.ViewBugAdmin" />
+        <activity android:name=".ui.getintouch.ViewAllBugsAdmin" />
+        <activity android:name=".ui.getintouch.GetInTouchAdminPanel" />
+
+
+        <activity android:name=".ui.advertisement.Donations" />
+        <activity android:name=".ui.advertisement.Advertisement" />
+        <activity android:name=".ui.advertisement.Myadds" />
+        <activity android:name=".ui.home.MainActivity" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-2612826891658748~3883957460"/>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

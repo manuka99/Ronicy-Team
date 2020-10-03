@@ -1,0 +1,400 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!--app -->
+    <string name="app_name">Ronicy</string>
+    <string name="site_name">Ronicy.lk</string>
+    <string name="slogan">SRILANKA\'S LARGEST MARKETPLACE</string>
+    <string name="dashboardVersion">Dashboard v6.1</string>
+
+    <string name="facebook_app_id">2691093471145086</string>
+    <string name="fb_login_protocol_scheme">fb2691093471145086</string>
+
+
+    <!-- common -->
+    <string name="image">image view</string>
+    <string name="company_phone">01122223344 </string>
+    <string name="phone_number_unknown">xxxxxxxxxx</string>
+    <string name="loading">loading...</string>
+    <string name="not_loggedIn">Dear user you are not logged in, please logged in to continue..</string>
+
+    <!-- Manuka -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="continueBtn">Continue</string>
+
+    <!-- profile -->
+    <string name="gender">Gender</string>
+    <string name="dateOfBirth">Date of birth</string>
+    <string name="living">Living in</string>
+
+    <!-- menu -->
+    <string name="menu_location">Location</string>
+    <string name="menu_category">Category</string>
+    <string name="menu_filter">filter</string>
+
+    <!-- enter code-->
+    <string name="enterCode_SMS_SENT_TO">SMS sent to:</string>
+    <string name="enterCode_time_arrive">Please note that it will take a few minutes to arrive.</string>
+    <string name="enterCode_editText_hint">Enter PIN code (6 digits)</string>
+    <string name="enterCode_didnt_recieve">Didn\'t recieve the SMS after 10 mins?</string>
+    <string name="enterCode_check_your_phone_again">Check your phone and try again ></string>
+
+    <!-- add new number-->
+    <string name="enterNumber">Please enter your phone number</string>
+    <string name="haveNotVerified">If you have not verified it before, we will send you an SMS with a PIN code to make sure that we can get in touch with you.</string>
+    <string name="phoneNumberText">Phone number (Ex 77 123 45 67)</string>
+    <string name="addAPhoneButton">Add a phone number</string>
+
+    <!-- post add -->
+    <string name="posting_allowance">Your posting allowance</string>
+    <string name="free_on_ronicy">Learn about posting adds for free on Ronicy</string>
+    <string name="all_categories">All Categories</string>
+    <string name="sell_an_item">Sell an item or service</string>
+
+    <!-- advertisement new/ edit -->
+    <string name="post_details">Ad Details: </string>
+    <string name="post_title">Ad Title</string>
+    <string name="post_condition">Item Condition</string>
+    <string name="post_description">Ad Description</string>
+    <string name="post_price">Item Price (Rs)</string>
+    <string name="post_update_btn">Update ad</string>
+    <string name="post_new_btn">Post ad</string>
+    <string name="post_choose_image_btn">Change Image</string>
+    <string name="post_add_image_btn">Add a Image</string>
+    <string name="post_add_1_image">Add at least one photo (max 5):</string>
+    <string name="more_than5images">You can not have more than 5 images</string>
+    <string name="tile_error">Ad title must have at least 10 characters</string>
+    <string name="condition_error">Ad condition must have at least 3 characters</string>
+    <string name="description_error">Ad description must have at least 20 characters</string>
+    <string name="price_error">Ad price must be at least greater than Rs 10.00</string>
+
+    <!-- acontact details -->
+    <string name="contact_details">Contact Details: </string>
+    <string name="phoneNumbers">Phone number(s)</string>
+    <string name="contact_detailsName">Name</string>
+    <string name="contact_detailsEmail">Email</string>
+    <string name="contact_detailsTermsAndConditions">By posting this ad you agree to our terms and conditions</string>
+    <string name="contact_detailsAdd">Add another phone number</string>
+    <string name="contact_detailsHide">Hide my phone number(s)</string>
+    <string name="contact_details_error">You need to have at least one verified number</string>
+
+    <!-- advertisement -->
+    <string name="newImage">Add new Image</string>
+    <string name="adCall">Contact Seller</string>
+    <string name="adChat">Chat Seller</string>
+    <string name="adDescription">Description</string>
+    <string name="adLocation">Location: </string>
+    <string name="adLocationText"> Sri Lanka</string>
+    <string name="adPosted">Posted: </string>
+    <string name="adCategory">Category: </string>
+    <string name="adCondition">Condition: </string>
+    <string name="adForSale">For sale by member</string>
+    <string name="adBuynow">Buy Now </string>
+
+    <!-- -->
+    <string name="selectLocation">Select location for your ad: </string>
+    <string name="locationSelectorLocation">Location </string>
+    <string name="locationAuto">The location for this ad was set automatically.</string>
+    <string name="useLocationBtn">Use this location</string>
+    <string name="changeLocation">Change location</string>
+
+    <!-- order verify phone -->
+    <string name="order_phone_header">Please verify your phone number: </string>
+    <string name="order_phone_subheading">Enter the PIN code that was sent to this phone number via SMS</string>
+    <string name="order_phone_btn_verify">Verify</string>
+    <string name="order_phone_cancel">Cancel</string>
+    <string name="order_phone_new_pin">Get new PIN code</string>
+    <string name="order_phone_didnt_recieve">Didn\'t receive the PIN code?</string>
+    <string name="virtual_env_exception">This feature will not work in a virtual environment. Try with your mobile phone.</string>
+    <string name="quota_exceeded">The SMS quota for this project has been exceeded!</string>
+    <string name="invalid_mobile">Invalid mobile number!.</string>
+    <string name="sending_code">Sending validation code....</string>
+    <string name="invalid_mobile_code">Entered code is invalid!</string>
+    <string name="verify_code_sent">Verification code was sent successfully!</string>
+    <string name="verify_code_not_sent">Verification code was not sent. Please check your credentials</string>
+
+    <!-- Order -->
+    <string name="orderStepHeader">Complete your purchase in 3 simple steps</string>
+    <string name="orderDeliveryHeader">Delivery Summary</string>
+    <string name="orderName">Name </string>
+    <string name="orderPhone">Phone number </string>
+    <string name="orderEmail">Email </string>
+    <string name="orderAddress">Delivery address </string>
+
+    <string name="orderItemPrice">Item price </string>
+    <string name="orderItemDelivery">Delivery fee </string>
+    <string name="orderItemDeliveryFee">Free </string>
+
+    <string name="orderItemPaymentTotal">Total </string>
+    <string name="orderItemPayment">Select a payment method</string>
+    <string name="orderItemPaymentCredit">Credit/Debit card</string>
+    <string name="orderItemPaymentCOD">Pay on Delivery</string>
+
+    <string name="orderItemPaymentInfo">Use our secure online payment tool to pay now and get your order delivered faster</string>
+
+    <!-- order completed -->
+    <string name="orderIDText">OrderID: </string>
+    <string name="orderThankyou">Thank you for placing  your order!</string>
+    <string name="orderContactYou">We will contact you during working hours to confirm your details and arrange for delivery</string>
+    <string name="orderHelp">Need help or want to cancel your order? </string>
+    <string name="orderCallus">Call Ronicy.lk </string>
+
+    <!-- donations -->
+    <string name="donate_header">Help us make a bigger impact</string>
+    <string name="donate_sub_header">Be a part of our family</string>
+    <string name="donate_name">Your name </string>
+    <string name="donate_email">Email address</string>
+    <string name="donate_phone">Contact number</string>
+    <string name="donate_amount">Donation amount(LKR)</string>
+    <string name="btn_donate_Now">Donate Now</string>
+
+    <!-- Account tab -->
+    <string name="account">Account</string>
+    <string name="account_getStarted">Get started with ikman</string>
+    <string name="account_myads">My Ads</string>
+    <string name="account_membership">My membership</string>
+    <string name="account_fav">Favourites</string>
+    <string name="account_profile">My profile</string>
+    <string name="account_safe">Stay safe</string>
+    <string name="account_faq">Get In Touch</string>
+    <string name="account_howto">How to sell fast</string>
+    <string name="account_donate">Donate us</string>
+    <string name="account_logout">Log out</string>
+
+    <!-- Authentication -->
+    <string name="register_btn">Register</string>
+    <string name="login_btn">Login</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="no_account">Don\'t have an account?</string>
+    <string name="sign_upNow">Sign up now</string>
+    <string name="continueWithFb">Continue with Facebook</string>
+    <string name="already_have_anAccount">Already have an account?</string>
+    <string name="login">Log in</string>
+    <string name="signUp">Sign up</string>
+    <string name="invalidEmail">Please enter your valid email address</string>
+    <string name="invalidPasswordLogin">Please enter your password</string>
+    <string name="invalidPasswordSignup">Password must have more than 8 characters</string>
+    <string name="invalidLogin">Error: Invalid credententials</string>
+    <string name="invalidRegister">Error: Account registration failed</string>
+    <string name="notLinked">An account exist with your facebook email address, please sign in to your local account in ronicy.lk and link it with your facebook account.</string>
+    <string name="linkFb">Connect with facebook</string>
+    <string name="linkFbSuccess">Your facebook account was successfully linked</string>
+    <string name="linkFbError">Error: Your facebook account was not linked. This may be due to an existing account linked with facebook or facebook account email you provided.</string>
+    <string name="linkFbRemoveSuccess">Your facebook account was successfully removed</string>
+    <string name="linkFbRemoveError">There was an error, please try again latter.</string>
+
+
+    <!--- Admin -->
+    <string name="reviewAdsTitle">When a user post a new Ad or update an existing Ad, they wil be appeared here to be reviewed.</string>
+
+    <!--- Admin orders-->
+    <string name="close">close</string>
+    <string name="open">open</string>
+
+    <!--- order status without delivered-->
+    <string-array name="order_status_no_delivered_array">
+        <item>Processing</item>
+        <item>Shipped</item>
+        <item>Delivered</item>
+        <item>Cancelled</item>
+    </string-array>
+
+    <!--- order status-->
+    <string-array name="order_status_array">
+        <item>Processing</item>
+        <item>Shipped</item>
+        <item>Delivered</item>
+        <item>Cancelled</item>
+    </string-array>
+
+    <!--- payment status-->
+    <string-array name="payment_status_array">
+        <item>Paid</item>
+        <item>Not Paid</item>
+        <item>Refunded</item>
+    </string-array>
+
+    <!--- sort by-->
+    <string-array name="ads_sort_by_array">
+        <item>Price: Lowest to Highest</item>
+        <item>Price: Highest to Lowest</item>
+        <item>Date: Oldest first</item>
+        <item>Price: Newest first</item>
+    </string-array>
+
+    <!--- types of posters-->
+    <string-array name="type_of_posters_array">
+        <item>All posters</item>
+        <item>Only members</item>
+        <item>Authorized dealers</item>
+    </string-array>
+
+    <string name="placed_date">Placed date</string>
+    <string name="payment_mode">Payment mode</string>
+    <string name="payment_status">Payment Status</string>
+    <string name="my_chats">My chats</string>
+    <string name="verification_code">Verification Code</string>
+    <string name="code_sent_successfully">Verification code sent sucessfully</string>
+    <string name="enter_verify_code">Please enter the verification code</string>
+    <string name="chack_phone_auth_credentials">Verification code was not sent. Please check your credentials</string>
+    <string name="phone_code_time_up">An error occurred when validating, Try again</string>
+    <string name="post_issues_ad">Please fix the above issues before posting an ad.</string>
+    <string name="colombo">Colombo</string>
+    <string name="note_these_ads_are_filtered_considering_the_filter_options_only_therefore_the_approval_status_of_the_advertisements_are_not_considered">Note: These Ads are filtered considering the filter options only therefore the approval status of the advertisements are not considered.</string>
+    <string name="rejected_reason">Rejected reason</string>
+    <string name="contacts">Contacts</string>
+    <string name="note">* Note</string>
+    <string name="this_message_will_be_displayed_to_the_user_as_the_unapproved_reason_please_make_sure_that_you_enter_a_valid_reason">This message will be displayed to the user as the unapproved reason, please make sure that you enter a valid reason.</string>
+    <string name="buynow_ad">BuyNow Ad</string>
+    <string name="approve_ad">Approve Ad</string>
+    <string name="ad_available">Ad Available</string>
+    <string name="hide_all_numbers">Hide all numbers</string>
+    <string name="delete">Delete</string>
+    <string name="go_to_all_ads">Go to all ads</string>
+    <string name="item_details">Item Details</string>
+    <string name="item_name">Item Name:</string>
+    <string name="item_id">Item ID:</string>
+    <string name="item_category">Item Category:</string>
+    <string name="item_price">Item Price:</string>
+    <string name="name">Name:</string>
+    <string name="customer_details">Customer Details</string>
+    <string name="address">Address:</string>
+    <string name="email_order">Email:</string>
+    <string name="phone">Phone:</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="payment_amount">Payment Amount:</string>
+    <string name="payment_type">Payment Type:</string>
+    <string name="placed_date_adfmin_order">Placed Date:</string>
+    <string name="delivered_date">Delivered Date:</string>
+    <string name="order_status">Order Status</string>
+    <string name="estimated_delivery_date">Estimated Delivery Date</string>
+    <string name="order_description">Order Description</string>
+    <string name="hidden_for_user">Hidden for user</string>
+    <string name="order_details">Order Details</string>
+    <string name="confirm_delivered">Confirm Delivered</string>
+    <string name="update">Update</string>
+    <string name="search">Search</string>
+    <string name="apply_filters">Apply filters</string>
+    <string name="online_payments">Online Payments</string>
+    <string name="cod_orders">COD Orders</string>
+    <string name="note_these_orders">Note: These Orders are filtered considering the approval status and visibility of the advertisements are not considered.</string>
+    <string name="select_year">Select year...</string>
+    <string name="this_data_will_represent_the_product_sales_of_the_particular_item_that_was_selected_also_if_the_product_price_changed_frequently_you_will_be_able_to_see_the_graphs_and_charts_based_on_the_price_vs_its_respective_sales">This data will represent the product sales of the particular item that was selected also if the product price changed frequently you will be able to see the graphs and charts based on the price vs its respective sales.</string>
+    <string name="productid">ProductID</string>
+    <string name="no_of_sales">No of sales</string>
+    <string name="total_sales_lkr">Total Sales(LKR)</string>
+    <string name="this_pie_chart_represent_the_orders_that_were_completed_based_on_the_above_product_also_this_chart_represents_data_based_on_the_prices_of_the_product_and_its_corresponding_sales">This Pie chart represent the orders that were completed based on the above product also this chart represents data based on the prices of the product and its corresponding sales.</string>
+    <string name="this_line_chart_represent_the_orders_that_were_completed_based_on_the_above_product_also_this_chart_represents_data_based_on_the_prices_of_the_product_and_its_corresponding_sales">This Line chart represent the orders that were completed based on the above product also this chart represents data based on the prices of the product and its corresponding sales.</string>
+
+    <!-- navigation overridden -->
+    <dimen name="badge_left_margin" tools:override="true">@dimen/_4sdp</dimen>
+    <dimen name="centre_content_width" tools:override="true">@dimen/_80sdp</dimen>
+    <dimen name="main_content_height" tools:override="true">@dimen/_46sdp</dimen>
+    <dimen name="space_centre_button_default_size" tools:override="true">@dimen/_56sdp</dimen>
+    <dimen name="space_centre_button_margin" tools:override="true">@dimen/_6sdp</dimen>
+    <dimen name="space_item_icon_default_size" tools:override="true">@dimen/_18sdp</dimen>
+    <dimen name="space_item_icon_only_size" tools:override="true">@dimen/_22sdp</dimen>
+    <dimen name="space_item_text_default_size" tools:override="true">@dimen/_14sdp</dimen>
+    <dimen name="space_navigation_height" tools:override="true">@dimen/_66sdp</dimen>
+    <dimen name="view_bottom_margin" tools:override="true">@dimen/_40sdp</dimen>
+
+    <!-- orders admin charts -->
+    <string name="trash_ads">Note: These advertisements are deleted by users/administrators and are not available anymore.</string>
+    <string name="cancelled_past_orders">Note: These orders have been cancelled therefore please consider before updating an Order.</string>
+    <string name="completed_past_orders">Note: These orders have been completed(Delivered) therefore please consider before updating an Order.</string>
+    <string name="pending_online_orders">Note: These orders have not been either cancelled or completed. These orders are placed via the payment gateway. Check the payments in the gateway before any confirmations.</string>
+    <string name="pending_cod_orders">Note: These orders have not been either cancelled or completed. These orders are placed to pay via cash on delivery therefore please contact the customer before any confirmations.</string>
+    <string name="pending_recent_orders">Note: These orders have not been either cancelled or completed. These orders are placed recently(last 24 hours). Payment status is not considered.</string>
+    <string name="product_sales">These is the complete sales analysis for the particular year selected also user can sort the total sales count as well as by amount of total sales.</string>
+    <string name="orders_completed_bar">These are the orders that were completed based on the month for the selected year. Payment status also considered.</string>
+    <string name="order_piechart_ratio_order_status">This Pie chart represent the ratio between the order status on the selected year. Payment status is also considered here. Even if the payment was made and the order is not delivered it will be categorized under cancelled orders.</string>
+    <string name="order_completed_ratio_payment">This Pie chart represents the orders that were completed and ratios between payment modes selected by customers.</string>
+    <string name="order_cancelled_ratio_payment">This Pie chart represents the orders that were cancelled and ratios between payment modes selected by customers.</string>
+    <string name="orders_stat_line">This Line graph represent the orders that were completed based on the month for the selected year. Payment status also considered.</string>
+
+    <string name="estimated_delivery">Estimated Delivery</string>
+    <string name="customer_mobile">Customer Mobile</string>
+    <string name="customer_email">Customer Email</string>
+    <string name="delivery_address">Delivery Address</string>
+    <string name="order_type">Order type</string>
+    <string name="order_time">Order Time</string>
+    <string name="order_id">Order ID</string>
+    <string name="order_has_been_delivered">Order has been Delivered</string>
+    <string name="similar_ads">Similar ads</string>
+
+    <!-- Divya -->
+
+    <!-- wishlist.xml-->
+    <string name="TextView1">Item_name</string>
+    <string name="TextView2">Item_description</string>
+    <string name="TextView3">Item_price</string>
+
+    <!-- Edit.xml-->
+    <string name="title"> Presonal Notes </string>
+    <string name="checkbox"> Contacted Salesman </string>
+    <string name="Personal_Note"> Your personal Note...... </string>
+    <string name="Appoinmet"> If You Place an Appoinment with claient Enter Details </string>
+    <string name="date"> Date </string>
+    <string name="time"> Time </string>
+    <string name="btn"> Edit </string>
+
+    <!-- Ravindu -->
+
+    <string name="ReportBugString">App has bugs?</string>
+    <string name="BugReportButtonText">Report Bugs</string>
+    <string name="HaveSuggestionsString">Have Suggestions?</string>
+    <string name="suggestionsBtn">Write to Us</string>
+    <string name="aboutUsString">About Us</string>
+    <string name="AboutUsText">About Us</string>
+    <string name="wantToKnowMoreText">Want to know more?</string>
+    <string name="BugIdTextStirng">101</string>
+    <string name="ViewBugBtnText">View</string>
+    <string name="BugDescriptionText">There was a bug where pressing the button to contact seller was not working.</string>
+    <string name="filedDateString">"Filed Date: "</string>
+    <string name="IdString">"Id: "</string>
+    <string name="staticDateString">2020-08-12</string>
+    <string name="descriptionText">Description:</string>
+    <string name="TextForEditBugBtn">Edit</string>
+    <string name="textForDeleteBugBtn">Delete</string>
+    <string name="bugStatusTopicText">Status:</string>
+    <string name="BugStatusTopicText">Status:</string>
+    <string name="BugStatusStaticText">Acknowledged</string>
+    <string name="viewBugsButtonText">View the bugs you have filed</string>
+    <string name="addBugsBtnText">File a new bug</string>
+    <string name="DescribeBugText">Please describe the issue below</string>
+    <string name="submitButtonText">Submit</string>
+    <string name="editText">Edit the details below</string>
+    <string name="saveChangesBtnTxt">Save Changes</string>
+    <string name="enterSuggestionHeader">Please enter your suggestions</string>
+    <string name="AppDescription">This is an application where we facillitate a seamless addvertising expeience to our users. We help advertisers to reach a vast audience through our platform. We are commited to supply a continued and improving service to our users.</string>
+    <string name="email">adzbiz@weekend.com</string>
+    <string name="EmailString">"Email: "</string>
+    <string name="PhoneNumberTopic">"Phone Number: "</string>
+    <string name="PhoneNumber">0712803772</string>
+    <string name="AppGivingTroubleString">App giving trouble?</string>
+    <string name="getInTouchString">Get In Touch</string>
+    <string name="bugs">Bugs</string>
+
+    <!--These were added later by ravindu-->
+    <string name="strBuginput">Describe your issue here</string>
+    <string name="strDeleteConfirm">Are you sure you want to delete the following?</string>
+    <string name="adminStr">Admin</string>
+    <string name="strAdmin">Admin</string>
+    <string name="ravinduBugs_str">Bugs</string>
+    <string name="ravinduBugCountStr">"Bug Count : "</string>
+    <string name="ravinduViewBugsStr">View Bugs</string>
+    <string name="ravindu_SuggestionsStr">Suggestions</string>
+    <string name="ravindu_suggestionCountStr">Suggestion Count : </string>
+    <string name="ravindu_viewSuggestionsStr">View Suggestions</string>
+    <string name="ravindu_idStr">"ID : "</string>
+    <string name="ravindu_filedDateStr">"Filed Date : "</string>
+    <string name="ravindu_bugDescriptionStr">Description : </string>
+    <string name="ravindu_statusStr">Status : </string>
+    <string name="ravindu_userStr">User : </string>
+    <string name="ravindu_acknowledgeStr">Acknowledge</string>
+    <string name="ravindu_fixedStr">Fixed</string>
+    <string name="ravindu_revokeToPendingStr">Revoke to Pending</string>
+    <string name="ravindu_revokeToReceivedStr">Revoke To Received</string>
+
+    <!-- Ashan -->
+</resources>

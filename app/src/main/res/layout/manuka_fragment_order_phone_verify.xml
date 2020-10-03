@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/phoneVerifyLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:padding="@dimen/_16sdp"
+    tools:context=".ui.Order.OrderPhoneVerify">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:text="@string/order_phone_header"
+        android:textColor="@color/colorBlackText"
+        android:textSize="@dimen/_14sdp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/order_phone_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/phone_number_unknown"
+        android:textColor="@color/colorBlackText"
+        android:textSize="@dimen/_14sdp"
+        android:textStyle="italic" />
+
+    <ImageView
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:background="@drawable/icon_sms_medium"
+        android:contentDescription="@string/image" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/order_phone_subheading"
+        android:textAlignment="center"
+        android:textSize="@dimen/_14sdp" />
+
+    <TextView
+        android:id="@+id/mobileCodeMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:fontFamily="sans-serif-light"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorError"
+        android:textSize="@dimen/_14sdp"
+        android:visibility="gone" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/orderCodeVerify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:counterEnabled="true"
+        app:counterMaxLength="6"
+        app:errorEnabled="true"
+        app:hintTextColor="@color/mainUiColour">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_14sdp"
+            android:hint="@string/verification_code"
+            android:inputType="number"
+            android:textCursorDrawable="@drawable/cursor_main_ui"
+            android:theme="@style/EditTextMainUiTheme" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/phoneVerifyBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@color/mainUiColour"
+        android:orientation="horizontal"
+        android:padding="@dimen/_6sdp">
+
+        <ProgressBar
+            android:id="@+id/progressBarCodeVerify"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorWhite"
+            android:indeterminateTintMode="src_atop"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/PhoneVerifyTextView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_24sdp"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/order_phone_btn_verify"
+            android:textAllCaps="true"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/order_phone_didnt_recieve"
+        android:textAlignment="center"
+        android:textSize="@dimen/_12sdp" />
+
+    <TextView
+        android:id="@+id/resendPinCodeOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/order_phone_new_pin"
+        android:textAlignment="center"
+        android:textColor="@color/colorGreen"
+        android:textSize="@dimen/_12sdp" />
+
+
+</LinearLayout>

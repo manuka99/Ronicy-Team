@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorHome"
+    tools:context=".ui.home.Account"
+    android:layout_marginBottom="@dimen/_18sdp"
+    tools:targetApi="m">
+
+    <!-- Manuka -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/noAuthFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/authContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_14sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_14sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:text="@string/loading"
+                android:textSize="@dimen/_20sdp" />
+
+            <Button
+                android:id="@+id/linkfb"
+                android:padding="@dimen/_8sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:background="@drawable/button_round_fb"
+                android:drawableStart="@drawable/custom_fb_icon"
+                android:drawablePadding="@dimen/_6sdp"
+                android:gravity="center"
+                android:text="@string/loading"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/myads"
+                android:padding="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_2sdp"
+                android:background="@color/colorWhite"
+                android:drawableStart="@drawable/ic_baseline_filter_24"
+                android:drawablePadding="@dimen/_16sdp"
+                android:drawableTint="#8C8C8C"
+                android:elevation="@dimen/_2sdp"
+                android:fontFamily="@font/droid_sans"
+                android:text="@string/account_myads"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_14sdp" />
+
+            <Button
+                android:id="@+id/myChats"
+                android:layout_width="match_parent"
+                android:padding="@dimen/_8sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_2sdp"
+                android:background="@color/colorWhite"
+                android:drawableStart="@drawable/ic_baseline_chat_24"
+                android:drawablePadding="@dimen/_16sdp"
+                android:drawableTint="#8C8C8C"
+                android:elevation="@dimen/_2sdp"
+                android:fontFamily="@font/droid_sans"
+                android:text="@string/my_chats"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_14sdp" />
+
+            <Button
+                android:id="@+id/accountMember"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_2sdp"
+                android:background="@color/colorWhite"
+                android:drawableStart="@drawable/ic_baseline_event_24"
+                android:drawablePadding="@dimen/_16sdp"
+                android:drawableTint="#8C8C8C"
+                android:elevation="@dimen/_2sdp"
+                android:fontFamily="@font/droid_sans"
+                android:padding="@dimen/_8sdp"
+                android:text="@string/account_membership"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_14sdp" />
+
+            <Button
+                android:id="@+id/favourite"
+                android:padding="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_2sdp"
+                android:background="@color/colorWhite"
+                android:drawableStart="@drawable/ic_baseline_star_24"
+                android:drawablePadding="@dimen/_16sdp"
+                android:drawableTint="#8C8C8C"
+                android:elevation="@dimen/_2sdp"
+                android:fontFamily="@font/droid_sans"
+                android:text="@string/account_fav"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_14sdp" />
+
+            <Button
+                android:id="@+id/myprofile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_6sdp"
+                android:background="@color/colorWhite"
+                android:drawableStart="@drawable/ic_baseline_person_24"
+                android:drawablePadding="@dimen/_16sdp"
+                android:drawableTint="#8C8C8C"
+                android:elevation="@dimen/_2sdp"
+                android:fontFamily="@font/droid_sans"
+                android:padding="@dimen/_8sdp"
+                android:text="@string/account_profile"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_14sdp" />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:background="@color/colorWhite"
+            android:drawableStart="@drawable/ic_baseline_verified_user_24"
+            android:drawablePadding="@dimen/_16sdp"
+            android:drawableTint="#8C8C8C"
+            android:elevation="@dimen/_2sdp"
+            android:fontFamily="@font/droid_sans"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/account_safe"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_14sdp" />
+
+        <Button
+            android:id="@+id/faq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:background="@color/colorWhite"
+            android:drawableStart="@drawable/ic_baseline_battery_unknown_24"
+            android:drawablePadding="@dimen/_16sdp"
+            android:drawableTint="#8C8C8C"
+            android:elevation="@dimen/_2sdp"
+            android:fontFamily="@font/droid_sans"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/account_faq"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_14sdp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:background="@color/colorWhite"
+            android:drawableStart="@drawable/ic_baseline_slideshow_24"
+            android:drawablePadding="@dimen/_16sdp"
+            android:drawableTint="#8C8C8C"
+            android:elevation="@dimen/_2sdp"
+            android:fontFamily="@font/droid_sans"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/account_howto"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_14sdp" />
+
+        <Button
+            android:id="@+id/donateUs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:background="@color/colorWhite"
+            android:drawableStart="@drawable/ic_baseline_double_arrow_24"
+            android:drawablePadding="@dimen/_16sdp"
+            android:drawableTint="#8C8C8C"
+            android:elevation="@dimen/_2sdp"
+            android:fontFamily="@font/droid_sans"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/account_donate"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_14sdp" />
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_40sdp"
+            android:background="@color/colorWhite"
+            android:drawableStart="@drawable/ic_baseline_power_settings_new_24"
+            android:drawablePadding="@dimen/_16sdp"
+            android:drawableTint="#8C8C8C"
+            android:elevation="@dimen/_2sdp"
+            android:fontFamily="@font/droid_sans"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/account_logout"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_14sdp" />
+
+        <FrameLayout
+            android:id="@+id/snackView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

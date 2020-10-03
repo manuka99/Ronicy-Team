@@ -1,0 +1,73 @@
+<resources>
+
+    <!-- Manuka -->
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:statusBarColor">@color/colorGreyBtn</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
+    <style name="EditTextBlueTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/colorGreyBtn</item>
+        <item name="colorControlActivated">@color/colorBlue</item>
+        <item name="colorControlHighlight">@color/colorBlue</item>
+    </style>
+
+    <style name="EditTextMainUiTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/colorGreyBtn</item>
+        <item name="colorControlActivated">@color/mainUiColour</item>
+        <item name="colorControlHighlight">@color/mainUiColour</item>
+    </style>
+
+    <style name="EditTextErrorTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/colorGreyBtn</item>
+        <item name="colorControlActivated">@color/colorDangerDark</item>
+        <item name="colorControlHighlight">@color/colorDangerDark</item>
+    </style>
+
+    <style name="MonthPickerDialogStyle">
+        <item name="monthBgColor">@color/colorWhite</item>
+        <item name="monthBgSelectedColor">@color/colorBlue</item>
+        <item name="monthFontColorSelected">@color/colorBlue</item>
+        <item name="monthFontColorNormal">@color/colorBlackText</item>
+        <item name="monthFontColorDisabled">@color/colorGreyBtn</item>
+
+        <item name="headerBgColor">@color/com_facebook_messenger_blue</item>
+        <item name="headerFontColorSelected">#fff</item>
+        <item name="headerFontColorNormal">#85FFFFFF</item>
+        <item name="headerTitleColor">#fff</item>
+
+        <item name="dialogActionButtonColor">@color/com_facebook_messenger_blue</item>
+    </style>
+
+    <style name="doorstep" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/mainUiColour</item>
+    </style>
+
+    <style name="Toolbar.title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/_16sdp</item>
+    </style>
+
+    <style name="ToolbarSubtitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+        <item name="android:textSize">@dimen/_12sdp</item>
+    </style>
+
+    <!-- Divya -->
+
+
+    <!-- Ravindu -->
+
+
+    <!-- Ashan -->
+
+</resources>

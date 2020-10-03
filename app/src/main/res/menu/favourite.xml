@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Manuka -->
+
+    <item
+        android:id="@+id/action_share"
+        android:title="Share product"
+        android:orderInCategory="300"
+        android:icon="@drawable/ic_baseline_share_24"
+        app:showAsAction="ifRoom"></item>
+    
+    <item
+        android:id="@+id/action_favorite"
+        android:title="Add to favourite"
+        android:orderInCategory="300"
+        android:icon="@drawable/ic_baseline_favorite_border_24"
+        app:showAsAction="ifRoom"></item>
+
+
+</menu>

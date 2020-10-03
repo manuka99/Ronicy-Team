@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp">
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:layout_alignBottom="@id/textView"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="615dp"
+        android:text="@string/checkbox" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="#009688"
+        android:gravity="center"
+        android:text="@string/title"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:layout_alignBottom="@id/checkBox2"
+        android:layout_marginBottom="-36dp"
+        android:gravity="center_vertical"
+        android:text="@string/Personal_Note"
+        android:textStyle="normal|bold|italic" />
+
+    <EditText
+        android:id="@+id/editTextDate3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/textView2"
+        android:layout_marginBottom="-36dp"
+        android:ems="10"
+        android:inputType="date" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_alignBottom="@id/editTextDate3"
+        android:layout_marginBottom="-39dp"
+        android:text="@string/Appoinmet"
+        android:textStyle="normal|bold|italic" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="91dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/textView6"
+        android:layout_marginBottom="-18dp"
+        android:text="@string/time" />
+
+    <EditText
+        android:id="@+id/editTextDate4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/textView7"
+        android:layout_marginBottom="-43dp"
+        android:ems="10"
+        android:inputType="date" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/editTextDate4"
+        android:layout_marginBottom="-22dp"
+        android:text="@string/date" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="269dp"
+        android:layout_alignBottom="@id/textView8"
+        android:layout_marginBottom="-269dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/textView8"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="-360dp"
+        android:text="@string/btn" />
+
+</RelativeLayout>

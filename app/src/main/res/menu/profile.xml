@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_profile_edit"
+        android:title="Edit profile"
+        android:orderInCategory="300"
+        android:icon="@drawable/ic_baseline_create_24_profile"
+        app:showAsAction="ifRoom"></item>
+
+    <item
+        android:id="@+id/action_profile_update"
+        android:title="Update profile"
+        android:orderInCategory="300"
+        android:icon="@drawable/ic_baseline_check_24_profile"
+        app:showAsAction="ifRoom"></item>
+
+    <item
+        android:id="@+id/action_profile_security"
+        android:title="Update profile"
+        android:orderInCategory="300"
+        android:icon="@drawable/ic_baseline_security_24_profile"
+        app:showAsAction="ifRoom"></item>
+
+</menu>

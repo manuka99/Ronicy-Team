@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:padding="@dimen/_16sdp"
+    tools:context=".ui.addphone.EnterCode">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/_6sdp"
+        tools:context=".ui.addphone.EnterCode">
+
+        <ImageView
+            android:layout_width="@dimen/_68sdp"
+            android:layout_height="@dimen/_68sdp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.1"
+            android:background="@drawable/icon_sms_medium"
+            android:contentDescription="@string/image" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.9"
+            android:orientation="vertical"
+            tools:context=".ui.addphone.EnterCode">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/enterCode_SMS_SENT_TO"
+                android:textColor="@color/colorBlackText"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:id="@+id/phoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/PhoneNumber"
+                android:textColor="@color/colorGreenDark"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/enterCode_time_arrive"
+                android:textSize="@dimen/_12sdp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:background="#33000000" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/codeEntered"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        app:counterMaxLength="6"
+        app:errorEnabled="true"
+        app:hintTextColor="@color/mainUiColour">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enterCode_editText_hint"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textColorHint="@color/mainUiColour"
+            android:textCursorDrawable="@drawable/cursor_main_ui"
+            android:textSize="@dimen/_14sdp"
+            android:theme="@style/EditTextMainUiTheme" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/phoneVerifyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_34sdp"
+        android:layout_marginTop="@dimen/_14sdp"
+        android:background="@color/colorGreyBtn"
+        android:orientation="horizontal"
+        android:padding="@dimen/_6sdp">
+
+        <ProgressBar
+            android:id="@+id/progressBarCodeVerify"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorWhite"
+            android:indeterminateTintMode="src_atop"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/PhoneVerifyTextView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_24sdp"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/order_phone_btn_verify"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:gravity="center"
+        android:text="@string/enterCode_didnt_recieve"
+        android:textColor="@color/colorBlackText"
+        android:textSize="@dimen/_14sdp" />
+
+    <TextView
+        android:id="@+id/checkAgain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_14sdp"
+        android:gravity="center"
+        android:text="@string/enterCode_check_your_phone_again"
+        android:textColor="@color/colorGreen"
+        android:textSize="@dimen/_12sdp" />
+
+    <LinearLayout
+        android:id="@+id/snackbar_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+</LinearLayout>
