@@ -397,6 +397,8 @@
     <string name="ravindu_fixedStr">Fixed</string>
     <string name="ravindu_revokeToPendingStr">Revoke to Pending</string>
     <string name="ravindu_revokeToReceivedStr">Revoke To Received</string>
+    <string name="ravindu_bug_statisticStr">Bug Statistics</string>
+    <string name="ravindu_bugStatisticsStr">Bug Statistics</string>
 
     <!-- Ashan -->
 </resources>

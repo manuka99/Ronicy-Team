@@ -32,7 +32,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/IdString"
                     android:textColor="#000000"
-                    android:textSize="14sp">
+                    android:textSize="24sp">
 
                 </TextView>
 
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/BugIdTextStirng"
                     android:textColor="#000000"
-                    android:textSize="14sp">
+                    android:textSize="24sp">
 
                 </TextView>
 
@@ -149,7 +149,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         app:cardBackgroundColor="@color/colorHome">
 
         <LinearLayout
