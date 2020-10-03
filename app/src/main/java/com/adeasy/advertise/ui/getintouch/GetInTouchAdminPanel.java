@@ -80,4 +80,10 @@ public class GetInTouchAdminPanel extends AppCompatActivity {
         });
 
     }
+
+    public void bugStatisticSwitch(View view)
+    {
+        Intent intent = new Intent(getApplicationContext(),BugStatisticsActivity.class);
+        startActivity(intent);
+    }
 }

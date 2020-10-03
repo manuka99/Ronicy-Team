@@ -103,6 +103,10 @@ dependencies {
     implementation 'com.github.irfaan008:IRBottomNavigationView:1.0.1'
     implementation 'com.github.santalu:aspect-ratio-imageview:1.0.9'
     implementation 'com.google.android.gms:play-services-ads:19.4.0'
+
+    //espresso for ui testing
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
