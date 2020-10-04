@@ -69,8 +69,11 @@
                 android:id="@+id/btnStat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#471404"
                 android:onClick="bugStatisticSwitch"
-                android:text="@string/ravindu_bug_statisticStr" />
+                android:text="@string/ravindu_bug_statisticStr"
+                android:textColor="#FFFFFF" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

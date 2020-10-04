@@ -25,94 +25,118 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/IdString"
-            android:textColor="#000000"
-            android:textSize="14sp">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/TVbugId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/BugIdTextStirng"
-            android:textColor="#000000"
-            android:textSize="14sp">
-
-        </TextView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filedDateString"
-            android:textColor="#000000"
-            android:textSize="14sp">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/TVfiledDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/staticDateString"
-            android:textColor="#000000"
-            android:textSize="14sp">
-
-        </TextView>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_margin="5dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp"
+        app:contentPadding="5dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/descriptionText"
-            android:textColor="#000000"
-            android:textSize="14sp">
-
-        </TextView>
-
-        <EditText
-            android:id="@+id/ETBugDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/BugDescriptionText">
-
-        </EditText>
-
-        <Button
-            android:id="@+id/editBugBtn"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/custom_button_darkblue"
-            android:text="@string/saveChangesBtnTxt"
-            android:textColor="#FFFFFF">
+            android:orientation="vertical">
 
-        </Button>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/IdString"
+                    android:textColor="#000000"
+                    android:textSize="14sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/TVbugId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/BugIdTextStirng"
+                    android:textColor="#000000"
+                    android:textSize="14sp">
+
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filedDateString"
+                    android:textColor="#000000"
+                    android:textSize="14sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/TVfiledDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/staticDateString"
+                    android:textColor="#000000"
+                    android:textSize="14sp">
+
+                </TextView>
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp"
+        app:contentPadding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/descriptionText"
+                android:textColor="#000000"
+                android:textSize="14sp">
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/ETBugDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/BugDescriptionText">
+
+            </EditText>
+
+            <Button
+                android:id="@+id/editBugBtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/custom_button_darkblue"
+                android:text="@string/saveChangesBtnTxt"
+                android:textColor="#FFFFFF">
+
+            </Button>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

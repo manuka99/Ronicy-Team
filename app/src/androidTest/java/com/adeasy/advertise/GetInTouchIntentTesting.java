@@ -29,35 +29,21 @@ import static org.hamcrest.Matchers.allOf;
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class GetInTouchIntentTesting {
-    private static final String PACKAGE_NAME  ="com.adeasy.advertise.ui.getintouch";
 
     @Rule
     public ActivityScenarioRule<GetInTouchActivity> activityRule = new ActivityScenarioRule<>(GetInTouchActivity.class);
 
-    //@Rule
-    //public IntentsTestRule<GetInTouchActivity> intentsTestRule = new IntentsTestRule<>(GetInTouchActivity.class);
     @Before
     public void setup()
     {
         Intents.init();
     }
 
-
-
     @Test
     public void verifyIntent()
     {
         onView(withId(R.id.contactUsBtn)).perform(click());
-
-        /*intended(allOf(
-                hasComponent(hasShortClassName(AboutUsActivity.class.getName())),toPackage(PACKAGE_NAME)
-        ));*/
-
         intended(hasComponent(AboutUsActivity.class.getName()));
-
-
-        //activityRule.launchActivity(new Intent());
-        //intended(hasComponent(AboutUsActivity.class.getName()));
     }
 
     @After
