@@ -42,7 +42,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
-                    android:text="12"
                     android:textColor="#000000"
                     android:textSize="24sp" />
             </LinearLayout>
@@ -69,7 +68,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
-                    android:text="TextView"
                     android:textColor="#000000"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -96,7 +94,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
-                    android:text="TextView"
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
@@ -124,7 +121,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
-                    android:text="TextView"
                     android:textColor="#000000"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -163,7 +159,6 @@
                     android:id="@+id/TVdescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
                     android:textColor="#000000"
                     android:textSize="18sp" />
             </LinearLayout>

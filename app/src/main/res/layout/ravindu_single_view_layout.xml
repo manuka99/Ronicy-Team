@@ -21,7 +21,7 @@
                 android:id="@+id/TVbugID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="123"
+                android:text="@string/ravindu_bugIdStr"
                 android:textColor="#000000"
                 android:textSize="30sp">
 
@@ -31,7 +31,7 @@
                 android:id="@+id/TVdescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="name"
+                android:text="@string/ravindu_bugDescriptionStr"
                 android:textColor="#000000"
                 android:textSize="18sp">
 

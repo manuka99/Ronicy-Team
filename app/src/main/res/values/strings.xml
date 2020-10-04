@@ -403,6 +403,7 @@
     <string name="ravindu_acknowledgedBugsStr">Acknowledged Bugs</string>
     <string name="ravindu_fixedBugsStr">Fixed Bugs</string>
     <string name="ravindu_pendingBugsStr">Pending Bugs</string>
+    <string name="ravindu_bugIdStr">BugID</string>
 
     <!-- Ashan -->
 </resources>
