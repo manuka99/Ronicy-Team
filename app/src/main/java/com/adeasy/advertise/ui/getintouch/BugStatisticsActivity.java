@@ -35,7 +35,7 @@ public class BugStatisticsActivity extends AppCompatActivity {
         TVAcknowledgedBugs = findViewById(R.id.TVAcknowledgedBugs);
         TVfixedBugs = findViewById(R.id.TVfixedBugs);
         TVunattendedBugs = findViewById(R.id.TVunattendedBugs);
-        TVtotalAckFix = findViewById(R.id.TVtotalAckFix);
+        //TVtotalAckFix = findViewById(R.id.TVtotalAckFix);
 
         dbref = FirebaseDatabase.getInstance().getReference().child("Bug");
         dbref.addValueEventListener(new ValueEventListener() {
@@ -98,8 +98,9 @@ public class BugStatisticsActivity extends AppCompatActivity {
             }
         });
 
+        /*
         totalAckFixed = bugCalc(fixedBugCount, acknowledgedBugCount);
-        TVtotalAckFix.setText(String.valueOf(totalAckFixed));
+        TVtotalAckFix.setText(String.valueOf(totalAckFixed));*/
     }
 
     public static long bugCalc(long fixedBugCount, long acknowledgedBugCount)

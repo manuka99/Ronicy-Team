@@ -16,6 +16,7 @@
         android:layout_marginRight="10dp"
         app:cardBackgroundColor="#FB8C00"
         app:cardCornerRadius="10dp"
+        app:cardElevation="2dp"
         app:contentPadding="20dp">
 
         <LinearLayout
@@ -53,7 +54,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="0"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -69,8 +69,11 @@
                 android:id="@+id/btnStat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#471404"
                 android:onClick="bugStatisticSwitch"
-                android:text="@string/ravindu_bug_statisticStr" />
+                android:text="@string/ravindu_bug_statisticStr"
+                android:textColor="#FFFFFF" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -83,6 +86,7 @@
         android:layout_marginRight="10dp"
         app:cardBackgroundColor="@color/colorBlue"
         app:cardCornerRadius="10dp"
+        app:cardElevation="2dp"
         app:contentPadding="20dp">
 
         <LinearLayout
@@ -120,7 +124,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="0"
                     android:textColor="#000000"
                     android:textSize="18sp" />
             </LinearLayout>

@@ -399,6 +399,11 @@
     <string name="ravindu_revokeToReceivedStr">Revoke To Received</string>
     <string name="ravindu_bug_statisticStr">Bug Statistics</string>
     <string name="ravindu_bugStatisticsStr">Bug Statistics</string>
+    <string name="ravindu_bugCountStr">Bug Count</string>
+    <string name="ravindu_acknowledgedBugsStr">Acknowledged Bugs</string>
+    <string name="ravindu_fixedBugsStr">Fixed Bugs</string>
+    <string name="ravindu_pendingBugsStr">Pending Bugs</string>
+    <string name="ravindu_bugIdStr">BugID</string>
 
     <!-- Ashan -->
 </resources>
