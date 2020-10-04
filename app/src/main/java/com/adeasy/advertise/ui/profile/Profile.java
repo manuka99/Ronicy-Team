@@ -58,6 +58,7 @@ public class Profile extends AppCompatActivity {
     }
 
     private void showPersonalDetails() {
+        userDetails = new UserDetails();
         getSupportActionBar().setTitle("Personal details");
         menuItems = new ArrayList<>();
         menuItems.add(toolbar.getMenu().findItem(R.id.action_profile_update));
@@ -66,6 +67,7 @@ public class Profile extends AppCompatActivity {
     }
 
     private void showEditDetails() {
+        editProfile = new EditProfile();
         getSupportActionBar().setTitle("Update profile");
         menuItems = new ArrayList<>();
         menuItems.add(toolbar.getMenu().findItem(R.id.action_profile_edit));
@@ -75,6 +77,7 @@ public class Profile extends AppCompatActivity {
     }
 
     private void showSecurityDetails(){
+        profileSecurity = new ProfileSecurity();
         getSupportActionBar().setTitle("Profile security");
         menuItems = new ArrayList<>();
         menuItems.add(toolbar.getMenu().findItem(R.id.action_profile_update));

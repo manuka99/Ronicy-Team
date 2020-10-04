@@ -153,21 +153,19 @@ public class UserDetails extends Fragment implements ProfileManagerCallback {
 
     @Override
     public void onCompleteGetUser(Task<DocumentSnapshot> task) {
-        if (task != null && task.isSuccessful() && task.getResult() != null && task.getResult().exists()) {
+        if (task != null && task.isSuccessful()) {
             user = task.getResult().toObject(User.class);
-            updateUiOnDataRecieve();
         } else if (task != null) {
-            if (task.getException() instanceof FirebaseFirestoreException) {
-                ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
+            if (task.getException() instanceof FirebaseFirestoreException && ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED)) { ;
                 customErrorDialogs.showPermissionDeniedStorage();
             };
         }
+        updateUiOnDataRecieve();
     }
 
     public void updateUiOnDataRecieve() {
         firebaseUser = firebaseAuth.getCurrentUser();
-        if (user != null) {
-
+        if (user != null && user.getUid() != null) {
             if (user.getName() != null && user.getName().length() > 0) {
                 name1.setText(user.getName());
                 name2.getEditText().setText(user.getName());

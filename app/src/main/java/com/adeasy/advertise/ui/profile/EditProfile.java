@@ -173,7 +173,6 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         profileManager.getUser();
     }
 
@@ -189,7 +188,6 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
     @Override
     public void onStart() {
         super.onStart();
-        //profileManager.getUser();
         if (!new InternetValidation().validateInternet(getActivity()))
             customErrorDialogs.showNoInternetDialog();
     }
@@ -250,20 +248,19 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
 
     @Override
     public void onCompleteGetUser(Task<DocumentSnapshot> task) {
-        if (task != null && task.isSuccessful() && task.getResult() != null && task.getResult().exists()) {
+        if (task != null && task.isSuccessful()) {
             user = task.getResult().toObject(User.class);
-            updateUiOnDataRecieve();
         }else if (task != null) {
-            if (task.getException() instanceof FirebaseFirestoreException) {
-                ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
+            if (task.getException() instanceof FirebaseFirestoreException &&  ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED)) {
                 customErrorDialogs.showPermissionDeniedStorage();
             };
         }
+        updateUiOnDataRecieve();
     }
 
     public void updateUiOnDataRecieve() {
         firebaseUser = firebaseAuth.getCurrentUser();
-        if (user.getUid() != null) {
+        if (user != null && user.getUid() != null) {
 
             name.getEditText().setText(user.getName());
 
@@ -282,6 +279,7 @@ public class EditProfile extends Fragment implements ProfileManagerCallback, Vie
                 female.setChecked(true);
 
         } else {
+            user = new User();
             name.getEditText().setText(firebaseUser.getDisplayName());
             phone.getEditText().setText(firebaseUser.getPhoneNumber());
             email.getEditText().setText(firebaseUser.getEmail());
