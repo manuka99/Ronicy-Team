@@ -80,6 +80,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     Boolean isCODSelected = false;
     Boolean isNumberVerified = false;
     Boolean isUpdatingDeliveryDetails = true;
+    Boolean isOrderCompleted = false;
 
     User user;
 
@@ -350,6 +351,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
             payment.setAmount(order.getItem().getPrice());
             order.setPayment(payment);
             orderManager.insertOrder(order, true);
+            isOrderCompleted = true;
         } else {
             InitRequest req = new InitRequest();
             req.setMerchantId(Configurations.PAYHERE_MERCHANTID);
@@ -403,6 +405,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
         payment.setAmount(order.getItem().getPrice());
         order.setPayment(payment);
         orderManager.insertOrder(order, true);
+        isOrderCompleted = true;
     }
 
     public void onSuccessOrder() {
@@ -511,7 +514,9 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     }
 
     private void validateFragmentOnStart() {
-        if (order.getCustomer().getEmail() == null || isUpdatingDeliveryDetails)
+        if (isOrderCompleted)
+            onSuccessOrder();
+        else if (order.getCustomer().getEmail() == null || isUpdatingDeliveryDetails)
             handelStep1Fragment();
         else if (!isNumberVerified)
             startVerifyNumberFragment();

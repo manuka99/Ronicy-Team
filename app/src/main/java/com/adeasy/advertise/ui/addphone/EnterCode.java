@@ -158,7 +158,7 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
             validateCodeInput();
         } else if (view == phoneVerifyTextView && codeEntered.getEditText().getText().length() != 6) {
             codeEntered.setError(getString(R.string.order_phone_subheading));
-            showErrorSnackbar(R.string.order_phone_subheading);
+            showErrorSnackbar(getString(R.string.order_phone_subheading));
         }
     }
 
@@ -167,7 +167,7 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationID, codeEntered.getEditText().getText().toString());
             verifyPhoneNumberWithPhoneAuthCredential(credential);
         } else
-            showErrorSnackbar(R.string.verify_code_not_sent);
+            showErrorSnackbar(getString(R.string.verify_code_not_sent));
 
     }
 
@@ -185,13 +185,13 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
                     if (isVerificationInProgress) {
                         HideSoftKeyboard.hideKeyboard(getActivity());
                         endVerifyProgress();
-                        showErrorSnackbar(R.string.phone_code_time_up);
+                        showErrorSnackbar(getString(R.string.phone_code_time_up));
                     }
                 }
             }, 8000);
         }
         else {
-            showErrorSnackbar(R.string.not_loggedIn);
+            showErrorSnackbar(getString(R.string.not_loggedIn));
             codeEntered.setError(getString(R.string.not_loggedIn));
         }
 
@@ -228,13 +228,15 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
         progressBarCodeVerify.setVisibility(View.GONE);
     }
 
-    private void showErrorSnackbar(int error) {
+    private void showErrorSnackbar(String error) {
         Snackbar snackbar = Snackbar.make(snackBarLayout, error, Snackbar.LENGTH_LONG).setAction("x", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             }
         }).setActionTextColor(getResources().getColor(R.color.colorWhite));
-
+        View snackbarView = snackbar.getView();
+        TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+        textView.setMaxLines(12);
         snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorError2));
         snackbar.show();
     }
@@ -288,12 +290,7 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
     @Override
     public void onVerificationFailed(FirebaseException e) {
         isVerificationInProgress = false;
-        if (e instanceof FirebaseAuthInvalidCredentialsException)
-            showErrorSnackbar(R.string.invalid_mobile);
-        else if (e instanceof FirebaseTooManyRequestsException)
-            showErrorSnackbar(R.string.quota_exceeded);
-        else
-            showErrorSnackbar(R.string.virtual_env_exception);
+        showErrorSnackbar(e.getMessage());
     }
 
     @Override
@@ -304,7 +301,7 @@ public class EnterCode extends Fragment implements View.OnClickListener, TextWat
             firebasePhoneAuthentication.unlinkPhoneAuth(task.getResult().getUser());
             verifiedNumbersManager.insertVerifiedNumber(new UserVerifiedNumbers(firebaseAuth.getCurrentUser(), phoneNumber), firebaseAuth.getCurrentUser());
         } else {
-            showErrorSnackbar(R.string.invalid_mobile_code);
+            showErrorSnackbar(getString(R.string.invalid_mobile_code));
             codeEntered.setError(getString(R.string.invalid_mobile_code));
         }
     }

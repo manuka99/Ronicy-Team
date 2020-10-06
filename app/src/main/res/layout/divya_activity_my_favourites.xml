@@ -4,34 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
+    android:background="@color/colorHome"
     android:orientation="vertical"
-    android:padding="@dimen/_16sdp"
     tools:context=".ui.favaourite.MyFavourites">
 
-    <TextView
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/_16sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/favourites"
-        android:textColor="@color/colorBlackText"
-        android:textSize="@dimen/_14sdp"
-        android:textStyle="bold|italic" />
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:background="@color/colorWhiteLite" />
+        <TextView
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/favourites"
+            android:textColor="@color/colorBlackText"
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="bold|italic" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/myFavs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            android:background="@color/colorWhiteLite" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/myFavs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+    </LinearLayout>
 
 </LinearLayout>

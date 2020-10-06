@@ -3,6 +3,7 @@ package com.adeasy.advertise.ui.favaourite;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,6 +51,7 @@ public class MyFavourites extends AppCompatActivity {
     AdvertisementManager advertisementManager;
     List<String> adIds;
     Map<String, String> adIdsFIds;
+    Toolbar toolbar;
 
 
     private static final String TAG = "MyFavourites";
@@ -62,11 +64,23 @@ public class MyFavourites extends AppCompatActivity {
 
         context = this;
         myFavs = findViewById(R.id.myFavs);
+        toolbar = findViewById(R.id.toolbar);
         frameLayout = findViewById(R.id.frameLayout);
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         customDialogs = new CustomDialogs(this);
         advertisementManager = new AdvertisementManager();
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("My favourites");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         myFavs.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
@@ -79,8 +93,10 @@ public class MyFavourites extends AppCompatActivity {
         firebaseFirestore.collection(FAVOURITE_COLLECTION).whereEqualTo("userID", firebaseAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                getSupportActionBar().setSubtitle( task.getResult().size() + " results");
                 adIds = new ArrayList<>();
                 adIdsFIds = new HashMap<String, String>();
+                if(task.isSuccessful()){
                 for (Favourite favourite : task.getResult().toObjects(Favourite.class)) {
                     adIds.add(favourite.getAdvertisementID());
                     adIdsFIds.put(favourite.getAdvertisementID(), favourite.getFavouriteID());
@@ -92,7 +108,7 @@ public class MyFavourites extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), new NoData()).commit();
                     frameLayout.setVisibility(View.VISIBLE);
                 }
-            }
+            }}
         });
     }
 
@@ -127,8 +143,8 @@ public class MyFavourites extends AppCompatActivity {
                         @Override
                         public boolean onLongClick(View view) {
                             new AlertDialog.Builder(context)
-                                    .setTitle("My Favourites")
-                                    .setMessage("Manage favourites")
+                                    .setTitle("Manage favourite")
+                                    .setMessage("Users can now update and manage favourites, click to view more...")
                                     .setIcon(getResources().getDrawable(R.drawable.ic_baseline_info_24_red))
                                     .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                                         @Override
@@ -146,6 +162,7 @@ public class MyFavourites extends AppCompatActivity {
                                                                     public void onComplete(@NonNull Task<Void> task) {
                                                                         if (task.isSuccessful()) {
                                                                             StartFavourites();
+                                                                            Toast.makeText(context, "Success: Advertisement was removed", Toast.LENGTH_LONG).show();
                                                                         }
                                                                         if (!task.isSuccessful()) {
                                                                             Toast.makeText(context, task.getException().getMessage(), Toast.LENGTH_LONG).show();
