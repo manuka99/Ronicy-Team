@@ -20,9 +20,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,7 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.adapter.RecyclerAdapterPublicFeed;
 import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.callback.AdvertismentSearchCallback;
+import com.adeasy.advertise.helper.EndlessScrollListener;
 import com.adeasy.advertise.helper.ViewHolderAdds;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
@@ -46,6 +49,8 @@ import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -57,6 +62,8 @@ import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_IDLE;
 
 /**
  * Created by Manuka yasas,
@@ -102,6 +109,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     DocumentSnapshot lastDoc;
     List<Object> objectList = new ArrayList<>();
     RecyclerAdapterPublicFeed recyclerAdapterPublicFeed;
+    private EndlessScrollListener scrollListener;
 
     Float imageRatio = 0.8f;
 
@@ -146,7 +154,21 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         recyclerView = view.findViewById(R.id.adMenuRecyclerView);
         aSwitch = view.findViewById(R.id.switchView);
         //recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, 1));
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, 1);
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
+
+        // Retain an instance so that you can call `resetState()` for fresh searches
+        scrollListener = new EndlessScrollListener(staggeredGridLayoutManager) {
+
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                mSwipeRefreshLayout.setRefreshing(true);
+                loadData2();
+            }
+        };
+
+        recyclerView.addOnScrollListener(scrollListener);
+
         //recyclerView.setHasFixedSize(false);
 
         customDialogs = new CustomDialogs(getActivity());
@@ -198,7 +220,12 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         query = advertisementManager.viewAddsHome(search_ids, category_selected, location_selected, aSwitch.isChecked());
 
         //loadData(query);
+
+        //new method
+        recyclerAdapterPublicFeed = new RecyclerAdapterPublicFeed(getActivity());
+        recyclerView.setAdapter(recyclerAdapterPublicFeed);
         loadData2();
+        mSwipeRefreshLayout.setRefreshing(true);
 
         return view;
     }
@@ -345,21 +372,29 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         }
     }
 
-    private void loadData2(){
+    private void loadData2() {
+        Query newQuery = query;
+        if (lastDoc == null)
+            advertisementManager.getCount(query);
+        else
+            newQuery = newQuery.startAfter(lastDoc);
+        newQuery.limit(6).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                mSwipeRefreshLayout.setRefreshing(false);
+                if (task.isSuccessful()) {
 
-    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-        @Override
-        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-           if(task.isSuccessful()){
-               objectList.addAll(task.getResult().toObjects(Advertisement.class));
-               recyclerAdapterPublicFeed = new RecyclerAdapterPublicFeed(getActivity(), objectList);
-               recyclerView.setAdapter(recyclerAdapterPublicFeed);
-           }
-        }
-    });
+                    QuerySnapshot documentSnapshots = task.getResult();
 
-
-
+                    if (documentSnapshots.size() > 0) {
+                        lastDoc = documentSnapshots.getDocuments().get(documentSnapshots.size() - 1);
+                        objectList.addAll(task.getResult().toObjects(Advertisement.class));
+                        recyclerAdapterPublicFeed.setObjects(objectList);
+                        recyclerAdapterPublicFeed.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -367,14 +402,16 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         super.onStart();
         if (!new InternetValidation().validateInternet(getActivity()))
             customDialogs.showNoInternetDialog();
-        if (firestorePagingAdapter != null) {
+        else if (recyclerAdapterPublicFeed != null) {
             mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    firestorePagingAdapter.refresh();
+                    lastDoc = null;
+                    scrollListener.resetState();
+                    recyclerAdapterPublicFeed.resetObjects();
+                    loadData2();
                 }
             });
-            firestorePagingAdapter.startListening();
         }
 
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -389,8 +426,6 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     @Override
     public void onStop() {
         super.onStop();
-        if (firestorePagingAdapter != null)
-            firestorePagingAdapter.stopListening();
     }
 
 

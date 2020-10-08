@@ -1,6 +1,7 @@
 package com.adeasy.advertise.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,9 +40,9 @@ public class RecyclerAdapterPublicFeed extends RecyclerView.Adapter<RecyclerView
 
     private static final String TAG = "RecyclerAdapterPublicFe";
 
-    public RecyclerAdapterPublicFeed(Context context, List<Object> objects) {
+    public RecyclerAdapterPublicFeed(Context context) {
         this.context = context;
-        this.objects = objects;
+        this.objects = new ArrayList<>();
     }
 
     @NonNull
@@ -59,7 +60,7 @@ public class RecyclerAdapterPublicFeed extends RecyclerView.Adapter<RecyclerView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
 
         int viewType = getItemViewType(position);
         switch (viewType) {
@@ -111,6 +112,18 @@ public class RecyclerAdapterPublicFeed extends RecyclerView.Adapter<RecyclerView
                 layoutParams.setFullSpan(true);
                 break;
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (objects.get(position) instanceof Advertisement) {
+                    Intent intent = new Intent(context, com.adeasy.advertise.ui.advertisement.Advertisement.class);
+                    intent.putExtra("adID", ((Advertisement) objects.get(position)).getId());
+                    intent.putExtra("adCID", ((Advertisement) objects.get(position)).getCategoryID());
+                    context.startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
@@ -127,6 +140,18 @@ public class RecyclerAdapterPublicFeed extends RecyclerView.Adapter<RecyclerView
             return BANNER;
         else
             return ADVERTISEMENT;
+    }
+
+    public void setObjects(List<Object> objects) {
+        int insertPosition = getItemCount();
+        this.objects.addAll(insertPosition, objects);
+        notifyItemChanged(insertPosition, getItemCount());
+    }
+
+    public void resetObjects() {
+        for (int i = 0; i < getItemCount(); ++i)
+            objects.remove(i);
+        notifyItemRangeRemoved(0, getItemCount());
     }
 
 }
