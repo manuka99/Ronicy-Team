@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.adapter.RecyclerAdapterPublicFeed;
 import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.callback.AdvertismentSearchCallback;
 import com.adeasy.advertise.helper.ViewHolderAdds;
@@ -43,6 +44,7 @@ import com.adeasy.advertise.util.CustomDialogs;
 import com.adeasy.advertise.util.InternetValidation;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -53,6 +55,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -92,6 +95,13 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     private static final int LOCATION_PICKER = 6512;
     private static final int CATEGORY_PICKER = 4662;
     private static final int FILTER_PICKER = 8825;
+
+    public static final int ITEM_PER_AD = 6;
+
+    Query query;
+    DocumentSnapshot lastDoc;
+    List<Object> objectList = new ArrayList<>();
+    RecyclerAdapterPublicFeed recyclerAdapterPublicFeed;
 
     Float imageRatio = 0.8f;
 
@@ -185,8 +195,10 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             advertismentSearchManager.searchAdsHome(searchKey);
         }
 
+        query = advertisementManager.viewAddsHome(search_ids, category_selected, location_selected, aSwitch.isChecked());
 
-        loadData(advertisementManager.viewAddsHome(search_ids, category_selected, location_selected, aSwitch.isChecked()));
+        //loadData(query);
+        loadData2();
 
         return view;
     }
@@ -331,6 +343,23 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                 }
             });
         }
+    }
+
+    private void loadData2(){
+
+    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        @Override
+        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+           if(task.isSuccessful()){
+               objectList.addAll(task.getResult().toObjects(Advertisement.class));
+               recyclerAdapterPublicFeed = new RecyclerAdapterPublicFeed(getActivity(), objectList);
+               recyclerView.setAdapter(recyclerAdapterPublicFeed);
+           }
+        }
+    });
+
+
+
     }
 
     @Override
