@@ -17,7 +17,11 @@ public class Configurations {
     public static final String PAYHERE_SECRET = "8bIpNGLREQb4UobgTUm9Dj49Z3dIeUkau4DrwsH4olA0";
 
     //spring boot server
-    public static final String SERVER_URL = "https://ronicy.herokuapp.com/user/get_token?tokenID=";
+    public static final String SPRING_SERVER_URL = "https://ronicy.herokuapp.com";
+    public static final String SERVER_URL_AUTH_TOKEN = SPRING_SERVER_URL + "/user/get_token?tokenID=";
+    public static final String SERVER_URL_PUBLIC_FCM = SPRING_SERVER_URL + "/fcm/save?token=";
+    public static final String SERVER_URL_ADMIN_FCM = SPRING_SERVER_URL + "/fcm/save-admin?token=";
+    public static final String SERVER_URL_ADMIN_FCM_UID = "&uid=";
 
     //Algolia Search Engine
     public static final String ALGOLIA_APP_ID = "43D39I7H4Q";

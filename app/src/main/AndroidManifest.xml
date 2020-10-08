@@ -31,7 +31,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.getintouch.BugStatisticsActivity"/>
+        <activity android:name=".ui.getintouch.BugStatisticsActivity" />
         <activity android:name=".ui.chat.AboutUsMainActivity" />
         <activity android:name=".ui.advertisement.FilterSearchResult" />
         <activity android:name=".ui.advertisement.LocationPicker" />
@@ -81,7 +81,7 @@
         <activity android:name=".ui.advertisement.Donations" />
         <activity android:name=".ui.advertisement.Advertisement" />
         <activity android:name=".ui.advertisement.Myadds" />
-        <activity android:name=".ui.home.MainActivity" />
+        <activity android:name=".ui.home.MainActivity" android:launchMode="singleTop" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -109,6 +109,16 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".cloudMessaging.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
     </application>
+
 
 </manifest>

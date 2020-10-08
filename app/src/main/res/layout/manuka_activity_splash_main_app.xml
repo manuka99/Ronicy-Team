@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/pattern_icon"
-        android:backgroundTint="#0D000000"
+        android:backgroundTint="#1A000000"
         android:gravity="center">
 
         <LinearLayout

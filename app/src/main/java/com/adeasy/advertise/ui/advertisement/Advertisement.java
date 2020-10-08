@@ -261,7 +261,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
             new AlertDialog.Builder(Advertisement.this)
 
-                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setIcon(getResources().getDrawable(R.drawable.ic_baseline_info_24_red))
 
                     .setTitle("You are not logged in")
 

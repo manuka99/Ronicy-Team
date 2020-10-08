@@ -31,6 +31,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -92,13 +93,13 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
         customAuthTokenManager = new CustomAuthTokenManager(this);
 
         //set name and image
-        name.setText(firebaseUser.getDisplayName());
-        Picasso.get().load(firebaseUser.getPhotoUrl()).fit().centerCrop().into(profileImage);
+        name.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        Picasso.get().load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).fit().centerCrop().into(profileImage);
     }
 
     @Override
     public void onClick(View view) {
-        if(customClaims != null) {
+        if (customClaims != null) {
             if (view == advertisement && (customClaims.isAdvertisement_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
                 startActivity(new Intent(this, AdvertisementMain.class));
             else if (view == orders && (customClaims.isOrder_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
@@ -117,7 +118,7 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
                 startActivity(new Intent(this, DashboardHome.class));
             else
                 customDialogs.showPermissionDeniedStorage();
-        }else
+        } else
             Toast.makeText(this, "Please wait while we verify you from our server...", Toast.LENGTH_LONG).show();
     }
 
@@ -137,7 +138,10 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
         roles.setText(getString(R.string.loading));
         rolesDescription = "";
         customClaims = null;
-        customAuthTokenManager.getCustomClaimsInLoggedinUser();
+        if (firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().isEmailVerified())
+            customAuthTokenManager.getCustomClaimsInLoggedinUser();
+        else
+            customDialogs.showVerifyEmail();
     }
 
     //just after the claims are received

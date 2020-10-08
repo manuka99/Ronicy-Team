@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.CustomClaimsCallback;
 import com.adeasy.advertise.callback.FacebookAuthCallback;
+import com.adeasy.advertise.cloudMessaging.ServerManagement;
 import com.adeasy.advertise.manager.CustomAuthTokenManager;
 import com.adeasy.advertise.manager.FacebookAuthManager;
 import com.adeasy.advertise.model.CustomClaims;
@@ -426,6 +427,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
             if (customClaims != null && (customClaims.isGuest_admin() || customClaims.isUser_manager() || customClaims.isChat_manager() || customClaims.isContact_manager() || customClaims.isFavourite_manager() || customClaims.isAdvertisement_manager() || customClaims.isAdmin() || customClaims.isOrder_manager())) {
                 isAdministrator = true;
                 getActivity().invalidateOptionsMenu();
+                new ServerManagement(ServerManagement.TYPE_ADMIN, FirebaseAuth.getInstance().getUid()).getFCMToken();
             } else
                 isAdministrator = false;
         } catch (Exception e) {

@@ -74,7 +74,7 @@ public class CustomAuthTokenManager {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String url = Configurations.SERVER_URL + idToken;
+        String url = Configurations.SERVER_URL_AUTH_TOKEN + idToken;
 
         Log.i(TAG, url);
 

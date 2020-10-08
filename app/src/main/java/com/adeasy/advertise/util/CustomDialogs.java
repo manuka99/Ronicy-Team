@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Manuka yasas,
@@ -164,6 +166,57 @@ public class CustomDialogs {
             Intent intent = new Intent(context, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(intent);
+        }
+    }
+
+    public void showCloudDialog(String header, String body, String image) {
+        try {
+            if (context != null) {
+                String username = "user";
+
+                if (FirebaseAuth.getInstance().getCurrentUser() != null)
+                    username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+
+                final Dialog dialog = new Dialog(context);
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                dialog.setContentView(R.layout.manuka_cloud_message_dialog);
+                dialog.setCancelable(false);
+                dialog.setCanceledOnTouchOutside(false);
+
+                TextView title = dialog.findViewById(R.id.title);
+                TextView message = dialog.findViewById(R.id.message);
+                ImageView imageView = dialog.findViewById(R.id.image);
+
+                if (image != null) {
+                    Picasso.get().load(image).fit().into(imageView);
+                    imageView.setVisibility(View.VISIBLE);
+                }
+
+                if (header != null)
+                    title.setText(header);
+                else
+                    title.setText("Team Ronicy.lk");
+
+                message.setText("Dear " + username + " " + body);
+
+                Button button = dialog.findViewById(R.id.button);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                TextView close = dialog.findViewById(R.id.close);
+                close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

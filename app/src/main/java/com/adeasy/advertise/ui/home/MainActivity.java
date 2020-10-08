@@ -9,12 +9,19 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -22,17 +29,30 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Filter;
+import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.HomeViewModel;
+import com.adeasy.advertise.cloudMessaging.MyFirebaseMessagingService;
+import com.adeasy.advertise.cloudMessaging.ServerManagement;
+import com.adeasy.advertise.manager.SharedPreferencesManager;
 import com.adeasy.advertise.model.Category;
+import com.adeasy.advertise.ui.administration.home.DashboardHome;
 import com.adeasy.advertise.ui.newPost.NewAd;
+import com.adeasy.advertise.ui.profile.Profile;
+import com.adeasy.advertise.util.CommonConstants;
+import com.adeasy.advertise.util.CustomDialogs;
 import com.adeasy.advertise.util.InternetValidation;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.RequestConfiguration;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 import com.irfaan008.irbottomnavigation.SpaceItem;
 import com.irfaan008.irbottomnavigation.SpaceNavigationView;
 import com.irfaan008.irbottomnavigation.SpaceOnClickListener;
@@ -72,14 +92,21 @@ public class MainActivity extends AppCompatActivity {
     int selectedMenueID = 0;
     String searchKey, location_selected;
     Category categorySelected;
+    CustomDialogs customDialogs;
 
     HomeViewModel homeViewModel;
+
+    //private BroadcastReceiver broadcastReceiver, broadcastReceiverCloudMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        customDialogs = new CustomDialogs(this);
+        new ServerManagement(ServerManagement.TYPE_PUBLIC, null).getFCMToken();
+
+        //for fb auth
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
                     "com.adeasy.advertise",
@@ -89,12 +116,54 @@ public class MainActivity extends AppCompatActivity {
                 md.update(signature.toByteArray());
                 Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
             }
-        }
-        catch (PackageManager.NameNotFoundException e) {
-        }
-        catch (NoSuchAlgorithmException e) {
+        } catch (PackageManager.NameNotFoundException e) {
+        } catch (NoSuchAlgorithmException e) {
         }
 
+
+        //for cloud messaging
+//        broadcastReceiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                Log.i(TAG, "Messaging token: " + new SharedPreferencesManager(getApplicationContext()).getCloudMessagingToken());
+//
+//            }
+//        };
+//        registerReceiver(broadcastReceiver, new IntentFilter(MyFirebaseMessagingService.BROADCAST_MESSAGE_TOKEN));
+
+
+        //Log.i(TAG, "Messaging token: " + new SharedPreferencesManager(getApplicationContext()).getCloudMessagingToken());
+
+
+
+
+//        try {
+//
+//            broadcastReceiverCloudMessage = new BroadcastReceiver() {
+//                @Override
+//                public void onReceive(Context context, Intent intent) {
+//                    RemoteMessage remoteMessage = intent.getParcelableExtra(CommonConstants.CLOUD_MESSAGING_DATA);
+//                    Log.i(TAG, "Messaging data: " + remoteMessage.getData());
+//
+//                    //handleCloudMessaging(remoteMessage);
+//                }
+//            };
+//            registerReceiver(broadcastReceiverCloudMessage, new IntentFilter(MyFirebaseMessagingService.BROADCAST_CLOUD_MESSAGE));
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+
+        try {
+            if (getIntent().hasExtra(CommonConstants.CLOUD_MESSAGE_BODY))
+                handleCloudDialog();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        //for google ad mob
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -212,6 +281,20 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         initializeAllFragments();
         validateFragmentSelected();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //IntentFilter filter = new IntentFilter(MyFirebaseMessagingService.BROADCAST_CLOUD_MESSAGE);
+        //LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiverCloudMessage, filter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiverCloudMessage);
     }
 
     @Override
@@ -424,15 +507,32 @@ public class MainActivity extends AppCompatActivity {
         return currentFragment;
     }
 
-    private void validateFragmentSelected(){
-        if(getCurrentFragment() instanceof Home)
+    private void validateFragmentSelected() {
+        if (getCurrentFragment() instanceof Home)
             spaceNavigationView.changeCurrentItem(0);
-        else if(getCurrentFragment() instanceof Search)
+        else if (getCurrentFragment() instanceof Search)
             spaceNavigationView.changeCurrentItem(1);
-        else if(getCurrentFragment() instanceof Orders)
+        else if (getCurrentFragment() instanceof Orders)
             spaceNavigationView.changeCurrentItem(2);
-        else if(getCurrentFragment() instanceof Account)
+        else if (getCurrentFragment() instanceof Account)
             spaceNavigationView.changeCurrentItem(3);
     }
 
+
+    private void handleCloudDialog() {
+        String header = null, body = null, image = null;
+
+        if (getIntent().hasExtra(CommonConstants.CLOUD_MESSAGE_HEADER))
+            header = getIntent().getStringExtra(CommonConstants.CLOUD_MESSAGE_HEADER);
+
+        if (getIntent().hasExtra(CommonConstants.CLOUD_MESSAGE_BODY))
+            body = getIntent().getStringExtra(CommonConstants.CLOUD_MESSAGE_BODY);
+
+        if (getIntent().hasExtra(CommonConstants.CLOUD_MESSAGE_IMAGE))
+            image = getIntent().getStringExtra(CommonConstants.CLOUD_MESSAGE_IMAGE);
+
+        if (body != null)
+            customDialogs.showCloudDialog(header, body, image);
+
+    }
 }
