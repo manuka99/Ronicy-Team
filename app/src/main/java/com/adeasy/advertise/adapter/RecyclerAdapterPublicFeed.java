@@ -37,8 +37,6 @@ public class RecyclerAdapterPublicFeed extends RecyclerView.Adapter<RecyclerView
     public static final int ADVERTISEMENT = 1;
     private static Float imageRatio = 0.8f;
 
-    private int mLowestPosition = -1;
-
     private static final String TAG = "RecyclerAdapterPublicFe";
 
     public RecyclerAdapterPublicFeed(Context context, List<Object> objects) {
@@ -63,62 +61,55 @@ public class RecyclerAdapterPublicFeed extends RecyclerView.Adapter<RecyclerView
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        if (position > mLowestPosition) {
-            // All item coming from the bottom for their first time will pass here.
-            // Bind your view here
+        int viewType = getItemViewType(position);
+        switch (viewType) {
+            case ADVERTISEMENT:
+                ViewHolderAdds viewHolderAdds = (ViewHolderAdds) holder;
+                Advertisement advertisement = (Advertisement) objects.get(position);
 
-            mLowestPosition = position;
+                viewHolderAdds.titleView.setText(advertisement.getTitle());
+                viewHolderAdds.dateView.setText(advertisement.getPreetyTime());
+                viewHolderAdds.priceView.setText(advertisement.getPreetyCurrency());
 
-            int viewType = getItemViewType(position);
-            switch (viewType) {
-                case ADVERTISEMENT:
-                    ViewHolderAdds viewHolderAdds = (ViewHolderAdds) holder;
-                    Advertisement advertisement = (Advertisement) objects.get(position);
+                try {
+                    if (imageRatio >= 1.4f)
+                        imageRatio = 0.8f;
+                    viewHolderAdds.imageView.setRatio(imageRatio);
+                    imageRatio += 0.1f;
 
-                    viewHolderAdds.titleView.setText(advertisement.getTitle());
-                    viewHolderAdds.dateView.setText(advertisement.getPreetyTime());
-                    viewHolderAdds.priceView.setText(advertisement.getPreetyCurrency());
+                    Picasso.get().load(advertisement.getImageUrls().get(0)).into(viewHolderAdds.imageView);
+                } catch (Exception e) {
 
-                    try {
-                        if (imageRatio >= 1.4f)
-                            imageRatio = 0.8f;
-                        viewHolderAdds.imageView.setRatio(imageRatio);
-                        imageRatio += 0.1f;
+                }
 
-                        Picasso.get().load(advertisement.getImageUrls().get(0)).into(viewHolderAdds.imageView);
-                    } catch (Exception e) {
+                if (advertisement.isBuynow())
+                    viewHolderAdds.buyNow.setVisibility(View.VISIBLE);
 
-                    }
+                else
+                    viewHolderAdds.buyNow.setVisibility(View.GONE);
 
-                    if (advertisement.isBuynow())
-                        viewHolderAdds.buyNow.setVisibility(View.VISIBLE);
+                break;
 
-                    else
-                        viewHolderAdds.buyNow.setVisibility(View.GONE);
+            default:
+                ViewHolderBannersHome banners = (ViewHolderBannersHome) holder;
+                AdView ad = banners.adView;
+                ad.loadAd(new AdRequest.Builder().build());
 
-                    break;
+                ViewGroup viewGroup = (ViewGroup) banners.itemView;
 
-                default:
-                    ViewHolderBannersHome banners = (ViewHolderBannersHome) holder;
-                    AdView ad = banners.adView;
-                    ad.loadAd(new AdRequest.Builder().build());
+                if (viewGroup.getChildCount() > 0) {
+                    viewGroup.removeAllViews();
+                }
 
-                    ViewGroup viewGroup = (ViewGroup) banners.itemView;
+                if (viewGroup.getParent() != null) {
+                    ((ViewGroup) ad.getParent()).removeView(ad);
+                }
 
-                    if (viewGroup.getChildCount() > 0) {
-                        viewGroup.removeAllViews();
-                    }
+                viewGroup.addView(ad);
 
-                    if (viewGroup.getParent() != null) {
-                        ((ViewGroup) ad.getParent()).removeView(ad);
-                    }
-
-                    viewGroup.addView(ad);
-
-                    StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
-                    layoutParams.setFullSpan(true);
-                    break;
-            }
+                StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
+                layoutParams.setFullSpan(true);
+                break;
         }
     }
 
