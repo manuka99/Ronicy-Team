@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.adapter.RecyclerAdapterPublicFeed;
+import com.adeasy.advertise.adapter.RecyclerAdapterPublicFeedHorizontal;
 import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.callback.AdvertismentSearchCallback;
 import com.adeasy.advertise.helper.EndlessScrollListener;
@@ -90,7 +91,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
 
     Toolbar toolbar;
     TextView adCountText, category_picker, location_picker;
-    RecyclerView recyclerView;
+    RecyclerView recyclerView, adMenuRecyclerHorizontalView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     AdvertisementManager advertisementManager;
     String searchKey, location_selected;
@@ -115,6 +116,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     DocumentSnapshot lastDoc;
     List<Object> objectList = new ArrayList<>();
     RecyclerAdapterPublicFeed recyclerAdapterPublicFeed;
+    RecyclerAdapterPublicFeedHorizontal recyclerAdapterPublicFeedHorizontal;
     Query finalNewQuery;
     CardView cardViewHeader;
     boolean isHeaderHidden = false;
@@ -164,15 +166,19 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                 getResources().getDimensionPixelSize(R.dimen.refresher_offset_end));
         cardViewHeader = view.findViewById(R.id.cardViewHeader);
         recyclerView = view.findViewById(R.id.adMenuRecyclerView);
+        adMenuRecyclerHorizontalView = view.findViewById(R.id.adMenuRecyclerHorizontalView);
         aSwitch = view.findViewById(R.id.switchView);
         recyclerView.setNestedScrollingEnabled(true);
+
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, 1) {
             @Override
             public boolean canScrollHorizontally() {
                 return false;
             }
         };
+
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
+        adMenuRecyclerHorizontalView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
         //recyclerView.setHasFixedSize(false);
 
@@ -226,8 +232,14 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
 
         //new method
         recyclerAdapterPublicFeed = new RecyclerAdapterPublicFeed(getActivity());
+        recyclerAdapterPublicFeedHorizontal = new RecyclerAdapterPublicFeedHorizontal(getActivity());
+
         recyclerView.setAdapter(recyclerAdapterPublicFeed);
+        adMenuRecyclerHorizontalView.setAdapter(recyclerAdapterPublicFeedHorizontal);
+
         loadData2();
+        loadDataTopAds();
+
         mSwipeRefreshLayout.setRefreshing(true);
 
         return view;
@@ -325,6 +337,22 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                         objectList.addAll(task.getResult().toObjects(Advertisement.class));
                         recyclerAdapterPublicFeed.setObjects(objectList);
                         recyclerAdapterPublicFeed.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
+    }
+
+    private void loadDataTopAds() {
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful() && query != null && task.getResult().getQuery().equals(query)) {
+                    QuerySnapshot documentSnapshots = task.getResult();
+                    if (documentSnapshots.size() > 0) {
+                        objectList.addAll(task.getResult().toObjects(Advertisement.class));
+                        recyclerAdapterPublicFeedHorizontal.setObjects(objectList);
+                        recyclerAdapterPublicFeedHorizontal.notifyDataSetChanged();
                     }
                 }
             }

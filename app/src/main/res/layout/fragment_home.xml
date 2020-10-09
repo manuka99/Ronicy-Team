@@ -155,6 +155,11 @@
                 android:paddingTop="@dimen/_80sdp">
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/adMenuRecyclerHorizontalView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/adMenuRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
