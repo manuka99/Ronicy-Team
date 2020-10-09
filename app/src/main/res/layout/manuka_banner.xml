@@ -9,7 +9,7 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        ads:adSize="LARGE_BANNER"
+        ads:adSize="MEDIUM_RECTANGLE"
         ads:adUnitId="ca-app-pub-2612826891658748/5962491746" />
 
 </LinearLayout>

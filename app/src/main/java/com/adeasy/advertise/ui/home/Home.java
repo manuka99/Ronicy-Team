@@ -378,14 +378,12 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             advertisementManager.getCount(query);
         else
             newQuery = newQuery.startAfter(lastDoc);
-        newQuery.limit(6).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        newQuery.limit(ITEM_PER_AD).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 mSwipeRefreshLayout.setRefreshing(false);
                 if (task.isSuccessful()) {
-
                     QuerySnapshot documentSnapshots = task.getResult();
-
                     if (documentSnapshots.size() > 0) {
                         lastDoc = documentSnapshots.getDocuments().get(documentSnapshots.size() - 1);
                         objectList.addAll(task.getResult().toObjects(Advertisement.class));
@@ -409,6 +407,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                     lastDoc = null;
                     scrollListener.resetState();
                     recyclerAdapterPublicFeed.resetObjects();
+                    recyclerView.invalidate();
                     loadData2();
                 }
             });
