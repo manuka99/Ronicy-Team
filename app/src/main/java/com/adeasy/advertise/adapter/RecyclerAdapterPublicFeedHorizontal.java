@@ -34,7 +34,7 @@ import java.util.TimerTask;
 
 public class RecyclerAdapterPublicFeedHorizontal extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Object> objects = new ArrayList<>();
+    private List<Advertisement> advertisementList;
     private Context context;
 
     public static final int ADVERTISEMENT = 1;
@@ -43,7 +43,7 @@ public class RecyclerAdapterPublicFeedHorizontal extends RecyclerView.Adapter<Re
 
     public RecyclerAdapterPublicFeedHorizontal(Context context) {
         this.context = context;
-        this.objects = new ArrayList<>();
+        this.advertisementList = new ArrayList<>();
     }
 
     @NonNull
@@ -64,7 +64,7 @@ public class RecyclerAdapterPublicFeedHorizontal extends RecyclerView.Adapter<Re
         switch (viewType) {
             case ADVERTISEMENT:
                 ViewHolderAddsHorizontal viewHolderAdds = (ViewHolderAddsHorizontal) holder;
-                Advertisement advertisement = (Advertisement) objects.get(position);
+                Advertisement advertisement = advertisementList.get(position);
 
                 viewHolderAdds.titleView.setText(advertisement.getTitle());
                 viewHolderAdds.dateView.setText(advertisement.getPreetyTime());
@@ -84,20 +84,18 @@ public class RecyclerAdapterPublicFeedHorizontal extends RecyclerView.Adapter<Re
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (objects.get(position) instanceof Advertisement) {
-                    Intent intent = new Intent(context, com.adeasy.advertise.ui.advertisement.Advertisement.class);
-                    intent.putExtra("adID", ((Advertisement) objects.get(position)).getId());
-                    intent.putExtra("adCID", ((Advertisement) objects.get(position)).getCategoryID());
-                    context.startActivity(intent);
-                }
+                Intent intent = new Intent(context, com.adeasy.advertise.ui.advertisement.Advertisement.class);
+                intent.putExtra("adID", ((Advertisement) advertisementList.get(position)).getId());
+                intent.putExtra("adCID", ((Advertisement) advertisementList.get(position)).getCategoryID());
+                context.startActivity(intent);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        if (objects != null)
-            return objects.size();
+        if (advertisementList != null)
+            return advertisementList.size();
         else
             return 0;
     }
@@ -107,12 +105,13 @@ public class RecyclerAdapterPublicFeedHorizontal extends RecyclerView.Adapter<Re
         return ADVERTISEMENT;
     }
 
-    public void setObjects(List<Object> objects) {
-        this.objects = objects;
+    public void setObjects(List<Advertisement> advertisements) {
+        this.advertisementList = advertisements;
+        notifyDataSetChanged();
     }
 
     public void resetObjects() {
-        objects.clear();
+        advertisementList.clear();
         notifyDataSetChanged();
     }
 

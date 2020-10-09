@@ -173,7 +173,9 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         recyclerView = view.findViewById(R.id.adMenuRecyclerView);
         adMenuRecyclerHorizontalView = view.findViewById(R.id.adMenuRecyclerHorizontalView);
         aSwitch = view.findViewById(R.id.switchView);
-        recyclerView.setNestedScrollingEnabled(true);
+
+        recyclerView.setNestedScrollingEnabled(false);
+        adMenuRecyclerHorizontalView.setNestedScrollingEnabled(false);
 
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, 1) {
             @Override
@@ -244,7 +246,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         recyclerView.setAdapter(recyclerAdapterPublicFeed);
         adMenuRecyclerHorizontalView.setAdapter(recyclerAdapterPublicFeedHorizontal);
 
-        loadData2();
+        loadDataMain();
         loadDataTopAds();
 
         mSwipeRefreshLayout.setRefreshing(true);
@@ -308,7 +310,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                     if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                         //Log.i(TAG, "BOTTOM SCROLL");
                         mSwipeRefreshLayout.setRefreshing(true);
-                        loadData2();
+                        loadDataMain();
                     }
                 }
             });
@@ -319,7 +321,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
 
 //The LinearSnapHelper will snap the center of the target child view to the center of the attached RecyclerView , it's optional if you want , you can use it
         final LinearSnapHelper linearSnapHelper = new LinearSnapHelper();
-        linearSnapHelper.attachToRecyclerView(recyclerView);
+        linearSnapHelper.attachToRecyclerView(adMenuRecyclerHorizontalView);
 
         final Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -329,10 +331,11 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
 
                 if (layoutManager.findLastCompletelyVisibleItemPosition() < (recyclerAdapterPublicFeedHorizontal.getItemCount() - 1)) {
 
-                    layoutManager.smoothScrollToPosition(recyclerView, new RecyclerView.State(), layoutManager.findLastCompletelyVisibleItemPosition() + 1);
+                    layoutManager.smoothScrollToPosition(adMenuRecyclerHorizontalView, new RecyclerView.State(), layoutManager.findLastCompletelyVisibleItemPosition() + 1);
+
                 } else if (layoutManager.findLastCompletelyVisibleItemPosition() == (recyclerAdapterPublicFeedHorizontal.getItemCount() - 1)) {
 
-                    layoutManager.smoothScrollToPosition(recyclerView, new RecyclerView.State(), 0);
+                    layoutManager.smoothScrollToPosition(adMenuRecyclerHorizontalView, new RecyclerView.State(), 0);
                 }
             }
         }, 0, scrollTime);
@@ -348,7 +351,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             getActivity().startActivityForResult(new Intent(getActivity(), FilterSearchResult.class), FILTER_PICKER);
     }
 
-    private void loadData2() {
+    private void loadDataMain() {
         finalNewQuery = query.limit(ITEM_PER_AD);
 
         if (lastDoc == null)
@@ -364,9 +367,10 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                     QuerySnapshot documentSnapshots = task.getResult();
                     if (documentSnapshots.size() > 0) {
                         lastDoc = documentSnapshots.getDocuments().get(documentSnapshots.size() - 1);
+                        objectList = new ArrayList<>();
                         objectList.addAll(task.getResult().toObjects(Advertisement.class));
+                        objectList.add(new AdRequest.Builder().build());
                         recyclerAdapterPublicFeed.setObjects(objectList);
-                        recyclerAdapterPublicFeed.notifyDataSetChanged();
                     }
                 }
             }
@@ -374,15 +378,15 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     }
 
     private void loadDataTopAds() {
+        Log.d(TAG, "loading top ");
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful() && query != null && task.getResult().getQuery().equals(query)) {
                     QuerySnapshot documentSnapshots = task.getResult();
                     if (documentSnapshots.size() > 0) {
-                        objectList.addAll(task.getResult().toObjects(Advertisement.class));
-                        recyclerAdapterPublicFeedHorizontal.setObjects(objectList);
-                        recyclerAdapterPublicFeedHorizontal.notifyDataSetChanged();
+                        recyclerAdapterPublicFeedHorizontal.resetObjects();
+                        recyclerAdapterPublicFeedHorizontal.setObjects(task.getResult().toObjects(Advertisement.class));
                     }
                 }
             }
@@ -399,7 +403,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                 @Override
                 public void onRefresh() {
                     mSwipeRefreshLayout.setRefreshing(true);
-                    resetAdapterAndView();
+                    resetAdapterAndLoadDataMain();
                 }
             });
         }
@@ -409,12 +413,12 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 mSwipeRefreshLayout.setRefreshing(true);
                 query = advertisementManager.viewAddsHome(search_ids, category_selected, location_selected, b);
-                resetAdapterAndView();
+                resetAdapterAndLoadDataMain();
             }
         });
     }
 
-    private void resetAdapterAndView() {
+    private void resetAdapterAndLoadDataMain() {
         if (recyclerAdapterPublicFeed != null) {
             try {
                 adCountText.setText(" loading..");
@@ -429,7 +433,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
 
             lastDoc = null;
             recyclerAdapterPublicFeed.resetObjects();
-            loadData2();
+            loadDataMain();
         }
     }
 
@@ -504,8 +508,10 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     public void onSearchComplete(List<String> ids, List<Advertisement> advertisementList) {
         search_ids = ids;
         Log.i(TAG, "ids: " + ids);
+
         query = advertisementManager.viewAddsHome(ids, category_selected, location_selected, aSwitch.isChecked());
-        resetAdapterAndView();
+        resetAdapterAndLoadDataMain();
+        loadDataTopAds();
     }
 
 }

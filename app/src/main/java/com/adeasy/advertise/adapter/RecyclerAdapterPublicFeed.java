@@ -138,14 +138,16 @@ public class RecyclerAdapterPublicFeed extends RecyclerView.Adapter<RecyclerView
     @Override
     public int getItemViewType(int position) {
         Log.i("reeecc", String.valueOf(getItemCount()));
-        if (position != 0 && position % Home.ITEM_PER_AD == 0)
-            return BANNER;
-        else
+        if (objects.get(position) instanceof Advertisement)
             return ADVERTISEMENT;
+        else
+            return BANNER;
     }
 
     public void setObjects(List<Object> objects) {
-        this.objects = objects;
+        int start = getItemCount();
+        this.objects.addAll(start, objects);
+        notifyItemRangeInserted(start, start + objects.size());
     }
 
     public void resetObjects() {
