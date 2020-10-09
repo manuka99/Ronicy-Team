@@ -14,10 +14,13 @@ import androidx.fragment.app.Fragment;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +73,8 @@ import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_IDLE;
 
@@ -120,8 +125,8 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     Query finalNewQuery;
     CardView cardViewHeader;
     boolean isHeaderHidden = false;
-
-    Float imageRatio = 0.8f;
+    LinearLayoutManager layoutManager;
+    int scrollTime = 6000;
 
     public Home() {
         // Required empty public constructor
@@ -177,8 +182,10 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             }
         };
 
+        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        adMenuRecyclerHorizontalView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        adMenuRecyclerHorizontalView.setLayoutManager(layoutManager);
 
         //recyclerView.setHasFixedSize(false);
 
@@ -306,6 +313,29 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                 }
             });
         }
+
+
+        //auto scroll in the top header ads
+
+//The LinearSnapHelper will snap the center of the target child view to the center of the attached RecyclerView , it's optional if you want , you can use it
+        final LinearSnapHelper linearSnapHelper = new LinearSnapHelper();
+        linearSnapHelper.attachToRecyclerView(recyclerView);
+
+        final Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+
+                if (layoutManager.findLastCompletelyVisibleItemPosition() < (recyclerAdapterPublicFeedHorizontal.getItemCount() - 1)) {
+
+                    layoutManager.smoothScrollToPosition(recyclerView, new RecyclerView.State(), layoutManager.findLastCompletelyVisibleItemPosition() + 1);
+                } else if (layoutManager.findLastCompletelyVisibleItemPosition() == (recyclerAdapterPublicFeedHorizontal.getItemCount() - 1)) {
+
+                    layoutManager.smoothScrollToPosition(recyclerView, new RecyclerView.State(), 0);
+                }
+            }
+        }, 0, scrollTime);
     }
 
     @Override
