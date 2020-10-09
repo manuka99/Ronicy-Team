@@ -121,6 +121,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/location"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -258,16 +259,8 @@
                     android:id="@+id/adView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    ads:adSize="LARGE_BANNER"
+                    ads:adSize="MEDIUM_RECTANGLE"
                     ads:adUnitId="ca-app-pub-2612826891658748/5962491746"/>
-
-                <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/adView3"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    ads:adSize="LARGE_BANNER"
-                    ads:adUnitId="ca-app-pub-2612826891658748/2737029777"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

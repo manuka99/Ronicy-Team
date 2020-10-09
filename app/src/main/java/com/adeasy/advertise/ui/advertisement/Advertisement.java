@@ -79,7 +79,7 @@ import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERM
  **/
 public class Advertisement extends AppCompatActivity implements AdvertisementCallback, CategoryCallback, View.OnClickListener {
 
-    TextView AdTitle, AdCondition, AdDescription, AdPrice, adTime, adCatName;
+    TextView AdTitle, AdCondition, AdDescription, AdPrice, adTime, adCatName, location;
     SliderView sliderView;
     AdvertisementSliderAdapter advertisementSliderAdapter;
     String adID, adCID;
@@ -98,7 +98,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
     CustomDialogs customDialogs;
 
-    AdView adView1, adView2, adView3, adView4;
+    AdView adView1, adView2, adView4;
 
     private static final String ADVERTISEMENTID = "adID";
     private static final String TAG = "EditAdvertisement";
@@ -140,6 +140,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         });
 
         adCatName = findViewById(R.id.adDetailsCategoryName);
+        location = findViewById(R.id.location);
         adTime = findViewById(R.id.adDetailsTime);
         AdTitle = findViewById(R.id.adDetailsTitle);
         AdCondition = findViewById(R.id.adDetailsCondition);
@@ -162,11 +163,9 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
         adView1 = findViewById(R.id.adView1);
         adView2 = findViewById(R.id.adView2);
-        adView3 = findViewById(R.id.adView3);
         adView4 = findViewById(R.id.adView4);
         adView1.loadAd(new AdRequest.Builder().build());
         adView2.loadAd(new AdRequest.Builder().build());
-        adView3.loadAd(new AdRequest.Builder().build());
         adView4.loadAd(new AdRequest.Builder().build());
 
         loadData();
@@ -341,6 +340,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
                     AdCondition.setText(advertisement.getCondition());
                     AdDescription.setText(advertisement.getDescription());
                     AdPrice.setText(advertisement.getPreetyCurrency());
+                    location.setText(advertisement.getLocation());
                     displayImageSlider();
                     if (advertisement.isBuynow())
                         adBuyNow.setVisibility(View.VISIBLE);

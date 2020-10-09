@@ -53,6 +53,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -109,6 +110,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     List<Object> objectList = new ArrayList<>();
     RecyclerAdapterPublicFeed recyclerAdapterPublicFeed;
     private EndlessScrollListener scrollListener;
+    Query finalNewQuery;
 
     Float imageRatio = 0.8f;
 
@@ -245,16 +247,18 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     }
 
     private void loadData2() {
-        Query newQuery = query;
+        finalNewQuery = query.limit(ITEM_PER_AD);
+
         if (lastDoc == null)
             advertisementManager.getCount(query);
         else
-            newQuery = newQuery.startAfter(lastDoc);
-        newQuery.limit(ITEM_PER_AD).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            finalNewQuery = finalNewQuery.startAfter(lastDoc);
+
+        finalNewQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 mSwipeRefreshLayout.setRefreshing(false);
-                if (task.isSuccessful()) {
+                if (task.isSuccessful() && finalNewQuery != null && task.getResult().getQuery().equals(finalNewQuery)) {
                     QuerySnapshot documentSnapshots = task.getResult();
                     if (documentSnapshots.size() > 0) {
                         lastDoc = documentSnapshots.getDocuments().get(documentSnapshots.size() - 1);
@@ -293,6 +297,17 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
 
     private void resetAdapterAndView() {
         if (recyclerAdapterPublicFeed != null) {
+            try {
+                adCountText.setText(" loading..");
+            } catch (NullPointerException e) {
+                Log.i(TAG, "fragments changed");
+            }
+            try {
+                toolbar.setSubtitle("loading..");
+            } catch (NullPointerException e) {
+                Log.i(TAG, "fragments changed");
+            }
+
             lastDoc = null;
             scrollListener.resetState();
             recyclerAdapterPublicFeed.resetObjects();
@@ -329,7 +344,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
 
     @Override
     public void onAdCount(Task<QuerySnapshot> task) {
-        if (task.isSuccessful()) {
+        if (task.isSuccessful() && query != null && task.getResult().getQuery().equals(query)) {
             try {
                 adCountText.setText(task.getResult().size() + " results");
             } catch (NullPointerException e) {
