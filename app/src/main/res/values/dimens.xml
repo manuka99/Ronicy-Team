@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources  xmlns:tools="http://schemas.android.com/tools">
+    <dimen name="refresher_offset">@dimen/_120sdp</dimen>
+    <dimen name="refresher_offset_end">@dimen/_120sdp</dimen>
+
+    <!-- navigation overridden -->
+    <dimen name="badge_left_margin" tools:override="true">@dimen/_4sdp</dimen>
+    <dimen name="centre_content_width" tools:override="true">@dimen/_80sdp</dimen>
+    <dimen name="main_content_height" tools:override="true">@dimen/_46sdp</dimen>
+    <dimen name="space_centre_button_default_size" tools:override="true">@dimen/_56sdp</dimen>
+    <dimen name="space_centre_button_margin" tools:override="true">@dimen/_6sdp</dimen>
+    <dimen name="space_item_icon_default_size" tools:override="true">@dimen/_18sdp</dimen>
+    <dimen name="space_item_icon_only_size" tools:override="true">@dimen/_22sdp</dimen>
+    <dimen name="space_item_text_default_size" tools:override="true">@dimen/_14sdp</dimen>
+    <dimen name="space_navigation_height" tools:override="true">@dimen/_66sdp</dimen>
+    <dimen name="view_bottom_margin" tools:override="true">@dimen/_40sdp</dimen>
+
+</resources>

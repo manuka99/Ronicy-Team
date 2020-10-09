@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -20,6 +22,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
@@ -47,6 +51,8 @@ import com.adeasy.advertise.util.CustomDialogs;
 import com.adeasy.advertise.util.InternetValidation;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -109,8 +115,9 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     DocumentSnapshot lastDoc;
     List<Object> objectList = new ArrayList<>();
     RecyclerAdapterPublicFeed recyclerAdapterPublicFeed;
-    private EndlessScrollListener scrollListener;
     Query finalNewQuery;
+    CardView cardViewHeader;
+    boolean isHeaderHidden = false;
 
     Float imageRatio = 0.8f;
 
@@ -152,23 +159,20 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         mSwipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
+        mSwipeRefreshLayout.setProgressViewOffset(false,
+                getResources().getDimensionPixelSize(R.dimen.refresher_offset),
+                getResources().getDimensionPixelSize(R.dimen.refresher_offset_end));
+        cardViewHeader = view.findViewById(R.id.cardViewHeader);
         recyclerView = view.findViewById(R.id.adMenuRecyclerView);
         aSwitch = view.findViewById(R.id.switchView);
-        //recyclerView.setNestedScrollingEnabled(false);
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, 1);
-        recyclerView.setLayoutManager(staggeredGridLayoutManager);
-
-        // Retain an instance so that you can call `resetState()` for fresh searches
-        scrollListener = new EndlessScrollListener(staggeredGridLayoutManager) {
-
+        recyclerView.setNestedScrollingEnabled(true);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, 1) {
             @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                mSwipeRefreshLayout.setRefreshing(true);
-                loadData2();
+            public boolean canScrollHorizontally() {
+                return false;
             }
         };
-
-        recyclerView.addOnScrollListener(scrollListener);
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
 
         //recyclerView.setHasFixedSize(false);
 
@@ -230,10 +234,66 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         aSwitch.setOnClickListener(this);
+
+        NestedScrollView nestedSV = (NestedScrollView) view.findViewById(R.id.nestedScroll);
+
+        if (nestedSV != null) {
+
+            nestedSV.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                    if (scrollY > 0) {
+                        // Scrolling up
+                        if (isHeaderHidden) {
+//                            Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.moveup);
+//                            cardViewHeader.startAnimation(aniSlide);
+//                            cardViewHeader.setVisibility(View.GONE);
+                        }
+
+                    } else {
+                        // User scrolls down
+                        if (!isHeaderHidden) {
+//                            Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.movedown);
+//                            cardViewHeader.startAnimation(aniSlide);
+//                            cardViewHeader.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    if (scrollY > oldScrollY) {
+                        if (!isHeaderHidden) {
+                            Log.i(TAG, "Scroll DOWN");
+                            Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.moveup);
+                            cardViewHeader.startAnimation(aniSlide);
+                            cardViewHeader.setVisibility(View.INVISIBLE);
+                            isHeaderHidden = true;
+                        }
+                    }
+                    if (scrollY < oldScrollY) {
+                        if (isHeaderHidden) {
+                            Log.i(TAG, "Scroll UP");
+                            Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.movedown);
+                            cardViewHeader.startAnimation(aniSlide);
+                            cardViewHeader.setVisibility(View.VISIBLE);
+                            isHeaderHidden = false;
+                        }
+                    }
+
+                    if (scrollY == 0) {
+                        //Log.i(TAG, "TOP SCROLL");
+                    }
+
+                    if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                        //Log.i(TAG, "BOTTOM SCROLL");
+                        mSwipeRefreshLayout.setRefreshing(true);
+                        loadData2();
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -280,6 +340,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
+                    mSwipeRefreshLayout.setRefreshing(true);
                     resetAdapterAndView();
                 }
             });
@@ -309,7 +370,6 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             }
 
             lastDoc = null;
-            scrollListener.resetState();
             recyclerAdapterPublicFeed.resetObjects();
             loadData2();
         }
