@@ -85,7 +85,6 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     TextView adCountText, category_picker, location_picker;
     RecyclerView recyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    FirestorePagingAdapter<Advertisement, ViewHolderAdds> firestorePagingAdapter;
     AdvertisementManager advertisementManager;
     String searchKey, location_selected;
     Category category_selected;
@@ -219,8 +218,6 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
 
         query = advertisementManager.viewAddsHome(search_ids, category_selected, location_selected, aSwitch.isChecked());
 
-        //loadData(query);
-
         //new method
         recyclerAdapterPublicFeed = new RecyclerAdapterPublicFeed(getActivity());
         recyclerView.setAdapter(recyclerAdapterPublicFeed);
@@ -245,131 +242,6 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             getActivity().startActivityForResult(new Intent(getActivity(), LocationPicker.class), LOCATION_PICKER);
         else if (view == filters)
             getActivity().startActivityForResult(new Intent(getActivity(), FilterSearchResult.class), FILTER_PICKER);
-    }
-
-    public void loadData(Query query) {
-
-        advertisementManager.getCount(query);
-
-        PagedList.Config config = new PagedList.Config.Builder()
-                .setEnablePlaceholders(false)
-                .setInitialLoadSizeHint(3)
-                .setPageSize(3)
-                .build();
-
-        FirestorePagingOptions<Advertisement> options = new FirestorePagingOptions.Builder<Advertisement>()
-                .setLifecycleOwner(this)
-                .setQuery(query, config, Advertisement.class)
-                .build();
-
-        if (firestorePagingAdapter != null)
-            firestorePagingAdapter.updateOptions(options);
-
-        else {
-            firestorePagingAdapter =
-                    new FirestorePagingAdapter<Advertisement, ViewHolderAdds>(
-                            options
-                    ) {
-                        @Override
-                        protected void onBindViewHolder(@NonNull final ViewHolderAdds holder, final int position, @NonNull Advertisement advertisement) {
-
-                            holder.titleView.setText(advertisement.getTitle());
-                            holder.dateView.setText(advertisement.getPreetyTime());
-                            holder.priceView.setText(advertisement.getPreetyCurrency());
-
-                            try {
-                                if (imageRatio >= 1.4f)
-                                    imageRatio = 0.8f;
-                                holder.imageView.setRatio(imageRatio);
-                                imageRatio += 0.1f;
-
-                                Picasso.get().load(advertisement.getImageUrls().get(0)).into(holder.imageView);
-                            } catch (Exception e) {
-
-                            }
-
-                            if (advertisement.isBuynow())
-                                holder.buyNow.setVisibility(View.VISIBLE);
-
-                            else
-                                holder.buyNow.setVisibility(View.GONE);
-
-                            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Intent intent = new Intent(getContext(), com.adeasy.advertise.ui.advertisement.Advertisement.class);
-                                    intent.putExtra("adID", getItem(position).getId());
-                                    intent.putExtra("adCID", (String) getItem(position).get("categoryID"));
-                                    startActivity(intent);
-                                    //Toast.makeText(view.getContext(), getItem(position).getId(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-
-                        }
-
-                        @NonNull
-                        @Override
-                        public ViewHolderAdds onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manuka_ad_menu, parent, false);
-                            return new ViewHolderAdds(view);
-                        }
-
-                        @Override
-                        protected void onLoadingStateChanged(@NonNull com.firebase.ui.firestore.paging.LoadingState state) {
-                            super.onLoadingStateChanged(state);
-                            switch (state) {
-                                case LOADING_INITIAL:
-                                    mSwipeRefreshLayout.setRefreshing(true);
-                                case LOADING_MORE:
-                                    // Do your loading animation
-                                    mSwipeRefreshLayout.setRefreshing(true);
-                                    break;
-
-                                case LOADED:
-                                    // Stop Animation
-                                    mSwipeRefreshLayout.setRefreshing(false);
-                                    break;
-
-                                case FINISHED:
-                                    try {
-                                        //Toast.makeText(getActivity(), "No more ads..", Toast.LENGTH_SHORT).show();
-                                    } catch (Exception e) {
-                                        Log.i(TAG, "Exception at toast");
-                                    }
-                                    mSwipeRefreshLayout.setRefreshing(false);
-                                    break;
-
-                                case ERROR:
-                                    mSwipeRefreshLayout.setRefreshing(false);
-                                    retry();
-                                    break;
-                            }
-                        }
-
-                        @Override
-                        protected void onError(@NonNull Exception e) {
-                            super.onError(e);
-                            mSwipeRefreshLayout.setRefreshing(false);
-                            e.printStackTrace();
-                            //Handle Error
-                            refresh();
-                        }
-
-                        @Override
-                        public int getItemCount() {
-                            return super.getItemCount();
-                        }
-                    };
-
-            firestorePagingAdapter.startListening();
-            recyclerView.setAdapter(firestorePagingAdapter);
-            mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    firestorePagingAdapter.refresh();
-                }
-            });
-        }
     }
 
     private void loadData2() {
@@ -400,15 +272,11 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         super.onStart();
         if (!new InternetValidation().validateInternet(getActivity()))
             customDialogs.showNoInternetDialog();
-        else if (recyclerAdapterPublicFeed != null) {
+        else {
             mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    lastDoc = null;
-                    scrollListener.resetState();
-                    recyclerAdapterPublicFeed.resetObjects();
-                    recyclerView.invalidate();
-                    loadData2();
+                    resetAdapterAndView();
                 }
             });
         }
@@ -416,9 +284,20 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                loadData(advertisementManager.viewAddsHome(search_ids, category_selected, location_selected, b));
+                mSwipeRefreshLayout.setRefreshing(true);
+                query = advertisementManager.viewAddsHome(search_ids, category_selected, location_selected, b);
+                resetAdapterAndView();
             }
         });
+    }
+
+    private void resetAdapterAndView() {
+        if (recyclerAdapterPublicFeed != null) {
+            lastDoc = null;
+            scrollListener.resetState();
+            recyclerAdapterPublicFeed.resetObjects();
+            loadData2();
+        }
     }
 
     //Stop Listening Adapter
@@ -492,7 +371,8 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     public void onSearchComplete(List<String> ids, List<Advertisement> advertisementList) {
         search_ids = ids;
         Log.i(TAG, "ids: " + ids);
-        loadData(advertisementManager.viewAddsHome(ids, category_selected, location_selected, aSwitch.isChecked()));
+        query = advertisementManager.viewAddsHome(ids, category_selected, location_selected, aSwitch.isChecked());
+        resetAdapterAndView();
     }
 
 }

@@ -2,6 +2,7 @@ package com.adeasy.advertise.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,25 +137,20 @@ public class RecyclerAdapterPublicFeed extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public int getItemViewType(int position) {
-        if (position % Home.ITEM_PER_AD == Home.ITEM_PER_AD - 1)
+        Log.i("reeecc", String.valueOf(getItemCount()));
+        if (position != 0 && position % Home.ITEM_PER_AD == 0)
             return BANNER;
         else
             return ADVERTISEMENT;
     }
 
     public void setObjects(List<Object> objects) {
-
-//        int insertPosition = getItemCount();
-//        this.objects.addAll(insertPosition, objects);
-//        notifyItemChanged(insertPosition, getItemCount());
-
         this.objects = objects;
     }
 
     public void resetObjects() {
-        for (int i = 0; i < getItemCount(); ++i)
-            objects.remove(i);
-        notifyItemRangeRemoved(0, getItemCount());
+        objects.clear();
+        notifyDataSetChanged();
     }
 
 }
