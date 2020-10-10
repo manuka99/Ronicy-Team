@@ -13,6 +13,10 @@ import com.adeasy.advertise.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+//Creator-A.M.W.W.R.L.Wataketiya
+//IT19014128
+//ravinduwata@gmail.com
+
 public class GetInTouchActivity extends AppCompatActivity {
 
     Button bugsActivityBtn, suggestionsBtn, contactUsBtn, radminBtn;

@@ -26,6 +26,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+//Creator-A.M.W.W.R.L.Wataketiya
+//IT19014128
+//ravinduwata@gmail.com
+
 public class AddNewBugActivity extends AppCompatActivity {
 
     EditText bugDescription;

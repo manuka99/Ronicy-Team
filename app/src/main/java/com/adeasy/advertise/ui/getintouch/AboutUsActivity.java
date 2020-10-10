@@ -6,6 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.adeasy.advertise.R;
 
+//Creator-A.M.W.W.R.L.Wataketiya
+//IT19014128
+//ravinduwata@gmail.com
+
 public class AboutUsActivity extends AppCompatActivity {
 
     @Override
