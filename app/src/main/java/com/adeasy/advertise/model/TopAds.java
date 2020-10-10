@@ -5,18 +5,4 @@ package com.adeasy.advertise.model;/**
  **/
 public class TopAds extends Advertisement {
 
-    private Boolean isTopAd;
-
-    public TopAds(){
-
-    }
-
-    public Boolean getTopAd() {
-        return isTopAd;
-    }
-
-    public void setTopAd(Boolean topAd) {
-        isTopAd = topAd;
-    }
-
 }

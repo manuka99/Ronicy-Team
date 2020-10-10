@@ -32,6 +32,7 @@ import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -119,7 +120,11 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
     private static final int CATEGORY_PICKER = 4662;
     private static final int FILTER_PICKER = 8825;
 
-    public static final int ITEM_PER_AD = 6;
+    public static final int ITEM_PER_AD_USED = 0;
+    public static final int ITEM_PER_AD_1 = 8;
+    public static final int ITEM_PER_AD_2 = 7;
+    public static final int ITEM_PER_AD_3 = 11;
+
     public static final int TOP_AD_COUNT = 2;
 
     Query query;
@@ -135,6 +140,9 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
     ImageView spotlight;
     PromotionManager promotionManager;
     List<String> topAdIds;
+    boolean isAllAdsLoaded = false;
+    boolean loadingAdsTask = false;
+    ProgressBar progressBar;
 
     public Home() {
         // Required empty public constructor
@@ -174,10 +182,8 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         mSwipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
-        mSwipeRefreshLayout.setProgressViewOffset(false,
-                getResources().getDimensionPixelSize(R.dimen.refresher_offset),
-                getResources().getDimensionPixelSize(R.dimen.refresher_offset_end));
         cardViewHeader = view.findViewById(R.id.cardViewHeader);
+        progressBar = view.findViewById(R.id.progressBar);
         spotlight = view.findViewById(R.id.spotlight);
         recyclerView = view.findViewById(R.id.adMenuRecyclerView);
         adMenuRecyclerHorizontalView = view.findViewById(R.id.adMenuRecyclerHorizontalView);
@@ -255,7 +261,6 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
 
         recyclerView.setAdapter(recyclerAdapterPublicFeed);
         adMenuRecyclerHorizontalView.setAdapter(recyclerAdapterPublicFeedHorizontal);
-        mSwipeRefreshLayout.setRefreshing(true);
 
         resetDataPublicFeed();
         loadDataPublicFeed();
@@ -294,6 +299,9 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
                     }
 
                     if (scrollY > oldScrollY) {
+                        if (!loadingAdsTask)
+                            loadTopAndRegularAds();
+
                         if (!isHeaderHidden) {
                             Log.i(TAG, "Scroll DOWN");
                             Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.moveup);
@@ -318,8 +326,8 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
 
                     if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                         //Log.i(TAG, "BOTTOM SCROLL");
-                        mSwipeRefreshLayout.setRefreshing(true);
-                        loadTopAndRegularAds();
+//                        mSwipeRefreshLayout.setRefreshing(true);
+//                        loadTopAndRegularAds();
                     }
                 }
             });
@@ -361,15 +369,18 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
     }
 
     private void loadTopAndRegularAds() {
+
+        loadingAdsTask = true;
+
         //load the top ads
         Log.d(TAG, "loading top ads");
 
-        //get new top ads
+        //get new top ads ids
         if (topAdIds == null || topAdIds.size() == 0)
             loadTopAds();
 
         //if there are top ads
-        if (topAdIds != null && topAdIds.size() > 0) {
+        if (topAdIds != null && !isAllAdsLoaded && topAdIds.size() > 0) {
 
             Query topAdsQuery = advertisementManager.homeAdsByIds(topAdIds).limit(TOP_AD_COUNT);
 
@@ -386,8 +397,10 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
                             objectList = new ArrayList<>();
                             objectList.addAll(task.getResult().toObjects(TopAds.class));
                             recyclerAdapterPublicFeed.setObjects(objectList);
-                        }else
+                        } else {
                             lastDocTop = null;
+                            progressBar.setVisibility(View.GONE);
+                        }
                     } else
                         Log.i(TAG, task.getException().getMessage());
 
@@ -399,7 +412,7 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
     }
 
     private void loadRegularAds() {
-        finalNewQuery = query.limit(ITEM_PER_AD);
+        finalNewQuery = query.limit(getQueryLimitVlueForRegularAds());
 
         if (lastDoc == null)
             advertisementManager.getCount(query);
@@ -409,7 +422,7 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
         finalNewQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                mSwipeRefreshLayout.setRefreshing(false);
+
                 if (task.isSuccessful() && finalNewQuery != null && task.getResult().getQuery().equals(finalNewQuery)) {
                     QuerySnapshot documentSnapshots = task.getResult();
                     if (documentSnapshots.size() > 0) {
@@ -418,8 +431,11 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
                         objectList.addAll(task.getResult().toObjects(Advertisement.class));
                         objectList.add(new AdRequest.Builder().build());
                         recyclerAdapterPublicFeed.setObjects(objectList);
-                    }
+                        isAllAdsLoaded = false;
+                    } else
+                        isAllAdsLoaded = true;
                 }
+                loadingAdsTask = false;
             }
         });
     }
@@ -488,7 +504,7 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
             mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    mSwipeRefreshLayout.setRefreshing(true);
+                    mSwipeRefreshLayout.setRefreshing(false);
                     resetDataPublicFeed();
                     loadDataPublicFeed();
                 }
@@ -498,7 +514,6 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                mSwipeRefreshLayout.setRefreshing(true);
                 query = advertisementManager.viewAddsHome(search_ids, category_selected, location_selected, b);
                 resetDataPublicFeed();
                 loadDataPublicFeed();
@@ -525,6 +540,7 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
 
             //reset top ad list
             topAdIds = null;
+            isAllAdsLoaded = false;
 
             //reset adapters
             recyclerAdapterPublicFeed.resetObjects();
@@ -532,6 +548,12 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
 
             //remove spotlight image
             spotlight.setVisibility(View.GONE);
+
+            //load data
+            loadingAdsTask = false;
+
+            //progress bar
+            progressBar.setVisibility(View.VISIBLE);
         }
     }
 
@@ -629,6 +651,15 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
 
     @Override
     public void onPromotionsListIds(List<String> ids, Query promotionQuery) {
+    }
+
+    private int getQueryLimitVlueForRegularAds() {
+        if (ITEM_PER_AD_USED == ITEM_PER_AD_1)
+            return ITEM_PER_AD_2;
+        else if (ITEM_PER_AD_USED == ITEM_PER_AD_2)
+            return ITEM_PER_AD_3;
+        else
+            return ITEM_PER_AD_1;
     }
 
 }

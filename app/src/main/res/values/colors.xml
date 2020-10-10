@@ -35,4 +35,5 @@
     <color name="custom_background_color">#e2f3f5</color>
     <color name="btnColor2">#2f89fc</color>
     <color name="whiteLogin">#CCFFFFFF</color>
+    <color name="top_ad_colour">#38FFE066</color>
 </resources>

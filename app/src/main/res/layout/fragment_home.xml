@@ -182,13 +182,24 @@
                     android:id="@+id/adMenuRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_6sdp" />
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginTop="@dimen/_8sdp" />
 
                 <FrameLayout
                     android:id="@+id/frameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_marginTop="@dimen/_80sdp"
+                    android:layout_marginBottom="@dimen/_120sdp"
+                    android:layout_width="match_parent"
+                    android:indeterminate="true"
+                    android:indeterminateTint="#99BFBFBF"
+                    android:indeterminateTintMode="src_atop"
+                    android:layout_height="@dimen/_60sdp" />
 
             </LinearLayout>
 

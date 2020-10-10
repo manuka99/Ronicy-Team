@@ -3,6 +3,7 @@ package com.adeasy.advertise.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.adeasy.advertise.helper.ViewHolderAdds;
 import com.adeasy.advertise.helper.ViewHolderBannersHome;
 import com.adeasy.advertise.helper.ViewHolderPhoneNumbers;
 import com.adeasy.advertise.model.Advertisement;
+import com.adeasy.advertise.model.Promotion;
 import com.adeasy.advertise.model.TopAds;
 import com.adeasy.advertise.ui.home.Home;
 import com.google.android.gms.ads.AdRequest;
@@ -23,6 +25,7 @@ import com.google.android.gms.ads.AdView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -99,11 +102,11 @@ public class RecyclerAdapterPublicFeed extends RecyclerView.Adapter<RecyclerView
                 viewHolderAdds.priceView.setText(advertisement.getPreetyCurrency());
 
                 try {
-                    if (imageRatio >= 1.2f)
+                    if (imageRatio >= 1.4f)
                         imageRatio = 0.8f;
 
                     if (viewType == TOP_AD)
-                        imageRatio = 1.4f;
+                        imageRatio = 1.2f;
 
                     viewHolderAdds.imageView.setRatio(imageRatio);
                     imageRatio += 0.1f;
@@ -118,6 +121,32 @@ public class RecyclerAdapterPublicFeed extends RecyclerView.Adapter<RecyclerView
 
                 else
                     viewHolderAdds.buyNow.setVisibility(View.GONE);
+
+                //check for promotions
+
+                viewHolderAdds.urgentWatermark.setVisibility(View.GONE);
+                viewHolderAdds.dailyBoastWatermark.setVisibility(View.GONE);
+
+                if (viewType != TOP_AD)
+                    viewHolderAdds.dateView.setGravity(Gravity.END);
+
+                Date currentDate = new Date();
+
+                for (String promoType : advertisement.getPromotions().keySet()) {
+                    Log.i(TAG, promoType + " current date: "  + currentDate + " promoDate: " + advertisement.getPromotions().get(promoType));
+
+                    Log.i(TAG, " date diff: " + advertisement.getPromotions().get(promoType).compareTo(currentDate));
+
+                    if (promoType.equals(String.valueOf(Promotion.URGENT_AD)) && advertisement.getPromotions().get(promoType).compareTo(currentDate) > 0) {
+                        viewHolderAdds.urgentWatermark.setVisibility(View.VISIBLE);
+                    }
+
+                    if (promoType.equals(String.valueOf(Promotion.DAILY_BUMP_AD)) && advertisement.getPromotions().get(promoType).compareTo(currentDate) > 0) {
+                        Log.i(TAG, promoType + " daily boast: ");
+                                viewHolderAdds.dailyBoastWatermark.setVisibility(View.VISIBLE);
+                        viewHolderAdds.dateView.setGravity(Gravity.START);
+                    }
+                }
 
                 break;
 

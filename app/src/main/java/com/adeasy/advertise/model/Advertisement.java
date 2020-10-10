@@ -13,7 +13,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Manuka yasas,
@@ -28,16 +30,19 @@ public class Advertisement implements Serializable {
     private String description;
     private double price;
     private Date placedDate;
-    private boolean availability;
-    private boolean approved;
-    private boolean buynow;
     private String categoryID;
     private String userID;
     private List<String> imageUrls;
     private List<Integer> numbers;
     private String location;
     private String unapprovedReason;
+
     private boolean reviewed;
+    private boolean availability;
+    private boolean approved;
+    private boolean buynow;
+    private Map<String, Date> promotions;
+
     private String preetyTime;
     private String preetyCurrency;
 
@@ -47,6 +52,7 @@ public class Advertisement implements Serializable {
         this.approved = false;
         this.buynow = false;
         this.reviewed = false;
+        this.promotions = new HashMap<>();
         this.imageUrls = new ArrayList<>();
         this.numbers = new ArrayList<>();
         this.unapprovedReason = "This ad is currently being reviewed. You will recieve a notification when we have reviewed this ad. It usually takes about 4 working hours (Office hours 07 AM - 09 PM)";
@@ -208,6 +214,14 @@ public class Advertisement implements Serializable {
     @Exclude
     public void setPreetyCurrency(String preetyCurrency) {
         this.preetyCurrency = preetyCurrency;
+    }
+
+    public Map<String, Date> getPromotions() {
+        return promotions;
+    }
+
+    public void setPromotions(Map<String, Date> promotions) {
+        this.promotions = promotions;
     }
 
 }

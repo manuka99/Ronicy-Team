@@ -19,6 +19,7 @@ public class ViewHolderAdds extends RecyclerView.ViewHolder {
 
     public TextView titleView, priceView, dateView, buyNow;
     public AspectRatioImageView imageView;
+    public ImageView urgentWatermark, dailyBoastWatermark;
 
     public ViewHolderAdds(@NonNull View itemView) {
         super(itemView);
@@ -26,6 +27,8 @@ public class ViewHolderAdds extends RecyclerView.ViewHolder {
         priceView = itemView.findViewById(R.id.adMenuPrice);
         dateView = itemView.findViewById(R.id.adMenuDate);
         imageView = itemView.findViewById(R.id.adMenuImage);
+        urgentWatermark = itemView.findViewById(R.id.urgentWatermark);
+        dailyBoastWatermark = itemView.findViewById(R.id.dailyBoastWatermark);
         buyNow = itemView.findViewById(R.id.adMenuBuyNow);
     }
 
