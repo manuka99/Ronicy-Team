@@ -154,10 +154,29 @@
                 android:orientation="vertical"
                 android:paddingTop="@dimen/_80sdp">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/adMenuRecyclerHorizontalView"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/adMenuRecyclerHorizontalView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true" />
+
+                    <ImageView
+                        android:id="@+id/spotlight"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:src="@drawable/icon_spotlight_promotion"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/adMenuRecyclerView"

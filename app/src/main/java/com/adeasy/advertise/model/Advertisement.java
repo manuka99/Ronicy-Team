@@ -3,6 +3,7 @@ package com.adeasy.advertise.model;
 import android.net.Uri;
 
 import com.adeasy.advertise.util.DoubleToCurrencyFormat;
+import com.adeasy.advertise.util.UniqueIdBasedOnName;
 import com.google.firebase.firestore.Exclude;
 
 import org.ocpsoft.prettytime.PrettyTime;

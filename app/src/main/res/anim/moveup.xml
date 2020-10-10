@@ -5,7 +5,7 @@
 
     <!-- Move -->
     <translate
-        android:duration="100"
+        android:duration="200"
         android:fillAfter="true"
         android:fromYDelta="0%p"
         android:toYDelta="-40%p" />

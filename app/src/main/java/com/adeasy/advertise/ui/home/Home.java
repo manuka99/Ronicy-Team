@@ -41,11 +41,15 @@ import com.adeasy.advertise.adapter.RecyclerAdapterPublicFeed;
 import com.adeasy.advertise.adapter.RecyclerAdapterPublicFeedHorizontal;
 import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.callback.AdvertismentSearchCallback;
+import com.adeasy.advertise.callback.PromotionCallback;
 import com.adeasy.advertise.helper.EndlessScrollListener;
 import com.adeasy.advertise.helper.ViewHolderAdds;
 import com.adeasy.advertise.manager.AdvertisementManager;
+import com.adeasy.advertise.manager.PromotionManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.Category;
+import com.adeasy.advertise.model.Promotion;
+import com.adeasy.advertise.model.TopAds;
 import com.adeasy.advertise.search_manager.AdvertismentSearchManager;
 import com.adeasy.advertise.ui.advertisement.CategoryPicker;
 import com.adeasy.advertise.ui.advertisement.FilterSearchResult;
@@ -83,7 +87,7 @@ import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_IDLE;
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class Home extends Fragment implements AdvertisementCallback, AdvertismentSearchCallback, View.OnClickListener {
+public class Home extends Fragment implements AdvertisementCallback, PromotionCallback, AdvertismentSearchCallback, View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -116,9 +120,10 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     private static final int FILTER_PICKER = 8825;
 
     public static final int ITEM_PER_AD = 6;
+    public static final int TOP_AD_COUNT = 2;
 
     Query query;
-    DocumentSnapshot lastDoc;
+    DocumentSnapshot lastDoc, lastDocTop;
     List<Object> objectList = new ArrayList<>();
     RecyclerAdapterPublicFeed recyclerAdapterPublicFeed;
     RecyclerAdapterPublicFeedHorizontal recyclerAdapterPublicFeedHorizontal;
@@ -126,7 +131,10 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     CardView cardViewHeader;
     boolean isHeaderHidden = false;
     LinearLayoutManager layoutManager;
-    int scrollTime = 6000;
+    int scrollTime = 8000;
+    ImageView spotlight;
+    PromotionManager promotionManager;
+    List<String> topAdIds;
 
     public Home() {
         // Required empty public constructor
@@ -170,6 +178,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                 getResources().getDimensionPixelSize(R.dimen.refresher_offset),
                 getResources().getDimensionPixelSize(R.dimen.refresher_offset_end));
         cardViewHeader = view.findViewById(R.id.cardViewHeader);
+        spotlight = view.findViewById(R.id.spotlight);
         recyclerView = view.findViewById(R.id.adMenuRecyclerView);
         adMenuRecyclerHorizontalView = view.findViewById(R.id.adMenuRecyclerHorizontalView);
         aSwitch = view.findViewById(R.id.switchView);
@@ -194,6 +203,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         customDialogs = new CustomDialogs(getActivity());
 
         advertisementManager = new AdvertisementManager(this);
+        promotionManager = new PromotionManager(this);
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         adCountText = toolbar.findViewById(R.id.adResults);
         frameLayout = view.findViewById(R.id.frameLayout);
@@ -245,11 +255,10 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
 
         recyclerView.setAdapter(recyclerAdapterPublicFeed);
         adMenuRecyclerHorizontalView.setAdapter(recyclerAdapterPublicFeedHorizontal);
-
-        loadDataMain();
-        loadDataTopAds();
-
         mSwipeRefreshLayout.setRefreshing(true);
+
+        resetDataPublicFeed();
+        loadDataPublicFeed();
 
         return view;
     }
@@ -310,7 +319,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                     if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                         //Log.i(TAG, "BOTTOM SCROLL");
                         mSwipeRefreshLayout.setRefreshing(true);
-                        loadDataMain();
+                        loadTopAndRegularAds();
                     }
                 }
             });
@@ -351,7 +360,45 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             getActivity().startActivityForResult(new Intent(getActivity(), FilterSearchResult.class), FILTER_PICKER);
     }
 
-    private void loadDataMain() {
+    private void loadTopAndRegularAds() {
+        //load the top ads
+        Log.d(TAG, "loading top ads");
+
+        //get new top ads
+        if (topAdIds == null || topAdIds.size() == 0)
+            loadTopAds();
+
+        //if there are top ads
+        if (topAdIds != null && topAdIds.size() > 0) {
+
+            Query topAdsQuery = advertisementManager.homeAdsByIds(topAdIds).limit(TOP_AD_COUNT);
+
+            if (lastDocTop != null)
+                topAdsQuery = topAdsQuery.startAfter(lastDocTop);
+
+            topAdsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot documentSnapshots = task.getResult();
+                        if (documentSnapshots.size() > 0) {
+                            lastDocTop = documentSnapshots.getDocuments().get(documentSnapshots.size() - 1);
+                            objectList = new ArrayList<>();
+                            objectList.addAll(task.getResult().toObjects(TopAds.class));
+                            recyclerAdapterPublicFeed.setObjects(objectList);
+                        }else
+                            lastDocTop = null;
+                    } else
+                        Log.i(TAG, task.getException().getMessage());
+
+                    loadRegularAds();
+                }
+            });
+        } else
+            loadRegularAds();
+    }
+
+    private void loadRegularAds() {
         finalNewQuery = query.limit(ITEM_PER_AD);
 
         if (lastDoc == null)
@@ -377,18 +424,57 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         });
     }
 
-    private void loadDataTopAds() {
-        Log.d(TAG, "loading top ");
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    private void loadSpotLightAds() {
+        //first get the ad ids of spot light ads
+        promotionManager.getAdIDsByPromotionTypeQuery(Promotion.SPOTLIGHT_AD).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful() && query != null && task.getResult().getQuery().equals(query)) {
-                    QuerySnapshot documentSnapshots = task.getResult();
-                    if (documentSnapshots.size() > 0) {
-                        recyclerAdapterPublicFeedHorizontal.resetObjects();
-                        recyclerAdapterPublicFeedHorizontal.setObjects(task.getResult().toObjects(Advertisement.class));
+                Log.i(TAG, "task sent");
+                final List<String> ids = new ArrayList<>();
+                if (task.isSuccessful()) {
+
+                    for (Promotion promotion : task.getResult().toObjects(Promotion.class)) {
+                        ids.add(promotion.getAdvertisementID());
                     }
-                }
+
+                    //load the ads from the ad ids
+                    advertisementManager.homeAdsByIds(ids).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                QuerySnapshot documentSnapshots = task.getResult();
+                                if (documentSnapshots.size() > 0) {
+                                    spotlight.setVisibility(View.VISIBLE);
+                                    recyclerAdapterPublicFeedHorizontal.resetObjects();
+                                    recyclerAdapterPublicFeedHorizontal.setObjects(task.getResult().toObjects(Advertisement.class));
+                                } else
+                                    spotlight.setVisibility(View.GONE);
+                            } else
+                                Log.i(TAG, task.getException().getMessage());
+                        }
+                    });
+
+                } else
+                    Log.i(TAG, task.getException().getMessage());
+
+            }
+        });
+    }
+
+    private void loadTopAds() {
+        Log.d(TAG, "loading top ");
+        promotionManager.getAdIDsByPromotionTypeQuery(Promotion.TOP_AD).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                Log.i(TAG, "task sent");
+                final List<String> ids = new ArrayList<>();
+                if (task.isSuccessful()) {
+                    for (Promotion promotion : task.getResult().toObjects(Promotion.class)) {
+                        ids.add(promotion.getAdvertisementID());
+                    }
+                    topAdIds = ids;
+                } else
+                    Log.i(TAG, task.getException().getMessage());
             }
         });
     }
@@ -403,7 +489,8 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                 @Override
                 public void onRefresh() {
                     mSwipeRefreshLayout.setRefreshing(true);
-                    resetAdapterAndLoadDataMain();
+                    resetDataPublicFeed();
+                    loadDataPublicFeed();
                 }
             });
         }
@@ -413,12 +500,13 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 mSwipeRefreshLayout.setRefreshing(true);
                 query = advertisementManager.viewAddsHome(search_ids, category_selected, location_selected, b);
-                resetAdapterAndLoadDataMain();
+                resetDataPublicFeed();
+                loadDataPublicFeed();
             }
         });
     }
 
-    private void resetAdapterAndLoadDataMain() {
+    private void resetDataPublicFeed() {
         if (recyclerAdapterPublicFeed != null) {
             try {
                 adCountText.setText(" loading..");
@@ -431,10 +519,25 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                 Log.i(TAG, "fragments changed");
             }
 
+            //reset last documents
             lastDoc = null;
+            lastDocTop = null;
+
+            //reset top ad list
+            topAdIds = null;
+
+            //reset adapters
             recyclerAdapterPublicFeed.resetObjects();
-            loadDataMain();
+            recyclerAdapterPublicFeedHorizontal.resetObjects();
+
+            //remove spotlight image
+            spotlight.setVisibility(View.GONE);
         }
+    }
+
+    private void loadDataPublicFeed() {
+        loadSpotLightAds();
+        loadTopAndRegularAds();
     }
 
     //Stop Listening Adapter
@@ -510,8 +613,22 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         Log.i(TAG, "ids: " + ids);
 
         query = advertisementManager.viewAddsHome(ids, category_selected, location_selected, aSwitch.isChecked());
-        resetAdapterAndLoadDataMain();
-        loadDataTopAds();
+        resetDataPublicFeed();
+        loadDataPublicFeed();
+    }
+
+    @Override
+    public void onCompleteSavePromotion(Task<Void> task) {
+
+    }
+
+    @Override
+    public void onGetPromotionByID(Task<DocumentSnapshot> task) {
+
+    }
+
+    @Override
+    public void onPromotionsListIds(List<String> ids, Query promotionQuery) {
     }
 
 }

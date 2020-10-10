@@ -33,11 +33,13 @@ import com.adeasy.advertise.adapter.AdvertisementSliderAdapter;
 import com.adeasy.advertise.helper.ViewHolderAdds;
 import com.adeasy.advertise.helper.ViewHolderListAdds;
 import com.adeasy.advertise.model.Category;
+import com.adeasy.advertise.model.Promotion;
 import com.adeasy.advertise.ui.Order.BuyNow;
 import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.callback.CategoryCallback;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.manager.CategoryManager;
+import com.adeasy.advertise.ui.Promotion.PromotionMain;
 import com.adeasy.advertise.ui.administration.advertisement.MoreActionsOnAd;
 import com.adeasy.advertise.ui.editAd.EditAd;
 import com.adeasy.advertise.ui.favaourite.AddToFavourite;
@@ -347,6 +349,8 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
                     else
                         adBuyNow.setVisibility(View.GONE);
+
+                    startPromoteAd();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -482,6 +486,14 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
         adapter.startListening();
         similarAds.setAdapter(adapter);
+    }
+
+    private void startPromoteAd(){
+        if(advertisement != null){
+            Intent intent = new Intent(getApplicationContext(), PromotionMain.class);
+            intent.putExtra(ADVERTISEMENTID, advertisement.getId());
+            startActivity(intent);
+        }
     }
 
 }

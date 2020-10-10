@@ -16,6 +16,7 @@ import com.adeasy.advertise.helper.ViewHolderAdds;
 import com.adeasy.advertise.helper.ViewHolderBannersHome;
 import com.adeasy.advertise.helper.ViewHolderPhoneNumbers;
 import com.adeasy.advertise.model.Advertisement;
+import com.adeasy.advertise.model.TopAds;
 import com.adeasy.advertise.ui.home.Home;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -37,6 +38,7 @@ public class RecyclerAdapterPublicFeed extends RecyclerView.Adapter<RecyclerView
 
     public static final int BANNER = 0;
     public static final int ADVERTISEMENT = 1;
+    public static final int TOP_AD = 2;
     private static Float imageRatio = 0.8f;
 
     private static final String TAG = "RecyclerAdapterPublicFe";
@@ -56,43 +58,18 @@ public class RecyclerAdapterPublicFeed extends RecyclerView.Adapter<RecyclerView
             case ADVERTISEMENT:
                 View advertisementView = LayoutInflater.from(parent.getContext()).inflate(R.layout.manuka_ad_menu, parent, false);
                 return new ViewHolderAdds(advertisementView);
+            case TOP_AD:
+                View topAdView = LayoutInflater.from(parent.getContext()).inflate(R.layout.manuka_top_ad_menu, parent, false);
+                return new ViewHolderAdds(topAdView);
         }
         return null;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-
         int viewType = getItemViewType(position);
         switch (viewType) {
-            case ADVERTISEMENT:
-                ViewHolderAdds viewHolderAdds = (ViewHolderAdds) holder;
-                Advertisement advertisement = (Advertisement) objects.get(position);
-
-                viewHolderAdds.titleView.setText(advertisement.getTitle());
-                viewHolderAdds.dateView.setText(advertisement.getPreetyTime());
-                viewHolderAdds.priceView.setText(advertisement.getPreetyCurrency());
-
-                try {
-                    if (imageRatio >= 1.4f)
-                        imageRatio = 0.8f;
-                    viewHolderAdds.imageView.setRatio(imageRatio);
-                    imageRatio += 0.1f;
-
-                    Picasso.get().load(advertisement.getImageUrls().get(0)).into(viewHolderAdds.imageView);
-                } catch (Exception e) {
-
-                }
-
-                if (advertisement.isBuynow())
-                    viewHolderAdds.buyNow.setVisibility(View.VISIBLE);
-
-                else
-                    viewHolderAdds.buyNow.setVisibility(View.GONE);
-
-                break;
-
-            default:
+            case BANNER:
                 ViewHolderBannersHome banners = (ViewHolderBannersHome) holder;
                 AdView ad = banners.adView;
                 ad.loadAd(new AdRequest.Builder().build());
@@ -112,6 +89,38 @@ public class RecyclerAdapterPublicFeed extends RecyclerView.Adapter<RecyclerView
                 StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
                 layoutParams.setFullSpan(true);
                 break;
+
+            default:
+                ViewHolderAdds viewHolderAdds = (ViewHolderAdds) holder;
+                Advertisement advertisement = (Advertisement) objects.get(position);
+
+                viewHolderAdds.titleView.setText(advertisement.getTitle());
+                viewHolderAdds.dateView.setText(advertisement.getPreetyTime());
+                viewHolderAdds.priceView.setText(advertisement.getPreetyCurrency());
+
+                try {
+                    if (imageRatio >= 1.2f)
+                        imageRatio = 0.8f;
+
+                    if (viewType == TOP_AD)
+                        imageRatio = 1.4f;
+
+                    viewHolderAdds.imageView.setRatio(imageRatio);
+                    imageRatio += 0.1f;
+
+                    Picasso.get().load(advertisement.getImageUrls().get(0)).into(viewHolderAdds.imageView);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (advertisement.isBuynow())
+                    viewHolderAdds.buyNow.setVisibility(View.VISIBLE);
+
+                else
+                    viewHolderAdds.buyNow.setVisibility(View.GONE);
+
+                break;
+
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +147,9 @@ public class RecyclerAdapterPublicFeed extends RecyclerView.Adapter<RecyclerView
     @Override
     public int getItemViewType(int position) {
         Log.i("reeecc", String.valueOf(getItemCount()));
-        if (objects.get(position) instanceof Advertisement)
+        if (objects.get(position) instanceof TopAds)
+            return TOP_AD;
+        else if (objects.get(position) instanceof Advertisement)
             return ADVERTISEMENT;
         else
             return BANNER;
