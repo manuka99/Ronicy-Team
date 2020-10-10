@@ -18,6 +18,10 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+//Creator-A.M.W.W.R.L.Wataketiya
+//IT19014128
+//ravinduwata@gmail.com
+
 public class ViewAllSuggestionsAdmin extends AppCompatActivity {
 
     private FirebaseRecyclerOptions<Suggestion> options;
