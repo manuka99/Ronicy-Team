@@ -19,7 +19,6 @@ import com.adeasy.advertise.helper.ViewHolderPhoneNumbers;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.Promotion;
 import com.adeasy.advertise.model.TopAds;
-import com.adeasy.advertise.ui.home.Home;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.squareup.picasso.Picasso;

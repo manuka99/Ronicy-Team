@@ -191,15 +191,54 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone" />
 
+
+                <LinearLayout
+                    android:id="@+id/adsFinishedView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/_20sdp"
+                    android:paddingBottom="@dimen/_20sdp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/check_icon_filled_small_blue" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:gravity="center"
+                        android:text="You're All Caught Up"
+                        android:textColor="@color/colorBlackText"
+                        android:textSize="@dimen/_18sdp" />
+
+                    <TextView
+                        android:id="@+id/refreshAds"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:gravity="center"
+                        android:text="Refresh all ads"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="italic" />
+
+                </LinearLayout>
+
                 <ProgressBar
                     android:id="@+id/progressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_60sdp"
                     android:layout_marginTop="@dimen/_80sdp"
                     android:layout_marginBottom="@dimen/_120sdp"
-                    android:layout_width="match_parent"
                     android:indeterminate="true"
-                    android:indeterminateTint="#99BFBFBF"
-                    android:indeterminateTintMode="src_atop"
-                    android:layout_height="@dimen/_60sdp" />
+                    android:indeterminateDrawable="@drawable/progress_grey" />
 
             </LinearLayout>
 

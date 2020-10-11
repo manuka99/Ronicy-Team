@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources  xmlns:tools="http://schemas.android.com/tools">
     <dimen name="refresher_offset">@dimen/_120sdp</dimen>
-    <dimen name="refresher_offset_end">@dimen/_120sdp</dimen>
+    <dimen name="refresher_offset_end">@dimen/_60sdp</dimen>
 
     <!-- navigation overridden -->
     <dimen name="badge_left_margin" tools:override="true">@dimen/_4sdp</dimen>

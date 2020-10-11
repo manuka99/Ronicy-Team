@@ -350,7 +350,6 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
                     else
                         adBuyNow.setVisibility(View.GONE);
 
-                    startPromoteAd();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

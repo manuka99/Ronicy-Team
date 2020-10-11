@@ -2,7 +2,9 @@ package com.adeasy.advertise.ui.home;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,6 +27,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
@@ -143,6 +146,8 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
     boolean isAllAdsLoaded = false;
     boolean loadingAdsTask = false;
     ProgressBar progressBar;
+    LinearLayout adsFinishedView;
+    TextView refreshAdsView;
 
     public Home() {
         // Required empty public constructor
@@ -182,6 +187,8 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         mSwipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
+        adsFinishedView = view.findViewById(R.id.adsFinishedView);
+        refreshAdsView = view.findViewById(R.id.refreshAds);
         cardViewHeader = view.findViewById(R.id.cardViewHeader);
         progressBar = view.findViewById(R.id.progressBar);
         spotlight = view.findViewById(R.id.spotlight);
@@ -219,6 +226,8 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
         category_picker.setOnClickListener(this);
         location_picker.setOnClickListener(this);
         filters.setOnClickListener(this);
+        refreshAdsView.setOnClickListener(this);
+
         advertismentSearchManager = new AdvertismentSearchManager(this);
 
         try {
@@ -331,6 +340,21 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
                     }
                 }
             });
+
+            mSwipeRefreshLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        mSwipeRefreshLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    } else {
+                        mSwipeRefreshLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    }
+
+                    Rect rect = new Rect();
+                    mSwipeRefreshLayout.getDrawingRect(rect);
+                    mSwipeRefreshLayout.setProgressViewOffset(false, 0, (int) getResources().getDimension(R.dimen.refresher_offset_end));
+                }
+            });
         }
 
 
@@ -366,6 +390,8 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
             getActivity().startActivityForResult(new Intent(getActivity(), LocationPicker.class), LOCATION_PICKER);
         else if (view == filters)
             getActivity().startActivityForResult(new Intent(getActivity(), FilterSearchResult.class), FILTER_PICKER);
+        else if (view == refreshAdsView)
+            loadDataPublicFeed();
     }
 
     private void loadTopAndRegularAds() {
@@ -399,7 +425,6 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
                             recyclerAdapterPublicFeed.setObjects(objectList);
                         } else {
                             lastDocTop = null;
-                            progressBar.setVisibility(View.GONE);
                         }
                     } else
                         Log.i(TAG, task.getException().getMessage());
@@ -432,8 +457,11 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
                         objectList.add(new AdRequest.Builder().build());
                         recyclerAdapterPublicFeed.setObjects(objectList);
                         isAllAdsLoaded = false;
-                    } else
+                    } else {
                         isAllAdsLoaded = true;
+                        progressBar.setVisibility(View.GONE);
+                        adsFinishedView.setVisibility(View.VISIBLE);
+                    }
                 }
                 loadingAdsTask = false;
             }
@@ -505,7 +533,6 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
                 @Override
                 public void onRefresh() {
                     mSwipeRefreshLayout.setRefreshing(false);
-                    resetDataPublicFeed();
                     loadDataPublicFeed();
                 }
             });
@@ -515,7 +542,6 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 query = advertisementManager.viewAddsHome(search_ids, category_selected, location_selected, b);
-                resetDataPublicFeed();
                 loadDataPublicFeed();
             }
         });
@@ -552,12 +578,14 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
             //load data
             loadingAdsTask = false;
 
-            //progress bar
+            //progress bar and ads finished view
             progressBar.setVisibility(View.VISIBLE);
+            adsFinishedView.setVisibility(View.GONE);
         }
     }
 
     private void loadDataPublicFeed() {
+        resetDataPublicFeed();
         loadSpotLightAds();
         loadTopAndRegularAds();
     }
