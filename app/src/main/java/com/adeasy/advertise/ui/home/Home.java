@@ -77,7 +77,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.otaliastudios.nestedscrollcoordinatorlayout.NestedScrollCoordinatorLayout;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
@@ -88,7 +87,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_IDLE;
-import static com.otaliastudios.nestedscrollcoordinatorlayout.NestedScrollCoordinatorLayout.PASS_MODE_BOTH;
 
 /**
  * Created by Manuka yasas,
@@ -315,22 +313,22 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
                         if (!loadingAdsTask)
                             loadTopAndRegularAds();
 
-//                        if (!isHeaderHidden) {
-//                            Log.i(TAG, "Scroll DOWN");
-//                            Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.moveup);
-//                            cardViewHeader.startAnimation(aniSlide);
-//                            cardViewHeader.setVisibility(View.INVISIBLE);
-//                            isHeaderHidden = true;
-//                        }
+                        if (!isHeaderHidden) {
+                            Log.i(TAG, "Scroll DOWN");
+                            Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.moveup);
+                            cardViewHeader.startAnimation(aniSlide);
+                            cardViewHeader.setVisibility(View.INVISIBLE);
+                            isHeaderHidden = true;
+                        }
                     }
                     if (scrollY < oldScrollY) {
-//                        if (isHeaderHidden) {
-//                            Log.i(TAG, "Scroll UP");
-//                            Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.movedown);
-//                            cardViewHeader.startAnimation(aniSlide);
-//                            cardViewHeader.setVisibility(View.VISIBLE);
-//                            isHeaderHidden = false;
-//                        }
+                        if (isHeaderHidden) {
+                            Log.i(TAG, "Scroll UP");
+                            Animation aniSlide = AnimationUtils.loadAnimation(getActivity(), R.anim.movedown);
+                            cardViewHeader.startAnimation(aniSlide);
+                            cardViewHeader.setVisibility(View.VISIBLE);
+                            isHeaderHidden = false;
+                        }
                     }
 
                     if (scrollY == 0) {

@@ -119,6 +119,7 @@ dependencies {
     
     implementation 'com.github.Spikeysanju:ZoomRecylerLayout:1.0'
     implementation 'com.github.worker8:radiogroupplus:v1.0.1'
+    implementation 'com.otaliastudios:nestedscrollcoordinatorlayout:1.0.3'
 }
 
 apply plugin: 'com.google.gms.google-services'
