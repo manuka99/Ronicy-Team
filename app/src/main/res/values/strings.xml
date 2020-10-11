@@ -1,5 +1,7 @@
 <resources>
 
+    <string name="appbar_scrolling_view_behavior_manuka" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
+
     <!--app -->
     <string name="app_name">Ronicy</string>
     <string name="site_name">Ronicy.lk</string>
