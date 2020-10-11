@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/promotion_bundle_border"
+    android:orientation="vertical"
+    tools:context=".ui.Promotion.DailyBump">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/promotion_bundle_border"
+        android:orientation="horizontal"
+        android:padding="@dimen/_8sdp">
+
+        <ImageView
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0"
+            android:background="@drawable/ic_checkbox_normal" />
+
+        <ImageView
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_34sdp"
+            android:layout_gravity="top"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_weight="0"
+            android:background="@drawable/bump_small" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:text="Daily Bump Up"
+                    android:textColor="@color/colorBlackText"
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="From Rs 500.00"
+                    android:textColor="@color/colorBlackText"
+                    android:textSize="@dimen/_11sdp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:gravity="start"
+                android:text="Get a fresh start every day and gain upto 5 times or more views!"
+                android:textColor="@color/colorBlackText"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:gravity="start"
+                android:text="Learn more"
+                android:textColor="@color/com_facebook_blue"
+                android:textSize="@dimen/_12sdp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <worker8.com.github.radiogroupplus.RadioGroupPlus
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/days3View"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/promotion_bundle_border"
+            android:orientation="horizontal"
+            android:padding="@dimen/_10sdp">
+
+            <RadioButton
+                android:id="@+id/days3Radio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="3 days"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Rs 500.00"
+                android:textColor="@color/colorGreenDark"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/days7View"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/promotion_bundle_border"
+            android:orientation="horizontal"
+            android:padding="@dimen/_10sdp">
+
+            <RadioButton
+                android:id="@+id/days7Radio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="7 days"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Rs 1,000.00"
+                android:textColor="@color/colorGreenDark"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/days15View"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/promotion_bundle_border"
+            android:orientation="horizontal"
+            android:padding="@dimen/_10sdp">
+
+            <RadioButton
+                android:id="@+id/days15Radio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="15 days"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Rs 1,500.00"
+                android:textColor="@color/colorGreenDark"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </worker8.com.github.radiogroupplus.RadioGroupPlus>
+
+</LinearLayout>

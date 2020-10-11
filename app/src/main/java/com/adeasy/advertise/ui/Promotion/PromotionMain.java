@@ -1,9 +1,11 @@
 package com.adeasy.advertise.ui.Promotion;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.FrameLayout;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.PromotionCallback;
@@ -23,15 +25,32 @@ public class PromotionMain extends AppCompatActivity implements PromotionCallbac
 
     PromotionManager promotionManager;
 
+    Toolbar toolbar;
+    FrameLayout promotionsLayout;
+
+    //promotions Fragments
+    DailyBump dailyBump;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manuka_activity_promotion_main);
 
+        //toolbar setup
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_baseline_close_24));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Add Promotions");
+
+        promotionsLayout = findViewById(R.id.promotionsLayout);
+
+        //initialize fragments
+        dailyBump = new DailyBump();
+
         promotionManager = new PromotionManager(this);
 
         if (getIntent().hasExtra(ADVERTISEMENT_ID)) {
-            promotionManager.savePromotions(new Promotion(UniqueIdBasedOnName.Generator("PROMO"), getIntent().getStringExtra(ADVERTISEMENT_ID), Promotion.SPOTLIGHT_AD, 3));
+            //promotionManager.savePromotions(new Promotion(UniqueIdBasedOnName.Generator("PROMO"), getIntent().getStringExtra(ADVERTISEMENT_ID), Promotion.SPOTLIGHT_AD, 3));
         }
     }
 

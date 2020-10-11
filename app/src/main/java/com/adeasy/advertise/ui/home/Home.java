@@ -51,6 +51,7 @@ import com.adeasy.advertise.helper.ViewHolderAdds;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.manager.PromotionManager;
 import com.adeasy.advertise.model.Advertisement;
+import com.adeasy.advertise.model.ApprovedPromotions;
 import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.model.Promotion;
 import com.adeasy.advertise.model.TopAds;
@@ -63,6 +64,7 @@ import com.adeasy.advertise.util.CustomDialogs;
 import com.adeasy.advertise.util.InternetValidation;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.github.javafaker.App;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -470,57 +472,69 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
 
     private void loadSpotLightAds() {
         //first get the ad ids of spot light ads
-        promotionManager.getAdIDsByPromotionTypeQuery(Promotion.SPOTLIGHT_AD).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Log.i(TAG, "task sent");
-                final List<String> ids = new ArrayList<>();
-                if (task.isSuccessful()) {
+        Query query = promotionManager.getAdIDsByPromotionTypeQuery(Promotion.SPOTLIGHT_AD);
+        if (query != null) {
+            query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    Log.i(TAG, "task sent");
+                    final List<String> ids = new ArrayList<>();
+                    if (task.isSuccessful()) {
 
-                    for (Promotion promotion : task.getResult().toObjects(Promotion.class)) {
-                        ids.add(promotion.getAdvertisementID());
-                    }
-
-                    //load the ads from the ad ids
-                    advertisementManager.homeAdsByIds(ids).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                QuerySnapshot documentSnapshots = task.getResult();
-                                if (documentSnapshots.size() > 0) {
-                                    spotlight.setVisibility(View.VISIBLE);
-                                    recyclerAdapterPublicFeedHorizontal.resetObjects();
-                                    recyclerAdapterPublicFeedHorizontal.setObjects(task.getResult().toObjects(Advertisement.class));
-                                } else
-                                    spotlight.setVisibility(View.GONE);
-                            } else
-                                Log.i(TAG, task.getException().getMessage());
+                        for (ApprovedPromotions promotion : task.getResult().toObjects(ApprovedPromotions.class)) {
+                            Log.i(TAG, "task sent");
+                            ids.add(promotion.getAdvertismentID());
                         }
-                    });
 
-                } else
-                    Log.i(TAG, task.getException().getMessage());
+                        if (ids != null && ids.size() > 0) {
+                            //load the ads from the ad ids
+                            advertisementManager.homeAdsByIds(ids).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        QuerySnapshot documentSnapshots = task.getResult();
+                                        if (documentSnapshots.size() > 0) {
+                                            spotlight.setVisibility(View.VISIBLE);
+                                            recyclerAdapterPublicFeedHorizontal.resetObjects();
+                                            recyclerAdapterPublicFeedHorizontal.setObjects(task.getResult().toObjects(Advertisement.class));
+                                        } else
+                                            spotlight.setVisibility(View.GONE);
+                                    } else
+                                        Log.i(TAG, task.getException().getMessage());
+                                }
+                            });
+                        } else {
+                            recyclerAdapterPublicFeedHorizontal.resetObjects();
+                            spotlight.setVisibility(View.GONE);
+                        }
 
-            }
-        });
+                    } else
+                        Log.i(TAG, task.getException().getMessage());
+
+                }
+            });
+        }
     }
 
     private void loadTopAds() {
         Log.d(TAG, "loading top ");
-        promotionManager.getAdIDsByPromotionTypeQuery(Promotion.TOP_AD).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Log.i(TAG, "task sent");
-                final List<String> ids = new ArrayList<>();
-                if (task.isSuccessful()) {
-                    for (Promotion promotion : task.getResult().toObjects(Promotion.class)) {
-                        ids.add(promotion.getAdvertisementID());
-                    }
-                    topAdIds = ids;
-                } else
-                    Log.i(TAG, task.getException().getMessage());
-            }
-        });
+        Query query = promotionManager.getAdIDsByPromotionTypeQuery(Promotion.TOP_AD);
+        if (query != null) {
+            query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    Log.i(TAG, "task sent");
+                    final List<String> ids = new ArrayList<>();
+                    if (task.isSuccessful()) {
+                        for (ApprovedPromotions promotion : task.getResult().toObjects(ApprovedPromotions.class)) {
+                            ids.add(promotion.getAdvertismentID());
+                        }
+                        topAdIds = ids;
+                    } else
+                        Log.i(TAG, task.getException().getMessage());
+                }
+            });
+        }
     }
 
     @Override

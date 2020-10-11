@@ -118,6 +118,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     
     implementation 'com.github.Spikeysanju:ZoomRecylerLayout:1.0'
+    implementation 'com.github.worker8:radiogroupplus:v1.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

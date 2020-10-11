@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.adeasy.advertise.callback.PromotionCallback;
+import com.adeasy.advertise.model.ApprovedPromotions;
 import com.adeasy.advertise.model.Promotion;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,6 +29,7 @@ public class PromotionManager {
 
     private static final String TAG = "PromotionManager";
     private static final String PROMOTIONS = "Promotions";
+    private static final String APPROVED_PROMOTIONS = "ApprovedPromotions";
     private FirebaseFirestore firebaseFirestore;
     private DocumentReference documentReference;
     private PromotionCallback promotionCallback;
@@ -59,26 +61,44 @@ public class PromotionManager {
     }
 
     public void getAdIDsByPromotionType(int promoType) {
-       getAdIDsByPromotionTypeQuery(promoType).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Log.i(TAG, "task sent");
-                final List<String> ids = new ArrayList<>();
-                if (task.isSuccessful()) {
-                    for (Promotion promotion : task.getResult().toObjects(Promotion.class)) {
-                        ids.add(promotion.getAdvertisementID());
-                    }
-                } else
-                    Log.i(TAG, task.getException().getMessage());
+        Query query = getAdIDsByPromotionTypeQuery(promoType);
+        if (query != null) {
+            getAdIDsByPromotionTypeQuery(promoType).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    Log.i(TAG, "task sent");
+                    final List<String> ids = new ArrayList<>();
+                    if (task.isSuccessful()) {
+                        for (Promotion promotion : task.getResult().toObjects(Promotion.class)) {
+                            ids.add(promotion.getAdvertisementID());
+                        }
+                    } else
+                        Log.i(TAG, task.getException().getMessage());
 
-                if (promotionCallback != null)
-                    promotionCallback.onPromotionsListIds(ids, task.getResult().getQuery());
-            }
-        });
+                    if (promotionCallback != null)
+                        promotionCallback.onPromotionsListIds(ids, task.getResult().getQuery());
+                }
+            });
+        }
     }
 
-    public Query getAdIDsByPromotionTypeQuery(int promoType){
-        return  firebaseFirestore.collection(PROMOTIONS).whereEqualTo("promotionType", promoType).whereEqualTo("approved", true).whereGreaterThan("expireDate", new Date()).orderBy("expireDate", Query.Direction.ASCENDING);
+    public Query getAdIDsByPromotionTypeQuery(int promoType) {
+        Query query = firebaseFirestore.collection(APPROVED_PROMOTIONS);
+
+        if(promoType == Promotion.DAILY_BUMP_AD)
+            return query.whereEqualTo(ApprovedPromotions.stopPromotions_name, false).whereGreaterThan(ApprovedPromotions.dailyPromoPromoExpireTime_name, new Date()).orderBy(ApprovedPromotions.dailyPromoPromoExpireTime_name, Query.Direction.ASCENDING);
+
+        else if(promoType == Promotion.URGENT_AD)
+            return query.whereEqualTo(ApprovedPromotions.stopPromotions_name, false).whereGreaterThan(ApprovedPromotions.urgentPromoExpireTime_name, new Date()).orderBy(ApprovedPromotions.urgentPromoExpireTime_name, Query.Direction.ASCENDING);
+
+        else if(promoType == Promotion.SPOTLIGHT_AD)
+            return query.whereEqualTo(ApprovedPromotions.stopPromotions_name, false).whereGreaterThan(ApprovedPromotions.spotLightPromoExpireTime_name, new Date()).orderBy(ApprovedPromotions.spotLightPromoExpireTime_name, Query.Direction.ASCENDING);
+
+        else if(promoType == Promotion.TOP_AD)
+            return query.whereEqualTo(ApprovedPromotions.stopPromotions_name, false).whereGreaterThan(ApprovedPromotions.topAdPromoExpireTime_name, new Date()).orderBy(ApprovedPromotions.topAdPromoExpireTime_name, Query.Direction.ASCENDING);
+
+        else
+            return null;
     }
 
     public void destroy() {

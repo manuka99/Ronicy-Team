@@ -2,6 +2,8 @@ package com.adeasy.advertise.model;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -13,11 +15,11 @@ public class Promotion {
 
     private String promoID;
     private String advertisementID;
-    private int promotionType;
     private Date placeDate;
-    private Date expireDate;
-    private int applyDays;
     private boolean approved;
+    private boolean activated;
+    private boolean reviewed;
+    private Map<String, Integer> promos;
 
     public static final int DAILY_BUMP_AD = 1;
     public static final int TOP_AD = 2;
@@ -28,20 +30,14 @@ public class Promotion {
 
     }
 
-    public Promotion(String promoID, String advertisementID, int promotionType, int applyDays) {
+    public Promotion(String promoID, String advertisementID, Map<String, Integer> promos) {
         this.promoID = promoID;
-        this.promotionType = promotionType;
         this.approved = false;
-        this.applyDays = applyDays;
+        this.reviewed = false;
+        this.activated = false;
         this.advertisementID = advertisementID;
-
-        Date pDate = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(pDate);
-        c.add(Calendar.DATE, applyDays);
-
-        this.placeDate = pDate;
-        this.expireDate = c.getTime();
+        this.promos = promos;
+        this.placeDate = new Date();
     }
 
     public String getPromoID() {
@@ -52,36 +48,12 @@ public class Promotion {
         this.promoID = promoID;
     }
 
-    public int getPromotionType() {
-        return promotionType;
-    }
-
-    public void setPromotionType(int promotionType) {
-        this.promotionType = promotionType;
-    }
-
     public Date getPlaceDate() {
         return placeDate;
     }
 
     public void setPlaceDate(Date placeDate) {
         this.placeDate = placeDate;
-    }
-
-    public Date getExpireDate() {
-        return expireDate;
-    }
-
-    public void setExpireDate(Date expireDate) {
-        this.expireDate = expireDate;
-    }
-
-    public int getApplyDays() {
-        return applyDays;
-    }
-
-    public void setApplyDays(int applyDays) {
-        this.applyDays = applyDays;
     }
 
     public boolean isApproved() {
@@ -98,6 +70,30 @@ public class Promotion {
 
     public void setAdvertisementID(String advertisementID) {
         this.advertisementID = advertisementID;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+    public boolean isReviewed() {
+        return reviewed;
+    }
+
+    public void setReviewed(boolean reviewed) {
+        this.reviewed = reviewed;
+    }
+
+    public Map<String, Integer> getPromos() {
+        return promos;
+    }
+
+    public void setPromos(Map<String, Integer> promos) {
+        this.promos = promos;
     }
 
 }
