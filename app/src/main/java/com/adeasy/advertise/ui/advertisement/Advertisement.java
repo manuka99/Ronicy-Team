@@ -25,6 +25,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,6 +97,10 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
     com.adeasy.advertise.model.Category category;
     private static final int requestCodeImage = 1456;
 
+    ProgressBar progressBar;
+    LinearLayout adLayout;
+    Button startPromotion;
+
     RecyclerView similarAds;
     FirestoreRecyclerAdapter adapter;
 
@@ -132,6 +138,12 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
         customDialogs = new CustomDialogs(this);
 
+        progressBar = findViewById(R.id.progressBar);
+        adLayout = findViewById(R.id.adLayout);
+        startPromotion = findViewById(R.id.startPromotion);
+        adLayout.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
         similarAds = findViewById(R.id.similarAds);
         similarAds.setNestedScrollingEnabled(false);
         similarAds.setLayoutManager(new LinearLayoutManager(getApplicationContext()) {
@@ -153,6 +165,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         callText = findViewById(R.id.adCallNow);
         adBuyNow = findViewById(R.id.adBuyNow);
         adBuyNow.setOnClickListener(this);
+        startPromotion.setOnClickListener(this);
 
         adID = getIntent().getStringExtra("adID");
         adCID = getIntent().getStringExtra("adCID");
@@ -350,6 +363,9 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
                     else
                         adBuyNow.setVisibility(View.GONE);
 
+                    adLayout.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -372,10 +388,12 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         if (view == chatText) {
 
 
-        } else if (view == callText) {
+        } else if (view == callText)
             callAdCustomer();
-        } else if (view == adBuyNow)
+        else if (view == adBuyNow)
             initBuyNow();
+        else if (view == startPromotion)
+            startPromoteAd();
 
     }
 
@@ -487,8 +505,8 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         similarAds.setAdapter(adapter);
     }
 
-    private void startPromoteAd(){
-        if(advertisement != null){
+    private void startPromoteAd() {
+        if (advertisement != null) {
             Intent intent = new Intent(getApplicationContext(), PromotionMain.class);
             intent.putExtra(ADVERTISEMENTID, advertisement.getId());
             startActivity(intent);

@@ -2,12 +2,19 @@ package com.adeasy.advertise.ui.Promotion;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.ViewModel.PromotionsViewModel;
 import com.adeasy.advertise.callback.PromotionCallback;
 import com.adeasy.advertise.manager.PromotionManager;
 import com.adeasy.advertise.model.Promotion;
@@ -16,9 +23,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class PromotionMain extends AppCompatActivity implements PromotionCallback {
+public class PromotionMain extends AppCompatActivity implements PromotionCallback, View.OnClickListener {
 
     private static final String TAG = "PromotionMain";
     private static final String ADVERTISEMENT_ID = "adID";
@@ -26,10 +35,19 @@ public class PromotionMain extends AppCompatActivity implements PromotionCallbac
     PromotionManager promotionManager;
 
     Toolbar toolbar;
-    FrameLayout promotionsLayout;
+    LinearLayout promotionsLayout;
+    Map<Integer, Integer> promos;
 
     //promotions Fragments
     DailyBump dailyBump;
+    TopAds topAds;
+    UrgentAds urgentAds;
+    SpotLightAd spotLightAd;
+
+    //viewModel
+    PromotionsViewModel promotionsViewModel;
+
+    Button continueBTN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +60,45 @@ public class PromotionMain extends AppCompatActivity implements PromotionCallbac
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Add Promotions");
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         promotionsLayout = findViewById(R.id.promotionsLayout);
+        continueBTN = findViewById(R.id.continueBTN);
 
         //initialize fragments
-        dailyBump = new DailyBump();
+        initializeFragments();
 
         promotionManager = new PromotionManager(this);
 
-        if (getIntent().hasExtra(ADVERTISEMENT_ID)) {
-            //promotionManager.savePromotions(new Promotion(UniqueIdBasedOnName.Generator("PROMO"), getIntent().getStringExtra(ADVERTISEMENT_ID), Promotion.SPOTLIGHT_AD, 3));
-        }
+        promotionsViewModel = ViewModelProviders.of(this).get(PromotionsViewModel.class);
+
+        promos = new HashMap<>();
+        continueBTN.setOnClickListener(this);
+        //load pending and approved promotions
+
+        //load all promotions
+        loadAllPromotions();
+    }
+
+
+    private void loadAllPromotions() {
+        initializeFragments();
+        getSupportFragmentManager().beginTransaction().add(promotionsLayout.getId(), dailyBump)
+                .add(promotionsLayout.getId(), topAds)
+                .add(promotionsLayout.getId(), urgentAds)
+                .add(promotionsLayout.getId(), spotLightAd).commit();
+    }
+
+    private void initializeFragments() {
+        dailyBump = new DailyBump();
+        topAds = new TopAds();
+        urgentAds = new UrgentAds();
+        spotLightAd = new SpotLightAd();
     }
 
     @Override
@@ -78,4 +125,24 @@ public class PromotionMain extends AppCompatActivity implements PromotionCallbac
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        promotionsViewModel.getSelectedPromo().observe(this, new Observer<Map<Integer, Integer>>() {
+            @Override
+            public void onChanged(Map<Integer, Integer> integerIntegerMap) {
+                Log.i(TAG, "updating promos");
+                promos.putAll(integerIntegerMap);
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == continueBTN) {
+            for (Integer promo : promos.keySet()) {
+                Log.i(TAG, "type: " + promo + " days: " + promos.get(promo));
+            }
+        }
+    }
 }

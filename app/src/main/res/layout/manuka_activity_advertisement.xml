@@ -8,335 +8,409 @@
     android:orientation="vertical"
     tools:context=".ui.advertisement.Advertisement">
 
-    <!-- Manuka -->
-
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <androidx.core.widget.NestedScrollView
+    <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="@dimen/_60sdp"
+        android:layout_marginTop="@dimen/_80sdp"
+        android:layout_marginBottom="@dimen/_120sdp"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/progress_grey"
+        android:visibility="gone" />
 
-        <LinearLayout
+    <LinearLayout
+        android:id="@+id/adLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible"
+        tools:context=".ui.advertisement.Advertisement">
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.smarteist.autoimageslider.SliderView
-                android:id="@+id/imageSlider"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_260sdp"
-                app:sliderAnimationDuration="600"
-                app:sliderAutoCycleDirection="back_and_forth"
-                app:sliderAutoCycleEnabled="true"
-                app:sliderIndicatorAnimationDuration="200"
-                app:sliderIndicatorGravity="center_horizontal|bottom"
-                app:sliderIndicatorMargin="@dimen/_4sdp"
-                app:sliderIndicatorOrientation="horizontal"
-                app:sliderIndicatorPadding="@dimen/_4sdp"
-                app:sliderIndicatorRadius="2dp"
-                app:sliderIndicatorSelectedColor="@color/mainUiColour"
-                app:sliderIndicatorUnselectedColor="@color/colorGreyBtn"
-                app:sliderScrollTimeInSec="1"
-                app:sliderStartAutoCycle="true" />
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_20sdp"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/adBuyNow"
+                <com.smarteist.autoimageslider.SliderView
+                    android:id="@+id/imageSlider"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorWhite"
-                    android:drawableStart="@drawable/icon_buy_now_serp"
-                    android:gravity="center"
-                    android:visibility="gone" />
+                    android:layout_height="@dimen/_260sdp"
+                    app:sliderAnimationDuration="600"
+                    app:sliderAutoCycleDirection="back_and_forth"
+                    app:sliderAutoCycleEnabled="true"
+                    app:sliderIndicatorAnimationDuration="200"
+                    app:sliderIndicatorGravity="center_horizontal|bottom"
+                    app:sliderIndicatorMargin="@dimen/_4sdp"
+                    app:sliderIndicatorOrientation="horizontal"
+                    app:sliderIndicatorPadding="@dimen/_4sdp"
+                    app:sliderIndicatorRadius="2dp"
+                    app:sliderIndicatorSelectedColor="@color/mainUiColour"
+                    app:sliderIndicatorUnselectedColor="@color/colorGreyBtn"
+                    app:sliderScrollTimeInSec="1"
+                    app:sliderStartAutoCycle="true" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:background="@color/colorWhite"
-                    android:orientation="vertical"
-                    android:padding="@dimen/_8sdp">
-
-                    <TextView
-                        android:id="@+id/adDetailsTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_8sdp"
-                        android:ellipsize="end"
-                        android:fontFamily="serif"
-                        android:maxLines="2"
-                        android:padding="@dimen/_2sdp"
-                        android:textColor="@color/colorBlackText"
-                        android:textSize="@dimen/_18sdp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/adDetailsPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_6sdp"
-                        android:background="@drawable/ad_price_yellow_frame"
-                        android:fontFamily="serif"
-                        android:paddingStart="@dimen/_8sdp"
-                        android:paddingTop="@dimen/_4sdp"
-                        android:paddingEnd="@dimen/_16sdp"
-                        android:paddingBottom="@dimen/_4sdp"
-                        android:textColor="@color/colorBlackText"
-                        android:textSize="@dimen/_14sdp"
-                        android:textStyle="italic" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="serif"
-                        android:paddingTop="@dimen/_6sdp"
-                        android:paddingBottom="@dimen/_6sdp"
-                        android:text="@string/adForSale"
-                        android:textSize="@dimen/_12sdp" />
-
-                    <View style="@style/Divider" />
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="@string/adLocation"
-                            android:textColor="@color/colorBlackText"
-                            android:textSize="@dimen/_12sdp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/location"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:paddingStart="@dimen/_8sdp"
-                            android:paddingEnd="@dimen/_8sdp"
-                            android:text="@string/adLocationText"
-                            android:textColor="@color/colorBlackText"
-                            android:textSize="@dimen/_12sdp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="@string/adCondition"
-                            android:textColor="@color/colorBlackText"
-                            android:textSize="@dimen/_12sdp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/adDetailsCondition"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:paddingStart="@dimen/_8sdp"
-                            android:paddingEnd="@dimen/_8sdp"
-                            android:textColor="@color/colorBlackText"
-                            android:textSize="@dimen/_12sdp" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="@string/adCategory"
-                            android:textColor="@color/colorBlackText"
-                            android:textSize="@dimen/_12sdp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/adDetailsCategoryName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:paddingStart="@dimen/_8sdp"
-                            android:paddingEnd="@dimen/_8sdp"
-                            android:textColor="@color/colorBlackText"
-                            android:textSize="@dimen/_12sdp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="@string/adPosted"
-                            android:textColor="@color/colorBlackText"
-                            android:textSize="@dimen/_12sdp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/adDetailsTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:paddingStart="@dimen/_8sdp"
-                            android:paddingEnd="@dimen/_8sdp"
-                            android:textColor="@color/colorBlackText"
-                            android:textSize="@dimen/_12sdp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/adView1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    ads:adSize="LARGE_BANNER"
-                    ads:adUnitId="ca-app-pub-2612826891658748/5962491746"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:background="@color/colorWhite"
-                    android:orientation="vertical"
-                    android:padding="@dimen/_8sdp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:text="@string/adDescription"
-                        android:textColor="@color/colorBlackText"
-                        android:textSize="@dimen/_12sdp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/adDetailsDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:fontFamily="serif"
-                        android:textColor="@color/colorBlackText"
-                        android:textSize="@dimen/_14sdp" />
-
-                </LinearLayout>
-
-                <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/adView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    ads:adSize="MEDIUM_RECTANGLE"
-                    ads:adUnitId="ca-app-pub-2612826891658748/5962491746"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:background="@color/colorWhite"
+                    android:layout_marginBottom="@dimen/_20sdp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <Button
+                        android:id="@+id/adBuyNow"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="@dimen/_6sdp"
-                        android:text="@string/similar_ads"
-                        android:textColor="@color/colorBlackText"
-                        android:textSize="@dimen/_12sdp"
-                        android:textStyle="bold" />
+                        android:background="@color/colorWhite"
+                        android:drawableStart="@drawable/icon_buy_now_serp"
+                        android:gravity="center"
+                        android:visibility="gone" />
 
-                    <View
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:background="@color/colorWhiteLite" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:background="@color/colorWhite"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_8sdp">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/similarAds"
+                        <TextView
+                            android:id="@+id/adDetailsTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                            android:ellipsize="end"
+                            android:fontFamily="serif"
+                            android:maxLines="2"
+                            android:padding="@dimen/_2sdp"
+                            android:textColor="@color/colorBlackText"
+                            android:textSize="@dimen/_18sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/adDetailsPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_6sdp"
+                            android:background="@drawable/ad_price_yellow_frame"
+                            android:fontFamily="serif"
+                            android:paddingStart="@dimen/_8sdp"
+                            android:paddingTop="@dimen/_4sdp"
+                            android:paddingEnd="@dimen/_16sdp"
+                            android:paddingBottom="@dimen/_4sdp"
+                            android:textColor="@color/colorBlackText"
+                            android:textSize="@dimen/_14sdp"
+                            android:textStyle="italic" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="serif"
+                            android:paddingTop="@dimen/_6sdp"
+                            android:paddingBottom="@dimen/_6sdp"
+                            android:text="@string/adForSale"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <View style="@style/Divider" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/adLocation"
+                                android:textColor="@color/colorBlackText"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/location"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:paddingStart="@dimen/_8sdp"
+                                android:paddingEnd="@dimen/_8sdp"
+                                android:text="@string/adLocationText"
+                                android:textColor="@color/colorBlackText"
+                                android:textSize="@dimen/_12sdp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/adCondition"
+                                android:textColor="@color/colorBlackText"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/adDetailsCondition"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:paddingStart="@dimen/_8sdp"
+                                android:paddingEnd="@dimen/_8sdp"
+                                android:textColor="@color/colorBlackText"
+                                android:textSize="@dimen/_12sdp" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/adCategory"
+                                android:textColor="@color/colorBlackText"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/adDetailsCategoryName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:paddingStart="@dimen/_8sdp"
+                                android:paddingEnd="@dimen/_8sdp"
+                                android:textColor="@color/colorBlackText"
+                                android:textSize="@dimen/_12sdp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/adPosted"
+                                android:textColor="@color/colorBlackText"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/adDetailsTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:paddingStart="@dimen/_8sdp"
+                                android:paddingEnd="@dimen/_8sdp"
+                                android:textColor="@color/colorBlackText"
+                                android:textSize="@dimen/_12sdp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/adView1"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        ads:adSize="LARGE_BANNER"
+                        ads:adUnitId="ca-app-pub-2612826891658748/5962491746" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:background="@color/colorWhite"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_8sdp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:text="@string/adDescription"
+                            android:textColor="@color/colorBlackText"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/adDetailsDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="serif"
+                            android:textColor="@color/colorBlackText"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:background="@color/colorWhiteLite" />
+
+                        <Button
+                            android:id="@+id/startPromotion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:background="@color/colorWarningDark"
+                            android:drawableStart="@drawable/ic_round_arrow_upward_24"
+                            android:drawableTint="@color/brownRed"
+                            android:paddingStart="@dimen/_80sdp"
+                            android:paddingTop="@dimen/_6sdp"
+                            android:paddingEnd="@dimen/_80sdp"
+                            android:paddingBottom="@dimen/_6sdp"
+                            android:text="Promote this ad"
+                            android:textAllCaps="false"
+                            android:textColor="@color/brownRed"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:drawableStart="@drawable/ic_baseline_not_interested_24"
+                            android:drawableTint="@color/colorGreyBtn"
+                            android:drawablePadding="@dimen/_8sdp"
+                            android:gravity="center_vertical"
+                            android:paddingStart="@dimen/_76sdp"
+                            android:paddingEnd="@dimen/_76sdp"
+                            android:textSize="@dimen/_14sdp"
+                            android:text="Report this ad" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:background="@color/colorWhiteLite" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:drawableStart="@drawable/stay_safe_xml"
+                            android:gravity="center_vertical"
+                            android:drawablePadding="@dimen/_8sdp"
+                            android:paddingStart="@dimen/_60sdp"
+                            android:paddingEnd="@dimen/_60sdp"
+                            android:textSize="@dimen/_14sdp"
+                            android:text="Stay safe on ikman!" />
+
+                    </LinearLayout>
+
+                    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/adView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        ads:adSize="MEDIUM_RECTANGLE"
+                        ads:adUnitId="ca-app-pub-2612826891658748/5962491746" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@color/colorWhite"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="@dimen/_6sdp"
+                            android:text="@string/similar_ads"
+                            android:textColor="@color/colorBlackText"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:background="@color/colorWhiteLite" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/similarAds"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/adView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        ads:adSize="LARGE_BANNER"
+                        ads:adUnitId="ca-app-pub-2612826891658748/5962491746" />
+
 
                 </LinearLayout>
-
-                <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/adView4"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    ads:adSize="LARGE_BANNER"
-                    ads:adUnitId="ca-app-pub-2612826891658748/5962491746"/>
-
 
             </LinearLayout>
 
+        </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_border"
+            android:orientation="horizontal"
+            android:padding="@dimen/_8sdp">
+
+            <Button
+                android:id="@+id/adCallNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:layout_weight="1"
+                android:background="@color/mainUiColour"
+                android:onClick="onClick"
+                android:text="@string/adCall"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/colorWhite" />
+
+            <Button
+                android:id="@+id/adChatNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_weight="1"
+                android:background="@color/mainUiColour"
+                android:onClick="onClick"
+                android:text="@string/adChat"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/colorWhite" />
+
         </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_border"
-        android:orientation="horizontal"
-        android:padding="@dimen/_8sdp">
-
-        <Button
-            android:id="@+id/adCallNow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_6sdp"
-            android:layout_weight="1"
-            android:background="@color/mainUiColour"
-            android:onClick="onClick"
-            android:text="@string/adCall"
-            android:textAllCaps="false"
-            android:textColor="@color/colorWhite" />
-
-        <Button
-            android:id="@+id/adChatNow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_6sdp"
-            android:layout_weight="1"
-            android:background="@color/mainUiColour"
-            android:onClick="onClick"
-            android:text="@string/adChat"
-            android:textAllCaps="false"
-            android:textColor="@color/colorWhite" />
 
     </LinearLayout>
 

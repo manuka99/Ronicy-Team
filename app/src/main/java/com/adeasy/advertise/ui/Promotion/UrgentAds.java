@@ -6,14 +6,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.PromotionsViewModel;
@@ -26,17 +24,15 @@ import worker8.com.github.radiogroupplus.RadioGroupPlus;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DailyBump#newInstance} factory method to
+ * Use the {@link UrgentAds#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DailyBump extends Fragment implements View.OnClickListener {
+public class UrgentAds extends Fragment implements View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    private static final String TAG = "DailyBump";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -53,7 +49,7 @@ public class DailyBump extends Fragment implements View.OnClickListener {
     //viewModel
     PromotionsViewModel promotionsViewModel;
 
-    public DailyBump() {
+    public UrgentAds() {
         // Required empty public constructor
     }
 
@@ -63,11 +59,11 @@ public class DailyBump extends Fragment implements View.OnClickListener {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment DailyBump.
+     * @return A new instance of fragment UrgentAds.
      */
     // TODO: Rename and change types and number of parameters
-    public static DailyBump newInstance(String param1, String param2) {
-        DailyBump fragment = new DailyBump();
+    public static UrgentAds newInstance(String param1, String param2) {
+        UrgentAds fragment = new UrgentAds();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -88,7 +84,7 @@ public class DailyBump extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.manuka_fragment_daily_bump, container, false);
+        View view = inflater.inflate(R.layout.manuka_fragment_urgent_ads, container, false);
 
         checkbox = view.findViewById(R.id.checkbox);
         radioGroup = view.findViewById(R.id.radioGroup);
@@ -108,6 +104,7 @@ public class DailyBump extends Fragment implements View.OnClickListener {
         return view;
     }
 
+
     @Override
     public void onClick(View view) {
         if (view == checkbox)
@@ -126,7 +123,7 @@ public class DailyBump extends Fragment implements View.OnClickListener {
             checkbox.setBackground(getActivity().getResources().getDrawable(R.drawable.ic_checkbox_checked));
             radioGroup.setVisibility(View.VISIBLE);
             days7Radio.setChecked(true);
-            promotionsViewModel.setOnFragmentSelected(new DailyBump());
+            promotionsViewModel.setOnFragmentSelected(new UrgentAds());
         }
         upDateActivity();
     }
@@ -155,7 +152,7 @@ public class DailyBump extends Fragment implements View.OnClickListener {
         promotionsViewModel.getOnFragmentSelected().observe(this, new Observer<Fragment>() {
             @Override
             public void onChanged(Fragment fragment) {
-                if (fragment instanceof DailyBump == false) {
+                if (fragment instanceof UrgentAds == false) {
                     radioGroup.setVisibility(View.GONE);
                 }
             }
@@ -177,12 +174,12 @@ public class DailyBump extends Fragment implements View.OnClickListener {
 
             //updateViewModel
             Map<Integer, Integer> promos = new HashMap<>();
-            promos.put(Promotion.DAILY_BUMP_AD, daysSelected);
+            promos.put(Promotion.URGENT_AD, daysSelected);
             promotionsViewModel.setSelectedPromo(promos);
         } else {
             //updateViewModel
             Map<Integer, Integer> promos = new HashMap<>();
-            promos.put(Promotion.DAILY_BUMP_AD, daysSelected);
+            promos.put(Promotion.URGENT_AD, daysSelected);
             promotionsViewModel.setSelectedPromo(promos);
         }
 
