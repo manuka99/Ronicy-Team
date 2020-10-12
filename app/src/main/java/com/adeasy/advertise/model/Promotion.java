@@ -25,6 +25,7 @@ public class Promotion {
     public static final int TOP_AD = 2;
     public static final int URGENT_AD = 3;
     public static final int SPOTLIGHT_AD = 4;
+    public static final int BUNDLE_AD = 5;
 
     public Promotion() {
 

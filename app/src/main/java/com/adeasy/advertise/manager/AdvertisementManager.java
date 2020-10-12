@@ -278,8 +278,12 @@ public class AdvertisementManager {
         return FirebaseFirestore.getInstance().collection(childName).whereIn("id", ids).whereEqualTo("availability", true).whereEqualTo("approved", true).orderBy("placedDate", Query.Direction.DESCENDING);
     }
 
-    public Query homeSimilarAds(String cid) {
-        return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("categoryID", cid).whereEqualTo("availability", true).whereEqualTo("approved", true).limit(6);
+    public Query homeSimilarAds(String cid, List<String> promo_AdIDs, int limitValue) {
+        if (promo_AdIDs != null && promo_AdIDs.size() > 0)
+            return FirebaseFirestore.getInstance().collection(childName).whereIn("id", promo_AdIDs).whereEqualTo("categoryID", cid).whereEqualTo("availability", true).whereEqualTo("approved", true).limit(limitValue);
+
+        else
+            return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("categoryID", cid).whereEqualTo("availability", true).whereEqualTo("approved", true).limit(limitValue);
     }
 
     public Query viewMyAddsAll() {

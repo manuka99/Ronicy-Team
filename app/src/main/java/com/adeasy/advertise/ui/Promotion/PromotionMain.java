@@ -39,6 +39,7 @@ public class PromotionMain extends AppCompatActivity implements PromotionCallbac
     Map<Integer, Integer> promos;
 
     //promotions Fragments
+    BundleAds bundleAds;
     DailyBump dailyBump;
     TopAds topAds;
     UrgentAds urgentAds;
@@ -88,13 +89,15 @@ public class PromotionMain extends AppCompatActivity implements PromotionCallbac
 
     private void loadAllPromotions() {
         initializeFragments();
-        getSupportFragmentManager().beginTransaction().add(promotionsLayout.getId(), dailyBump)
+        getSupportFragmentManager().beginTransaction().add(promotionsLayout.getId(), bundleAds)
+                .add(promotionsLayout.getId(), dailyBump)
                 .add(promotionsLayout.getId(), topAds)
                 .add(promotionsLayout.getId(), urgentAds)
                 .add(promotionsLayout.getId(), spotLightAd).commit();
     }
 
     private void initializeFragments() {
+        bundleAds = new BundleAds();
         dailyBump = new DailyBump();
         topAds = new TopAds();
         urgentAds = new UrgentAds();

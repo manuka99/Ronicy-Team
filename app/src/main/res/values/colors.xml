@@ -37,4 +37,5 @@
     <color name="btnColor2">#2f89fc</color>
     <color name="whiteLogin">#CCFFFFFF</color>
     <color name="top_ad_colour">#38FFE066</color>
+    <color name="bundle_ads_color">#F5E9E2</color>
 </resources>

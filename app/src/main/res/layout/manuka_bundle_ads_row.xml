@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_10sdp"
-    android:background="@color/colorWhite"
+    android:paddingTop="@dimen/_10sdp"
+    android:background="@color/bundle_ads_color"
     android:orientation="vertical">
 
     <LinearLayout
@@ -64,6 +64,12 @@
                 android:gravity="center_vertical"
                 android:text="@string/loading"
                 android:textSize="@dimen/_10sdp" />
+
+            <ImageView
+                android:layout_marginTop="@dimen/_2sdp"
+                android:background="@drawable/icon_urgent_bundle"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_22sdp"/>
 
             <TextView
                 android:id="@+id/myaddsAprovedStatus"

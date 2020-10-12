@@ -17,6 +17,7 @@ public class ApprovedPromotions {
     public static final String dailyPromoPromoExpireTime_name = "dailyPromoPromoExpireTime";
     public static final String spotLightPromoExpireTime_name = "spotLightPromoExpireTime";
     public static final String topAdPromoExpireTime_name = "topAdPromoExpireTime";
+    public static final String bundleAdPromoExpireTime_name = "bundleAdPromoExpireTime";
     public static final String lastUpdated_name = "lastUpdated";
     public static final String stopPromotions_name = "stopPromotions";
 
@@ -25,6 +26,7 @@ public class ApprovedPromotions {
     private Date dailyPromoPromoExpireTime;
     private Date spotLightPromoExpireTime;
     private Date topAdPromoExpireTime;
+    private Date bundleAdPromoExpireTime;
     private Boolean stopPromotions;
     List<String> notes;
     List<String> promoIDs;
@@ -103,6 +105,14 @@ public class ApprovedPromotions {
 
     public void setPromoIDs(List<String> promoIDs) {
         this.promoIDs = promoIDs;
+    }
+
+    public Date getBundleAdPromoExpireTime() {
+        return bundleAdPromoExpireTime;
+    }
+
+    public void setBundleAdPromoExpireTime(Date bundleAdPromoExpireTime) {
+        this.bundleAdPromoExpireTime = bundleAdPromoExpireTime;
     }
 
 }

@@ -40,6 +40,11 @@ public class PromotionManager {
         this.documentReference = firebaseFirestore.collection(PROMOTIONS).document();
     }
 
+    public PromotionManager() {
+        this.firebaseFirestore = FirebaseFirestore.getInstance();
+        this.documentReference = firebaseFirestore.collection(PROMOTIONS).document();
+    }
+
     public void savePromotions(Promotion promotion) {
         firebaseFirestore.collection(PROMOTIONS).document(promotion.getPromoID()).set(promotion, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -69,8 +74,8 @@ public class PromotionManager {
                     Log.i(TAG, "task sent");
                     final List<String> ids = new ArrayList<>();
                     if (task.isSuccessful()) {
-                        for (Promotion promotion : task.getResult().toObjects(Promotion.class)) {
-                            ids.add(promotion.getAdvertisementID());
+                        for (ApprovedPromotions promotion : task.getResult().toObjects(ApprovedPromotions.class)) {
+                            ids.add(promotion.getAdvertismentID());
                         }
                     } else
                         Log.i(TAG, task.getException().getMessage());
@@ -96,6 +101,9 @@ public class PromotionManager {
 
         else if(promoType == Promotion.TOP_AD)
             return query.whereEqualTo(ApprovedPromotions.stopPromotions_name, false).whereGreaterThan(ApprovedPromotions.topAdPromoExpireTime_name, new Date()).orderBy(ApprovedPromotions.topAdPromoExpireTime_name, Query.Direction.ASCENDING);
+
+        else if(promoType == Promotion.BUNDLE_AD)
+            return query.whereEqualTo(ApprovedPromotions.stopPromotions_name, false).whereGreaterThan(ApprovedPromotions.bundleAdPromoExpireTime_name, new Date()).orderBy(ApprovedPromotions.bundleAdPromoExpireTime_name, Query.Direction.ASCENDING);
 
         else
             return null;

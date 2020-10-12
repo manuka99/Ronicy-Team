@@ -297,13 +297,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_20sdp"
                             android:drawableStart="@drawable/ic_baseline_not_interested_24"
-                            android:drawableTint="@color/colorGreyBtn"
                             android:drawablePadding="@dimen/_8sdp"
+                            android:drawableTint="@color/colorGreyBtn"
                             android:gravity="center_vertical"
                             android:paddingStart="@dimen/_76sdp"
                             android:paddingEnd="@dimen/_76sdp"
-                            android:textSize="@dimen/_14sdp"
-                            android:text="Report this ad" />
+                            android:text="Report this ad"
+                            android:textSize="@dimen/_14sdp" />
 
                         <View
                             android:layout_width="match_parent"
@@ -316,12 +316,12 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_12sdp"
                             android:drawableStart="@drawable/stay_safe_xml"
-                            android:gravity="center_vertical"
                             android:drawablePadding="@dimen/_8sdp"
+                            android:gravity="center_vertical"
                             android:paddingStart="@dimen/_60sdp"
                             android:paddingEnd="@dimen/_60sdp"
-                            android:textSize="@dimen/_14sdp"
-                            android:text="Stay safe on ikman!" />
+                            android:text="Stay safe on ikman!"
+                            android:textSize="@dimen/_14sdp" />
 
                     </LinearLayout>
 
@@ -360,6 +360,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
+                        <ProgressBar
+                            android:id="@+id/progressBarSimilarAds"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_60sdp"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:layout_marginBottom="@dimen/_20sdp"
+                            android:indeterminate="true"
+                            android:indeterminateDrawable="@drawable/progress_grey" />
+
                     </LinearLayout>
 
                     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
@@ -369,7 +378,6 @@
                         android:layout_marginTop="@dimen/_8sdp"
                         ads:adSize="LARGE_BANNER"
                         ads:adUnitId="ca-app-pub-2612826891658748/5962491746" />
-
 
                 </LinearLayout>
 
@@ -394,8 +402,8 @@
                 android:onClick="onClick"
                 android:text="@string/adCall"
                 android:textAllCaps="false"
-                android:textSize="@dimen/_12sdp"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_12sdp" />
 
             <Button
                 android:id="@+id/adChatNow"
@@ -407,8 +415,8 @@
                 android:onClick="onClick"
                 android:text="@string/adChat"
                 android:textAllCaps="false"
-                android:textSize="@dimen/_12sdp"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_12sdp" />
 
         </LinearLayout>
 

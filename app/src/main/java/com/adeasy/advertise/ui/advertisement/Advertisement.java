@@ -32,8 +32,11 @@ import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.adapter.AdvertisementSliderAdapter;
+import com.adeasy.advertise.adapter.RecyclerAdapterSimillarAds;
+import com.adeasy.advertise.callback.PromotionCallback;
 import com.adeasy.advertise.helper.ViewHolderAdds;
 import com.adeasy.advertise.helper.ViewHolderListAdds;
+import com.adeasy.advertise.manager.PromotionManager;
 import com.adeasy.advertise.model.Category;
 import com.adeasy.advertise.model.Promotion;
 import com.adeasy.advertise.ui.Order.BuyNow;
@@ -59,9 +62,12 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.RequestConfiguration;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -71,7 +77,9 @@ import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED;
@@ -81,7 +89,7 @@ import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERM
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class Advertisement extends AppCompatActivity implements AdvertisementCallback, CategoryCallback, View.OnClickListener {
+public class Advertisement extends AppCompatActivity implements AdvertisementCallback, CategoryCallback, PromotionCallback, View.OnClickListener {
 
     TextView AdTitle, AdCondition, AdDescription, AdPrice, adTime, adCatName, location;
     SliderView sliderView;
@@ -96,17 +104,23 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
     com.adeasy.advertise.model.Advertisement advertisement;
     com.adeasy.advertise.model.Category category;
     private static final int requestCodeImage = 1456;
+    private static final int LIMIT_SIMILLAR_ADS = 8;
 
-    ProgressBar progressBar;
+    List<String> bundle_ad_ids;
+
+    ProgressBar progressBar, progressBarSimilarAds;
     LinearLayout adLayout;
     Button startPromotion;
 
     RecyclerView similarAds;
-    FirestoreRecyclerAdapter adapter;
 
     CustomDialogs customDialogs;
 
     AdView adView1, adView2, adView4;
+    PromotionManager promotionManager;
+    List<Object> objectsForSimilarAds = new ArrayList<>();
+
+    RecyclerAdapterSimillarAds recyclerAdapterSimillarAds;
 
     private static final String ADVERTISEMENTID = "adID";
     private static final String TAG = "EditAdvertisement";
@@ -120,6 +134,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         context = this;
 
         advertisementManager = new AdvertisementManager(this);
+        promotionManager = new PromotionManager(this);
         categoryManager = new CategoryManager(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -139,6 +154,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         customDialogs = new CustomDialogs(this);
 
         progressBar = findViewById(R.id.progressBar);
+        progressBarSimilarAds = findViewById(R.id.progressBarSimilarAds);
         adLayout = findViewById(R.id.adLayout);
         startPromotion = findViewById(R.id.startPromotion);
         adLayout.setVisibility(View.GONE);
@@ -183,7 +199,10 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         adView2.loadAd(new AdRequest.Builder().build());
         adView4.loadAd(new AdRequest.Builder().build());
 
-        loadData();
+        promotionManager.getAdIDsByPromotionType(Promotion.BUNDLE_AD);
+
+        recyclerAdapterSimillarAds = new RecyclerAdapterSimillarAds(context);
+        similarAds.setAdapter(recyclerAdapterSimillarAds);
     }
 
     @Override
@@ -191,9 +210,6 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         super.onStart();
         if (!new InternetValidation().validateInternet(getApplicationContext()))
             customDialogs.showNoInternetDialog();
-
-        similarAds.setAdapter(adapter);
-        adapter.startListening();
 
         adView1.setAdListener(new AdListener() {
             @Override
@@ -234,7 +250,6 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
     @Override
     public void onStop() {
         super.onStop();
-        adapter.startListening();
     }
 
 
@@ -444,73 +459,72 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         }
     }
 
-    public void loadData() {
-        FirestoreRecyclerOptions<com.adeasy.advertise.model.Advertisement> options =
-                new FirestoreRecyclerOptions.Builder<com.adeasy.advertise.model.Advertisement>()
-                        .setQuery(advertisementManager.homeSimilarAds(adCID), com.adeasy.advertise.model.Advertisement.class)
-                        .build();
-
-        adapter = new FirestoreRecyclerAdapter<com.adeasy.advertise.model.Advertisement, ViewHolderListAdds>(options) {
-            @Override
-            public void onBindViewHolder(ViewHolderListAdds holder, final int position, com.adeasy.advertise.model.Advertisement advertisement) {
-                try {
-                    holder.getMyadsTitle().setText(advertisement.getTitle());
-                    holder.getMyadsPrice().setText(advertisement.getPreetyCurrency());
-                    holder.getMyaddsDate().setText(advertisement.getPreetyTime());
-                    Picasso.get().load(advertisement.getImageUrls().get(0)).fit().into(holder.getImageView());
-                    holder.getMyadsAprooved().setVisibility(View.GONE);
-
-                    holder.itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(getApplicationContext(), com.adeasy.advertise.ui.advertisement.Advertisement.class);
-                            intent.putExtra("adID", getItem(position).getId());
-                            intent.putExtra("adCID", (String) getItem(position).getCategoryID());
-                            startActivity(intent);
-                            //Toast.makeText(view.getContext(), getItem(position).getId(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public ViewHolderListAdds onCreateViewHolder(ViewGroup group, int i) {
-                // Create a new instance of the ViewHolder, in this case we are using a custom
-                View view = LayoutInflater.from(group.getContext())
-                        .inflate(R.layout.manuka_ads_row, group, false);
-
-                return new ViewHolderListAdds(view);
-            }
-
-            @Override
-            public void onDataChanged() {
-
-                //if (getSnapshots().size() == 0)
-
-            }
-
-            @Override
-            public void onError(FirebaseFirestoreException e) {
-                // Called when there is an error getting a query snapshot. You may want to update
-                // your UI to display an error message to the user.
-                // ...
-                e.printStackTrace();
-            }
-
-        };
-
-        adapter.startListening();
-        similarAds.setAdapter(adapter);
-    }
-
     private void startPromoteAd() {
         if (advertisement != null) {
             Intent intent = new Intent(getApplicationContext(), PromotionMain.class);
             intent.putExtra(ADVERTISEMENTID, advertisement.getId());
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onCompleteSavePromotion(Task<Void> task) {
+
+    }
+
+    @Override
+    public void onGetPromotionByID(Task<DocumentSnapshot> task) {
+
+    }
+
+    @Override
+    public void onPromotionsListIds(List<String> ids, Query promotionQuery) {
+        bundle_ad_ids = ids;
+        if (bundle_ad_ids != null && bundle_ad_ids.size() > 0)
+            loadBundleAds();
+        else
+            loadRegularAds(LIMIT_SIMILLAR_ADS);
+    }
+
+    private void loadBundleAds() {
+        advertisementManager.homeSimilarAds(adCID, bundle_ad_ids, LIMIT_SIMILLAR_ADS).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                //check if there are bundleAds
+                if (task.isSuccessful() && task.getResult().size() > 0) {
+                    objectsForSimilarAds = new ArrayList<>();
+                    objectsForSimilarAds.addAll(task.getResult().toObjects(com.adeasy.advertise.model.BundleAd.class));
+                    recyclerAdapterSimillarAds.setObjects(objectsForSimilarAds);
+
+                    if (objectsForSimilarAds.size() < LIMIT_SIMILLAR_ADS) {
+                        //load regularAds
+                        loadRegularAds(LIMIT_SIMILLAR_ADS - objectsForSimilarAds.size());
+                    } else
+                        progressBarSimilarAds.setVisibility(View.GONE);
+                } else
+                    loadRegularAds(LIMIT_SIMILLAR_ADS);
+            }
+        });
+    }
+
+    private void loadRegularAds(final int count) {
+        advertisementManager.homeSimilarAds(adCID, null, count).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (task.getResult().size() > 0) {
+                        objectsForSimilarAds = new ArrayList<>();
+                        objectsForSimilarAds.addAll(task.getResult().toObjects(com.adeasy.advertise.model.Advertisement.class));
+                        recyclerAdapterSimillarAds.setObjects(objectsForSimilarAds);
+                    } else if (count == LIMIT_SIMILLAR_ADS) {
+                        //no data for similar ads
+                    }
+                } else if (count == LIMIT_SIMILLAR_ADS) {
+                    //no data for similar ads
+                }
+                progressBarSimilarAds.setVisibility(View.GONE);
+            }
+        });
     }
 
 }
