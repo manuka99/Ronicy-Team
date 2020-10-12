@@ -174,7 +174,6 @@
                                 android:textColor="@color/colorBlackText"
                                 android:textSize="@dimen/_12sdp" />
 
-
                         </LinearLayout>
 
                         <LinearLayout
@@ -248,7 +247,7 @@
                         android:layout_marginBottom="@dimen/_12sdp"
                         android:background="@color/colorWhite"
                         android:orientation="vertical"
-                        android:padding="@dimen/_8sdp">
+                        android:padding="@dimen/_12sdp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -267,7 +266,7 @@
                             android:layout_marginTop="@dimen/_10sdp"
                             android:fontFamily="serif"
                             android:textColor="@color/colorBlackText"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_12sdp" />
 
                         <View
                             android:layout_width="match_parent"
@@ -284,18 +283,18 @@
                             android:drawableStart="@drawable/ic_round_arrow_upward_24"
                             android:drawableTint="@color/brownRed"
                             android:paddingStart="@dimen/_80sdp"
-                            android:paddingTop="@dimen/_6sdp"
+                            android:paddingTop="@dimen/_4sdp"
                             android:paddingEnd="@dimen/_80sdp"
-                            android:paddingBottom="@dimen/_6sdp"
+                            android:paddingBottom="@dimen/_4sdp"
                             android:text="Promote this ad"
                             android:textAllCaps="false"
                             android:textColor="@color/brownRed"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_12sdp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_20sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:drawableStart="@drawable/ic_baseline_not_interested_24"
                             android:drawablePadding="@dimen/_8sdp"
                             android:drawableTint="@color/colorGreyBtn"
@@ -303,12 +302,12 @@
                             android:paddingStart="@dimen/_76sdp"
                             android:paddingEnd="@dimen/_76sdp"
                             android:text="Report this ad"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_12sdp" />
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_1sdp"
-                            android:layout_marginTop="@dimen/_16sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:background="@color/colorWhiteLite" />
 
                         <TextView
@@ -320,7 +319,7 @@
                             android:gravity="center_vertical"
                             android:paddingStart="@dimen/_60sdp"
                             android:paddingEnd="@dimen/_60sdp"
-                            android:text="Stay safe on ikman!"
+                            android:text="Stay safe on ronicy!"
                             android:textSize="@dimen/_14sdp" />
 
                     </LinearLayout>
@@ -395,7 +394,7 @@
             <Button
                 android:id="@+id/adCallNow"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_38sdp"
                 android:layout_marginEnd="@dimen/_6sdp"
                 android:layout_weight="1"
                 android:background="@color/mainUiColour"
@@ -408,7 +407,7 @@
             <Button
                 android:id="@+id/adChatNow"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_38sdp"
                 android:layout_marginStart="@dimen/_6sdp"
                 android:layout_weight="1"
                 android:background="@color/mainUiColour"

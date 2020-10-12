@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +32,7 @@ import java.util.Map;
 public class PromotionMain extends AppCompatActivity implements PromotionCallback, View.OnClickListener {
 
     private static final String TAG = "PromotionMain";
+    private static final String PROMOS_ADDED = "promos_added";
     private static final String ADVERTISEMENT_ID = "adID";
 
     PromotionManager promotionManager;
@@ -48,12 +51,19 @@ public class PromotionMain extends AppCompatActivity implements PromotionCallbac
     //viewModel
     PromotionsViewModel promotionsViewModel;
 
+    String advertisementID;
+
     Button continueBTN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manuka_activity_promotion_main);
+
+        if (getIntent().hasExtra(ADVERTISEMENT_ID))
+            advertisementID = getIntent().getStringExtra(ADVERTISEMENT_ID);
+        else
+            finish();
 
         //toolbar setup
         toolbar = findViewById(R.id.toolbar);
@@ -84,11 +94,12 @@ public class PromotionMain extends AppCompatActivity implements PromotionCallbac
 
         //load all promotions
         loadAllPromotions();
+        changeColourOfContinueBTN();
     }
-
 
     private void loadAllPromotions() {
         initializeFragments();
+        promotionsLayout.removeAllViews();
         getSupportFragmentManager().beginTransaction().add(promotionsLayout.getId(), bundleAds)
                 .add(promotionsLayout.getId(), dailyBump)
                 .add(promotionsLayout.getId(), topAds)
@@ -136,16 +147,39 @@ public class PromotionMain extends AppCompatActivity implements PromotionCallbac
             public void onChanged(Map<Integer, Integer> integerIntegerMap) {
                 Log.i(TAG, "updating promos");
                 promos.putAll(integerIntegerMap);
+                changeColourOfContinueBTN();
             }
         });
     }
 
     @Override
     public void onClick(View view) {
-        if (view == continueBTN) {
+        if (view == continueBTN && validateContinueBTN()) {
             for (Integer promo : promos.keySet()) {
                 Log.i(TAG, "type: " + promo + " days: " + promos.get(promo));
             }
+            Intent intent = new Intent(this, Payment.class);
+            intent.putExtra(PROMOS_ADDED, (Serializable) promos);
+            intent.putExtra(ADVERTISEMENT_ID, advertisementID);
+            startActivity(intent);
         }
     }
+
+    private boolean validateContinueBTN() {
+        if (promos != null) {
+            for (Integer value : promos.values()) {
+                if (value == 3 || value == 7 || value == 15)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private void changeColourOfContinueBTN() {
+        if (validateContinueBTN())
+            continueBTN.setBackgroundResource(R.drawable.button_round_fb);
+        else
+            continueBTN.setBackgroundResource(R.drawable.button_round_grey);
+    }
+
 }

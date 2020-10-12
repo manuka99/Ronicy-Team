@@ -21,7 +21,6 @@
         tools:context=".ui.Promotion.PromotionMain">
 
         <LinearLayout
-            android:id="@+id/promotionsLayout"
             android:paddingTop="@dimen/_16sdp"
             android:paddingBottom="@dimen/_16sdp"
             android:paddingStart="@dimen/_12sdp"
@@ -53,6 +52,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/promotionsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
@@ -62,6 +67,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/continueLayout"
+        android:background="@color/colorWhite"
         android:elevation="@dimen/_8sdp"
         android:padding="@dimen/_12sdp"
         android:layout_width="match_parent"

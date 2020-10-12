@@ -22,6 +22,7 @@
     <!-- Manuka -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="continueBtn">Continue</string>
+    <string name="paynowBTN">Pay Now</string>
 
     <!-- profile -->
     <string name="gender">Gender</string>
