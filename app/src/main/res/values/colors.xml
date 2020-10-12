@@ -22,6 +22,7 @@
     <color name="colorWarning">#ffe066</color>
     <color name="colorWarningDark">#FFC107</color>
     <color name="colorHome">#e6ecff</color>
+    <color name="colorBlueLitePromo">#1A646870</color>
     <color name="colorGreen">#009877</color>
     <color name="colorGreenDark">#007f63</color>
     <color name="colorError">#FFAE0655</color>

@@ -50,6 +50,8 @@ public class DailyBump extends Fragment implements View.OnClickListener {
 
     boolean isChecked = false;
 
+    LinearLayout layoutMain;
+
     //viewModel
     PromotionsViewModel promotionsViewModel;
 
@@ -101,7 +103,8 @@ public class DailyBump extends Fragment implements View.OnClickListener {
         days15Radio = view.findViewById(R.id.days15Radio);
         days15View = view.findViewById(R.id.days15View);
 
-        checkbox.setOnClickListener(this);
+        layoutMain = view.findViewById(R.id.layoutMain);
+        layoutMain.setOnClickListener(this);
 
         promotionsViewModel = ViewModelProviders.of(getActivity()).get(PromotionsViewModel.class);
 
@@ -121,12 +124,14 @@ public class DailyBump extends Fragment implements View.OnClickListener {
             checkbox.setBackground(getActivity().getResources().getDrawable(R.drawable.ic_checkbox_normal));
             radioGroup.clearCheck();
             radioGroup.setVisibility(View.GONE);
+            layoutMain.setBackgroundResource(R.color.colorWhite);
         } else {
             isChecked = true;
             checkbox.setBackground(getActivity().getResources().getDrawable(R.drawable.ic_checkbox_checked));
             radioGroup.setVisibility(View.VISIBLE);
             days7Radio.setChecked(true);
             promotionsViewModel.setOnFragmentSelected(new DailyBump());
+            layoutMain.setBackgroundResource(R.color.colorBlueLitePromo);
         }
         upDateActivity();
     }
@@ -142,11 +147,11 @@ public class DailyBump extends Fragment implements View.OnClickListener {
                 days15View.setBackgroundResource(R.drawable.promotion_bundle_border);
 
                 if (i == days3Radio.getId())
-                    days3View.setBackgroundResource(R.color.colorHome);
+                    days3View.setBackgroundResource(R.drawable.promotion_bundle_border_active);
                 else if (i == days7Radio.getId())
-                    days7View.setBackgroundResource(R.color.colorHome);
+                    days7View.setBackgroundResource(R.drawable.promotion_bundle_border_active);
                 else if (i == days15Radio.getId())
-                    days15View.setBackgroundResource(R.color.colorHome);
+                    days15View.setBackgroundResource(R.drawable.promotion_bundle_border_active);
 
                 upDateActivity();
             }

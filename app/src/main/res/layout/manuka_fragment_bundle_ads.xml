@@ -14,6 +14,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/layoutMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/promotion_bundle_border"
