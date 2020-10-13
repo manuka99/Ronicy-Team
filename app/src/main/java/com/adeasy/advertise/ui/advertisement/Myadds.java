@@ -130,7 +130,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                         options
                 ) {
                     @Override
-                    protected void onBindViewHolder(@NonNull ViewHolderListAdds holder, final int position, @NonNull Advertisement advertisement) {
+                    protected void onBindViewHolder(@NonNull ViewHolderListAdds holder, final int position, @NonNull final Advertisement advertisement) {
                         try {
                             holder.getMyadsTitle().setText(advertisement.getTitle());
                             holder.getMyadsPrice().setText(advertisement.getPreetyCurrency());
@@ -163,9 +163,9 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                                 public void onClick(View view) {
                                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(Myadds.this)
 
-                                            .setIcon(android.R.drawable.ic_dialog_alert)
+                                            .setIcon(getResources().getDrawable(R.drawable.ic_baseline_info_24_red))
 
-                                            .setTitle("My ad - " + getItem(position).get("title"))
+                                            .setTitle("My ad - " + advertisement.getTitle())
 
                                             .setMessage("Note any changes made cannot be revert. Select below and proceed.")
 
@@ -178,15 +178,15 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
 
                                                             .setIcon(getResources().getDrawable(R.drawable.ic_baseline_info_24_red))
 
-                                                            .setTitle("Are you sure you want to delete your advertisement - " + getItem(position).get("title"))
+                                                            .setTitle("Are you sure you want to delete your advertisement - " + advertisement.getTitle())
 
                                                             .setMessage("Note any changes made cannot be revert.")
 
                                                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                                                 @Override
                                                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                                                    imageUrls = (List<String>) getItem(position).get("imageUrls");
-                                                                    advertisementManager.moveAdToTrash(getItem(position).toObject(Advertisement.class));
+                                                                    imageUrls = advertisement.getImageUrls();
+                                                                    advertisementManager.moveAdToTrash(advertisement);
                                                                 }
                                                             })
 
@@ -206,18 +206,18 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                                                 @Override
                                                 public void onClick(DialogInterface dialogInterface, int i) {
                                                     Intent intent = new Intent(getApplicationContext(), EditAd.class);
-                                                    intent.putExtra("adID", getItem(position).get("id").toString());
-                                                    intent.putExtra("adCID", getItem(position).get("categoryID").toString());
+                                                    intent.putExtra("adID", advertisement.getId());
+                                                    intent.putExtra("adCID", advertisement.getCategoryID());
                                                     startActivity(intent);
                                                 }
                                             });
 
-                                    if ((Boolean) getItem(position).get("availability")) {
+                                    if (advertisement.isAvailability()) {
 
                                         alertDialog.setPositiveButton("Hide ad", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                                advertisementManager.hideAdd(getItem(position).getId(), false);
+                                                advertisementManager.hideAdd(advertisement.getId(), false);
                                             }
                                         });
                                     } else {

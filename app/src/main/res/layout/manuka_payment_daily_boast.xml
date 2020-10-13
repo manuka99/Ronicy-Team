@@ -7,10 +7,10 @@
     android:padding="@dimen/_12sdp">
 
     <ImageView
-        android:layout_weight="0.5"
         android:layout_width="0dp"
         android:layout_height="@dimen/_26sdp"
         android:layout_gravity="center_vertical"
+        android:layout_weight="0.5"
         android:scaleType="fitCenter"
         android:src="@drawable/bump_small" />
 
@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
+        android:gravity="end"
         android:text="@string/loading"
         android:textSize="@dimen/_12sdp"
         android:textStyle="italic" />

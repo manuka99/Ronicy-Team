@@ -3,6 +3,9 @@ package com.adeasy.advertise.ui.Promotion;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,12 +15,14 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.ViewModel.PromotionsViewModel;
 import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.callback.CategoryCallback;
 import com.adeasy.advertise.callback.PromotionCallback;
@@ -38,6 +43,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,33 +55,19 @@ import lk.payhere.androidsdk.PHResponse;
 import lk.payhere.androidsdk.model.InitRequest;
 import lk.payhere.androidsdk.model.StatusResponse;
 
-public class Payment extends AppCompatActivity implements PromotionCallback, AdvertisementCallback, CategoryCallback, View.OnClickListener, TextWatcher {
+public class Payment extends AppCompatActivity implements PromotionCallback, View.OnClickListener, TextWatcher {
 
     Toolbar toolbar;
     Button continueBTN;
-    Map<Integer, Integer> promos;
-    Map<String, Integer> promosString;
     String advertisementID;
     LinearLayout continueLayout, mainLayout;
     ProgressBar progressBar;
-    AdvertisementManager advertisementManager;
-    CategoryManager categoryManager;
     PromotionManager promotionManager;
-
-    //ad layout
-    ImageView adImage;
-    TextView adTitle, adCategory, adPrice;
-    Advertisement advertisement;
-
-    //promotions layouts
-    LinearLayout bundle_layout, daily_bump_layout, top_ad_layout, urgent_layout, spotlight_layout;
+    FrameLayout promoFrame;
+    PromoBody promoBody;
 
     //total
-    TextView totalView;
     double totalSum;
-
-    //invalid promos
-    TextView invalid_promos;
 
     //payment summary
     LinearLayout paymentSummary;
@@ -87,10 +79,19 @@ public class Payment extends AppCompatActivity implements PromotionCallback, Adv
     String phone;
     String email;
 
+    Map<Integer, Integer> promos;
+    Map<String, Integer> promosString;
+
+    //view model
+    PromotionsViewModel promotionsViewModel;
+
+    Bundle bundle;
+
     private static final String TAG = "Payment";
 
     private static final String PROMOS_ADDED = "promos_added";
     private static final String ADVERTISEMENT_ID = "adID";
+    private static final String PROMOTION_ID = "promoID";
     private static final int PAYHERE_REQUEST = 8562;
 
     @Override
@@ -101,25 +102,9 @@ public class Payment extends AppCompatActivity implements PromotionCallback, Adv
         //main layouts
         progressBar = findViewById(R.id.progressBar);
         mainLayout = findViewById(R.id.mainLayout);
+        promoFrame = findViewById(R.id.promoFrame);
         continueLayout = findViewById(R.id.continueLayout);
         continueBTN = findViewById(R.id.continueBTN);
-        invalid_promos = findViewById(R.id.invalid_promos);
-
-        //ad layout
-        adTitle = findViewById(R.id.title);
-        adImage = findViewById(R.id.adImage);
-        adCategory = findViewById(R.id.category);
-        adPrice = findViewById(R.id.adPrice);
-
-        //promo layouts
-        bundle_layout = findViewById(R.id.bundle_layout);
-        daily_bump_layout = findViewById(R.id.daily_bump_layout);
-        top_ad_layout = findViewById(R.id.top_ad_layout);
-        urgent_layout = findViewById(R.id.urgent_layout);
-        spotlight_layout = findViewById(R.id.spotlight_layout);
-
-        //total
-        totalView = findViewById(R.id.total);
 
         //payment summary
         paymentSummary = findViewById(R.id.paymentSummary);
@@ -132,7 +117,6 @@ public class Payment extends AppCompatActivity implements PromotionCallback, Adv
         continueLayout.setVisibility(View.GONE);
         mainLayout.setVisibility(View.GONE);
         paymentSummary.setVisibility(View.GONE);
-        invalid_promos.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         continueBTN.setBackgroundResource(R.drawable.button_round_grey);
 
@@ -141,20 +125,22 @@ public class Payment extends AppCompatActivity implements PromotionCallback, Adv
         phoneView.getEditText().addTextChangedListener(this);
         emailView.getEditText().addTextChangedListener(this);
 
-        advertisementManager = new AdvertisementManager(this);
-        categoryManager = new CategoryManager(this);
         promotionManager = new PromotionManager(this);
 
-        //checkIntent values
+        promoBody = new PromoBody();
+
+        //checkIntent values and bundle
+        bundle = new Bundle();
         if (getIntent().hasExtra(PROMOS_ADDED)) {
             promos = (Map<Integer, Integer>) getIntent().getSerializableExtra(PROMOS_ADDED);
             convertToStringMap();
+            bundle.putSerializable(PROMOS_ADDED, (Serializable) promos);
         }
 
-        if (getIntent().hasExtra(ADVERTISEMENT_ID))
+        if (getIntent().hasExtra(ADVERTISEMENT_ID)) {
             advertisementID = getIntent().getStringExtra(ADVERTISEMENT_ID);
-
-        advertisementManager.getAddbyID(advertisementID);
+            bundle.putString(ADVERTISEMENT_ID, advertisementID);
+        }
 
         //toolbar setup
         toolbar = findViewById(R.id.toolbar);
@@ -171,6 +157,33 @@ public class Payment extends AppCompatActivity implements PromotionCallback, Adv
 
         //set listeners
         continueBTN.setOnClickListener(this);
+
+        promotionsViewModel = ViewModelProviders.of(this).get(PromotionsViewModel.class);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        promoBody.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(promoFrame.getId(), promoBody).commit();
+        promotionsViewModel.getTotal().observe(this, new Observer<Double>() {
+            @Override
+            public void onChanged(Double aDouble) {
+                totalSum = aDouble;
+                //show layout
+                progressBar.setVisibility(View.GONE);
+                mainLayout.setVisibility(View.VISIBLE);
+                continueLayout.setVisibility(View.VISIBLE);
+
+                if (totalSum > 0) {
+                    continueBTN.setBackgroundResource(R.drawable.button_round_fb);
+                    paymentSummary.setVisibility(View.VISIBLE);
+                } else {
+                    continueBTN.setBackgroundResource(R.drawable.button_round_grey);
+                    paymentSummary.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     @Override
@@ -179,286 +192,7 @@ public class Payment extends AppCompatActivity implements PromotionCallback, Adv
             checkout();
     }
 
-    @Override
-    public void onUploadImage(@NonNull Task<Uri> task) {
-
-    }
-
-    @Override
-    public void onTaskFull(boolean result) {
-
-    }
-
-    @Override
-    public void onCompleteInsertAd(Task<Void> task) {
-
-    }
-
-    @Override
-    public void onCompleteDeleteAd(Task<Void> task) {
-
-    }
-
-    @Override
-    public void onAdCount(Task<QuerySnapshot> task) {
-
-    }
-
-    @Override
-    public void getAdbyID(@NonNull Task<DocumentSnapshot> task) {
-        if (task != null && task.isSuccessful()) {
-            advertisement = task.getResult().toObject(Advertisement.class);
-
-            //get the category details
-            categoryManager.getCategorybyID(advertisement.getCategoryID());
-
-            //add layouts and views
-            adTitle.setText(advertisement.getTitle());
-            Picasso.get().load(advertisement.getImageUrls().get(0)).into(adImage);
-            adPrice.setText(advertisement.getPreetyCurrency());
-
-            //complete the promotions
-            showPromotions();
-
-            //show layout
-            progressBar.setVisibility(View.GONE);
-            mainLayout.setVisibility(View.VISIBLE);
-            continueLayout.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void onSuccessGetAllAdsByYear(Task<QuerySnapshot> task) {
-
-    }
-
-    @Override
-    public void getCategoryByID(@NonNull Task<DocumentSnapshot> task) {
-        if (task != null && task.isSuccessful()) {
-            Category category = task.getResult().toObject(Category.class);
-            adCategory.setText(category.getName());
-        }
-    }
-
-    private void showPromotions() {
-        hideAllPromosLayouts();
-        if (promos != null) {
-            totalSum = 0;
-            for (Integer promoType : promos.keySet()) {
-
-                int daysSelected = promos.get(promoType);
-
-                if (promoType == Promotion.BUNDLE_AD) {
-                    if (daysSelected == 3) {
-                        double price = Promotions.BUNDLE_AD_PRICE_3_DAYS;
-                        totalSum += price;
-
-                        TextView description = bundle_layout.findViewById(R.id.description);
-                        TextView priceView = bundle_layout.findViewById(R.id.price);
-
-                        description.setText(Promotions.BUNDLE_AD_DESCRIPTION + daysSelected + Promotions.DAYS);
-                        priceView.setText(new DoubleToCurrencyFormat().setStringValue(String.valueOf(price)));
-
-                        bundle_layout.setVisibility(View.VISIBLE);
-                    } else if (daysSelected == 7) {
-                        double price = Promotions.BUNDLE_AD_PRICE_7_DAYS;
-                        totalSum += price;
-
-                        TextView description = bundle_layout.findViewById(R.id.description);
-                        TextView priceView = bundle_layout.findViewById(R.id.price);
-
-                        description.setText(Promotions.BUNDLE_AD_DESCRIPTION + daysSelected + Promotions.DAYS);
-                        priceView.setText(new DoubleToCurrencyFormat().setStringValue(String.valueOf(price)));
-
-                        bundle_layout.setVisibility(View.VISIBLE);
-                    } else if (daysSelected == 15) {
-                        double price = Promotions.BUNDLE_AD_PRICE_15_DAYS;
-                        totalSum += price;
-
-                        TextView description = bundle_layout.findViewById(R.id.description);
-                        TextView priceView = bundle_layout.findViewById(R.id.price);
-
-                        description.setText(Promotions.BUNDLE_AD_DESCRIPTION + daysSelected + Promotions.DAYS);
-                        priceView.setText(new DoubleToCurrencyFormat().setStringValue(String.valueOf(price)));
-
-                        bundle_layout.setVisibility(View.VISIBLE);
-                    }
-                }
-
-                if (promoType == Promotion.DAILY_BUMP_AD) {
-                    if (daysSelected == 3) {
-                        double price = Promotions.DAILY_BUMP_AD_PRICE_3_DAYS;
-                        totalSum += price;
-
-                        TextView description = daily_bump_layout.findViewById(R.id.description);
-                        TextView priceView = daily_bump_layout.findViewById(R.id.price);
-
-                        description.setText(Promotions.DAILY_AD_DESCRIPTION + daysSelected + Promotions.DAYS);
-                        priceView.setText(new DoubleToCurrencyFormat().setStringValue(String.valueOf(price)));
-
-                        daily_bump_layout.setVisibility(View.VISIBLE);
-                    } else if (daysSelected == 7) {
-                        double price = Promotions.DAILY_BUMP_AD_PRICE_7_DAYS;
-                        totalSum += price;
-
-                        TextView description = daily_bump_layout.findViewById(R.id.description);
-                        TextView priceView = daily_bump_layout.findViewById(R.id.price);
-
-                        description.setText(Promotions.DAILY_AD_DESCRIPTION + daysSelected + Promotions.DAYS);
-                        priceView.setText(new DoubleToCurrencyFormat().setStringValue(String.valueOf(price)));
-
-                        daily_bump_layout.setVisibility(View.VISIBLE);
-                    } else if (daysSelected == 15) {
-                        double price = Promotions.DAILY_BUMP_AD_PRICE_15_DAYS;
-                        totalSum += price;
-
-                        TextView description = daily_bump_layout.findViewById(R.id.description);
-                        TextView priceView = daily_bump_layout.findViewById(R.id.price);
-
-                        description.setText(Promotions.DAILY_AD_DESCRIPTION + daysSelected + Promotions.DAYS);
-                        priceView.setText(new DoubleToCurrencyFormat().setStringValue(String.valueOf(price)));
-
-                        daily_bump_layout.setVisibility(View.VISIBLE);
-                    }
-                }
-
-
-                if (promoType == Promotion.TOP_AD) {
-                    if (daysSelected == 3) {
-                        double price = Promotions.TOP_AD_PRICE_3_DAYS;
-                        totalSum += price;
-
-                        TextView description = top_ad_layout.findViewById(R.id.description);
-                        TextView priceView = top_ad_layout.findViewById(R.id.price);
-
-                        description.setText(Promotions.TOP_AD_DESCRIPTION + daysSelected + Promotions.DAYS);
-                        priceView.setText(new DoubleToCurrencyFormat().setStringValue(String.valueOf(price)));
-
-                        top_ad_layout.setVisibility(View.VISIBLE);
-                    } else if (daysSelected == 7) {
-                        double price = Promotions.TOP_AD_PRICE_7_DAYS;
-                        totalSum += price;
-
-                        TextView description = top_ad_layout.findViewById(R.id.description);
-                        TextView priceView = top_ad_layout.findViewById(R.id.price);
-
-                        description.setText(Promotions.TOP_AD_DESCRIPTION + daysSelected + Promotions.DAYS);
-                        priceView.setText(new DoubleToCurrencyFormat().setStringValue(String.valueOf(price)));
-
-                        top_ad_layout.setVisibility(View.VISIBLE);
-                    } else if (daysSelected == 15) {
-                        double price = Promotions.TOP_AD_PRICE_15_DAYS;
-                        totalSum += price;
-
-                        TextView description = top_ad_layout.findViewById(R.id.description);
-                        TextView priceView = top_ad_layout.findViewById(R.id.price);
-
-                        description.setText(Promotions.TOP_AD_DESCRIPTION + daysSelected + Promotions.DAYS);
-                        priceView.setText(new DoubleToCurrencyFormat().setStringValue(String.valueOf(price)));
-
-                        top_ad_layout.setVisibility(View.VISIBLE);
-                    }
-                }
-
-                if (promoType == Promotion.URGENT_AD) {
-                    if (daysSelected == 3) {
-                        double price = Promotions.URGENT_AD_PRICE_3_DAYS;
-                        totalSum += price;
-
-                        TextView description = urgent_layout.findViewById(R.id.description);
-                        TextView priceView = urgent_layout.findViewById(R.id.price);
-
-                        description.setText(Promotions.URGENT_AD_DESCRIPTION + daysSelected + Promotions.DAYS);
-                        priceView.setText(new DoubleToCurrencyFormat().setStringValue(String.valueOf(price)));
-
-                        urgent_layout.setVisibility(View.VISIBLE);
-                    } else if (daysSelected == 7) {
-                        double price = Promotions.URGENT_AD_PRICE_7_DAYS;
-                        totalSum += price;
-
-                        TextView description = urgent_layout.findViewById(R.id.description);
-                        TextView priceView = urgent_layout.findViewById(R.id.price);
-
-                        description.setText(Promotions.URGENT_AD_DESCRIPTION + daysSelected + Promotions.DAYS);
-                        priceView.setText(new DoubleToCurrencyFormat().setStringValue(String.valueOf(price)));
-
-                        urgent_layout.setVisibility(View.VISIBLE);
-                    } else if (daysSelected == 15) {
-                        double price = Promotions.URGENT_AD_PRICE_15_DAYS;
-                        totalSum += price;
-
-                        TextView description = urgent_layout.findViewById(R.id.description);
-                        TextView priceView = urgent_layout.findViewById(R.id.price);
-
-                        description.setText(Promotions.URGENT_AD_DESCRIPTION + daysSelected + Promotions.DAYS);
-                        priceView.setText(new DoubleToCurrencyFormat().setStringValue(String.valueOf(price)));
-
-                        urgent_layout.setVisibility(View.VISIBLE);
-                    }
-                }
-
-                if (promoType == Promotion.SPOTLIGHT_AD) {
-                    if (daysSelected == 3) {
-                        double price = Promotions.SPOTLIGHT_AD_PRICE_3_DAYS;
-                        totalSum += price;
-
-                        TextView description = spotlight_layout.findViewById(R.id.description);
-                        TextView priceView = spotlight_layout.findViewById(R.id.price);
-
-                        description.setText(Promotions.SPOTLIGHT_AD_DESCRIPTION + daysSelected + Promotions.DAYS);
-                        priceView.setText(new DoubleToCurrencyFormat().setStringValue(String.valueOf(price)));
-
-                        spotlight_layout.setVisibility(View.VISIBLE);
-                    } else if (daysSelected == 7) {
-                        double price = Promotions.SPOTLIGHT_AD_PRICE_7_DAYS;
-                        totalSum += price;
-
-                        TextView description = spotlight_layout.findViewById(R.id.description);
-                        TextView priceView = spotlight_layout.findViewById(R.id.price);
-
-                        description.setText(Promotions.SPOTLIGHT_AD_DESCRIPTION + daysSelected + Promotions.DAYS);
-                        priceView.setText(new DoubleToCurrencyFormat().setStringValue(String.valueOf(price)));
-
-                        spotlight_layout.setVisibility(View.VISIBLE);
-                    } else if (daysSelected == 15) {
-                        double price = Promotions.SPOTLIGHT_AD_PRICE_15_DAYS;
-                        totalSum += price;
-
-                        TextView description = spotlight_layout.findViewById(R.id.description);
-                        TextView priceView = spotlight_layout.findViewById(R.id.price);
-
-                        description.setText(Promotions.SPOTLIGHT_AD_DESCRIPTION + daysSelected + Promotions.DAYS);
-                        priceView.setText(new DoubleToCurrencyFormat().setStringValue(String.valueOf(price)));
-
-                        spotlight_layout.setVisibility(View.VISIBLE);
-                    }
-                }
-
-            }
-
-            totalView.setText(new DoubleToCurrencyFormat().setStringValue(String.valueOf(totalSum)));
-            if (totalSum > 0) {
-                continueBTN.setBackgroundResource(R.drawable.button_round_fb);
-                invalid_promos.setVisibility(View.GONE);
-                paymentSummary.setVisibility(View.VISIBLE);
-            } else {
-                continueBTN.setBackgroundResource(R.drawable.button_round_grey);
-                invalid_promos.setVisibility(View.VISIBLE);
-                paymentSummary.setVisibility(View.GONE);
-            }
-        }
-    }
-
-    private void hideAllPromosLayouts() {
-        bundle_layout.setVisibility(View.GONE);
-        daily_bump_layout.setVisibility(View.GONE);
-        top_ad_layout.setVisibility(View.GONE);
-        urgent_layout.setVisibility(View.GONE);
-        spotlight_layout.setVisibility(View.GONE);
-    }
-
     private boolean validatePaymentDetails() {
-
         if (nameView.getEditText().getText().length() < 6) {
             nameView.setError("Your name is not clear enough!");
             nameView.requestFocus();
@@ -535,6 +269,11 @@ public class Payment extends AppCompatActivity implements PromotionCallback, Adv
 
     private void completePayhereCheckOut() {
         promotionManager.savePromotions(new Promotion(promoID, advertisementID, promosString));
+        Intent intent  = new Intent(this, PaymentMade.class);
+        intent.putExtra(PROMOTION_ID, promoID);
+        intent.putExtra(ADVERTISEMENT_ID, advertisementID);
+        intent.putExtra(PROMOS_ADDED, (Serializable) promos);
+        startActivity(intent);
         finish();
     }
 

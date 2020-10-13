@@ -138,7 +138,7 @@ public class ApprovedRejected extends Fragment implements View.OnClickListener, 
                         options
                 ) {
                     @Override
-                    protected void onBindViewHolder(@NonNull ViewHolderListAdds holder, final int position, @NonNull Advertisement advertisement) {
+                    protected void onBindViewHolder(@NonNull ViewHolderListAdds holder, final int position, @NonNull final Advertisement advertisement) {
                         try {
                             holder.getMyadsTitle().setText(advertisement.getTitle());
                             holder.getMyadsPrice().setText(advertisement.getPreetyCurrency());
@@ -178,8 +178,8 @@ public class ApprovedRejected extends Fragment implements View.OnClickListener, 
                                                 @Override
                                                 public void onClick(DialogInterface dialogInterface, int i) {
                                                     Intent intent = new Intent(getApplicationContext(), MoreActionsOnAd.class);
-                                                    intent.putExtra("adID", getItem(position).get("id").toString());
-                                                    intent.putExtra("adCID", getItem(position).get("categoryID").toString());
+                                                    intent.putExtra("adID", advertisement.getId());
+                                                    intent.putExtra("adCID", advertisement.getCategoryID());
                                                     startActivity(intent);
                                                 }
                                             })
@@ -187,8 +187,8 @@ public class ApprovedRejected extends Fragment implements View.OnClickListener, 
                                                 @Override
                                                 public void onClick(DialogInterface dialogInterface, int i) {
                                                     Intent intent = new Intent(getApplicationContext(), EditAd.class);
-                                                    intent.putExtra("adID", getItem(position).get("id").toString());
-                                                    intent.putExtra("adCID", getItem(position).get("categoryID").toString());
+                                                    intent.putExtra("adID", advertisement.getId());
+                                                    intent.putExtra("adCID", advertisement.getCategoryID());
                                                     startActivity(intent);
                                                 }
                                             });
@@ -197,8 +197,8 @@ public class ApprovedRejected extends Fragment implements View.OnClickListener, 
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                             Intent intent = new Intent(getContext(), com.adeasy.advertise.ui.advertisement.Advertisement.class);
-                                            intent.putExtra("adID", getItem(position).getId());
-                                            intent.putExtra("adCID", (String) getItem(position).get("categoryID"));
+                                            intent.putExtra("adID", advertisement.getId());
+                                            intent.putExtra("adCID", advertisement.getCategoryID());
                                             startActivity(intent);
                                         }
                                     });

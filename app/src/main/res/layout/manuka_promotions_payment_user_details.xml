@@ -12,23 +12,23 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
         android:text="Payment Summary"
         android:textColor="@color/colorBlack"
-        android:textSize="@dimen/_12sdp"
+        android:textSize="@dimen/_16sdp"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Please enter a valid email and phone number to contact you."
-        android:textSize="@dimen/_10sdp" />
+        android:text="Make sure that you enter your valid email and phone number bellow, this important to verify your payment."
+        android:textSize="@dimen/_12sdp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:layout_marginTop="@dimen/_14sdp"
-        android:layout_marginBottom="@dimen/_14sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:background="@color/colorWhiteLite" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -52,8 +52,9 @@
         android:id="@+id/phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_2sdp"
         app:counterEnabled="true"
-        app:counterMaxLength="9"
+        app:counterMaxLength="14"
         app:errorEnabled="true"
         app:hintTextColor="@color/mainUiColour">
 
@@ -71,6 +72,7 @@
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_2sdp"
         app:errorEnabled="true"
         app:hintTextColor="@color/mainUiColour">
 
@@ -87,7 +89,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_16sdp"
         android:background="@color/colorWhiteLite" />
 
     <LinearLayout

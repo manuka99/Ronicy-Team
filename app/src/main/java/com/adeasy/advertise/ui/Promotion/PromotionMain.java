@@ -33,12 +33,13 @@ public class PromotionMain extends AppCompatActivity implements PromotionCallbac
 
     private static final String TAG = "PromotionMain";
     private static final String PROMOS_ADDED = "promos_added";
-    private static final String ADVERTISEMENT_ID = "adID";
+    public static final String ADVERTISEMENT_ID = "adID";
+    public static final String ADVERTISEMENT_SUBMITTED = "adReview";
 
     PromotionManager promotionManager;
 
     Toolbar toolbar;
-    LinearLayout promotionsLayout;
+    LinearLayout promotionsLayout, adReview;
     Map<Integer, Integer> promos;
 
     //promotions Fragments
@@ -67,6 +68,7 @@ public class PromotionMain extends AppCompatActivity implements PromotionCallbac
 
         //toolbar setup
         toolbar = findViewById(R.id.toolbar);
+        adReview = findViewById(R.id.adReview);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_baseline_close_24));
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Add Promotions");
@@ -90,7 +92,14 @@ public class PromotionMain extends AppCompatActivity implements PromotionCallbac
 
         promos = new HashMap<>();
         continueBTN.setOnClickListener(this);
+
         //load pending and approved promotions
+
+        //if ad was submitted for review
+        if (getIntent().hasExtra(ADVERTISEMENT_SUBMITTED))
+            adReview.setVisibility(View.VISIBLE);
+        else
+            adReview.setVisibility(View.GONE);
 
         //load all promotions
         loadAllPromotions();

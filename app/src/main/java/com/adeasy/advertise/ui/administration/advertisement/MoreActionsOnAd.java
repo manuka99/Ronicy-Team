@@ -348,7 +348,7 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void getCategoryByID(@NonNull Task<DocumentSnapshot> task) {
-        if (task!= null && task.isSuccessful()) {
+        if (task != null && task.isSuccessful()) {
             DocumentSnapshot document = task.getResult();
             if (document.exists()) {
                 category = new com.adeasy.advertise.model.Category();
@@ -359,7 +359,7 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
             } else {
                 Log.d(TAG, "No such document");
             }
-        } else {
+        } else if (task != null) {
             Log.d(TAG, "get failed with ", task.getException());
         }
     }
@@ -423,7 +423,7 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
     public void showExitAlert() {
         new AlertDialog.Builder(this)
 
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(getResources().getDrawable(R.drawable.ic_baseline_info_24_red))
 
                 .setTitle("Are you sure you want to leave this page?")
 
@@ -452,7 +452,7 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
 
         new AlertDialog.Builder(this)
 
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(getResources().getDrawable(R.drawable.ic_baseline_info_24_red))
 
                 .setTitle(deleteAdTitle)
 

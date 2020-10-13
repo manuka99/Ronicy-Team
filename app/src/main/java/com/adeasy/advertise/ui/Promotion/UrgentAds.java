@@ -49,6 +49,8 @@ public class UrgentAds extends Fragment implements View.OnClickListener {
     //viewModel
     PromotionsViewModel promotionsViewModel;
 
+    LinearLayout layoutMain;
+
     public UrgentAds() {
         // Required empty public constructor
     }
@@ -97,7 +99,8 @@ public class UrgentAds extends Fragment implements View.OnClickListener {
         days15Radio = view.findViewById(R.id.days15Radio);
         days15View = view.findViewById(R.id.days15View);
 
-        checkbox.setOnClickListener(this);
+        layoutMain = view.findViewById(R.id.layoutMain);
+        layoutMain.setOnClickListener(this);
 
         promotionsViewModel = ViewModelProviders.of(getActivity()).get(PromotionsViewModel.class);
 
@@ -107,7 +110,7 @@ public class UrgentAds extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view == checkbox)
+        if (view == layoutMain)
             toggleCheckBox();
 
     }
@@ -118,12 +121,14 @@ public class UrgentAds extends Fragment implements View.OnClickListener {
             checkbox.setBackground(getActivity().getResources().getDrawable(R.drawable.ic_checkbox_normal));
             radioGroup.clearCheck();
             radioGroup.setVisibility(View.GONE);
+            layoutMain.setBackgroundResource(R.drawable.promotion_bundle_border);
         } else {
             isChecked = true;
             checkbox.setBackground(getActivity().getResources().getDrawable(R.drawable.ic_checkbox_checked));
             radioGroup.setVisibility(View.VISIBLE);
             days7Radio.setChecked(true);
             promotionsViewModel.setOnFragmentSelected(new UrgentAds());
+            layoutMain.setBackgroundResource(R.drawable.promotion_bundle_border_main_active);
         }
         upDateActivity();
     }
@@ -139,11 +144,11 @@ public class UrgentAds extends Fragment implements View.OnClickListener {
                 days15View.setBackgroundResource(R.drawable.promotion_bundle_border);
 
                 if (i == days3Radio.getId())
-                    days3View.setBackgroundResource(R.color.colorHome);
+                    days3View.setBackgroundResource(R.drawable.promotion_bundle_border_active);
                 else if (i == days7Radio.getId())
-                    days7View.setBackgroundResource(R.color.colorHome);
+                    days7View.setBackgroundResource(R.drawable.promotion_bundle_border_active);
                 else if (i == days15Radio.getId())
-                    days15View.setBackgroundResource(R.color.colorHome);
+                    days15View.setBackgroundResource(R.drawable.promotion_bundle_border_active);
 
                 upDateActivity();
             }

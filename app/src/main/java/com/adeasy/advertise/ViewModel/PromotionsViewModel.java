@@ -14,6 +14,7 @@ import java.util.Map;
  * Email manukayasas99@gmail.com
  **/
 public class PromotionsViewModel extends ViewModel {
+    private MutableLiveData<Double> total = new MutableLiveData<>();
     private MutableLiveData<Map<Integer, Integer>> selectedPromo = new MutableLiveData<>();
     private MutableLiveData<Fragment> onFragmentSelected = new MutableLiveData<>();
     ;
@@ -32,5 +33,13 @@ public class PromotionsViewModel extends ViewModel {
 
     public void setOnFragmentSelected(Fragment onFragmentSelected) {
         this.onFragmentSelected.setValue(onFragmentSelected);
+    }
+
+    public LiveData<Double> getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total.setValue(total);
     }
 }

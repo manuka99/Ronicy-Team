@@ -113,7 +113,7 @@ public class DailyBump extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view == checkbox)
+        if (view == layoutMain)
             toggleCheckBox();
 
     }
@@ -124,14 +124,14 @@ public class DailyBump extends Fragment implements View.OnClickListener {
             checkbox.setBackground(getActivity().getResources().getDrawable(R.drawable.ic_checkbox_normal));
             radioGroup.clearCheck();
             radioGroup.setVisibility(View.GONE);
-            layoutMain.setBackgroundResource(R.color.colorWhite);
+            layoutMain.setBackgroundResource(R.drawable.promotion_bundle_border);
         } else {
             isChecked = true;
             checkbox.setBackground(getActivity().getResources().getDrawable(R.drawable.ic_checkbox_checked));
             radioGroup.setVisibility(View.VISIBLE);
             days7Radio.setChecked(true);
             promotionsViewModel.setOnFragmentSelected(new DailyBump());
-            layoutMain.setBackgroundResource(R.color.colorBlueLitePromo);
+            layoutMain.setBackgroundResource(R.drawable.promotion_bundle_border_main_active);
         }
         upDateActivity();
     }

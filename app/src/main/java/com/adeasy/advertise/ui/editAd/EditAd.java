@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,7 @@ import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.manager.CategoryManager;
 import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.model.Category;
+import com.adeasy.advertise.ui.Promotion.PromotionMain;
 import com.adeasy.advertise.ui.editAd.SelectedCategory;
 import com.adeasy.advertise.ui.editAd.ContactDetails;
 import com.adeasy.advertise.ui.editAd.LocationSelector;
@@ -214,7 +216,7 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
     public void showExitAlert() {
         new AlertDialog.Builder(this)
 
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(getResources().getDrawable(R.drawable.ic_baseline_info_24_red))
 
                 .setTitle("Are you sure you want to leave this page?")
 
@@ -255,11 +257,14 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
 
     @Override
     public void onCompleteInsertAd(Task<Void> task) {
-        if(task != null && task.isSuccessful()){
+        if (task != null && task.isSuccessful()) {
             progressDialog.dismiss();
-            Toast.makeText(EditAd.this, "Success: Your advertisement was submited", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(EditAd.this, PromotionMain.class);
+            intent.putExtra(PromotionMain.ADVERTISEMENT_SUBMITTED, true);
+            intent.putExtra(PromotionMain.ADVERTISEMENT_ID, advertisement.getId());
+            startActivity(intent);
             finish();
-        }else if(task != null){
+        } else if (task != null) {
             progressDialog.dismiss();
             Toast.makeText(this, "error: Your advertisement was not submited", Toast.LENGTH_LONG).show();
             if (task.getException() instanceof FirebaseFirestoreException) {
