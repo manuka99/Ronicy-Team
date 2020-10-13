@@ -1,5 +1,6 @@
 package com.adeasy.advertise.ui.Promotion;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,8 @@ import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -23,6 +26,7 @@ import com.adeasy.advertise.util.UniqueIdBasedOnName;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -106,6 +110,25 @@ public class PromotionMain extends AppCompatActivity implements PromotionCallbac
         changeColourOfContinueBTN();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.promotion_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_history:
+                Intent intent = new Intent(getApplicationContext(), PromotionHistory.class);
+                intent.putExtra(PromotionHistory.ADVERTISEMENT_ID, advertisementID);
+                startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void loadAllPromotions() {
         initializeFragments();
         promotionsLayout.removeAllViews();
@@ -145,6 +168,16 @@ public class PromotionMain extends AppCompatActivity implements PromotionCallbac
 
     @Override
     public void onPromotionsListIds(List<String> ids, Query promotionQuery) {
+
+    }
+
+    @Override
+    public void onGetAppliedApprovedPromotionByADID(Task<DocumentSnapshot> task) {
+
+    }
+
+    @Override
+    public void onGetPendingPromotionsByADID(Task<QuerySnapshot> task) {
 
     }
 

@@ -133,6 +133,7 @@
     <string name="orderItemPaymentCOD">Pay on Delivery</string>
 
     <string name="orderItemPaymentInfo">Use our secure online payment tool to pay now and get your order delivered faster</string>
+    <string name="secureCheckoutPaymentInfo">Use our secure online payment tool to pay now and get your purchases complete faster.</string>
 
     <!-- order completed -->
     <string name="orderIDText">OrderID: </string>

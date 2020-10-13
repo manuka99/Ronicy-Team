@@ -3,6 +3,7 @@ package com.adeasy.advertise.callback;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -16,5 +17,8 @@ public interface PromotionCallback {
     public void onCompleteSavePromotion(Task<Void> task);
     public void onGetPromotionByID(Task<DocumentSnapshot> task);
     public void onPromotionsListIds(List<String> ids, Query promotionQuery);
+
+    public void onGetAppliedApprovedPromotionByADID(Task<DocumentSnapshot> task);
+    public void onGetPendingPromotionsByADID(Task<QuerySnapshot> task);
 
 }

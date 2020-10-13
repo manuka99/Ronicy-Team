@@ -486,6 +486,16 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
             loadRegularAds(LIMIT_SIMILLAR_ADS);
     }
 
+    @Override
+    public void onGetAppliedApprovedPromotionByADID(Task<DocumentSnapshot> task) {
+
+    }
+
+    @Override
+    public void onGetPendingPromotionsByADID(Task<QuerySnapshot> task) {
+
+    }
+
     private void loadBundleAds() {
         advertisementManager.homeSimilarAds(adCID, bundle_ad_ids, LIMIT_SIMILLAR_ADS).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

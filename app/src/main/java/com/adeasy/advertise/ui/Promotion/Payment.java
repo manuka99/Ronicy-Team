@@ -184,24 +184,50 @@ public class Payment extends AppCompatActivity implements PromotionCallback, Vie
                 }
             }
         });
+        validatePaymentDetails();
     }
 
     @Override
     public void onClick(View view) {
-        if (view == continueBTN)
+        if (view == continueBTN && validatePaymentDetails())
             checkout();
     }
 
     private boolean validatePaymentDetails() {
-        if (nameView.getEditText().getText().length() < 6) {
+        if (nameView.getEditText().getText().length() == 0) {
+            nameView.setError("This field is required and cannot be empty!");
+            nameView.requestFocus();
+        } else if (nameView.getEditText().getText().length() < 6) {
             nameView.setError("Your name is not clear enough!");
             nameView.requestFocus();
+        } else if (phoneView.getEditText().getText().length() == 0) {
+            phoneView.setError("This field is required and cannot be empty!");
+            phoneView.requestFocus();
         } else if (phoneView.getEditText().getText().length() < 9 || phoneView.getEditText().getText().length() > 14) {
             phoneView.setError("Phone number seems to be invalid!");
             phoneView.requestFocus();
+        } else if (emailView.getEditText().getText().length() == 0) {
+            emailView.setError("This field is required and cannot be empty!");
+            emailView.requestFocus();
         } else if (emailView.getEditText().getText().length() < 10) {
             emailView.setError("Your email address seems to be invalid!");
             emailView.requestFocus();
+        } else {
+            name = nameView.getEditText().getText().toString();
+            phone = phoneView.getEditText().getText().toString();
+            email = emailView.getEditText().getText().toString();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean validatePaymentDetailsWithoutFocus() {
+        if (nameView.getEditText().getText().length() == 0) {
+        } else if (nameView.getEditText().getText().length() < 6) {
+        } else if (phoneView.getEditText().getText().length() == 0) {
+        } else if (phoneView.getEditText().getText().length() < 9 || phoneView.getEditText().getText().length() > 14) {
+        } else if (emailView.getEditText().getText().length() == 0) {
+        } else if (emailView.getEditText().getText().length() < 10) {
         } else {
             name = nameView.getEditText().getText().toString();
             phone = phoneView.getEditText().getText().toString();
@@ -269,7 +295,7 @@ public class Payment extends AppCompatActivity implements PromotionCallback, Vie
 
     private void completePayhereCheckOut() {
         promotionManager.savePromotions(new Promotion(promoID, advertisementID, promosString));
-        Intent intent  = new Intent(this, PaymentMade.class);
+        Intent intent = new Intent(this, PaymentMade.class);
         intent.putExtra(PROMOTION_ID, promoID);
         intent.putExtra(ADVERTISEMENT_ID, advertisementID);
         intent.putExtra(PROMOS_ADDED, (Serializable) promos);
@@ -300,6 +326,16 @@ public class Payment extends AppCompatActivity implements PromotionCallback, Vie
     }
 
     @Override
+    public void onGetAppliedApprovedPromotionByADID(Task<DocumentSnapshot> task) {
+
+    }
+
+    @Override
+    public void onGetPendingPromotionsByADID(Task<QuerySnapshot> task) {
+
+    }
+
+    @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
     }
@@ -313,7 +349,14 @@ public class Payment extends AppCompatActivity implements PromotionCallback, Vie
 
     @Override
     public void afterTextChanged(Editable editable) {
+        updatePaymentButton();
+    }
 
+    private void updatePaymentButton() {
+        if (validatePaymentDetailsWithoutFocus())
+            continueBTN.setBackgroundResource(R.drawable.button_round_fb);
+        else
+            continueBTN.setBackgroundResource(R.drawable.button_round_grey);
     }
 
 }

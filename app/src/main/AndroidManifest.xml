@@ -32,7 +32,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustPan">
-        <activity android:name=".ui.Promotion.PaymentMade"></activity>
+        <activity android:name=".ui.Promotion.PromotionHistory"></activity>
+        <activity android:name=".ui.Promotion.PaymentMade" />
         <activity android:name=".ui.Promotion.Payment" />
         <activity android:name=".ui.Promotion.PromotionMain" />
         <activity android:name=".ui.getintouch.BugStatisticsActivity" />

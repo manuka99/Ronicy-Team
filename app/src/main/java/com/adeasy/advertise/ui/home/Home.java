@@ -93,7 +93,7 @@ import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_IDLE;
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class Home extends Fragment implements AdvertisementCallback, PromotionCallback, AdvertismentSearchCallback, View.OnClickListener {
+public class Home extends Fragment implements AdvertisementCallback, AdvertismentSearchCallback, View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -218,7 +218,7 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
         customDialogs = new CustomDialogs(getActivity());
 
         advertisementManager = new AdvertisementManager(this);
-        promotionManager = new PromotionManager(this);
+        promotionManager = new PromotionManager();
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         adCountText = toolbar.findViewById(R.id.adResults);
         frameLayout = view.findViewById(R.id.frameLayout);
@@ -679,20 +679,6 @@ public class Home extends Fragment implements AdvertisementCallback, PromotionCa
         query = advertisementManager.viewAddsHome(ids, category_selected, location_selected, aSwitch.isChecked());
         resetDataPublicFeed();
         loadDataPublicFeed();
-    }
-
-    @Override
-    public void onCompleteSavePromotion(Task<Void> task) {
-
-    }
-
-    @Override
-    public void onGetPromotionByID(Task<DocumentSnapshot> task) {
-
-    }
-
-    @Override
-    public void onPromotionsListIds(List<String> ids, Query promotionQuery) {
     }
 
     private int getQueryLimitVlueForRegularAds() {

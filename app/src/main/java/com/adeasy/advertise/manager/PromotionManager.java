@@ -109,6 +109,26 @@ public class PromotionManager {
             return null;
     }
 
+    public void getPendingPromos(String adID){
+        FirebaseFirestore.getInstance().collection(PROMOTIONS).whereEqualTo("activated", false).whereEqualTo("reviewed", false).whereEqualTo("approved", false).whereEqualTo("advertisementID", adID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(promotionCallback != null)
+                    promotionCallback.onGetPendingPromotionsByADID(task);
+            }
+        });
+    }
+
+    public void getAppliedPromos(String adID){
+        FirebaseFirestore.getInstance().collection(APPROVED_PROMOTIONS).document(adID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(promotionCallback != null)
+                    promotionCallback.onGetAppliedApprovedPromotionByADID(task);
+            }
+        });
+    }
+
     public void destroy() {
         this.promotionCallback = null;
     }
