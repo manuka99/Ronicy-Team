@@ -14,7 +14,7 @@
 
     <!-- common -->
     <string name="image">image view</string>
-    <string name="company_phone">01122223344 </string>
+    <string name="company_phone">011 25 25 568 </string>
     <string name="phone_number_unknown">xxxxxxxxxx</string>
     <string name="loading">loading...</string>
     <string name="not_loggedIn">Dear user you are not logged in, please logged in to continue..</string>

@@ -66,7 +66,7 @@ public class PaymentMade extends AppCompatActivity {
 
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Payment Success");
+        getSupportActionBar().setTitle("Payment Completed");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

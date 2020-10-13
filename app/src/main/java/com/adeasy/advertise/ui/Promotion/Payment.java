@@ -176,7 +176,6 @@ public class Payment extends AppCompatActivity implements PromotionCallback, Vie
                 continueLayout.setVisibility(View.VISIBLE);
 
                 if (totalSum > 0) {
-                    continueBTN.setBackgroundResource(R.drawable.button_round_fb);
                     paymentSummary.setVisibility(View.VISIBLE);
                 } else {
                     continueBTN.setBackgroundResource(R.drawable.button_round_grey);
@@ -184,7 +183,7 @@ public class Payment extends AppCompatActivity implements PromotionCallback, Vie
                 }
             }
         });
-        validatePaymentDetails();
+        updatePaymentButton();
     }
 
     @Override

@@ -74,7 +74,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_12sdp"
                 android:fontFamily="serif"
-                android:text="@string/orderThankyou"
+                android:text="Your payment has been completed!"
                 android:textAlignment="center"
                 android:textColor="@color/colorBlackText"
                 android:textSize="@dimen/_14sdp" />
