@@ -17,6 +17,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -29,8 +30,10 @@ import com.adeasy.advertise.util.HideSoftKeyboard;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -51,7 +54,7 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
     private String mParam1;
     private String mParam2;
 
-    TextInputLayout postTitle, postCondition, postDescription, postPrice;
+    TextInputLayout postTitle, postDescription, postPrice;
     Button btn_add_photo;
     Advertisement advertisement;
 
@@ -62,6 +65,10 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
     FrameLayout snackbarView;
     RecycleAdapterForImages recycleAdapterForImages;
     NewPostViewModel newPostViewModel;
+
+    List<String> condition_list;
+    MaterialBetterSpinner postCondition;
+    ArrayAdapter<CharSequence> postCondition_adapter;
 
     private static final String TAG = "AdDetails";
     private static final int MULTIPLE_IMAGE_SELECTOR = 23234;
@@ -134,12 +141,19 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
 
         //text watches
         postTitle.getEditText().addTextChangedListener(this);
-        postCondition.getEditText().addTextChangedListener(this);
+        postCondition.addTextChangedListener(this);
         postDescription.getEditText().addTextChangedListener(this);
         postPrice.getEditText().addTextChangedListener(this);
 
         imagesUriArrayList = advertisement.getImageUrls();
         deletedFirebaseUriArrayList = new ArrayList<>();
+
+        //set adapter for order status and payment status array
+        condition_list = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.post_condition_array)));
+        postCondition_adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.post_condition_array, R.layout.spinner_layout_new_post);
+        postCondition_adapter.setDropDownViewResource(R.layout.spinner_drop_down_new_post);
+        postCondition.setAdapter(postCondition_adapter);
 
         displayAdDetails();
         displayImages();
@@ -161,7 +175,7 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
 
     private void displayAdDetails() {
         postTitle.getEditText().setText(advertisement.getTitle());
-        postCondition.getEditText().setText(advertisement.getCondition());
+        postCondition.setText(advertisement.getCondition());
         postDescription.getEditText().setText(advertisement.getDescription());
         postPrice.getEditText().setText(String.valueOf(advertisement.getPrice()));
     }
@@ -251,7 +265,7 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
             showErrorSnackBar(R.string.post_add_1_image);
         else if (postTitle.getEditText().getText().length() < 10)
             postTitle.setError(getString(R.string.tile_error));
-        else if (postCondition.getEditText().getText().length() < 3)
+        else if (postCondition.getText().length() == 0)
             postCondition.setError(getString(R.string.condition_error));
         else if (postDescription.getEditText().getText().length() < 20)
             postDescription.setError(getString(R.string.description_error));
@@ -265,7 +279,7 @@ public class AdDetails extends Fragment implements View.OnClickListener, TextWat
             updatedAdvertisement.setLocation(advertisement.getLocation());
 
             updatedAdvertisement.setTitle(postTitle.getEditText().getText().toString());
-            updatedAdvertisement.setCondition(postCondition.getEditText().getText().toString());
+            updatedAdvertisement.setCondition(postCondition.getText().toString());
             updatedAdvertisement.setDescription(postDescription.getEditText().getText().toString());
             updatedAdvertisement.setPrice(Double.valueOf(postPrice.getEditText().getText().toString().replace(",", "").replace("LKR", "")));
             updatedAdvertisement.setImageUrls(imagesUriArrayList);

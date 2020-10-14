@@ -66,7 +66,7 @@
     <string name="post_add_1_image">Add at least one photo (max 5):</string>
     <string name="more_than5images">You can not have more than 5 images</string>
     <string name="tile_error">Ad title must have at least 10 characters</string>
-    <string name="condition_error">Ad condition must have at least 3 characters</string>
+    <string name="condition_error">Select the condition of the item</string>
     <string name="description_error">Ad description must have at least 20 characters</string>
     <string name="price_error">Ad price must be at least greater than Rs 10.00</string>
 
@@ -194,6 +194,14 @@
     <!--- Admin orders-->
     <string name="close">close</string>
     <string name="open">open</string>
+
+    <!--- order status-->
+    <string-array name="post_condition_array">
+        <item>New</item>
+        <item>Used</item>
+        <item>Mild Condition</item>
+        <item>Refurbished</item>
+    </string-array>
 
     <!--- order status without delivered-->
     <string-array name="order_status_no_delivered_array">

@@ -39,4 +39,5 @@
     <color name="whiteLogin">#CCFFFFFF</color>
     <color name="top_ad_colour">#38FFE066</color>
     <color name="bundle_ads_color">#F5E9E2</color>
+    <color name="hint_grey">#66000000</color>
 </resources>

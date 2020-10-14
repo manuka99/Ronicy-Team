@@ -75,52 +75,49 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:counterEnabled="true"
-            app:counterMaxLength="35"
+            app:counterMaxLength="55"
             app:errorEnabled="true"
+            app:hintTextAppearance="@style/HintSize10"
             app:hintTextColor="@color/mainUiColour">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/post_title"
-                android:inputType="textPersonName"
-                android:maxLength="35"
+                android:inputType="textMultiLine"
+                android:maxLength="55"
                 android:textColorHint="@color/mainUiColour"
                 android:textCursorDrawable="@drawable/cursor_main_ui"
-                android:textSize="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"
                 android:theme="@style/EditTextMainUiTheme" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
             android:id="@+id/newAdCondition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:counterEnabled="true"
-            app:counterMaxLength="15"
-            app:errorEnabled="true"
-            app:hintTextColor="@color/mainUiColour">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/post_condition"
-                android:inputType="textPersonName"
-                android:maxLength="15"
-                android:textColorHint="@color/mainUiColour"
-                android:textCursorDrawable="@drawable/cursor_main_ui"
-                android:textSize="@dimen/_16sdp"
-                android:theme="@style/EditTextMainUiTheme" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:hint="@string/post_condition"
+            android:textSize="@dimen/_14sdp"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="@string/post_condition"
+            app:met_floatingLabelTextColor="@color/mainUiColour"
+            app:met_floatingLabelTextSize="@dimen/_10sdp"
+            app:met_primaryColor="@color/mainUiColour"
+            app:met_textColor="@color/colorBlackText"
+            app:met_textColorHint="@color/hint_grey" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/newAdDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:counterEnabled="true"
-            app:counterMaxLength="500"
+            app:counterMaxLength="10000"
             app:errorEnabled="true"
+            app:hintTextAppearance="@style/HintSize10"
             app:hintTextColor="@color/mainUiColour">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -128,10 +125,10 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/adDescription"
                 android:inputType="textMultiLine"
-                android:maxLength="500"
+                android:maxLength="10000"
                 android:textColorHint="@color/mainUiColour"
                 android:textCursorDrawable="@drawable/cursor_main_ui"
-                android:textSize="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"
                 android:theme="@style/EditTextMainUiTheme" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -143,6 +140,7 @@
             app:counterEnabled="true"
             app:counterMaxLength="15"
             app:errorEnabled="true"
+            app:hintTextAppearance="@style/HintSize10"
             app:hintTextColor="@color/mainUiColour">
 
             <com.adeasy.advertise.custom_view.CurrencyTextInputEditText
@@ -153,7 +151,7 @@
                 android:maxLength="15"
                 android:textColorHint="@color/mainUiColour"
                 android:textCursorDrawable="@drawable/cursor_main_ui"
-                android:textSize="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"
                 android:theme="@style/EditTextMainUiTheme" />
 
         </com.google.android.material.textfield.TextInputLayout>

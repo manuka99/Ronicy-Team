@@ -251,6 +251,7 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
             progressDialog.setTitle("Publishing your advertisement...");
             progressDialog.setMessage("Your advertisement will be live after we approve it.");
             progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setCancelable(false);
             progressDialog.show();
         }
     }
@@ -258,7 +259,6 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
     @Override
     public void onCompleteInsertAd(Task<Void> task) {
         if (task != null && task.isSuccessful()) {
-            progressDialog.dismiss();
             Intent intent = new Intent(EditAd.this, PromotionMain.class);
             intent.putExtra(PromotionMain.ADVERTISEMENT_SUBMITTED, true);
             intent.putExtra(PromotionMain.ADVERTISEMENT_ID, advertisement.getId());
@@ -266,12 +266,13 @@ public class EditAd extends AppCompatActivity implements AdvertisementCallback, 
             finish();
         } else if (task != null) {
             progressDialog.dismiss();
-            Toast.makeText(this, "error: Your advertisement was not submited", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "error: Your advertisement was not submitted", Toast.LENGTH_LONG).show();
             if (task.getException() instanceof FirebaseFirestoreException) {
                 ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
                 customDialogs.showPermissionDeniedStorage();
             }
         }
+        progressDialog.dismiss();
     }
 
     @Override

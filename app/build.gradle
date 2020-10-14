@@ -120,6 +120,12 @@ dependencies {
     implementation 'com.github.Spikeysanju:ZoomRecylerLayout:1.0'
     implementation 'com.github.worker8:radiogroupplus:v1.0.1'
     implementation 'com.otaliastudios:nestedscrollcoordinatorlayout:1.0.3'
+
+    implementation "com.github.skydoves:powerspinner:1.1.5"
+    implementation 'com.github.ganfra:material-spinner:2.0.0'
+    implementation 'com.weiwangcn.betterspinner:library-material:1.1.0'
+
+    implementation 'com.github.chivorns.androidx:smartmaterialspinner:1.2.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

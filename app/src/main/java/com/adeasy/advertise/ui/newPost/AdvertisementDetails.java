@@ -22,9 +22,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.adeasy.advertise.R;
@@ -34,9 +37,13 @@ import com.adeasy.advertise.model.Advertisement;
 import com.adeasy.advertise.util.HideSoftKeyboard;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import fr.ganfra.materialspinner.MaterialSpinner;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -56,7 +63,7 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
     private String mParam1;
     private String mParam2;
 
-    TextInputLayout postTitle, postCondition, postDescription, postPrice;
+    TextInputLayout postTitle, postDescription, postPrice;
     Button btn_add_photo;
     Advertisement advertisement;
 
@@ -66,6 +73,10 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
     FrameLayout snackbarView;
     RecycleAdapterForImages recycleAdapterForImages;
     NewPostViewModel newPostViewModel;
+
+    List<String> condition_list;
+    MaterialBetterSpinner postCondition;
+    ArrayAdapter<CharSequence> postCondition_adapter;
 
     private static final String TAG = "AdvertisementDetails";
     private static final int MULTIPLE_IMAGE_SELECTOR = 23234;
@@ -127,9 +138,28 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
 
         //text watches
         postTitle.getEditText().addTextChangedListener(this);
-        postCondition.getEditText().addTextChangedListener(this);
+        postCondition.addTextChangedListener(this);
         postDescription.getEditText().addTextChangedListener(this);
         postPrice.getEditText().addTextChangedListener(this);
+
+        //set adapter for order status and payment status array
+        condition_list = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.post_condition_array)));
+        postCondition_adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.post_condition_array, R.layout.spinner_layout_new_post);
+        postCondition_adapter.setDropDownViewResource(R.layout.spinner_drop_down_new_post);
+        postCondition.setAdapter(postCondition_adapter);
+
+//        postCondition.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                int textSize = getResources().getDimensionPixelSize(R.dimen._14sdp);
+//                int height = getResources().getDimensionPixelSize(R.dimen._18sdp);
+//                TextView textView = (TextView) postCondition.getSelectedView();
+//                textView.setTextSize(textSize);
+//                textView.setHeight(height);
+//            }
+//        });
+
 
         return view;
     }
@@ -138,7 +168,7 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        newPostViewModel.getAdDetailsValidation().observe(this, new Observer<Boolean>() {
+        newPostViewModel.getAdDetailsValidation().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean)
@@ -218,7 +248,7 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
             showErrorSnackBar(R.string.post_add_1_image);
         } else if (postTitle.getEditText().getText().length() < 10) {
             postTitle.setError(getString(R.string.tile_error));
-        } else if (postCondition.getEditText().getText().length() < 3) {
+        } else if (postCondition.getText().length() == 0) {
             postCondition.setError(getString(R.string.condition_error));
         } else if (postDescription.getEditText().getText().length() < 20) {
             postDescription.setError(getString(R.string.description_error));
@@ -227,7 +257,7 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
         } else {
             advertisement = new Advertisement();
             advertisement.setTitle(postTitle.getEditText().getText().toString());
-            advertisement.setCondition(postCondition.getEditText().getText().toString());
+            advertisement.setCondition(postCondition.getText().toString());
             advertisement.setDescription(postDescription.getEditText().getText().toString());
             advertisement.setPrice(Double.valueOf(postPrice.getEditText().getText().toString().replace(",", "").replace("LKR", "")));
             advertisement.setImageUrls(imagesUriArrayList);
@@ -254,7 +284,6 @@ public class AdvertisementDetails extends Fragment implements View.OnClickListen
 
     @Override
     public void afterTextChanged(Editable editable) {
-
     }
 
 }

@@ -303,6 +303,7 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
             progressDialog.setTitle("Publishing your advertisement...");
             progressDialog.setMessage("Your advertisement will be live after we approve it.");
             progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setCancelable(false);
             progressDialog.show();
         }
     }
@@ -310,16 +311,15 @@ public class NewAd extends AppCompatActivity implements AdvertisementCallback {
     @Override
     public void onCompleteInsertAd(Task<Void> task) {
         if (task != null && task.isSuccessful()) {
-            progressDialog.dismiss();
             Intent intent = new Intent(NewAd.this, PromotionMain.class);
             intent.putExtra(PromotionMain.ADVERTISEMENT_SUBMITTED, true);
             intent.putExtra(PromotionMain.ADVERTISEMENT_ID, advertisement.getId());
             startActivity(intent);
             finish();
         } else if (task != null) {
-            progressDialog.dismiss();
             Toast.makeText(this, "error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
         }
+        progressDialog.dismiss();
     }
 
     @Override

@@ -412,7 +412,7 @@ public class MoreOnOrder extends AppCompatActivity implements OrderCallback, Ada
         if (order.getDeliveredDate() == null) {
             new AlertDialog.Builder(this)
 
-                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setIcon(getResources().getDrawable(R.drawable.ic_baseline_info_20_red))
 
                     .setTitle("Are you sure you want to confirm order delivered?")
 
