@@ -116,8 +116,8 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
 
         PagedList.Config config = new PagedList.Config.Builder()
                 .setEnablePlaceholders(false)
-                .setInitialLoadSizeHint(4)
-                .setPageSize(3)
+                .setInitialLoadSizeHint(8)
+                .setPageSize(9)
                 .build();
 
         FirestorePagingOptions<Advertisement> options = new FirestorePagingOptions.Builder<Advertisement>()
@@ -246,6 +246,12 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                     }
 
                     @Override
+                    public void refresh() {
+                        super.refresh();
+                        advertisementManager.getCount(advertisementManager.viewMyAddsAll());
+                    }
+
+                    @Override
                     protected void onLoadingStateChanged(@NonNull com.firebase.ui.firestore.paging.LoadingState state) {
                         super.onLoadingStateChanged(state);
                         switch (state) {
@@ -261,7 +267,6 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                                 break;
 
                             case FINISHED:
-                                Toast.makeText(getApplicationContext(), "last..", Toast.LENGTH_SHORT).show();
                                 swipeRefreshLayout.setRefreshing(false);
                                 break;
 
@@ -351,6 +356,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
         if (task.isSuccessful()) {
             if (task.getResult().size() == 0) {
                 getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), new NoData()).commit();
+                getSupportActionBar().setSubtitle("No ads Posted ");
                 frameLayout.setVisibility(View.VISIBLE);
             } else {
                 frameLayout.setVisibility(View.GONE);

@@ -131,7 +131,7 @@ public class Orders extends Fragment implements OrderCallback {
         orderManager = new OrderManager(this, getActivity());
 
         bundle = new Bundle();
-        bundle.putString("frame", "chat");
+        bundle.putString("frame", "order");
 
         return view;
     }
@@ -244,6 +244,7 @@ public class Orders extends Fragment implements OrderCallback {
                             super.onLoadingStateChanged(state);
                             switch (state) {
                                 case LOADING_INITIAL:
+
                                 case LOADING_MORE:
                                     // Do your loading animation
                                     swipeRefreshRecycle_view.setRefreshing(true);
@@ -277,6 +278,11 @@ public class Orders extends Fragment implements OrderCallback {
 
                         }
 
+                        @Override
+                        public void refresh() {
+                            super.refresh();
+                            orderManager.getCount(orderManager.myOrders());
+                        }
                     };
 
             firestorePagingAdapter.startListening();
@@ -333,6 +339,7 @@ public class Orders extends Fragment implements OrderCallback {
             if (task.isSuccessful()) {
                 if (task.getResult().size() == 0) {
                     getFragmentManager().beginTransaction().replace(frameLayout.getId(), new NoData()).commit();
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("No orders placed");
                     frameLayout.setVisibility(View.VISIBLE);
                 } else {
                     frameLayout.setVisibility(View.GONE);

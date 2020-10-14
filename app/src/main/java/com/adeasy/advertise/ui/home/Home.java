@@ -354,7 +354,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
 
                     Rect rect = new Rect();
                     mSwipeRefreshLayout.getDrawingRect(rect);
-                    mSwipeRefreshLayout.setProgressViewOffset(false, 0, (int) getResources().getDimension(R.dimen.refresher_offset_end));
+                    mSwipeRefreshLayout.setProgressViewOffset(false, 0, (int) view.getResources().getDimension(R.dimen.refresher_offset_end));
                 }
             });
         }
@@ -584,7 +584,6 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
 
             //reset adapters
             recyclerAdapterPublicFeed.resetObjects();
-            recyclerAdapterPublicFeedHorizontal.resetObjects();
 
             //remove spotlight image
             spotlight.setVisibility(View.GONE);
@@ -596,6 +595,9 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             progressBar.setVisibility(View.VISIBLE);
             adsFinishedView.setVisibility(View.GONE);
         }
+
+        if (recyclerAdapterPublicFeedHorizontal != null)
+            recyclerAdapterPublicFeedHorizontal.resetObjects();
     }
 
     private void loadDataPublicFeed() {
@@ -677,7 +679,6 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         Log.i(TAG, "ids: " + ids);
 
         query = advertisementManager.viewAddsHome(ids, category_selected, location_selected, aSwitch.isChecked());
-        resetDataPublicFeed();
         loadDataPublicFeed();
     }
 

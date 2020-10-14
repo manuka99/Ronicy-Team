@@ -24,6 +24,7 @@ import com.google.firebase.auth.GetTokenResult;
 import java.util.Map;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -134,6 +135,7 @@ public class CustomAuthTokenManager {
             firebaseUser.getIdToken(true).addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                 @Override
                 public void onComplete(@NonNull Task<GetTokenResult> task) {
+                    Log.i(TAG, task.toString());
                     if (customClaimsCallback != null)
                         customClaimsCallback.onCompleteGetCustomClaims(task);
                 }
@@ -148,14 +150,24 @@ public class CustomAuthTokenManager {
     public CustomClaims mapJsomClaimsToObject(Map<String, Object> claims) {
         CustomClaims customClaims = new CustomClaims();
         try {
-            customClaims.setAdmin((Boolean) claims.get("admin"));
-            customClaims.setAdvertisement_manager((Boolean) claims.get("advertisement_manager"));
-            customClaims.setOrder_manager((Boolean) claims.get("order_manager"));
-            customClaims.setFavourite_manager((Boolean) claims.get("favourite_manager"));
-            customClaims.setChat_manager((Boolean) claims.get("chat_manager"));
-            customClaims.setContact_manager((Boolean) claims.get("contact_manager"));
-            customClaims.setUser_manager((Boolean) claims.get("user_manager"));
-            customClaims.setGuest_admin((Boolean) claims.get("guest_admin"));
+            for (String claim : claims.keySet()) {
+                if (claim.equals(CustomClaims.ADMIN))
+                    customClaims.setAdmin(true);
+                if (claim.equals(CustomClaims.ADVERTISEMENT_MANAGER))
+                    customClaims.setAdvertisement_manager(true);
+                if (claim.equals(CustomClaims.ORDER_MANAGER))
+                    customClaims.setOrder_manager(true);
+                if (claim.equals(CustomClaims.FAVOURITE_MANAGER))
+                    customClaims.setFavourite_manager(true);
+                if (claim.equals(CustomClaims.CHAT_MANAGER))
+                    customClaims.setChat_manager(true);
+                if(claim.equals(CustomClaims.CONTACT_MANAGER))
+                    customClaims.setContact_manager(true);
+                if(claim.equals(CustomClaims.USER_MANAGER))
+                    customClaims.setUser_manager(true);
+                if(claim.equals(CustomClaims.GUEST_ADMIN))
+                    customClaims.setGuest_admin(true);
+            }
         } catch (Exception e) {
             Log.i(TAG, "Claims were not successfull");
             e.printStackTrace();

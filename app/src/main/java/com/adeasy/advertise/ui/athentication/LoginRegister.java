@@ -73,6 +73,7 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
     private static final String TAG = "LoginRegister";
     private static final String Post = "Please sign up to post your ad:";
     private static final String Chat = "Log in to chat with buyers and sellers on ronicy.lk";
+    private static final String Order = "Log in to manage your orders and payments on ronicy.lk";
     private static final String Account = "Log in to manage your account:";
 
 
@@ -285,6 +286,8 @@ public class LoginRegister extends Fragment implements View.OnClickListener, Fir
             fragmentHeader.setText(Chat);
         else if (header.equals("post"))
             fragmentHeader.setText(Post);
+        else if (header.equals("order"))
+            fragmentHeader.setText(Order);
     }
 
     @Override

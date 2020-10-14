@@ -5,7 +5,16 @@ package com.adeasy.advertise.model;
  * Email manukayasas99@gmail.com
  **/
 public class CustomClaims{
-	
+
+	public static final String ADMIN = "admin";
+	public static final String ADVERTISEMENT_MANAGER = "advertisement_manager";
+	public static final String FAVOURITE_MANAGER = "favourite_manager";
+	public static final String CHAT_MANAGER = "chat_manager";
+	public static final String CONTACT_MANAGER = "contact_manager";
+	public static final String ORDER_MANAGER = "order_manager";
+	public static final String USER_MANAGER = "user_manager";
+	public static final String GUEST_ADMIN = "guest_admin";
+
 	private boolean admin;
 	private boolean advertisement_manager;
 	private boolean favourite_manager;
