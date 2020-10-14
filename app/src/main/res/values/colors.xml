@@ -40,4 +40,5 @@
     <color name="top_ad_colour">#38FFE066</color>
     <color name="bundle_ads_color">#F5E9E2</color>
     <color name="hint_grey">#66000000</color>
+    <color name="baseline_color_grey">#66CCCCCC</color>
 </resources>

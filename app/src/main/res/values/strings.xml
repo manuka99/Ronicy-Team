@@ -326,6 +326,80 @@
     <string name="fcm_message">Ronicy.lk</string>
     <string name="default_notification_channel_name">ronicy chanel</string>
     <string name="i_understand">I Understand</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="top_ad">TOP AD</string>
+
+
+    <string-array name="locations_main">
+        <item>Colombo</item>
+        <item>Kandy</item>
+        <item>Galle</item>
+        <item>Ampara</item>
+        <item>Anuradhapura</item>
+        <item>Badulla</item>
+        <item>Batticaloa</item>
+        <item>Gampaha</item>
+        <item>HambanThota</item>
+        <item>Jaffna</item>
+        <item>Kaluthara</item>
+        <item>Kegalle</item>
+        <item>Killinochchi</item>
+        <item>Kurunegala</item>
+        <item>Mannar</item>
+        <item>Matale</item>
+        <item>Matara</item>
+        <item>Monaragala</item>
+        <item>Mullativu</item>
+        <item>Nuwara Eliya</item>
+        <item>Polonnaruwa</item>
+        <item>Puttalam</item>
+        <item>Rathnapura</item>
+        <item>Trincomalee</item>
+        <item>Vavuniya</item>
+    </string-array>
+
+    <string-array name="locations_colombo">
+        <item>All ads in Colombo</item>
+        <item>Piliyandala</item>
+        <item>Nugegoda</item>
+        <item>Colombo 6</item>
+        <item>Dehiwala</item>
+        <item>Maharagama</item>
+        <item>Kottawa</item>
+        <item>Malabe</item>
+        <item>Homagama</item>
+        <item>Moratuwa</item>
+        <item>Colombo 3</item>
+        <item>Kaduwela</item>
+        <item>Battaramulla</item>
+        <item>Colombo 4</item>
+        <item>Athurugiruiya</item>
+        <item>Colombo 5</item>
+        <item>Boralasgamuwa</item>
+        <item>Rajagiriya</item>
+        <item>Talawatugoda</item>
+        <item>Colombo 10</item>
+        <item>Colombo 11</item>
+        <item>Pannipitiya</item>
+        <item>Colombo 8</item>
+        <item>Kotte</item>
+        <item>Mount Lavinia</item>
+    </string-array>
+
+
+    <string-array name="locations_kandy">
+        <item>All ads in Kandy</item>
+        <item>Kandy</item>
+        <item>Katugastota</item>
+        <item>Gampola</item>
+        <item>Peradeniya</item>
+        <item>Akurana</item>
+        <item>Pilimatalawe</item>
+        <item>Gelioya</item>
+        <item>Digana</item>
+        <item>Kundasale</item>
+        <item>Nawalpitiya</item>
+    </string-array>
 
     <!-- Divya -->
 
@@ -409,8 +483,7 @@
     <string name="ravindu_fixedBugsStr">Fixed Bugs</string>
     <string name="ravindu_pendingBugsStr">Pending Bugs</string>
     <string name="ravindu_bugIdStr">BugID</string>
-    <string name="buy_now">Buy Now</string>
-    <string name="top_ad">TOP AD</string>
+    <string name="all_of_sri_lanka">All of Sri Lanka</string>
 
     <!-- Ashan -->
 </resources>

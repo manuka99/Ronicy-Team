@@ -15,11 +15,14 @@ import com.adeasy.advertise.R;
 import com.adeasy.advertise.adapter.RecycleAdapterForLocationPicker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class LocationPicker extends AppCompatActivity {
+import javax.mail.Store;
 
-    TextView all_locations;
+public class LocationPicker extends AppCompatActivity implements RecycleAdapterForLocationPicker.ContactActivityInterface {
+
+    TextView all_locations, backToAllLocations, mainDistrict;
     Toolbar toolbar;
     private static final String LOCATION_SELECTED = "location_selected";
     RecycleAdapterForLocationPicker recycleAdapterForLocationPicker;
@@ -44,8 +47,19 @@ public class LocationPicker extends AppCompatActivity {
         });
 
         all_locations = findViewById(R.id.all_locations);
+
+        backToAllLocations = findViewById(R.id.backToAllLocations);
+        mainDistrict = findViewById(R.id.mainDistrict);
+        backToAllLocations.setVisibility(View.GONE);
+        mainDistrict.setVisibility(View.GONE);
+
         recyclerView = findViewById(R.id.location_recycle);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
 
         all_locations.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,37 +71,48 @@ public class LocationPicker extends AppCompatActivity {
             }
         });
 
-        recycleAdapterForLocationPicker = new RecycleAdapterForLocationPicker(addLocations(), this);
+        backToAllLocations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (recycleAdapterForLocationPicker != null) {
+                    recycleAdapterForLocationPicker.upDateAllLocations();
+                    backToAllLocations.setVisibility(View.GONE);
+                    mainDistrict.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        recycleAdapterForLocationPicker = new RecycleAdapterForLocationPicker(Arrays.asList(getResources().getStringArray(R.array.locations_main)), this, this);
 
         recyclerView.setAdapter(recycleAdapterForLocationPicker);
     }
 
-    private List<String> addLocations() {
-        List<String> locations = new ArrayList<>();
-        locations.add("Colombo");
-        locations.add("Galle");
-        locations.add("Mathara");
-        locations.add("Jafna");
-        locations.add("Colombo");
-        locations.add("Galle");
-        locations.add("Mathara");
-        locations.add("Jafna");
-        locations.add("Colombo");
-        locations.add("Galle");
-        locations.add("Mathara");
-        locations.add("Jafna");
-        locations.add("Colombo");
-        locations.add("Galle");
-        locations.add("Mathara");
-        locations.add("Jafna");
-        locations.add("Colombo");
-        locations.add("Galle");
-        locations.add("Mathara");
-        locations.add("Jafna");
-        locations.add("Colombo");
-        locations.add("Galle");
-        locations.add("Mathara");
-        locations.add("Jafna");
-        return locations;
+    public void showBackToAllLocations() {
+        backToAllLocations.setVisibility(View.VISIBLE);
     }
+
+    public void hideBackToAllLocations() {
+        backToAllLocations.setVisibility(View.VISIBLE);
+    }
+
+
+    @Override
+    public void toggleBackToAllAds(Boolean b) {
+        if (b)
+            showBackToAllLocations();
+        else {
+            hideBackToAllLocations();
+            mainDistrictSelected(null);
+        }
+    }
+
+    @Override
+    public void mainDistrictSelected(String district) {
+        if (district != null) {
+            mainDistrict.setText(district);
+            mainDistrict.setVisibility(View.VISIBLE);
+        } else
+            mainDistrict.setVisibility(View.GONE);
+    }
+
 }

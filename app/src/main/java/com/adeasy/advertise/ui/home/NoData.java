@@ -1,5 +1,6 @@
 package com.adeasy.advertise.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.adeasy.advertise.R;
+import com.adeasy.advertise.ui.newPost.NewAd;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,6 +76,22 @@ public class NoData extends Fragment {
         header = view.findViewById(R.id.header);
         allAds = view.findViewById(R.id.allAds);
         postAds = view.findViewById(R.id.postAd);
+
+        postAds.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), NewAd.class));
+            }
+        });
+
+        allAds.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                getActivity().startActivity(intent);
+            }
+        });
 
         return view;
     }

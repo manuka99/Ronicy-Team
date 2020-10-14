@@ -150,6 +150,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     ProgressBar progressBar;
     LinearLayout adsFinishedView;
     TextView refreshAdsView;
+    Boolean noResults = false;
 
     public Home() {
         // Required empty public constructor
@@ -462,7 +463,8 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                     } else {
                         isAllAdsLoaded = true;
                         progressBar.setVisibility(View.GONE);
-                        adsFinishedView.setVisibility(View.VISIBLE);
+                        if (!noResults)
+                            adsFinishedView.setVisibility(View.VISIBLE);
                     }
                 }
                 loadingAdsTask = false;
@@ -648,8 +650,11 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
             }
 
             if (task.getResult().size() == 0) {
-                getFragmentManager().beginTransaction().replace(frameLayout.getId(), new NoData()).commit();
+                noResults = true;
+                getParentFragmentManager().beginTransaction().replace(frameLayout.getId(), new NoData()).commit();
                 frameLayout.setVisibility(View.VISIBLE);
+                adsFinishedView.setVisibility(View.GONE);
+
             } else
                 frameLayout.setVisibility(View.GONE);
         } else {
