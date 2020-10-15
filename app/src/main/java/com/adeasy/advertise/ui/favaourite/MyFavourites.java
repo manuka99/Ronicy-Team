@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
@@ -52,6 +54,8 @@ public class MyFavourites extends AppCompatActivity {
     List<String> adIds;
     Map<String, String> adIdsFIds;
     Toolbar toolbar;
+    ProgressBar progressBar;
+    LinearLayout main_content;
 
 
     private static final String TAG = "MyFavourites";
@@ -65,6 +69,8 @@ public class MyFavourites extends AppCompatActivity {
         context = this;
         myFavs = findViewById(R.id.myFavs);
         toolbar = findViewById(R.id.toolbar);
+        progressBar = findViewById(R.id.progressBar);
+        main_content = findViewById(R.id.main_content);
         frameLayout = findViewById(R.id.frameLayout);
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -84,32 +90,44 @@ public class MyFavourites extends AppCompatActivity {
 
         myFavs.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
+        progressBar.setVisibility(View.VISIBLE);
+        main_content.setVisibility(View.GONE);
+
         if (firebaseAuth.getCurrentUser() != null) {
             StartFavourites();
         }
     }
 
     private void StartFavourites() {
+
+        frameLayout.setVisibility(View.GONE);
+        main_content.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        getSupportActionBar().setSubtitle("loading..");
+
         firebaseFirestore.collection(FAVOURITE_COLLECTION).whereEqualTo("userID", firebaseAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                getSupportActionBar().setSubtitle( task.getResult().size() + " results");
+                getSupportActionBar().setSubtitle(task.getResult().size() + " results");
                 adIds = new ArrayList<>();
                 adIdsFIds = new HashMap<String, String>();
-                if(task.isSuccessful()){
-                for (Favourite favourite : task.getResult().toObjects(Favourite.class)) {
-                    adIds.add(favourite.getAdvertisementID());
-                    adIdsFIds.put(favourite.getAdvertisementID(), favourite.getFavouriteID());
+                if (task.isSuccessful()) {
+                    for (Favourite favourite : task.getResult().toObjects(Favourite.class)) {
+                        adIds.add(favourite.getAdvertisementID());
+                        adIdsFIds.put(favourite.getAdvertisementID(), favourite.getFavouriteID());
+                    }
+                    if (adIds.size() > 0) {
+                        loadMyFavourites(adIds);
+                        frameLayout.setVisibility(View.GONE);
+                    } else {
+                        noDataShow();
+                        if (adapter != null)
+                            adapter.notifyItemRangeRemoved(0, adapter.getItemCount() - 1);
+                    }
                 }
-                if (adIds.size() > 0) {
-                    loadMyFavourites(adIds);
-                    frameLayout.setVisibility(View.GONE);
-                } else {
-                    getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), new NoData()).commit();
-                    frameLayout.setVisibility(View.VISIBLE);
-                }
-            }}
+            }
         });
+
     }
 
     private void loadMyFavourites(final List<String> adIds) {
@@ -187,7 +205,9 @@ public class MyFavourites extends AppCompatActivity {
                                     .setNegativeButton("More", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
-
+                                            Intent intent = new Intent(getApplicationContext(), MoreOnFavourites.class);
+                                            intent.putExtra(MoreOnFavourites.FAVOURITE_ID, adIdsFIds.get(advertisement.getId()));
+                                            startActivity(intent);
                                         }
                                     })
 
@@ -212,9 +232,12 @@ public class MyFavourites extends AppCompatActivity {
 
             @Override
             public void onDataChanged() {
-
-                //if (getSnapshots().size() == 0)
-
+                if (getSnapshots().size() > 0) {
+                    getSupportActionBar().setSubtitle(getSnapshots().size() + " results");
+                    progressBar.setVisibility(View.GONE);
+                    main_content.setVisibility(View.VISIBLE);
+                } else
+                    noDataShow();
             }
 
             @Override
@@ -234,6 +257,7 @@ public class MyFavourites extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        StartFavourites();
         if (adapter != null)
             adapter.startListening();
     }
@@ -243,6 +267,14 @@ public class MyFavourites extends AppCompatActivity {
         super.onStop();
         if (adapter != null)
             adapter.stopListening();
+    }
+
+    private void noDataShow() {
+        getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), new NoData()).commit();
+        frameLayout.setVisibility(View.VISIBLE);
+        main_content.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        getSupportActionBar().setSubtitle("No results");
     }
 
 }

@@ -99,7 +99,7 @@ public class AddToFavourite extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         progressDialog.dismiss();
                                         if (task.isSuccessful()) {
-                                            Toast.makeText(context, "added To favourites", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(context, "added To favourites", Toast.LENGTH_SHORT).show();
                                             finish();
                                         }
                                         if (!task.isSuccessful() || task.getException() instanceof FirebaseFirestoreException && ((FirebaseFirestoreException) task.getException()).getCode().equals(FirebaseFirestoreException.Code.PERMISSION_DENIED))
@@ -108,7 +108,7 @@ public class AddToFavourite extends AppCompatActivity {
                                 });
                             }
                         } else {
-                            Toast.makeText(context, "Server error *", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context,  R.string.internal_error_fav, Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     }
@@ -118,7 +118,7 @@ public class AddToFavourite extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(context, "removed from favourites", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "removed from favourites", Toast.LENGTH_SHORT).show();
                         } else {
 
                         }

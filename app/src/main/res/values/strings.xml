@@ -490,6 +490,7 @@
     <string name="you_have_ads_that_are_currently_being_reviewed">You have ads that are currently being reviewed.</string>
     <string name="you_have_ads_that_need_to_be_edited_before_they_can_be_published">You have ads that need to be edited before they can be published.</string>
     <string name="we_review_all_ads">* We review all ads manually before they go live. We will send a notification when we have reviewed and approved your ad. It usually takes about 4 working hours (Office hours 07 AM - 09 PM)</string>
+    <string name="internal_error_fav">Internal error occured, refresh again</string>
 
     <!-- Ashan -->
 </resources>
