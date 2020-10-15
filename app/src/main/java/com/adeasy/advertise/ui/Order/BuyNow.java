@@ -40,6 +40,7 @@ import com.adeasy.advertise.model.Order_Payment;
 import com.adeasy.advertise.model.UserVerifiedNumbers;
 import com.adeasy.advertise.util.CommonConstants;
 import com.adeasy.advertise.util.CustomDialogs;
+import com.adeasy.advertise.util.HideSoftKeyboard;
 import com.adeasy.advertise.util.InternetValidation;
 import com.adeasy.advertise.util.UniqueIdBasedOnName;
 import com.google.android.gms.tasks.Task;
@@ -197,7 +198,6 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
             }
         });
 
-        handelStep1Fragment();
     }
 
     @Override
@@ -226,6 +226,7 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
     public void onClick(View view) {
         if (view == continueOrder) {
             validateAndContinue();
+            HideSoftKeyboard.hideKeyboard(BuyNow.this);
         }
     }
 
@@ -318,7 +319,8 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
             user = new User();
             user.setEmail(firebaseUser.getEmail());
             user.setName(firebaseUser.getDisplayName());
-            user.setPhone(firebaseUser.getPhoneNumber());
+            if (firebaseUser.getPhoneNumber() != null)
+                user.setPhone(firebaseUser.getPhoneNumber().replace("+94", ""));
             bundle.putSerializable(CUSTOMER, user);
         }
         Step1 step1 = new Step1();
@@ -497,6 +499,8 @@ public class BuyNow extends AppCompatActivity implements View.OnClickListener, O
             user = task.getResult().toObject(User.class);
         else if (task != null && task.getException() instanceof FirebaseFirestoreException && ((FirebaseFirestoreException) task.getException()).getCode().equals(FirebaseFirestoreException.Code.PERMISSION_DENIED))
             customDialogs.showPermissionDeniedStorage();
+
+        handelStep1Fragment();
     }
 
     private void showExitDialog() {

@@ -187,8 +187,10 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
         if (view == newcode && mResendToken != null) {
             showSuccessSnackbar(getString(R.string.sending_code));
             firebasePhoneAuthentication.resendVerificationCode("+94" + phoneNum, getActivity(), mResendToken);
+            HideSoftKeyboard.hideKeyboard(getActivity());
         } else if (view == verifyTextView) {
             validatePhonenumber();
+            HideSoftKeyboard.hideKeyboard(getActivity());
         }
     }
 
@@ -257,7 +259,7 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
             showErrorSnackbar(getString(R.string.quota_exceeded));
         else
             showErrorSnackbar(e.getMessage());
-            //showErrorSnackbar(getString(R.string.virtual_env_exception));
+        //showErrorSnackbar(getString(R.string.virtual_env_exception));
     }
 
     @Override
@@ -428,7 +430,9 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onCompleteSearchNumberInUser(Task<QuerySnapshot> task) {
-        if (task != null && task.isSuccessful() && task.getResult().getDocuments().isEmpty() == false) {
+        Log.i(TAG, "results");
+
+        if (task != null && task.isSuccessful() && task.getResult().size() > 0) {
             List<UserVerifiedNumbers> numbers = task.getResult().toObjects(UserVerifiedNumbers.class);
             Log.i(TAG, numbers.get(0).getVerifiedNumbers().toString());
             Log.i(TAG, task.getResult().getDocuments().toString());
@@ -445,6 +449,8 @@ public class OrderPhoneVerify extends Fragment implements View.OnClickListener, 
                 firebasePhoneAuthentication.sendMobileVerifycode("+94" + phoneNum, getActivity());
         } else
             firebasePhoneAuthentication.sendMobileVerifycode("+94" + phoneNum, getActivity());
+
+
     }
 
     @Override

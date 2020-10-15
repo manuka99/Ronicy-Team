@@ -38,6 +38,8 @@ import com.adeasy.advertise.util.Promotions;
 import com.adeasy.advertise.util.UniqueIdBasedOnName;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -159,6 +161,14 @@ public class Payment extends AppCompatActivity implements PromotionCallback, Vie
         continueBTN.setOnClickListener(this);
 
         promotionsViewModel = ViewModelProviders.of(this).get(PromotionsViewModel.class);
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            nameView.getEditText().setText(firebaseUser.getDisplayName());
+            if (firebaseUser.getPhoneNumber() != null)
+                phoneView.getEditText().setText(firebaseUser.getPhoneNumber());
+            emailView.getEditText().setText(firebaseUser.getEmail());
+        }
     }
 
     @Override
