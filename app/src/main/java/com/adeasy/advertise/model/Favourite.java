@@ -1,10 +1,11 @@
 package com.adeasy.advertise.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Favourite {
+public class Favourite implements Serializable {
     private String favouriteID;
     private String advertisementID;
     private String userID;
@@ -14,6 +15,11 @@ public class Favourite {
     private Date placedDate;
     private List<Date> contactedLog;
     private boolean contacted;
+
+    public static final String COLLECTION_NAME = "Favourites";
+    public static final String USER_ID = "userID";
+    public static final String AD_ID = "advertisementID";
+
 
     public Favourite() {
 

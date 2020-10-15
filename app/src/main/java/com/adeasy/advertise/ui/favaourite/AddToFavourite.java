@@ -33,12 +33,14 @@ public class AddToFavourite extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     String adID;
+    boolean isAddToFav;
     Context context;
+    Favourite favourite;
 
     private static final String TAG = "addToFavourite";
     private static final String ADVERTISEMENTID = "adID";
-    private static final String FAVOURITE_COLLECTION = "Favourites";
-
+    public static final String FAV_STATUS = "status";
+    public static final String FAVOURITE = "favourite_model";
 
     CustomDialogs customDialogs;
 
@@ -58,17 +60,22 @@ public class AddToFavourite extends AppCompatActivity {
         if (firebaseAuth.getCurrentUser() == null)
             customDialogs.showPermissionDeniedStorage();
 
-        try {
-            if (getIntent().getStringExtra(ADVERTISEMENTID) != null)
-                adID = getIntent().getStringExtra(ADVERTISEMENTID);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        if (getIntent().hasExtra(ADVERTISEMENTID))
+            adID = getIntent().getStringExtra(ADVERTISEMENTID);
+
+        if (getIntent().hasExtra(FAV_STATUS))
+            isAddToFav = getIntent().getBooleanExtra(FAV_STATUS, false);
+
+        if (getIntent().hasExtra(FAVOURITE))
+            favourite = (Favourite) getIntent().getSerializableExtra(FAVOURITE);
 
         firebaseUser = firebaseAuth.getCurrentUser();
 
         final ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Adding to favorite");
+        if (isAddToFav)
+            progressDialog.setTitle("Adding to favorite");
+        else
+            progressDialog.setTitle("Removing from favorite");
         progressDialog.setMessage("please wait.....");
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
@@ -76,35 +83,50 @@ public class AddToFavourite extends AppCompatActivity {
 
         if (adID != null && firebaseUser != null) {
 
-            firebaseFirestore.collection(FAVOURITE_COLLECTION).whereEqualTo("advertisementID", adID).whereEqualTo("userID", firebaseUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        if (task.getResult().size() > 0) {
-                            progressDialog.dismiss();
-                            Toast.makeText(context, "already added", Toast.LENGTH_LONG).show();
-                            finish();
-                        } else {
-                            String id = UUID.randomUUID().toString().replace("-", "");
-                            firebaseFirestore.collection(FAVOURITE_COLLECTION).document(id).set(new Favourite(id, adID, firebaseUser.getUid())).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    progressDialog.dismiss();
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(context, "added To favourite", Toast.LENGTH_LONG).show();
-                                        finish();
+            if (isAddToFav) {
+                firebaseFirestore.collection(Favourite.COLLECTION_NAME).whereEqualTo("advertisementID", adID).whereEqualTo("userID", firebaseUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (task.getResult().size() > 0) {
+                                progressDialog.dismiss();
+                                Toast.makeText(context, "This advertisement is already added to favourites", Toast.LENGTH_LONG).show();
+                                finish();
+                            } else {
+                                String id = UUID.randomUUID().toString().replace("-", "");
+                                firebaseFirestore.collection(Favourite.COLLECTION_NAME).document(id).set(new Favourite(id, adID, firebaseUser.getUid())).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        progressDialog.dismiss();
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(context, "added To favourites", Toast.LENGTH_LONG).show();
+                                            finish();
+                                        }
+                                        if (!task.isSuccessful() || task.getException() instanceof FirebaseFirestoreException && ((FirebaseFirestoreException) task.getException()).getCode().equals(FirebaseFirestoreException.Code.PERMISSION_DENIED))
+                                            customDialogs.showPermissionDeniedStorage();
                                     }
-                                    if (!task.isSuccessful() || task.getException() instanceof FirebaseFirestoreException && ((FirebaseFirestoreException) task.getException()).getCode().equals(FirebaseFirestoreException.Code.PERMISSION_DENIED))
-                                        customDialogs.showPermissionDeniedStorage();
-                                }
-                            });
+                                });
+                            }
+                        } else {
+                            Toast.makeText(context, "Server error *", Toast.LENGTH_LONG).show();
+                            finish();
                         }
-                    } else {
-                        Toast.makeText(context, "Server error *", Toast.LENGTH_LONG).show();
+                    }
+                });
+            } else if (favourite != null) {
+                firebaseFirestore.collection(Favourite.COLLECTION_NAME).document(favourite.getFavouriteID()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(context, "removed from favourites", Toast.LENGTH_LONG).show();
+                        } else {
+
+                        }
                         finish();
                     }
-                }
-            });
+                });
+            } else
+                finish();
 
         }
 

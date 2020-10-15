@@ -112,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_2sdp"
                 android:background="@color/colorWhite"
-                android:drawableStart="@drawable/ic_baseline_star_24"
+                android:drawableStart="@drawable/ic_baseline_favorite_24_added"
                 android:drawablePadding="@dimen/_16sdp"
                 android:drawableTint="#8C8C8C"
                 android:elevation="@dimen/_2sdp"

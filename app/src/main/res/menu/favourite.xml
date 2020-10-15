@@ -10,14 +10,20 @@
         android:title="Share product"
         android:orderInCategory="300"
         android:icon="@drawable/ic_baseline_share_24"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="ifRoom"/>
     
     <item
         android:id="@+id/action_favorite"
-        android:title="Add to favourite"
+        android:title="Add to favourites"
         android:orderInCategory="300"
         android:icon="@drawable/ic_baseline_favorite_border_24"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/action_favorite_added"
+        android:title="Remove from favourites"
+        android:orderInCategory="300"
+        android:icon="@drawable/ic_baseline_favorite_24_added"
+        app:showAsAction="ifRoom"/>
 
 </menu>

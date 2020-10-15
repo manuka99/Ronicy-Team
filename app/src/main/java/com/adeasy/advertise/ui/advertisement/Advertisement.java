@@ -38,6 +38,7 @@ import com.adeasy.advertise.helper.ViewHolderAdds;
 import com.adeasy.advertise.helper.ViewHolderListAdds;
 import com.adeasy.advertise.manager.PromotionManager;
 import com.adeasy.advertise.model.Category;
+import com.adeasy.advertise.model.Favourite;
 import com.adeasy.advertise.model.Promotion;
 import com.adeasy.advertise.ui.Order.BuyNow;
 import com.adeasy.advertise.callback.AdvertisementCallback;
@@ -69,6 +70,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -121,6 +123,9 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
     List<Object> objectsForSimilarAds = new ArrayList<>();
 
     RecyclerAdapterSimillarAds recyclerAdapterSimillarAds;
+
+    boolean isAddedToFavourite = false;
+    Favourite favourite;
 
     private static final String ADVERTISEMENTID = "adID";
     private static final String TAG = "EditAdvertisement";
@@ -203,6 +208,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
         recyclerAdapterSimillarAds = new RecyclerAdapterSimillarAds(context);
         similarAds.setAdapter(recyclerAdapterSimillarAds);
+        loadFavourite();
     }
 
     @Override
@@ -210,6 +216,8 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         super.onStart();
         if (!new InternetValidation().validateInternet(getApplicationContext()))
             customDialogs.showNoInternetDialog();
+
+        loadFavourite();
 
         adView1.setAdListener(new AdListener() {
             @Override
@@ -257,6 +265,12 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.favourite, menu);
+
+        if (isAddedToFavourite)
+            menu.findItem(R.id.action_favorite).setVisible(false);
+        else
+            menu.findItem(R.id.action_favorite_added).setVisible(false);
+
         return true;
     }
 
@@ -269,11 +283,10 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_favorite) {
-            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                Intent fav_intent = new Intent(getApplicationContext(), AddToFavourite.class);
-                fav_intent.putExtra(ADVERTISEMENTID, adID);
-                startActivity(fav_intent);
-            }
+            addToFavourite();
+            return true;
+        } else if (id == R.id.action_favorite_added) {
+            removeFromFavourite();
             return true;
         } else if (id == R.id.action_share) {
             Toast.makeText(Advertisement.this, "Action clicked", Toast.LENGTH_LONG).show();
@@ -387,7 +400,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
             } else {
                 Log.d(TAG, "No such document");
             }
-        } else if(task != null) {
+        } else if (task != null) {
             Log.d(TAG, "get failed with ", task.getException());
         }
     }
@@ -454,7 +467,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
             } else {
                 Log.d(TAG, "No such document");
             }
-        } else if(task != null) {
+        } else if (task != null) {
             Log.d(TAG, "get failed with ", task.getException());
         }
     }
@@ -535,6 +548,41 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
                 progressBarSimilarAds.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void loadFavourite() {
+        FirebaseFirestore.getInstance().collection(Favourite.COLLECTION_NAME).whereEqualTo(Favourite.AD_ID, adID).whereEqualTo(Favourite.USER_ID, auth.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                isAddedToFavourite = false;
+                if (task.isSuccessful() && task.getResult().size() > 0) {
+                    isAddedToFavourite = true;
+                    favourite = task.getResult().toObjects(Favourite.class).get(0);
+                }
+                invalidateOptionsMenu();
+            }
+        });
+    }
+
+    private void addToFavourite() {
+        if (auth.getCurrentUser() != null) {
+            Intent fav_intent = new Intent(getApplicationContext(), AddToFavourite.class);
+            fav_intent.putExtra(ADVERTISEMENTID, adID);
+            fav_intent.putExtra(AddToFavourite.FAV_STATUS, true);
+            startActivity(fav_intent);
+        } else
+            Toast.makeText(getApplicationContext(), "Please sign in to manage your favourites", Toast.LENGTH_LONG).show();
+    }
+
+    private void removeFromFavourite() {
+        if (auth.getCurrentUser() != null) {
+            Intent fav_intent = new Intent(getApplicationContext(), AddToFavourite.class);
+            fav_intent.putExtra(ADVERTISEMENTID, adID);
+            fav_intent.putExtra(AddToFavourite.FAV_STATUS, false);
+            fav_intent.putExtra(AddToFavourite.FAVOURITE, favourite);
+            startActivity(fav_intent);
+        } else
+            Toast.makeText(getApplicationContext(), "Please sign in to manage your favourites", Toast.LENGTH_LONG).show();
     }
 
 }
