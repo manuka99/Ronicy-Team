@@ -9,6 +9,11 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshMyadds"
         android:layout_width="match_parent"
@@ -21,11 +26,6 @@
             android:layout_marginStart="@dimen/_4sdp"
             android:layout_marginTop="@dimen/_4sdp"
             android:layout_marginEnd="@dimen/_4sdp" />
-
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

@@ -55,7 +55,6 @@ public class Advertisement implements Serializable {
         this.promotions = new HashMap<>();
         this.imageUrls = new ArrayList<>();
         this.numbers = new ArrayList<>();
-        this.unapprovedReason = "This ad is currently being reviewed. You will recieve a notification when we have reviewed this ad. It usually takes about 4 working hours (Office hours 07 AM - 09 PM)";
     }
 
     public Advertisement(Date date, Boolean isApproved, Boolean isAvailable, Boolean isBuyNow) {

@@ -19,6 +19,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -140,6 +142,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback, 
             myRejectedAdsQuery = advertisementManager.getMyRejectedAds(uid);
 
             //load ads count
+            advertisementManager.getCount(myAllAdsQuery);
             advertisementManager.getCount(myPublishedAdsQuery);
             advertisementManager.getCount(myReviewingAdsQuery);
             advertisementManager.getCount(myRejectedAdsQuery);
@@ -154,6 +157,8 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback, 
         super.onStart();
         if (!new InternetValidation().validateInternet(getApplicationContext()))
             customDialogs.showNoInternetDialog();
+        if(firestorePagingAdapter != null)
+            firestorePagingAdapter.refresh();
     }
 
     public void loadPublishedAds() {
@@ -287,6 +292,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback, 
                         super.refresh();
                         initView();
                         swipeRefreshLayout.setRefreshing(false);
+                        advertisementManager.getCount(myAllAdsQuery);
                         advertisementManager.getCount(myPublishedAdsQuery);
                         advertisementManager.getCount(myReviewingAdsQuery);
                         advertisementManager.getCount(myRejectedAdsQuery);
@@ -426,13 +432,14 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback, 
                     frameLayout.setVisibility(View.VISIBLE);
                 } else {
                     frameLayout.setVisibility(View.GONE);
-                    getSupportActionBar().setSubtitle("Total ads: " + task.getResult().size());
+                    getSupportActionBar().setSubtitle("Total ads posted: " + task.getResult().size());
                 }
             } else if (taskQuery.equals(myPublishedAdsQuery)) {
                 if (resultCount == 0) {
                     publishedAdsLayout.setVisibility(View.GONE);
                 } else {
                     publishedAdsLayout.setVisibility(View.VISIBLE);
+                    publishedAdsLayout.startAnimation(AnimationUtils.loadAnimation(getApplication(), R.anim.fade_in));
                     publishedAdsCount.setText(String.valueOf(resultCount));
                 }
                 progressBarMain.setVisibility(View.GONE);
@@ -441,6 +448,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback, 
                     rejectedAdsLayout.setVisibility(View.GONE);
                 } else {
                     rejectedAdsLayout.setVisibility(View.VISIBLE);
+                    rejectedAdsLayout.startAnimation(AnimationUtils.loadAnimation(getApplication(), R.anim.fade_in));
                     rejectedAdsCount.setText(String.valueOf(resultCount));
                 }
             } else if (taskQuery.equals(myReviewingAdsQuery)) {
@@ -448,6 +456,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback, 
                     notReviewedAdsLayout.setVisibility(View.GONE);
                 } else {
                     notReviewedAdsLayout.setVisibility(View.VISIBLE);
+                    notReviewedAdsLayout.startAnimation(AnimationUtils.loadAnimation(getApplication(), R.anim.fade_in));
                     reviewingAdsCount.setText(String.valueOf(resultCount));
                 }
             }

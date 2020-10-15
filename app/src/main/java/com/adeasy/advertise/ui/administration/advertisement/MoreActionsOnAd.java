@@ -225,9 +225,13 @@ public class MoreActionsOnAd extends AppCompatActivity implements View.OnClickLi
             advertisement.setBuynow(isBuyNow);
             advertisement.setApproved(isApproved);
             advertisement.setAvailability(isAvailable);
-            if (hideAllNumbers) {
+
+            if (!isApproved)
+                advertisement.setUnapprovedReason(unApprovalMessage.getEditText().getText().toString());
+
+            if (hideAllNumbers)
                 advertisement.setNumbers(null);
-            }
+
             advertisementManager.insertUpdateAdvertisement(advertisement);
         }
     }

@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.AdvertisementCallback;
@@ -103,6 +104,13 @@ public class PendingRejectedAds extends AppCompatActivity implements Advertiseme
             finish();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(firestorePagingAdapter != null)
+            firestorePagingAdapter.refresh();
+    }
+
     private void loadData() {
 
         advertisementManager.getCount(query);
@@ -157,7 +165,7 @@ public class PendingRejectedAds extends AppCompatActivity implements Advertiseme
 
                                                 .setMessage("Note any changes made cannot be revert. Select below and proceed.")
 
-                                                .setNeutralButton("Delete ad", new DialogInterface.OnClickListener() {
+                                                .setNegativeButton("Delete ad", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -190,7 +198,7 @@ public class PendingRejectedAds extends AppCompatActivity implements Advertiseme
                                                     }
                                                 })
 
-                                                .setNegativeButton("Edit ad", new DialogInterface.OnClickListener() {
+                                                .setPositiveButton("Edit ad", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialogInterface, int i) {
                                                         Intent intent = new Intent(getApplicationContext(), EditAd.class);
@@ -199,24 +207,6 @@ public class PendingRejectedAds extends AppCompatActivity implements Advertiseme
                                                         startActivity(intent);
                                                     }
                                                 });
-
-                                        if (advertisement.isAvailability()) {
-
-                                            alertDialog.setPositiveButton("Hide ad", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    advertisementManager.hideAdd(advertisement.getId(), false);
-                                                }
-                                            });
-                                        } else {
-
-                                            alertDialog.setPositiveButton("Show ad", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    advertisementManager.hideAdd(getItem(position).getId(), true);
-                                                }
-                                            });
-                                        }
 
                                         alertDialog.show();
                                     }
@@ -317,12 +307,43 @@ public class PendingRejectedAds extends AppCompatActivity implements Advertiseme
 
     @Override
     public void onCompleteInsertAd(Task<Void> task) {
+        if (task != null && task.isSuccessful()) {
+            Toast.makeText(getApplicationContext(), "Success: All changes were saved", Toast.LENGTH_LONG).show();
+            firestorePagingAdapter.refresh();
+        } else if (task != null) {
+            Toast.makeText(getApplicationContext(), "Error, " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
 
+            if (task.getException() instanceof FirebaseFirestoreException) {
+                ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
+                firestorePagingAdapter.stopListening();
+                customDialogs.showPermissionDeniedStorage();
+            }
+        }
+
+        if (firestorePagingAdapter != null)
+            firestorePagingAdapter.refresh();
     }
 
     @Override
     public void onCompleteDeleteAd(Task<Void> task) {
+        if (task != null && task.isSuccessful()) {
+            if (imageUrls != null) {
+                advertisementManager.deleteMultipleImages(imageUrls);
+                imageUrls = null;
+            }
+            firestorePagingAdapter.refresh();
+            Toast.makeText(getApplicationContext(), "Success: Your advertisement was deleted", Toast.LENGTH_LONG).show();
+        } else if (task != null) {
+            Toast.makeText(getApplicationContext(), "Error: Your advertisement was not deleted", Toast.LENGTH_LONG).show();
+            if (task.getException() instanceof FirebaseFirestoreException) {
+                ((FirebaseFirestoreException) task.getException()).getCode().equals(PERMISSION_DENIED);
+                firestorePagingAdapter.stopListening();
+                customDialogs.showPermissionDeniedStorage();
+            }
+        }
 
+        if (firestorePagingAdapter != null)
+            firestorePagingAdapter.refresh();
     }
 
     @Override
