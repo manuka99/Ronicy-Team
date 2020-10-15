@@ -286,10 +286,6 @@ public class AdvertisementManager {
             return FirebaseFirestore.getInstance().collection(childName).whereEqualTo("categoryID", cid).whereEqualTo("availability", true).whereEqualTo("approved", true).limit(limitValue);
     }
 
-    public Query viewMyAddsAll() {
-        return firebaseFirestore.collection(childName).whereEqualTo("userID", firebaseAuth.getCurrentUser().getUid()).orderBy("placedDate", Query.Direction.DESCENDING);
-    }
-
     public Query viewNotReviewedAdds() {
         return firebaseFirestore.collection(childName).whereEqualTo("reviewed", false).orderBy("placedDate", Query.Direction.DESCENDING);
     }
@@ -318,6 +314,22 @@ public class AdvertisementManager {
         return firebaseFirestore.collection(childNameTrash).whereEqualTo("categoryID", categoryID).orderBy("placedDate", Query.Direction.DESCENDING);
     }
 
+    //my ads
+    public Query viewMyAllAds(String uid) {
+        return firebaseFirestore.collection(childName).whereEqualTo("userID", uid).orderBy("placedDate", Query.Direction.DESCENDING);
+    }
+
+    public Query viewMyPublishedAddsAll(String uid) {
+        return firebaseFirestore.collection(childName).whereEqualTo("userID", uid).whereEqualTo("reviewed", true).whereEqualTo("approved", true).orderBy("placedDate", Query.Direction.DESCENDING);
+    }
+
+    public Query getMyReviewingAds(String uid) {
+        return firebaseFirestore.collection(childName).whereEqualTo("userID", uid).whereEqualTo("reviewed", false).orderBy("placedDate", Query.Direction.DESCENDING);
+    }
+
+    public Query getMyRejectedAds(String uid) {
+        return firebaseFirestore.collection(childName).whereEqualTo("userID", uid).whereEqualTo("reviewed", true).whereEqualTo("approved", false).orderBy("placedDate", Query.Direction.DESCENDING);
+    }
 
     //get an ad from the advertisement collection
     public void getAddbyID(String id) {

@@ -1,36 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e6ecff"
-    android:orientation="vertical"
-    tools:context=".ui.advertisement.Myadds">
-
-    <!-- Manuka -->
+    android:background="@color/colorHome"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
-
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        layout="@layout/toolbar" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshMyadds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/myaddsRecycle"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_4sdp"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:layout_marginEnd="@dimen/_4sdp" />
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context=".ui.advertisement.Myadds">
+
+                <FrameLayout
+                    android:id="@+id/frameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <LinearLayout
+                    android:id="@+id/rejectedAds"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_baseline_info_20_red"
+                        android:drawablePadding="@dimen/_4sdp"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/_10sdp"
+                        android:text="@string/ads_pending_editing"
+                        android:textColor="@color/colorBlackText"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/baseline_color_grey" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_10sdp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.9"
+                            android:text="@string/you_have_ads_that_need_to_be_edited_before_they_can_be_published"
+                            android:textSize="@dimen/_13sdp" />
+
+                        <TextView
+                            android:id="@+id/rejectedAdsCountView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:background="@drawable/danger_round"
+                            android:gravity="center"
+                            android:paddingTop="@dimen/_4sdp"
+                            android:paddingBottom="@dimen/_4sdp"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/notReviewedAds"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_baseline_info_20_red"
+                        android:drawablePadding="@dimen/_4sdp"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/_10sdp"
+                        android:text="@string/ads_pending_review"
+                        android:textColor="@color/colorBlackText"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/baseline_color_grey" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_10sdp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.9"
+                            android:text="@string/you_have_ads_that_are_currently_being_reviewed"
+                            android:textSize="@dimen/_13sdp" />
+
+                        <TextView
+                            android:id="@+id/reviewingAdsCountView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:background="@drawable/nopt_reviewd_count_round"
+                            android:gravity="center"
+                            android:paddingTop="@dimen/_4sdp"
+                            android:paddingBottom="@dimen/_4sdp"
+                            android:textColor="@color/colorBlackText"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorHome"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/_16sdp"
+                        android:text="@string/we_review_all_ads"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="italic" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/publishedAds"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_46sdp"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.9"
+                            android:drawableStart="@drawable/ic_baseline_check_circle_outline_24"
+                            android:drawablePadding="@dimen/_4sdp"
+                            android:gravity="center_vertical"
+                            android:padding="@dimen/_10sdp"
+                            android:text="@string/published_ads"
+                            android:textColor="@color/colorBlackText"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/publishedAdsCountView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:layout_weight="0.1"
+                            android:background="@drawable/published_ads_count"
+                            android:gravity="center"
+                            android:paddingTop="@dimen/_2sdp"
+                            android:paddingBottom="@dimen/_2sdp"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/baseline_color_grey" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/myaddsRecycle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:layout_marginEnd="@dimen/_4sdp" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBarRecycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_60sdp"
+                        android:layout_marginBottom="@dimen/_120sdp"
+                        android:indeterminate="true"
+                        android:indeterminateDrawable="@drawable/progress_grey" />
+
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/progressBarMain"
+                    android:layout_width="match_parent"
+                    android:background="@color/colorHome"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginTop="@dimen/_100sdp"
+                    android:layout_marginBottom="@dimen/_120sdp"
+                    android:indeterminate="true"
+                    android:indeterminateDrawable="@drawable/progress_grey" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

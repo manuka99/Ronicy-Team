@@ -20,6 +20,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adeasy.advertise.R;
@@ -27,6 +30,7 @@ import com.adeasy.advertise.callback.AdvertisementCallback;
 import com.adeasy.advertise.helper.ViewHolderListAdds;
 import com.adeasy.advertise.manager.AdvertisementManager;
 import com.adeasy.advertise.model.Advertisement;
+import com.adeasy.advertise.ui.athentication.LoginRegister;
 import com.adeasy.advertise.ui.editAd.EditAd;
 import com.adeasy.advertise.ui.home.NoData;
 import com.adeasy.advertise.util.CustomDialogs;
@@ -37,6 +41,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
@@ -49,7 +54,7 @@ import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERM
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class Myadds extends AppCompatActivity implements AdvertisementCallback {
+public class Myadds extends AppCompatActivity implements AdvertisementCallback, View.OnClickListener {
 
     Context context;
     List<String> imageUrls;
@@ -62,7 +67,12 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
     CustomDialogs customErrorDialogs;
     FrameLayout frameLayout;
     CustomDialogs customDialogs;
+    ProgressBar progressBarMain, progressBarRecycler;
     private static final String TAG = "Myadds";
+
+    LinearLayout rejectedAdsLayout, notReviewedAdsLayout, publishedAdsLayout;
+    TextView publishedAdsCount, reviewingAdsCount, rejectedAdsCount;
+    Query myAllAdsQuery, myReviewingAdsQuery, myRejectedAdsQuery, myPublishedAdsQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,20 +96,56 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
         swipeRefreshLayout = findViewById(R.id.swipeRefreshMyadds);
 
         frameLayout = findViewById(R.id.frameLayout);
+
+        progressBarMain = findViewById(R.id.progressBarMain);
+        progressBarRecycler = findViewById(R.id.progressBarRecycler);
+        rejectedAdsLayout = findViewById(R.id.rejectedAds);
+        notReviewedAdsLayout = findViewById(R.id.notReviewedAds);
+        publishedAdsLayout = findViewById(R.id.publishedAds);
+
+        rejectedAdsCount = findViewById(R.id.rejectedAdsCountView);
+        reviewingAdsCount = findViewById(R.id.reviewingAdsCountView);
+        publishedAdsCount = findViewById(R.id.publishedAdsCountView);
+
+        //listeners
+        rejectedAdsLayout.setOnClickListener(this);
+        notReviewedAdsLayout.setOnClickListener(this);
+
         recyclerView = findViewById(R.id.myaddsRecycle);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+
+        initView();
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        customDialogs = new CustomDialogs(this);
 
         advertisementManager = new AdvertisementManager(this);
         customErrorDialogs = new CustomDialogs(this);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() == null)
+            getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), new LoginRegister()).commit();
+        else {
+            //init queries
+            String uid = firebaseAuth.getCurrentUser().getUid();
+            myAllAdsQuery = advertisementManager.viewMyAllAds(uid);
+            myPublishedAdsQuery = advertisementManager.viewMyPublishedAddsAll(uid);
+            myReviewingAdsQuery = advertisementManager.getMyReviewingAds(uid);
+            myRejectedAdsQuery = advertisementManager.getMyRejectedAds(uid);
 
-        customDialogs = new CustomDialogs(this);
+            //load ads count
+            advertisementManager.getCount(myPublishedAdsQuery);
+            advertisementManager.getCount(myReviewingAdsQuery);
+            advertisementManager.getCount(myRejectedAdsQuery);
 
-        if (firebaseAuth.getCurrentUser() != null)
-            loadData();
+            loadPublishedAds();
+        }
 
     }
 
@@ -110,19 +156,17 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
             customDialogs.showNoInternetDialog();
     }
 
-    public void loadData() {
-
-        advertisementManager.getCount(advertisementManager.viewMyAddsAll());
+    public void loadPublishedAds() {
 
         PagedList.Config config = new PagedList.Config.Builder()
                 .setEnablePlaceholders(false)
-                .setInitialLoadSizeHint(8)
-                .setPageSize(9)
+                .setInitialLoadSizeHint(4)
+                .setPageSize(6)
                 .build();
 
         FirestorePagingOptions<Advertisement> options = new FirestorePagingOptions.Builder<Advertisement>()
                 .setLifecycleOwner(this)
-                .setQuery(advertisementManager.viewMyAddsAll(), config, Advertisement.class)
+                .setQuery(myPublishedAdsQuery, config, Advertisement.class)
                 .build();
 
         firestorePagingAdapter =
@@ -137,6 +181,8 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                             holder.getMyaddsDate().setText(advertisement.getPreetyTime());
                             Picasso.get().load(advertisement.getImageUrls().get(0)).fit().into(holder.getImageView());
 
+                            holder.getMyaddsUaprovedReason().setVisibility(View.GONE);
+
                             if (!advertisement.isAvailability()) {
                                 holder.getMyadsAprooved().setText("Not Available");
                                 holder.getMyadsAprooved().setBackgroundResource(R.color.colorPrimary);
@@ -147,15 +193,6 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                                 holder.getMyadsAprooved().setBackgroundResource(R.color.colorSucess);
                                 holder.getMyadsAprooved().setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorBlack));
                                 holder.getMyaddsUaprovedReason().setVisibility(View.GONE);
-                            } else {
-                                holder.getMyadsAprooved().setText("Not Approved");
-                                holder.getMyadsAprooved().setBackgroundResource(R.color.colorDanger);
-                                holder.getMyadsAprooved().setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorWhite));
-                                if (advertisement.getUnapprovedReason() != null) {
-                                    holder.getMyaddsUaprovedReason().setText(advertisement.getUnapprovedReason());
-                                    holder.getMyaddsUaprovedReason().setVisibility(View.VISIBLE);
-                                } else
-                                    holder.getMyaddsUaprovedReason().setVisibility(View.GONE);
                             }
 
                             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -241,14 +278,18 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                     @NonNull
                     @Override
                     public ViewHolderListAdds onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manuka_ads_row_card, parent, false);
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manuka_ads_row, parent, false);
                         return new ViewHolderListAdds(view);
                     }
 
                     @Override
                     public void refresh() {
                         super.refresh();
-                        advertisementManager.getCount(advertisementManager.viewMyAddsAll());
+                        initView();
+                        swipeRefreshLayout.setRefreshing(false);
+                        advertisementManager.getCount(myPublishedAdsQuery);
+                        advertisementManager.getCount(myReviewingAdsQuery);
+                        advertisementManager.getCount(myRejectedAdsQuery);
                     }
 
                     @Override
@@ -256,9 +297,10 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                         super.onLoadingStateChanged(state);
                         switch (state) {
                             case LOADING_INITIAL:
+                                swipeRefreshLayout.setRefreshing(false);
                             case LOADING_MORE:
                                 // Do your loading animation
-                                swipeRefreshLayout.setRefreshing(true);
+                                swipeRefreshLayout.setRefreshing(false);
                                 break;
 
                             case LOADED:
@@ -268,6 +310,7 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
 
                             case FINISHED:
                                 swipeRefreshLayout.setRefreshing(false);
+                                progressBarRecycler.setVisibility(View.GONE);
                                 break;
 
                             case ERROR:
@@ -300,8 +343,22 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
             @Override
             public void onRefresh() {
                 firestorePagingAdapter.refresh();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == notReviewedAdsLayout) {
+            Intent intent = new Intent(getApplication(), PendingRejectedAds.class);
+            intent.putExtra(PendingRejectedAds.ADS_TYPE, PendingRejectedAds.NOT_REVIEWED);
+            startActivity(intent);
+        } else if (view == rejectedAdsLayout) {
+            Intent intent = new Intent(getApplication(), PendingRejectedAds.class);
+            intent.putExtra(PendingRejectedAds.ADS_TYPE, PendingRejectedAds.REJECTED);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -328,7 +385,9 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                 customErrorDialogs.showPermissionDeniedStorage();
             }
         }
-        advertisementManager.getCount(advertisementManager.viewMyAddsAll());
+
+        if (firestorePagingAdapter != null)
+            firestorePagingAdapter.refresh();
     }
 
     @Override
@@ -348,19 +407,49 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
                 customErrorDialogs.showPermissionDeniedStorage();
             }
         }
-        advertisementManager.getCount(advertisementManager.viewMyAddsAll());
+
+        if (firestorePagingAdapter != null)
+            firestorePagingAdapter.refresh();
     }
 
     @Override
     public void onAdCount(Task<QuerySnapshot> task) {
-        if (task.isSuccessful()) {
-            if (task.getResult().size() == 0) {
-                getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), new NoData()).commit();
-                getSupportActionBar().setSubtitle("No ads Posted ");
-                frameLayout.setVisibility(View.VISIBLE);
-            } else {
-                frameLayout.setVisibility(View.GONE);
-                getSupportActionBar().setSubtitle("Total ads: " + task.getResult().size());
+        if (task != null && task.isSuccessful()) {
+
+            Query taskQuery = task.getResult().getQuery();
+            int resultCount = task.getResult().size();
+
+            if (taskQuery.equals(myAllAdsQuery)) {
+                if (resultCount == 0) {
+                    getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), new NoData()).commit();
+                    getSupportActionBar().setSubtitle("No ads Posted ");
+                    frameLayout.setVisibility(View.VISIBLE);
+                } else {
+                    frameLayout.setVisibility(View.GONE);
+                    getSupportActionBar().setSubtitle("Total ads: " + task.getResult().size());
+                }
+            } else if (taskQuery.equals(myPublishedAdsQuery)) {
+                if (resultCount == 0) {
+                    publishedAdsLayout.setVisibility(View.GONE);
+                } else {
+                    publishedAdsLayout.setVisibility(View.VISIBLE);
+                    publishedAdsCount.setText(String.valueOf(resultCount));
+                }
+                progressBarMain.setVisibility(View.GONE);
+            } else if (taskQuery.equals(myRejectedAdsQuery)) {
+                if (resultCount == 0) {
+                    rejectedAdsLayout.setVisibility(View.GONE);
+                } else {
+                    rejectedAdsLayout.setVisibility(View.VISIBLE);
+                    rejectedAdsCount.setText(String.valueOf(resultCount));
+                }
+            } else if (taskQuery.equals(myReviewingAdsQuery)) {
+                if (resultCount == 0) {
+                    notReviewedAdsLayout.setVisibility(View.GONE);
+                } else {
+                    notReviewedAdsLayout.setVisibility(View.VISIBLE);
+                    reviewingAdsCount.setText(String.valueOf(resultCount));
+                }
             }
         }
     }
@@ -379,6 +468,14 @@ public class Myadds extends AppCompatActivity implements AdvertisementCallback {
     protected void onDestroy() {
         super.onDestroy();
         advertisementManager.destroy();
+    }
+
+    private void initView() {
+        progressBarMain.setVisibility(View.VISIBLE);
+        progressBarRecycler.setVisibility(View.VISIBLE);
+        publishedAdsLayout.setVisibility(View.GONE);
+        notReviewedAdsLayout.setVisibility(View.GONE);
+        rejectedAdsLayout.setVisibility(View.GONE);
     }
 
 }

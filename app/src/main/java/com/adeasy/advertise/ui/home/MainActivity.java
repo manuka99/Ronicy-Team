@@ -9,50 +9,31 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Filter;
-import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ViewModel.HomeViewModel;
-import com.adeasy.advertise.cloudMessaging.MyFirebaseMessagingService;
 import com.adeasy.advertise.cloudMessaging.ServerManagement;
-import com.adeasy.advertise.manager.SharedPreferencesManager;
 import com.adeasy.advertise.model.Category;
-import com.adeasy.advertise.ui.administration.home.DashboardHome;
 import com.adeasy.advertise.ui.newPost.NewAd;
-import com.adeasy.advertise.ui.profile.Profile;
 import com.adeasy.advertise.util.CommonConstants;
 import com.adeasy.advertise.util.CustomDialogs;
-import com.adeasy.advertise.util.InternetValidation;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.RequestConfiguration;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.RemoteMessage;
 import com.irfaan008.irbottomnavigation.SpaceItem;
 import com.irfaan008.irbottomnavigation.SpaceNavigationView;
 import com.irfaan008.irbottomnavigation.SpaceOnClickListener;
@@ -60,7 +41,6 @@ import com.irfaan008.irbottomnavigation.SpaceOnClickListener;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.logging.Logger;
 
 import static com.adeasy.advertise.util.CommonFunctions.md5;
 
@@ -82,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int LOCATION_PICKER_SEARCH = 7896;
 
     SpaceNavigationView spaceNavigationView;
-    BottomNavigationView bottomNavigationView;
 
     Toolbar toolbar;
     Home home;
@@ -133,8 +112,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Log.i(TAG, "Messaging token: " + new SharedPreferencesManager(getApplicationContext()).getCloudMessagingToken());
-
-
 
 
 //        try {
@@ -518,7 +495,6 @@ public class MainActivity extends AppCompatActivity {
             spaceNavigationView.changeCurrentItem(3);
     }
 
-
     private void handleCloudDialog() {
         String header = null, body = null, image = null;
 
@@ -535,4 +511,5 @@ public class MainActivity extends AppCompatActivity {
             customDialogs.showCloudDialog(header, body, image);
 
     }
+
 }

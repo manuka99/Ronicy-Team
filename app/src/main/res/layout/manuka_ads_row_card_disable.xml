@@ -6,6 +6,7 @@
     xmlns:card_view="http://schemas.android.com/tools"
     app:cardCornerRadius="@dimen/_12sdp"
     app:cardElevation="@dimen/_6sdp"
+    app:cardBackgroundColor="@color/baseline_color_grey"
     app:cardUseCompatPadding="true">
 
     <!-- Manuka -->

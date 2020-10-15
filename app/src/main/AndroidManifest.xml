@@ -32,6 +32,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustPan">
+        <activity android:name=".ui.advertisement.PendingRejectedAds"></activity>
         <activity android:name=".ui.Promotion.PromotionHistory" />
         <activity android:name=".ui.Promotion.PaymentMade" />
         <activity android:name=".ui.Promotion.Payment" />
