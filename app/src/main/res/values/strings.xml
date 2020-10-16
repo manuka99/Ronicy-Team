@@ -516,6 +516,11 @@
     <string name="enter_description">Enter description</string>
     <string name="save_update">Save/update</string>
 
+    <string name="is_there_something_wrong_with_this_ad">Is there something wrong with this ad?</string>
+    <string name="please_send_us_a_report_if_you_believe_there_is_a_problem_with_this_ad">Please send us a report if you believe there is a problem with this ad.</string>
+    <string name="message">Message</string>
+    <string name="send_report">Send report</string>
+
 
     <!-- Ravindu -->
 

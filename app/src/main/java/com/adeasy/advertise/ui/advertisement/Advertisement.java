@@ -93,7 +93,7 @@ import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERM
  **/
 public class Advertisement extends AppCompatActivity implements AdvertisementCallback, CategoryCallback, PromotionCallback, View.OnClickListener {
 
-    TextView AdTitle, AdCondition, AdDescription, AdPrice, adTime, adCatName, location;
+    TextView AdTitle, AdCondition, AdDescription, AdPrice, adTime, adCatName, location, reportAd;
     SliderView sliderView;
     AdvertisementSliderAdapter advertisementSliderAdapter;
     String adID, adCID;
@@ -159,6 +159,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
         customDialogs = new CustomDialogs(this);
 
+        reportAd = findViewById(R.id.reportAd);
         progressBar = findViewById(R.id.progressBar);
         progressBarSimilarAds = findViewById(R.id.progressBarSimilarAds);
         adLayout = findViewById(R.id.adLayout);
@@ -187,6 +188,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         callText = findViewById(R.id.adCallNow);
         adBuyNow = findViewById(R.id.adBuyNow);
         adBuyNow.setOnClickListener(this);
+        reportAd.setOnClickListener(this);
         startPromotion.setOnClickListener(this);
 
         if (getIntent().hasExtra(ADVERTISEMENTID))
@@ -421,13 +423,18 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
 
         if (view == chatText) {
 
-
         } else if (view == callText)
             callAdCustomer();
         else if (view == adBuyNow)
             initBuyNow();
         else if (view == startPromotion)
             startPromoteAd();
+        else if (view == reportAd) {
+            Intent reportAdIntent = new Intent(context, ReportAd.class);
+            reportAdIntent.putExtra(ReportAd.AD_TITLE, advertisement.getTitle());
+            reportAdIntent.putExtra(ReportAd.AD_ID, advertisement.getId());
+            startActivity(reportAdIntent);
+        }
 
     }
 

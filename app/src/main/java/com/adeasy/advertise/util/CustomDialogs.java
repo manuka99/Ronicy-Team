@@ -242,7 +242,9 @@ public class CustomDialogs {
                 public void onClick(View view) {
                 }
             }).setActionTextColor(context.getResources().getColor(R.color.colorWhite));
-
+            View snackbarView = snackbar.getView();
+            TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+            textView.setMaxLines(5);
             snackbar.getView().setBackgroundColor(context.getResources().getColor(R.color.colorPrimaryDark));
             snackbar.show();
         }
