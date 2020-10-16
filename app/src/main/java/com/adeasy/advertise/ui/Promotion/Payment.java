@@ -56,6 +56,7 @@ import lk.payhere.androidsdk.PHMainActivity;
 import lk.payhere.androidsdk.PHResponse;
 import lk.payhere.androidsdk.model.InitRequest;
 import lk.payhere.androidsdk.model.StatusResponse;
+
 /**
  * Created by Manuka yasas,
  * University Sliit
@@ -319,7 +320,8 @@ public class Payment extends AppCompatActivity implements PromotionCallback, Vie
     private void convertToStringMap() {
         promosString = new HashMap<>();
         for (Integer key : promos.keySet()) {
-            promosString.put(String.valueOf(key), promos.get(key));
+            if (promos.get(key) > 0)
+                promosString.put(String.valueOf(key), promos.get(key));
         }
     }
 

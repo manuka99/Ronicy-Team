@@ -210,23 +210,23 @@ public class PromotionHistory extends AppCompatActivity implements PromotionCall
                     for (String promoType : promotion.getPromos().keySet()) {
 
                         if (promoType.equals(String.valueOf(Promotion.BUNDLE_AD))) {
-                            pendingPromosLayout.addView(bundleAdTextView("Bundle Ad Package added on " + promotion.getPlaceDate() + " for" + promotion.getPromos().get(promoType) + " days."));
+                            pendingPromosLayout.addView(bundleAdTextView("Bundle Ad Package added on " + promotion.getPlaceDate() + " for " + promotion.getPromos().get(promoType) + " days."));
                         }
 
                         if (promoType.equals(String.valueOf(Promotion.DAILY_BUMP_AD))) {
-                            pendingPromosLayout.addView(dailyAdTextView("Daily Boast Ad Package added on " + promotion.getPlaceDate() + " for" + promotion.getPromos().get(promoType) + " days."));
+                            pendingPromosLayout.addView(dailyAdTextView("Daily Boast Ad Package added on " + promotion.getPlaceDate() + " for " + promotion.getPromos().get(promoType) + " days."));
                         }
 
                         if (promoType.equals(String.valueOf(Promotion.TOP_AD))) {
-                            pendingPromosLayout.addView(topAdTextView("Top Ad Package added on " + promotion.getPlaceDate() + " for" + promotion.getPromos().get(promoType) + " days."));
+                            pendingPromosLayout.addView(topAdTextView("Top Ad Package added on " + promotion.getPlaceDate() + " for " + promotion.getPromos().get(promoType) + " days."));
                         }
 
                         if (promoType.equals(String.valueOf(Promotion.URGENT_AD))) {
-                            pendingPromosLayout.addView(urgentAdTextView("Urgent Ad Package added on " + promotion.getPlaceDate() + " for" + promotion.getPromos().get(promoType) + " days."));
+                            pendingPromosLayout.addView(urgentAdTextView("Urgent Ad Package added on " + promotion.getPlaceDate() + " for " + promotion.getPromos().get(promoType) + " days."));
                         }
 
                         if (promoType.equals(String.valueOf(Promotion.SPOTLIGHT_AD))) {
-                            pendingPromosLayout.addView(spotlightAdTextView("Spotlight Ad Package added on " + promotion.getPlaceDate() + " for" + promotion.getPromos().get(promoType) + " days."));
+                            pendingPromosLayout.addView(spotlightAdTextView("Spotlight Ad Package added on " + promotion.getPlaceDate() + " for " + promotion.getPromos().get(promoType) + " days."));
                         }
 
                     }
