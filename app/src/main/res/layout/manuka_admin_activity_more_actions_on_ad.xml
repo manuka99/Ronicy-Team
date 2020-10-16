@@ -407,7 +407,7 @@
             android:text="@string/delete"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_14sdp"></Button>
+            android:textSize="@dimen/_14sdp"/>
 
         <Button
             android:id="@+id/update"
@@ -420,7 +420,7 @@
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/_14sdp"
-            android:visibility="visible"></Button>
+            android:visibility="visible"/>
 
         <ProgressBar
             android:id="@+id/progressBar"

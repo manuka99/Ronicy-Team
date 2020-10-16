@@ -214,7 +214,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:gravity="center"
-                        android:text="You're All Caught Up"
+                        android:text="@string/you_re_all_caught_up"
                         android:textColor="@color/colorBlackText"
                         android:textSize="@dimen/_18sdp" />
 
@@ -224,7 +224,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
                         android:gravity="center"
-                        android:text="Refresh all ads"
+                        android:text="@string/refresh_all_ads"
                         android:textColor="@color/colorBlue"
                         android:textSize="@dimen/_14sdp"
                         android:textStyle="italic" />

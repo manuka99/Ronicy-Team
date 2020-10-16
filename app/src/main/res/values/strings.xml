@@ -246,7 +246,7 @@
     <string name="payment_status">Payment Status</string>
     <string name="my_chats">My chats</string>
     <string name="verification_code">Verification Code</string>
-    <string name="code_sent_successfully">Verification code sent sucessfully</string>
+    <string name="code_sent_successfully">Verification code sent successfully</string>
     <string name="enter_verify_code">Please enter the verification code</string>
     <string name="chack_phone_auth_credentials">Verification code was not sent. Please check your credentials</string>
     <string name="phone_code_time_up">An error occurred when validating, Try again</string>
@@ -285,12 +285,12 @@
     <string name="order_details">Order Details</string>
     <string name="confirm_delivered">Confirm Delivered</string>
     <string name="update">Update</string>
+    <string name="select_year">Select year...</string>
     <string name="search">Search</string>
     <string name="apply_filters">Apply filters</string>
-    <string name="online_payments">Online Payments</string>
-    <string name="cod_orders">COD Orders</string>
+
     <string name="note_these_orders">Note: These Orders are filtered considering the approval status and visibility of the advertisements are not considered.</string>
-    <string name="select_year">Select year...</string>
+
     <string name="this_data_will_represent_the_product_sales_of_the_particular_item_that_was_selected_also_if_the_product_price_changed_frequently_you_will_be_able_to_see_the_graphs_and_charts_based_on_the_price_vs_its_respective_sales">This data will represent the product sales of the particular item that was selected also if the product price changed frequently you will be able to see the graphs and charts based on the price vs its respective sales.</string>
     <string name="productid">ProductID</string>
     <string name="no_of_sales">No of sales</string>
@@ -401,6 +401,98 @@
         <item>Nawalpitiya</item>
     </string-array>
 
+    <string name="all_of_sri_lanka">All of Sri Lanka</string>
+    <string name="ads_pending_review">Ads pending review</string>
+    <string name="ads_pending_editing">Ads pending editing</string>
+    <string name="published_ads">Published ads</string>
+    <string name="you_have_ads_that_are_currently_being_reviewed">You have ads that are currently being reviewed.</string>
+    <string name="you_have_ads_that_need_to_be_edited_before_they_can_be_published">You have ads that need to be edited before they can be published.</string>
+    <string name="we_review_all_ads">* We review all ads manually before they go live. We will send a notification when we have reviewed and approved your ad. It usually takes about 4 working hours (Office hours 07 AM - 09 PM)</string>
+
+    <string name="you_re_all_caught_up">You\'re All Caught Up</string>
+    <string name="refresh_all_ads">Refresh all ads</string>
+    <string name="location">Location</string>
+    <string name="change_location">Change location</string>
+    <string name="promote_this_ad">Promote this ad</string>
+    <string name="report_this_ad">Report this ad</string>
+    <string name="manage_users">Manage Users</string>
+    <string name="categories">Categories</string>
+    <string name="manage_otp">Manage OTP</string>
+    <string name="advertisements">Advertisements</string>
+    <string name="get_in_touch">Get in touch</string>
+    <string name="manage_chats">Manage Chats</string>
+    <string name="filter_ads_by">Filter ads by:</string>
+    <string name="urgent">URGENT</string>
+    <string name="back_to_all_locatons">Back to All locatons</string>
+    <string name="promotion_id">Promotion ID:</string>
+    <string name="your_payment_has_been_completed">Your payment has been completed!</string>
+    <string name="we_will_contact_you_during_working_hours_to_approve_the_promotions_applied_and_the_payment_refer_the_email_sent_to_the_provided_email_address_at_checkout_for_the_promotion_id">We will contact you during working hours to approve the promotions applied and the payment. Refer the email sent to the provided email address at checkout for the Promotion ID.</string>
+    <string name="there_are_no_promotions_currently_applied_for_the_above_advertisement">There are no promotions currently applied for the above advertisement.</string>
+    <string name="currently_applied_promos">Currently Applied Promos</string>
+    <string name="currently_pending_promos">Currently Pending Promos</string>
+    <string name="there_are_no_pending_promotions_added_for_the_above_advertisement">There are no pending promotions added for the above advertisement.</string>
+    <string name="need_help_or_something_is_not_right">Need help or something is not right?</string>
+    <string name="make_your_ad_stand_out">Make your ad stand out!</string>
+    <string name="get_up_to_10x_more_responses_on_your_ads_by_applying_a_promotion">Get up to 10x more responses on your ads by applying a promotion</string>
+    <string name="select_one_or_more_options">Select one or more options</string>
+    <string name="please_note_that_it_can_take_up_to_4_hours_or_more_for_your_ad_to_be_published_keep_track_of_your_ad_through_my_ads">Please note that it can take up to 4 hours or more for your ad to be published. Keep track of your ad through My ads</string>
+    <string name="this_bar_graph_represent_approved_posted_advertisements_per_month_based_on_the_selected_year_visibility_of_the_advertisements_are_not_considered">This bar graph represent Approved posted advertisements per month based on the selected year. Visibility of the advertisements are not considered.</string>
+    <string name="this_pie_chart_represents_the_ad_types_from_the_approved_ads_on_the_selected_year_ad_types_such_live_hidden_and_buynow_are_only_considered">This Pie chart represents the Ad types from the approved ads on the selected year. Ad types such live, hidden and buynow are only considered.</string>
+    <string name="this_pie_chart_represent_the_ratio_between_approved_ads_and_rejected_ads_from_all_the_advertisements_posted_updated_on_the_selected_year">This Pie chart represent the ratio between Approved Ads and Rejected Ads from all the advertisements posted/updated on the selected year.</string>
+    <string name="this_pie_chart_represents_the_ad_types_from_the_rejected_ads_on_the_selected_year_ad_types_such_live_hidden_and_buynow_are_only_considered">This Pie chart represents the Ad types from the rejected ads on the selected year. Ad types such live, hidden and buynow are only considered.</string>
+    <string name="this_line_graph_represent_approved_posted_advertisements_per_month_based_on_the_selected_year_visibility_of_the_advertisements_are_not_considered">This Line graph represent Approved posted advertisements per month based on the selected year. Visibility of the advertisements are not considered.</string>
+    <string name="sales_analysis">Sales Analysis</string>
+    <string name="product_analysis">Product Analysis</string>
+    <string name="documentation">Documentation</string>
+    <string name="completed_orders">Completed Orders</string>
+    <string name="cancelled_orders">Cancelled Orders</string>
+    <string name="cod_orders">COD Orders</string>
+    <string name="online_payments">Online Payments</string>
+    <string name="recent_orders">Recent orders</string>
+    <string name="rs_1_500_00">Rs 1,500.00</string>
+    <string name="_15_days">15 days</string>
+    <string name="rs_1_000_00">Rs 1,000.00</string>
+    <string name="_7_days">7 days</string>
+    <string name="rs_500_00">Rs 500.00</string>
+    <string name="_3_days">3 days</string>
+    <string name="learn_more">Learn more</string>
+    <string name="get_a_fresh_start_every_day_and_gain_upto_5_times_or_more_views">Get a fresh start every day and gain upto 5 times or more views!</string>
+    <string name="from_rs_500_00">From Rs 500.00</string>
+    <string name="daily_bump_up">Daily Bump Up</string>
+    <string name="manage_orders">Manage Orders</string>
+    <string name="this_may_be_due_to_requesting_data_which_is_protected_or_may_be_there_is_no_such_data_if_you_think_this_is_by_mistake_please_contact_ronicy_lk_for_support_thank_you">This may be due to requesting data which is protected or may be there is no such data. If you think this is by mistake please contact Ronicy.lk for support. Thank you!</string>
+    <string name="ops_it_seems_like_there_is_no_data_found_please_try_again">Ops, It seems like there is no data found, please try again.</string>
+    <string name="ad_will_appear_higher_under_similar_ads">Ad will appear higher under Similar Ads.</string>
+    <string name="ad_will_appear_in_a_light_red_color_under_similar_ads">Ad will appear in a light red color under similar ads.</string>
+    <string name="from_rs_600_00">From Rs 600.00</string>
+    <string name="bundle_ad">Bundle Ad</string>
+    <string name="ad_will_be_promoted_as_urgent">Ad will be promoted as Urgent.</string>
+    <string name="rs_700_00">Rs 700.00</string>
+    <string name="rs_900_00">Rs 900.00</string>
+    <string name="rs_1_340_00">Rs 1,340.00</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="update_profile">Update profile</string>
+    <string name="personal_details">Personal details</string>
+    <string name="post_your_ad">Post your ad</string>
+    <string name="start_buying_and_selling">Start buying and selling!</string>
+    <string name="no_results">No results!</string>
+    <string name="selected_promotion_promotions_seems_to_be_invalid_or_may_not_be_available_at_the_moment">Selected promotion/promotions seems to be invalid or may not be available at the moment.</string>
+    <string name="change_password">Change password</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="new_password">New password</string>
+    <string name="spotlight">Spotlight</string>
+    <string name="from_rs_3_500_00">From Rs 3,500.00</string>
+    <string name="boast_sales_by_showing_your_ad_in_this_premium_shot">Boast sales by showing your ad in this premium shot.</string>
+    <string name="rs_5_000_00">Rs 5,000.00</string>
+    <string name="rs_7_000_00">Rs 7,000.00</string>
+    <string name="rs_1_400_00">Rs 1,400.00</string>
+    <string name="rs_600_00">Rs 600.00</string>
+    <string name="get_up_to_10_times_or_more_views_by_displaying_your_ad_at_the_top">Get up to 10 times or more views by displaying your ad at the top</string>
+    <string name="from_rs_400_00">From Rs 400.00</string>
+    <string name="stand_out_from_the_rest_by_showing_a_bright_red_marker_on_the_ad">Stand out from the rest by showing a bright red marker on the ad.</string>
+    <string name="rs_400_00">Rs 400.00</string>
+
     <!-- Divya -->
 
     <!-- wishlist.xml-->
@@ -412,11 +504,17 @@
     <string name="title"> Presonal Notes </string>
     <string name="checkbox"> Contacted Salesman </string>
     <string name="Personal_Note"> Your personal Note...... </string>
-    <string name="Appoinmet"> If You Place an Appoinment with claient Enter Details </string>
+    <string name="Appoinmet"> If you place an appointment with client Enter Details </string>
     <string name="date"> Date </string>
     <string name="time"> Time </string>
     <string name="btn"> Edit </string>
     <string name="favourites">Favourites</string>
+
+
+    <string name="internal_error_fav">Internal error occurred, refresh again</string>
+    <string name="you_can_save_here_the_important_details_you_discussed_with_the_owner_seller_of_this_advertisement_and_there_will_be_a_log_of_the_contacts_you_made_below">You can save here the important details you discussed with the owner/seller of this advertisement and there will be a log of the contacts you made below.</string>
+    <string name="enter_description">Enter description</string>
+    <string name="save_update">Save/update</string>
 
 
     <!-- Ravindu -->
@@ -483,14 +581,7 @@
     <string name="ravindu_fixedBugsStr">Fixed Bugs</string>
     <string name="ravindu_pendingBugsStr">Pending Bugs</string>
     <string name="ravindu_bugIdStr">BugID</string>
-    <string name="all_of_sri_lanka">All of Sri Lanka</string>
-    <string name="ads_pending_review">Ads pending review</string>
-    <string name="ads_pending_editing">Ads pending editing</string>
-    <string name="published_ads">Published ads</string>
-    <string name="you_have_ads_that_are_currently_being_reviewed">You have ads that are currently being reviewed.</string>
-    <string name="you_have_ads_that_need_to_be_edited_before_they_can_be_published">You have ads that need to be edited before they can be published.</string>
-    <string name="we_review_all_ads">* We review all ads manually before they go live. We will send a notification when we have reviewed and approved your ad. It usually takes about 4 working hours (Office hours 07 AM - 09 PM)</string>
-    <string name="internal_error_fav">Internal error occured, refresh again</string>
 
     <!-- Ashan -->
+
 </resources>

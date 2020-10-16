@@ -75,7 +75,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Filter ads by:"
+            android:text="@string/filter_ads_by"
             android:textSize="@dimen/_14sdp" />
 
         <LinearLayout
@@ -99,7 +99,7 @@
                 android:layout_marginStart="@dimen/_2sdp"
                 android:background="@color/colorDangerDark"
                 android:padding="@dimen/_4sdp"
-                android:text="URGENT"
+                android:text="@string/urgent"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_10sdp"
                 android:textStyle="bold" />

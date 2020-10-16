@@ -46,7 +46,7 @@
                         android:clickable="true"
                         android:enabled="true"
                         android:focusableInTouchMode="false"
-                        android:hint="Select year..."
+                        android:hint="@string/select_year"
                         android:inputType="number"
                         android:textColorHint="@color/colorBlue"
                         android:textCursorDrawable="@drawable/blue_cursur"
@@ -63,7 +63,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="0.8"
                     android:background="@drawable/button_round_fb"
-                    android:text="Update"
+                    android:text="@string/update"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/_10sdp"
                     android:visibility="visible" />
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_12sdp"
-                android:text="This bar graph represent Approved posted advertisements per month based on the selected year. Visibility of the advertisements are not considered."
+                android:text="@string/this_bar_graph_represent_approved_posted_advertisements_per_month_based_on_the_selected_year_visibility_of_the_advertisements_are_not_considered"
                 android:textSize="@dimen/_10sdp"
                 android:textStyle="italic" />
 
@@ -129,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_14sdp"
-                android:text="This Pie chart represent the ratio between Approved Ads and Rejected Ads from all the advertisements posted/updated on the selected year."
+                android:text="@string/this_pie_chart_represent_the_ratio_between_approved_ads_and_rejected_ads_from_all_the_advertisements_posted_updated_on_the_selected_year"
                 android:textSize="@dimen/_10sdp"
                 android:textStyle="italic" />
 
@@ -155,7 +155,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_14sdp"
-                android:text="This Pie chart represents the Ad types from the approved ads on the selected year. Ad types such live, hidden and buynow are only considered."
+                android:text="@string/this_pie_chart_represents_the_ad_types_from_the_approved_ads_on_the_selected_year_ad_types_such_live_hidden_and_buynow_are_only_considered"
                 android:textSize="@dimen/_10sdp"
                 android:textStyle="italic" />
 
@@ -181,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_14sdp"
-                android:text="This Pie chart represents the Ad types from the rejected ads on the selected year. Ad types such live, hidden and buynow are only considered."
+                android:text="@string/this_pie_chart_represents_the_ad_types_from_the_rejected_ads_on_the_selected_year_ad_types_such_live_hidden_and_buynow_are_only_considered"
                 android:textSize="@dimen/_10sdp"
                 android:textStyle="italic" />
 
@@ -207,7 +207,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_14sdp"
-                android:text="This Line graph represent Approved posted advertisements per month based on the selected year. Visibility of the advertisements are not considered."
+                android:text="@string/this_line_graph_represent_approved_posted_advertisements_per_month_based_on_the_selected_year_visibility_of_the_advertisements_are_not_considered"
                 android:textSize="@dimen/_10sdp"
                 android:textStyle="italic" />
 

@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="No results! "
+            android:text="@string/no_results"
             android:textColor="@color/colorBlackText"
             android:textSize="@dimen/_16sdp" />
 
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Start buying and selling!"
+            android:text="@string/start_buying_and_selling"
             android:textSize="@dimen/_14sdp"
             android:textStyle="italic" />
 
@@ -53,7 +53,7 @@
             android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
             android:drawableTint="@color/mainUiColour"
             android:padding="@dimen/_10sdp"
-            android:text="Go to all ads"
+            android:text="@string/go_to_all_ads"
             android:textColor="@color/mainUiColour"
             android:textSize="@dimen/_14sdp"
             android:textStyle="italic" />
@@ -65,7 +65,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@color/colorWarningDark"
             android:padding="@dimen/_8sdp"
-            android:text="Post your ad"
+            android:text="@string/post_your_ad"
             android:textColor="#613D0D"
             android:textSize="@dimen/_16sdp"
             android:textStyle="bold" />

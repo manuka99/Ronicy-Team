@@ -294,7 +294,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
     }
 
     private void displayDialogUnlinkFb() {
-        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+       new AlertDialog.Builder(getActivity())
 
                 .setMessage("Are you sure you want to unlink from facebook?")
 

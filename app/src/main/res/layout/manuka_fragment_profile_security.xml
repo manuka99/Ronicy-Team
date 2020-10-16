@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Change password"
+        android:text="@string/change_password"
         android:textColor="@color/colorBlackText"
         android:textSize="@dimen/_12sdp"
         android:textStyle="bold" />
@@ -55,7 +55,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="New password"
+            android:hint="@string/new_password"
             android:inputType="textPassword"
             android:textColorHint="@color/colorBlue"
             android:textCursorDrawable="@drawable/blue_cursur"
@@ -74,7 +74,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Repeat password"
+            android:hint="@string/repeat_password"
             android:inputType="textPassword"
             android:textColorHint="@color/colorBlue"
             android:textCursorDrawable="@drawable/blue_cursur"
@@ -100,7 +100,7 @@
         android:layout_height="@dimen/_32sdp"
         android:layout_marginTop="@dimen/_6sdp"
         android:background="@drawable/button_round_fb"
-        android:text="Change password"
+        android:text="@string/change_password"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_14sdp"

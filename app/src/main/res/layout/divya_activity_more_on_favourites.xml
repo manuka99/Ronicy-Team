@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_14sdp"
-            android:text="You can save here the important details you discussed with the owner/seller of this advertisement and there will be a log of the contacts you made below."
+            android:text="@string/you_can_save_here_the_important_details_you_discussed_with_the_owner_seller_of_this_advertisement_and_there_will_be_a_log_of_the_contacts_you_made_below"
             android:textSize="@dimen/_12sdp" />
 
         <EditText
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12sdp"
-            android:hint="Enter description"
+            android:hint="@string/enter_description"
             android:inputType="textMultiLine"
             android:textColor="@color/colorBlackText"
             android:textSize="@dimen/_14sdp" />
@@ -57,7 +57,7 @@
             android:layout_marginTop="@dimen/_8sdp"
             android:background="@drawable/button_round_fb"
             android:padding="@dimen/_4sdp"
-            android:text="Save/update"
+            android:text="@string/save_update"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/_12sdp" />
 

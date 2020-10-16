@@ -10,7 +10,7 @@ tools:context=".ui.editAd.EditAd">
 
 <include
     android:id="@+id/toolbar"
-    layout="@layout/toolbar"></include>
+    layout="@layout/toolbar"/>
 <!-- Manuka -->
 
 <androidx.core.widget.NestedScrollView

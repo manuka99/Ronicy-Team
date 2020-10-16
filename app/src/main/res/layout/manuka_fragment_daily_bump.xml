@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:buttonTint="@color/mainUiColour"
-                    android:text="3 days"
+                    android:text="@string/_3_days"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="Rs 500.00"
+                    android:text="@string/rs_500_00"
                     android:textColor="@color/colorGreenDark"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
@@ -147,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:buttonTint="@color/mainUiColour"
-                    android:text="7 days"
+                    android:text="@string/_7_days"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -155,7 +155,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="Rs 1,000.00"
+                    android:text="@string/rs_1_000_00"
                     android:textColor="@color/colorGreenDark"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
@@ -176,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:buttonTint="@color/mainUiColour"
-                    android:text="15 days"
+                    android:text="@string/_15_days"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -184,7 +184,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="Rs 1,500.00"
+                    android:text="@string/rs_1_500_00"
                     android:textColor="@color/colorGreenDark"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />

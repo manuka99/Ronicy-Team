@@ -38,7 +38,7 @@
         android:fontFamily="serif"
         android:paddingStart="@dimen/_12sdp"
         android:paddingEnd="@dimen/_12sdp"
-        android:text="Please note that it can take up to 4 hours or more for your ad to be published. Keep track of your ad through My ads"
+        android:text="@string/please_note_that_it_can_take_up_to_4_hours_or_more_for_your_ad_to_be_published_keep_track_of_your_ad_through_my_ads"
         android:textAlignment="center"
         android:textSize="@dimen/_12sdp" />
 

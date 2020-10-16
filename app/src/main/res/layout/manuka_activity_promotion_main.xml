@@ -44,7 +44,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Make your ad stand out!"
+                    android:text="@string/make_your_ad_stand_out"
                     android:textColor="@color/colorBlackText"
                     android:textSize="@dimen/_18sdp"
                     android:textStyle="bold" />
@@ -53,7 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:text="Get up to 10x more responses on your ads by applying a promotion"
+                    android:text="@string/get_up_to_10x_more_responses_on_your_ads_by_applying_a_promotion"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
-                    android:text="Select one or more options"
+                    android:text="@string/select_one_or_more_options"
                     android:textSize="@dimen/_12sdp" />
 
                 <LinearLayout

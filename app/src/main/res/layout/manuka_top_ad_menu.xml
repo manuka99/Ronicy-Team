@@ -73,7 +73,6 @@
             android:layout_marginEnd="@dimen/_2sdp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="ABCD"
             android:textColor="@color/colorGreen"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
@@ -88,7 +87,6 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:fontFamily="sans-serif-medium"
             android:gravity="start"
-            android:text="ABCD"
             android:textSize="@dimen/_8sdp" />
 
         <LinearLayout

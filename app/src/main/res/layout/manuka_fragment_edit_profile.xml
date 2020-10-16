@@ -16,7 +16,7 @@
         android:textStyle="bold"
         android:textSize="@dimen/_12sdp"
         android:textColor="@color/colorBlackText"
-        android:text="Personal details" />
+        android:text="@string/personal_details" />
 
     <TextView
         android:layout_marginTop="@dimen/_10sdp"
@@ -139,12 +139,12 @@
             android:buttonTint="@color/colorBlue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Male" />
+            android:text="@string/male" />
         <RadioButton android:id="@+id/radio_female"
             android:buttonTint="@color/colorBlue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Female" />
+            android:text="@string/female" />
     </RadioGroup>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -206,7 +206,7 @@
         android:layout_marginTop="@dimen/_14sdp"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_14sdp"
-        android:text="Update profile"
+        android:text="@string/update_profile"
         android:textStyle="bold"
         android:background="@drawable/button_round_fb"
         android:layout_width="match_parent"

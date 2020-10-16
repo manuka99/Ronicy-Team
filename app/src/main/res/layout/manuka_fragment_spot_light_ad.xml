@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="start"
-                        android:text="Spotlight"
+                        android:text="@string/spotlight"
                         android:textColor="@color/colorBlackText"
                         android:textSize="@dimen/_13sdp"
                         android:textStyle="bold" />
@@ -69,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"
-                        android:text="From Rs 3,500.00"
+                        android:text="@string/from_rs_3_500_00"
                         android:textColor="@color/colorBlackText"
                         android:textSize="@dimen/_11sdp" />
 
@@ -80,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:gravity="start"
-                    android:text="Boast sales by showing your ad in this premium shot."
+                    android:text="@string/boast_sales_by_showing_your_ad_in_this_premium_shot"
                     android:textColor="@color/colorBlackText"
                     android:textSize="@dimen/_12sdp" />
 
@@ -89,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"
                     android:gravity="start"
-                    android:text="Learn more"
+                    android:text="@string/learn_more"
                     android:textColor="@color/com_facebook_blue"
                     android:textSize="@dimen/_12sdp" />
 
@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:buttonTint="@color/mainUiColour"
-                    android:text="3 days"
+                    android:text="@string/_3_days"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -155,7 +155,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="Rs 5,000.00"
+                    android:text="@string/rs_5_000_00"
                     android:textColor="@color/colorGreenDark"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
@@ -176,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:buttonTint="@color/mainUiColour"
-                    android:text="15 days"
+                    android:text="@string/_15_days"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -184,7 +184,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="Rs 7,000.00"
+                    android:text="@string/rs_7_000_00"
                     android:textColor="@color/colorGreenDark"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />

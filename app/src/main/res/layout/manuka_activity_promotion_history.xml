@@ -143,7 +143,7 @@
                                 android:paddingStart="@dimen/_12sdp"
                                 android:paddingTop="@dimen/_16sdp"
                                 android:paddingEnd="@dimen/_12sdp"
-                                android:text="Currently Applied Promos"
+                                android:text="@string/currently_applied_promos"
                                 android:textColor="@color/colorBlackText"
                                 android:textSize="@dimen/_12sdp"
                                 android:textStyle="bold" />
@@ -159,7 +159,7 @@
                                 android:paddingTop="@dimen/_16sdp"
                                 android:paddingEnd="@dimen/_12sdp"
                                 android:paddingBottom="@dimen/_16sdp"
-                                android:text="There are no promotions currently applied for the above advertisement."
+                                android:text="@string/there_are_no_promotions_currently_applied_for_the_above_advertisement"
                                 android:textSize="@dimen/_12sdp" />
 
                             <ProgressBar
@@ -193,7 +193,7 @@
                                 android:paddingStart="@dimen/_12sdp"
                                 android:paddingTop="@dimen/_16sdp"
                                 android:paddingEnd="@dimen/_12sdp"
-                                android:text="Currently Pending Promos"
+                                android:text="@string/currently_pending_promos"
                                 android:textColor="@color/colorBlackText"
                                 android:textSize="@dimen/_12sdp"
                                 android:textStyle="bold" />
@@ -209,7 +209,7 @@
                                 android:paddingTop="@dimen/_16sdp"
                                 android:paddingEnd="@dimen/_12sdp"
                                 android:paddingBottom="@dimen/_16sdp"
-                                android:text="There are no pending promotions added for the above advertisement."
+                                android:text="@string/there_are_no_pending_promotions_added_for_the_above_advertisement"
                                 android:textSize="@dimen/_12sdp" />
 
                             <ProgressBar
@@ -234,7 +234,7 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_14sdp"
                     android:fontFamily="serif"
-                    android:text="Need help or something is not right?"
+                    android:text="@string/need_help_or_something_is_not_right"
                     android:textAlignment="center"
                     android:textSize="@dimen/_12sdp" />
 

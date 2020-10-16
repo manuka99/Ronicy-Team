@@ -58,7 +58,7 @@
                         android:layout_marginStart="@dimen/_4sdp"
                         android:gravity="start"
                         android:drawableEnd="@drawable/ic_baseline_info_24_bundle"
-                        android:text="Bundle Ad"
+                        android:text="@string/bundle_ad"
                         android:textColor="@color/colorBlackText"
                         android:textSize="@dimen/_13sdp"
                         android:textStyle="bold" />
@@ -67,7 +67,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="end"
-                        android:text="From Rs 600.00"
+                        android:text="@string/from_rs_600_00"
                         android:textColor="@color/colorBlackText"
                         android:textSize="@dimen/_11sdp" />
 
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
                     android:gravity="start"
-                    android:text="Ad will be promoted as Urgent."
+                    android:text="@string/ad_will_be_promoted_as_urgent"
                     android:textColor="@color/colorBlackText"
                     android:textSize="@dimen/_12sdp" />
 
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:gravity="start"
-                    android:text="Ad will appear higher under Similar Ads."
+                    android:text="@string/ad_will_appear_higher_under_similar_ads"
                     android:textColor="@color/colorBlackText"
                     android:textSize="@dimen/_12sdp" />
 
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:gravity="start"
-                    android:text="Ad will appear in a light red color under similar ads."
+                    android:text="@string/ad_will_appear_in_a_light_red_color_under_similar_ads"
                     android:textColor="@color/colorBlackText"
                     android:textSize="@dimen/_12sdp" />
 
@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"
                     android:gravity="start"
-                    android:text="Learn more"
+                    android:text="@string/learn_more"
                     android:textColor="@color/com_facebook_blue"
                     android:textSize="@dimen/_12sdp" />
 
@@ -134,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:buttonTint="@color/mainUiColour"
-                    android:text="3 days"
+                    android:text="@string/_3_days"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -142,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="Rs 700.00"
+                    android:text="@string/rs_700_00"
                     android:textColor="@color/colorGreenDark"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
@@ -163,7 +163,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:buttonTint="@color/mainUiColour"
-                    android:text="7 days"
+                    android:text="@string/_7_days"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -171,7 +171,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="Rs 900.00"
+                    android:text="@string/rs_900_00"
                     android:textColor="@color/colorGreenDark"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
@@ -192,7 +192,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:buttonTint="@color/mainUiColour"
-                    android:text="15 days"
+                    android:text="@string/_15_days"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -200,7 +200,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="Rs 1,340.00"
+                    android:text="@string/rs_1_340_00"
                     android:textColor="@color/colorGreenDark"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />

@@ -286,12 +286,13 @@
                             android:paddingTop="@dimen/_4sdp"
                             android:paddingEnd="@dimen/_80sdp"
                             android:paddingBottom="@dimen/_4sdp"
-                            android:text="Promote this ad"
+                            android:text="@string/promote_this_ad"
                             android:textAllCaps="false"
                             android:textColor="@color/brownRed"
                             android:textSize="@dimen/_12sdp" />
 
                         <TextView
+                            android:id="@+id/reportAd"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
@@ -301,7 +302,7 @@
                             android:gravity="center_vertical"
                             android:paddingStart="@dimen/_76sdp"
                             android:paddingEnd="@dimen/_76sdp"
-                            android:text="Report this ad"
+                            android:text="@string/report_this_ad"
                             android:textSize="@dimen/_12sdp" />
 
                         <View

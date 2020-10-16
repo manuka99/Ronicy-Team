@@ -33,7 +33,7 @@
             android:layout_alignParentStart="false"
             android:layout_alignParentLeft="false"
             android:layout_alignParentEnd="true"
-            android:text="Ops, It seems like there is no data found, please try again."
+            android:text="@string/ops_it_seems_like_there_is_no_data_found_please_try_again"
             android:textColor="@color/colorBlackText"
             android:textSize="@dimen/_10sdp"
             android:textStyle="italic|bold" />
@@ -47,7 +47,7 @@
             android:layout_alignParentLeft="false"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/_12sdp"
-            android:text="This may be due to requesting data which is protected or may be there is no such data. If you think this is by mistake please contact Ronicy.lk for support. Thank you!"
+            android:text="@string/this_may_be_due_to_requesting_data_which_is_protected_or_may_be_there_is_no_such_data_if_you_think_this_is_by_mistake_please_contact_ronicy_lk_for_support_thank_you"
             android:textColor="@color/colorBlackText"
             android:textSize="@dimen/_10sdp"
             android:textStyle="italic" />

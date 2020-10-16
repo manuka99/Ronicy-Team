@@ -59,7 +59,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.8"
                 android:background="@drawable/button_round_fb"
-                android:text="Update"
+                android:text="@string/update"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_10sdp"
                 android:visibility="visible" />

@@ -110,7 +110,7 @@
             android:paddingTop="@dimen/_16sdp"
             android:paddingEnd="@dimen/_12sdp"
             android:paddingBottom="@dimen/_16sdp"
-            android:text="Selected promotion/promotions seems to be invalid or may not be available at the moment."
+            android:text="@string/selected_promotion_promotions_seems_to_be_invalid_or_may_not_be_available_at_the_moment"
             android:textSize="@dimen/_12sdp" />
 
         <View

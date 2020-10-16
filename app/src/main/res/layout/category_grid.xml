@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textAlignment="center"
-                android:textSize="@dimen/_10sdp"></TextView>
+                android:textSize="@dimen/_10sdp"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

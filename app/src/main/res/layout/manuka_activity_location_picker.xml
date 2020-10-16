@@ -46,7 +46,7 @@
                 android:drawableTint="@color/colorGreyBtn"
                 android:drawablePadding="@dimen/_8sdp"
                 android:padding="@dimen/_16sdp"
-                android:text="Back to All locatons"
+                android:text="@string/back_to_all_locatons"
                 android:textColor="@color/colorGreyBtn"
                 android:textSize="@dimen/_14sdp" />
 
@@ -58,7 +58,7 @@
                 android:gravity="center_vertical"
                 android:drawablePadding="@dimen/_8sdp"
                 android:padding="@dimen/_16sdp"
-                android:text="Back to All locatons"
+                android:text="@string/back_to_all_locatons"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_14sdp" />
 

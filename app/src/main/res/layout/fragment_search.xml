@@ -25,7 +25,7 @@
             android:drawablePadding="@dimen/_4sdp"
             android:textColor="@color/colorBlackText"
             android:drawableStart="@drawable/ic_baseline_location_on_24"
-            android:text="Location"
+            android:text="@string/location"
             android:textSize="@dimen/_12sdp" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:text="Change location"
+            android:text="@string/change_location"
             android:textColor="@color/colorBlue" />
 
     </RelativeLayout>

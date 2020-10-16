@@ -78,7 +78,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Advertisements" />
+                        android:text="@string/advertisements" />
 
                 </LinearLayout>
 
@@ -110,7 +110,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Manage Orders" />
+                        android:text="@string/manage_orders" />
                 </LinearLayout>
 
 
@@ -141,7 +141,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Favourites" />
+                        android:text="@string/favourites" />
                 </LinearLayout>
 
 
@@ -171,7 +171,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Manage Chats" />
+                        android:text="@string/manage_chats" />
                 </LinearLayout>
 
 
@@ -202,7 +202,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Get in touch" />
+                        android:text="@string/get_in_touch" />
                 </LinearLayout>
 
 
@@ -233,7 +233,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Manage Users" />
+                        android:text="@string/manage_users" />
                 </LinearLayout>
 
 
@@ -264,7 +264,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Categories" />
+                        android:text="@string/categories" />
                 </LinearLayout>
 
 
@@ -295,7 +295,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Manage OTP" />
+                        android:text="@string/manage_otp" />
                 </LinearLayout>
 
 
