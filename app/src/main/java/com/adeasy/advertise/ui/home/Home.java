@@ -125,7 +125,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     private static final int CATEGORY_PICKER = 4662;
     private static final int FILTER_PICKER = 8825;
 
-    public static final int ITEM_PER_AD_USED = 0;
+    public int ITEM_PER_AD_USED = 0;
     public static final int ITEM_PER_AD_1 = 8;
     public static final int ITEM_PER_AD_2 = 7;
     public static final int ITEM_PER_AD_3 = 11;
@@ -151,6 +151,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     LinearLayout adsFinishedView;
     TextView refreshAdsView;
     Boolean noResults = false;
+    StaggeredGridLayoutManager staggeredGridLayoutManager;
 
     public Home() {
         // Required empty public constructor
@@ -202,7 +203,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
         recyclerView.setNestedScrollingEnabled(false);
         adMenuRecyclerHorizontalView.setNestedScrollingEnabled(false);
 
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, 1) {
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, 1) {
             @Override
             public boolean canScrollHorizontally() {
                 return false;
@@ -310,9 +311,10 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                         }
                     }
 
+                    int visibleCount = staggeredGridLayoutManager.getChildCount();
+                    int totalCount = staggeredGridLayoutManager.getItemCount();
+
                     if (scrollY > oldScrollY) {
-                        if (!loadingAdsTask)
-                            loadTopAndRegularAds();
 
                         if (!isHeaderHidden) {
                             Log.i(TAG, "Scroll DOWN");
@@ -340,6 +342,8 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                         //Log.i(TAG, "BOTTOM SCROLL");
 //                        mSwipeRefreshLayout.setRefreshing(true);
 //                        loadTopAndRegularAds();
+                        if (!loadingAdsTask)
+                            loadTopAndRegularAds();
                     }
                 }
             });
@@ -440,7 +444,8 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
     }
 
     private void loadRegularAds() {
-        finalNewQuery = query.limit(getQueryLimitVlueForRegularAds());
+        final int queryLimit = getQueryLimitVlueForRegularAds();
+        finalNewQuery = query.limit(queryLimit);
 
         if (lastDoc == null)
             advertisementManager.getCount(query);
@@ -467,6 +472,7 @@ public class Home extends Fragment implements AdvertisementCallback, Advertismen
                             adsFinishedView.setVisibility(View.VISIBLE);
                     }
                 }
+                ITEM_PER_AD_USED = queryLimit;
                 loadingAdsTask = false;
             }
         });

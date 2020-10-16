@@ -110,7 +110,7 @@ public class RecyclerAdapterPublicFeed extends RecyclerView.Adapter<RecyclerView
                     viewHolderAdds.imageView.setRatio(imageRatio);
                     imageRatio += 0.1f;
 
-                    Picasso.get().load(advertisement.getImageUrls().get(0)).into(viewHolderAdds.imageView);
+                    Picasso.get().load(advertisement.getImageUrls().get(0)).fit().centerCrop().into(viewHolderAdds.imageView);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -185,8 +185,12 @@ public class RecyclerAdapterPublicFeed extends RecyclerView.Adapter<RecyclerView
 
     public void setObjects(List<Object> objects) {
         int start = getItemCount();
-        this.objects.addAll(start, objects);
-        notifyItemRangeInserted(start, start + objects.size());
+        this.objects.addAll(objects);
+        Log.i(TAG, "asasasasass " + start + objects.size());
+        Log.i(TAG, "asasasasass " + start );
+        Log.i(TAG, "asasasasass " + objects.size());
+
+        notifyItemRangeChanged(start, objects.size());
     }
 
     public void resetObjects() {
