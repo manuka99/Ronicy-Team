@@ -51,20 +51,7 @@ public class DeleteBugActivity extends AppCompatActivity {
         TVBugId.setText(bugId);
         TVdescription.setText(description);
 
-        //dbref = FirebaseDatabase.getInstance().getReference().child("Bug").child(bugId);
 
-        /*dbref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                TVBugId.setText(dataSnapshot.child("bugId").getValue().toString());
-                TVdescription.setText(dataSnapshot.child("description").getValue().toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,38 +98,7 @@ public class DeleteBugActivity extends AppCompatActivity {
                 });
 
 
-                /*delref.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                       if(dataSnapshot.hasChild(bugId)){
-                            /*dbref = FirebaseDatabase.getInstance().getReference().child("Bug").child(bugId);
-                            dbref.removeValue();*/
 
-                           /*Log.i("mylog","in delete bug activity in on data change");
-
-                            dataSnapshot.child(bugId).getRef().removeValue(); //this was added later removing using snapshot
-                           Log.i("mylog","in delete bug activity bug deleted");
-                            Toast.makeText(getApplicationContext(),"Bug report deleted succesfully",Toast.LENGTH_SHORT).show();
-
-                            Intent intent = new Intent(DeleteBugActivity.this, MainActivity.class);
-
-                            Log.i("mylog","in delete bug activity new intent created");
-                            //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                            finish();
-
-                        }
-                        else{
-                            Toast.makeText(getApplicationContext(),"No source to delete",Toast.LENGTH_SHORT).show();
-                            Log.i("mylog","in delete bug activity no source to delete");
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });*/
 
             }
         });
