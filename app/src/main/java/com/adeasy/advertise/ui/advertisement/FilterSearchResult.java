@@ -15,7 +15,11 @@ import com.adeasy.advertise.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class FilterSearchResult extends AppCompatActivity implements View.OnClickListener {
 
     Toolbar toolbar;

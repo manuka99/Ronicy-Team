@@ -33,10 +33,10 @@ import com.squareup.picasso.Picasso;
 import java.util.Map;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link PromoBody#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class PromoBody extends Fragment implements AdvertisementCallback, CategoryCallback {
 
     // TODO: Rename parameter arguments, choose names that match

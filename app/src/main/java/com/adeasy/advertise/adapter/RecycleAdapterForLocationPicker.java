@@ -15,7 +15,11 @@ import com.adeasy.advertise.helper.ViewHolderLocation;
 
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class RecycleAdapterForLocationPicker extends RecyclerView.Adapter<ViewHolderLocation> {
 
     private List<String> locationList;

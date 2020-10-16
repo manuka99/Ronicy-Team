@@ -19,7 +19,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.mail.Store;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class LocationPicker extends AppCompatActivity implements RecycleAdapterForLocationPicker.ContactActivityInterface {
 
     TextView all_locations, backToAllLocations, mainDistrict;

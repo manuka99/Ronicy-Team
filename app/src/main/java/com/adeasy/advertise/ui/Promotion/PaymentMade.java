@@ -13,7 +13,11 @@ import com.adeasy.advertise.ViewModel.PromotionsViewModel;
 
 import java.io.Serializable;
 import java.util.Map;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class PaymentMade extends AppCompatActivity {
 
     private static final String PROMOS_ADDED = "promos_added";

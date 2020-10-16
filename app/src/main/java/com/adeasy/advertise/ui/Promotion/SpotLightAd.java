@@ -21,12 +21,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import worker8.com.github.radiogroupplus.RadioGroupPlus;
-
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link SpotLightAd#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class SpotLightAd extends Fragment implements View.OnClickListener{
 
     // TODO: Rename parameter arguments, choose names that match

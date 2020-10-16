@@ -56,7 +56,11 @@ import lk.payhere.androidsdk.PHMainActivity;
 import lk.payhere.androidsdk.PHResponse;
 import lk.payhere.androidsdk.model.InitRequest;
 import lk.payhere.androidsdk.model.StatusResponse;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class Payment extends AppCompatActivity implements PromotionCallback, View.OnClickListener, TextWatcher {
 
     Toolbar toolbar;

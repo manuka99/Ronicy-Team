@@ -32,7 +32,11 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class PromotionMain extends AppCompatActivity implements PromotionCallback, View.OnClickListener {
 
     private static final String TAG = "PromotionMain";

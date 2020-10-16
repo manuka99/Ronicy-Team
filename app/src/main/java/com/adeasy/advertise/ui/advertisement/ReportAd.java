@@ -26,7 +26,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class ReportAd extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
     private static final String TAG = "ReportAd";

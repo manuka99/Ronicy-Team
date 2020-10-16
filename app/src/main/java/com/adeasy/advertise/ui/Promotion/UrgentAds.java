@@ -23,10 +23,10 @@ import java.util.Map;
 import worker8.com.github.radiogroupplus.RadioGroupPlus;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link UrgentAds#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class UrgentAds extends Fragment implements View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match

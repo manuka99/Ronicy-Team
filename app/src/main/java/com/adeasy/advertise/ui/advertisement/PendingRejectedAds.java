@@ -42,7 +42,11 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import static com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED;
-
+/**
+ * Created by Manuka yasas,
+ * University Sliit
+ * Email manukayasas99@gmail.com
+ **/
 public class PendingRejectedAds extends AppCompatActivity implements AdvertisementCallback {
 
     private static final String TAG = "PendingRejectedAds";
