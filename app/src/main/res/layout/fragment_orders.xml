@@ -21,7 +21,8 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshRecycle_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_20sdp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycle_view"
