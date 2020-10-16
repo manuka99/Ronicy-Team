@@ -86,44 +86,7 @@ public class EditBugActivity extends AppCompatActivity {
                 intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent1);
 
-                /*updref.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.hasChild(bugId)){
-                            Log.i("mylog","in Edit bug activity in on data change");
 
-                            bug = new Bug();
-                            filedDate = dataSnapshot.child(bugId).child("filedDate").getValue().toString();
-                            status = dataSnapshot.child(bugId).child("status").getValue().toString();
-                            user = dataSnapshot.child(bugId).child("user").getValue().toString();
-
-                            bug.setDescription(ETbugDescription.getText().toString());
-                            bug.setBugId(bugId);
-                            bug.setFiledDate(filedDate);
-                            bug.setStatus(status);
-                            bug.setUser(user);
-
-                            dbref = FirebaseDatabase.getInstance().getReference().child("Bug").child(bugId);
-                            dbref.setValue(bug);
-
-                            Toast.makeText(getApplicationContext(),"Successfully updated", Toast.LENGTH_SHORT).show();
-
-                            Intent intent1 = new Intent(EditBugActivity.this,BugsActivity2.class);
-                            intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent1);
-
-                        }
-                        else{
-                            Toast.makeText(getApplicationContext(),"No record to update", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(getApplicationContext(),"Database error", Toast.LENGTH_SHORT).show();
-
-                    }
-                });*/
 
             }
         });
