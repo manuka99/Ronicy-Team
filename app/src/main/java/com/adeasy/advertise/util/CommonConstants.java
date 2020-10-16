@@ -24,12 +24,13 @@ public class CommonConstants {
     public static final String CLOUD_MESSAGE_INTENT = "intent";
     public static final String CLOUD_MESSAGE_ADMIN = "admin";
     public static final String CLOUD_MESSAGE_NEWPOST = "new_post";
+    public static final String CLOUD_MESSAGE_AD = "ad";
+    public static final String CLOUD_MESSAGE_MYADs = "my_ads";
     public static final String CLOUD_MESSAGE_PROFILE = "profile";
     public static final String CLOUD_MESSAGE_DIALOG = "dialog";
     public static final String CLOUD_MESSAGE_HEADER = "header";
     public static final String CLOUD_MESSAGE_BODY = "body";
     public static final String CLOUD_MESSAGE_IMAGE = "image";
     public static final String CLOUD_MESSAGING_DATA = "app_msg_data";
-
 
 }

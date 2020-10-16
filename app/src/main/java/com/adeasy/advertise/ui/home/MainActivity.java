@@ -34,6 +34,7 @@ import com.google.android.gms.ads.RequestConfiguration;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.irfaan008.irbottomnavigation.SpaceItem;
 import com.irfaan008.irbottomnavigation.SpaceNavigationView;
 import com.irfaan008.irbottomnavigation.SpaceOnClickListener;
@@ -83,7 +84,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         customDialogs = new CustomDialogs(this);
-        new ServerManagement(ServerManagement.TYPE_PUBLIC, null).getFCMToken();
+
+        if (FirebaseAuth.getInstance().getCurrentUser() == null)
+            new ServerManagement(ServerManagement.TYPE_PUBLIC, null).getFCMToken();
+        else
+            new ServerManagement(ServerManagement.TYPE_PUBLIC, FirebaseAuth.getInstance().getCurrentUser().getUid()).getFCMToken();
 
         //for fb auth
         try {

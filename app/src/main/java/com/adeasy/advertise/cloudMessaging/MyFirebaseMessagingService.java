@@ -96,7 +96,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //        }
 
         Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-        notificationManager.sendNotification(remoteMessage.getNotification().getBody(), getCloudDataIntent(remoteMessage));
+        notificationManager.sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), getCloudDataIntent(remoteMessage));
     }
 
     /**
@@ -114,7 +114,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     /**
      * Create and show a simple notification containing the received FCM message.
      *
-     * @param messageBody FCM message body received.
+     * @param //messageBody FCM message body received.
      */
 //    private void sendNotification(String messageBody, Intent intent) {
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

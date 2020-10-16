@@ -127,7 +127,8 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
     boolean isAddedToFavourite = false;
     Favourite favourite;
 
-    private static final String ADVERTISEMENTID = "adID";
+    public static final String ADVERTISEMENTID = "adID";
+    public static final String CATID = "adCID";
     private static final String TAG = "EditAdvertisement";
 
     @Override
@@ -188,8 +189,13 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
         adBuyNow.setOnClickListener(this);
         startPromotion.setOnClickListener(this);
 
-        adID = getIntent().getStringExtra("adID");
-        adCID = getIntent().getStringExtra("adCID");
+        if (getIntent().hasExtra(ADVERTISEMENTID))
+            adID = getIntent().getStringExtra("adID");
+        if (getIntent().hasExtra(CATID))
+            adCID = getIntent().getStringExtra("adCID");
+
+        if (!getIntent().hasExtra(ADVERTISEMENTID) && !getIntent().hasExtra(CATID))
+            finish();
 
         advertisementManager.getAddbyID(adID);
         categoryManager.getCategorybyID(adCID);

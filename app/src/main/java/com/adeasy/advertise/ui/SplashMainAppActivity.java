@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.ui.administration.home.DashboardHome;
+import com.adeasy.advertise.ui.advertisement.Advertisement;
+import com.adeasy.advertise.ui.advertisement.Myadds;
 import com.adeasy.advertise.ui.home.MainActivity;
 import com.adeasy.advertise.ui.newPost.NewAd;
 import com.adeasy.advertise.ui.profile.Profile;
@@ -80,7 +82,15 @@ public class SplashMainAppActivity extends AppCompatActivity {
                     intent = new Intent(getApplicationContext(), NewAd.class);
                 else if (getIntent().getStringExtra(CommonConstants.CLOUD_MESSAGE_INTENT).equals(CommonConstants.CLOUD_MESSAGE_PROFILE))
                     intent = new Intent(getApplicationContext(), Profile.class);
-                else if (getIntent().getStringExtra(CommonConstants.CLOUD_MESSAGE_INTENT).equals(CommonConstants.CLOUD_MESSAGE_DIALOG)) {
+                else if (getIntent().getStringExtra(CommonConstants.CLOUD_MESSAGE_INTENT).equals(CommonConstants.CLOUD_MESSAGE_MYADs))
+                    intent = new Intent(getApplicationContext(), Myadds.class);
+                else if (getIntent().getStringExtra(CommonConstants.CLOUD_MESSAGE_INTENT).equals(CommonConstants.CLOUD_MESSAGE_AD)) {
+                    intent = new Intent(getApplicationContext(), Advertisement.class);
+                    if (getIntent().hasExtra(Advertisement.ADVERTISEMENTID))
+                        intent.putExtra(Advertisement.ADVERTISEMENTID, getIntent().getStringExtra(Advertisement.ADVERTISEMENTID));
+                    if (getIntent().hasExtra(Advertisement.CATID))
+                        intent.putExtra(Advertisement.CATID, getIntent().getStringExtra(Advertisement.CATID));
+                } else if (getIntent().getStringExtra(CommonConstants.CLOUD_MESSAGE_INTENT).equals(CommonConstants.CLOUD_MESSAGE_DIALOG)) {
                     intent = new Intent(getApplicationContext(), MainActivity.class);
 
                     //a dialog must have a body

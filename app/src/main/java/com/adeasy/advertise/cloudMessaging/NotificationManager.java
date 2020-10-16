@@ -30,7 +30,7 @@ public class NotificationManager {
         this.context = context;
     }
 
-    public void sendNotification(String notification, Intent intent){
+    public void sendNotification(String title, String body, Intent intent){
         if(context != null){
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, NOTIFICATION_ID, intent,
@@ -42,8 +42,10 @@ public class NotificationManager {
                     new NotificationCompat.Builder(context, channelId)
                             .setSmallIcon(R.drawable.rlogo)
                             .setColor(context.getResources().getColor(R.color.mainUiColour))
-                            .setContentTitle("Customasasasas333")
-                            .setContentText(notification)
+                            .setContentTitle(title)
+                            .setContentText("More...")
+                            .setStyle(new NotificationCompat.BigTextStyle()
+                                    .bigText(body))
                             .setAutoCancel(true)
                             .setSound(defaultSoundUri)
                             .setContentIntent(pendingIntent);

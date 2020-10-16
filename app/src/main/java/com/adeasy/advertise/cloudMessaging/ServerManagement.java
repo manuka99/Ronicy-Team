@@ -13,6 +13,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import static com.adeasy.advertise.config.Configurations.SERVER_URL_ADMIN_FCM_UID;
@@ -23,7 +24,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  * University Sliit
  * Email manukayasas99@gmail.com
  **/
-public class ServerManagement implements OnCompleteListener<String>{
+public class ServerManagement implements OnCompleteListener<String> {
 
     private static final String TAG = "ServerManagement";
     private int type;
@@ -32,16 +33,16 @@ public class ServerManagement implements OnCompleteListener<String>{
     public static final int TYPE_PUBLIC = 1;
     public static final int TYPE_ADMIN = 0;
 
-    public ServerManagement(int type, String uid){
+    public ServerManagement(int type, String uid) {
         this.type = type;
         this.uid = uid;
     }
 
-    public void subscribeToThePublicFCM(String token) {
+    public void subscribeToThePublicFCM(String token, String uid) {
         // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String url = Configurations.SERVER_URL_PUBLIC_FCM + token;
 
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        String url = Configurations.SERVER_URL_PUBLIC_FCM + token + SERVER_URL_ADMIN_FCM_UID + uid;
         Log.i(TAG, url);
 
 // Request a string response from the provided URL.
@@ -95,7 +96,7 @@ public class ServerManagement implements OnCompleteListener<String>{
         queue.add(stringRequest);
     }
 
-    public void getFCMToken(){
+    public void getFCMToken() {
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(this);
     }
 
@@ -109,10 +110,10 @@ public class ServerManagement implements OnCompleteListener<String>{
 
         String token = task.getResult();
 
-        if(this.type == TYPE_PUBLIC)
-            subscribeToThePublicFCM(token);
+        if (this.type == TYPE_PUBLIC)
+            subscribeToThePublicFCM(token, this.uid);
 
-        if(this.type == TYPE_ADMIN && uid != null)
+        if (this.type == TYPE_ADMIN && uid != null)
             subscribeToTheAdministrationFCM(token, this.uid);
     }
 
