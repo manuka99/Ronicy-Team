@@ -305,7 +305,7 @@ https://github.com/RavinduLa
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fadmin%2Fnew%20ads%20admin%2FScreenshot_20201017_143738_com.adeasy.advertise.jpg?alt=media&token=a9edda24-0fc6-47fb-b775-090880deab2d" width="240">
 
-<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fadmin%2Fnew%20ads%20admin%2FScreenshot_20201017_143738_com.adeasy.advertise.jpg?alt=media&token=a9edda24-0fc6-47fb-b775-090880deab2d" width="240">
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fadmin%2Fnew%20ads%20admin%2FScreenshot_20201017_143747_com.adeasy.advertise.jpg?alt=media&token=c12c1a56-1008-41ff-a72c-4b60915127b1" width="240">
 
 </p>
 
