@@ -1,6 +1,6 @@
 # Ronicy-Team
 
-** Date of submission :- 2020/10/17 **
+**Date of submission :- 2020/10/17**
 
 Promo video url :- https://www.youtube.com/watch?v=fSZL-qJNUTo
 Support spring server :- https://ronicy.herokuapp.com/
