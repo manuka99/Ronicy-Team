@@ -98,9 +98,9 @@ https://github.com/RavinduLa
 
 ## home
 
-<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084039_com.adeasy.advertise.jpg?alt=media&token=20d76fcc-a8d2-4ed5-ac0d-ba3afa53a7b1" width="120">
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084039_com.adeasy.advertise.jpg?alt=media&token=20d76fcc-a8d2-4ed5-ac0d-ba3afa53a7b1" width="200">
 
-
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084039_com.adeasy.advertise.jpg?alt=media&token=20d76fcc-a8d2-4ed5-ac0d-ba3afa53a7b1" width="200">
 
 
 
