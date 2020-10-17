@@ -98,7 +98,7 @@ https://github.com/RavinduLa
 
 ## Public feed
 
-<p align="center">
+<p align="left">
   
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084039_com.adeasy.advertise.jpg?alt=media&token=20d76fcc-a8d2-4ed5-ac0d-ba3afa53a7b1" width="240">
 
@@ -120,7 +120,7 @@ https://github.com/RavinduLa
 
 ## Search optimized by algolia
 
-<p align="center">
+<p align="left">
   
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084231_com.adeasy.advertise.jpg?alt=media&token=adab90ea-d83d-4bd4-b1a7-8f6419cb933b" width="240">
 
@@ -134,7 +134,7 @@ https://github.com/RavinduLa
 
 ## New post
 
-<p align="center">
+<p align="left">
   
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fnew%20post%2FScreenshot_20201017_084609_com.adeasy.advertise.jpg?alt=media&token=2ec170e0-9e30-44ba-846a-39546e8d54e3" width="240">
 
@@ -156,7 +156,7 @@ https://github.com/RavinduLa
 
 ## Advertisement
 
-<p align="center">
+<p align="left">
   
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fad%2FScreenshot_20201017_085653_com.adeasy.advertise.jpg?alt=media&token=297e5d0f-de94-4cc3-9202-55b627dc2c6a" width="240">
 
@@ -170,7 +170,7 @@ https://github.com/RavinduLa
 
 ## Promotions
 
-<p align="center">
+<p align="left">
   
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085411_com.adeasy.advertise.jpg?alt=media&token=f10ddc94-3f29-4ff8-8c03-773b4ac7568a" width="240">
 
@@ -192,7 +192,7 @@ https://github.com/RavinduLa
 
 ## Order
 
-<p align="center">
+<p align="left">
   
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Forder%2FScreenshot_20201017_085714_com.adeasy.advertise.jpg?alt=media&token=1e26f3ec-050c-4919-84e1-98cebb614158" width="240">
 
@@ -213,7 +213,7 @@ https://github.com/RavinduLa
 
 ## Login/ register
 
-<p align="center">
+<p align="left">
   
 <img src="zxzadaadadadadadadadadadadadada" width="240">
 
@@ -227,7 +227,7 @@ https://github.com/RavinduLa
 
 ## User profile
 
-<p align="center">
+<p align="left">
   
 <img src="zxzadaadadadadadadadadadadadada" width="240">
 
@@ -241,7 +241,7 @@ https://github.com/RavinduLa
 
 ## Favourites
 
-<p align="center">
+<p align="left">
   
 <img src="zxzadaadadadadadadadadadadadada" width="240">
 
@@ -256,7 +256,7 @@ https://github.com/RavinduLa
 
 ## Get in touch
 
-<p align="center">
+<p align="left">
   
 <img src="zxzadaadadadadadadadadadadadada" width="240">
 
