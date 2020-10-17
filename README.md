@@ -72,4 +72,13 @@ As it is mentioned above, even though this application was made as an assignment
 https://ronicy.herokuapp.com/
 
 
+## Bandara M.H.M.N.D.T
+
+1) Designing and developing the Customer Favourites component.
+
+
+
+
+
+
 
