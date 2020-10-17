@@ -32,6 +32,8 @@ To host advertisements on Ronicy is absolutely free and easy, an authenticated u
 Public feed is available for all users, advertisements can be classified and searched with any combination. To improve the searching and filtration , technologies that effectively couple with firebase such as Algolia are used after multiple testings’ and validations. 
 Spring boot project and a Node JS project was made in order to support this component.
 
+Any user can promote a advertisement in ronicy and there are 5 types of promotions. Spotlight ads will appear on the top for all users, Top ads will appear in the top 2 slots in each page, Bundle ads - here the advertisement will appear top on the similar ads, urgent ads - an urgent watermark will be displayed here and last the daily boast ads - here the advertisement will be promoted and updated daily and will never go bellow in the public advertisement feed.
+
 An authenticated user can save an advertisement under their favorites collection also full control on this collection was given to the user after consider the drawbacks of modern applications in the industry. User may repeatedly ring the same person/owner of an advertisement and user might need to save important details that were discussed with the owner after contacting, therefore this component was designed and developed by considering all requirements of our customers.
 
 Maintaining the communication between our sellers and customers was an important requirement of the application. Sellers might not be available at the time our customers/buyers contact and some sellers dislike to expose their contact details for the public. Therefore a simple but powerful chat application was developed by team Ronicy as an solution for the above communication issues.
