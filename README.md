@@ -96,7 +96,7 @@ https://github.com/RavinduLa
 
 #Screenshots
 
-https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/Advertisement%2FImages%2F024f571e773647ceb09e2f5813bbdc78?alt=media&token=5dcfa882-dbd7-4199-9cfb-853631f80305
+![Image of Yaktocat](https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/Advertisement%2FImages%2F024f571e773647ceb09e2f5813bbdc78?alt=media&token=5dcfa882-dbd7-4199-9cfb-853631f80305)
 
 
 
