@@ -64,6 +64,7 @@ As it is mentioned above, even though this application was made as an assignment
 9)	Designing and developing the Admin’s Orders analytics.
 10) Designing and developing the Backend server for managing User levels(JWT), Promotions, Advertisements, Algolia indexing, Firebase cloud messaging and Firebase in app messeging 
 11)	Designing and developing the Firebase Admin’s SDK on Spring boot.
+12)	Test cases and database rules for Client Mobile application, Spring server and for firebase cloud database.
 
 ###### Other Technologies used:
 
