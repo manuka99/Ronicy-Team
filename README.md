@@ -108,10 +108,6 @@ https://github.com/RavinduLa
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084118_com.adeasy.advertise.jpg?alt=media&token=6ae8f259-cf1a-49de-b22f-4cb0a83f67db" width="240">
 
-</p>
-
-<p align="center">
-
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084149_com.adeasy.advertise.jpg?alt=media&token=00ddfe64-c7be-4e5b-9ad0-3a06def61078" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084157_com.adeasy.advertise.jpg?alt=media&token=df9b54a9-126a-4222-8ce1-a11a11d21b36" width="240">
@@ -180,25 +176,25 @@ https://github.com/RavinduLa
 
 <p align="center">
   
-<img src="zxzadaadadadadadadadadadadadada" width="240">
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085411_com.adeasy.advertise.jpg?alt=media&token=f10ddc94-3f29-4ff8-8c03-773b4ac7568a" width="240">
 
-<img src="zxzadaadadadadadadadadadadadada" width="240">
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085506_com.adeasy.advertise.jpg?alt=media&token=bc482363-7d6d-4a88-a0ad-8679a82953ac" width="240">
 
-<img src="zxzadaadadadadadadadadadadadada" width="240">
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085511_com.adeasy.advertise.jpg?alt=media&token=5fccaa68-1c4b-462b-96ad-aeac7e5b5dbe" width="240">
 
-<img src="zxzadaadadadadadadadadadadadada" width="240">
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085513_com.adeasy.advertise.jpg?alt=media&token=22f1a86d-5c15-424b-8ea3-8fa7e1b2c86e" width="240">
 
 </p>
 
 <p align="center">
 
-<img src="zxzadaadadadadadadadadadadadada" width="240">
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085523_com.adeasy.advertise.jpg?alt=media&token=b07affe4-f6e5-4ccf-8085-7b6a2a5d6281" width="240">
 
-<img src="zxzadaadadadadadadadadadadadada" width="240">
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085555_com.adeasy.advertise.jpg?alt=media&token=8924f970-dcbb-4487-8456-0769392c9de6" width="240">
 
-<img src="zxzadaadadadadadadadadadadadada" width="240">
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085602_com.adeasy.advertise.jpg?alt=media&token=b99c6708-5481-4f17-a0f7-26129a7798ec" width="240">
 
-<img src="zxzadaadadadadadadadadadadadada" width="240">
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085611_com.adeasy.advertise.jpg?alt=media&token=8dafe8df-c2d0-48e8-8b47-5cf22bd17805" width="240">
 
 </p>
 
