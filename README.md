@@ -93,8 +93,8 @@ https://github.com/RavinduLa
 2) Designing and developing the bugs and suggestions report component.
 3) Designing and developing the administration related to bugs report component.
 
-
-#Screenshots
+<br><br>
+# Screenshots
 
 # Manuka Yasas
 
@@ -108,11 +108,15 @@ https://github.com/RavinduLa
 
 <img style="margin:100px" src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084107_com.adeasy.advertise.jpg?alt=media&token=bb2f35af-5564-41b6-86ad-734d266b0cf0" width="240">
 
+<br>
+
 <img style="margin:100px"  src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084118_com.adeasy.advertise.jpg?alt=media&token=6ae8f259-cf1a-49de-b22f-4cb0a83f67db" width="240">
 
 <img style="margin:100px" src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084149_com.adeasy.advertise.jpg?alt=media&token=00ddfe64-c7be-4e5b-9ad0-3a06def61078" width="240">
 
 <img style="margin:100px" src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084157_com.adeasy.advertise.jpg?alt=media&token=df9b54a9-126a-4222-8ce1-a11a11d21b36" width="240">
+
+<br>
 
 <img style="margin:100px" src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084211_com.adeasy.advertise.jpg?alt=media&token=04ff53db-84d8-4d60-8fd1-8434585270e2" width="240">
 
@@ -129,7 +133,7 @@ https://github.com/RavinduLa
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084257_com.adeasy.advertise.jpg?alt=media&token=29cc9bd8-004e-4f16-a60a-4f9bc4d6ca50" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084303_com.adeasy.advertise.jpg?alt=media&token=7cd000e1-0b76-4d75-988d-b7a80a82e80d" width="240">
-
+<br>
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084317_com.adeasy.advertise.jpg?alt=media&token=c6078e8f-b81d-4690-9052-87bc427bb4dd" width="240">
 
 </p>
@@ -143,13 +147,13 @@ https://github.com/RavinduLa
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fnew%20post%2FScreenshot_20201017_084613_com.adeasy.advertise.jpg?alt=media&token=8079bd32-0d4c-4124-b006-b5e718bb4e54" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fnew%20post%2FScreenshot_20201017_084626_com.adeasy.advertise.jpg?alt=media&token=6ed31814-e647-440e-9d2b-bf40e3d0ad92" width="240">
-
+<br>
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fnew%20post%2FScreenshot_20201017_084626_com.adeasy.advertise.jpg?alt=media&token=6ed31814-e647-440e-9d2b-bf40e3d0ad92" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fnew%20post%2FScreenshot_20201017_084727_com.adeasy.advertise.jpg?alt=media&token=c9f874a6-f4c8-469d-856d-add1b2e3213a" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fnew%20post%2FScreenshot_20201017_084729_com.adeasy.advertise.jpg?alt=media&token=f974c95e-a2de-4aaa-a66a-8720b5e1783a" width="240">
-
+<br>
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fnew%20post%2FScreenshot_20201017_084731_com.adeasy.advertise.jpg?alt=media&token=a245ab5b-d4c3-4814-a7ab-1ef393d3eedd" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fnew%20post%2FScreenshot_20201017_084740_com.adeasy.advertise.jpg?alt=media&token=5e350fd9-2463-4e25-8ccd-0c0c123cdda1" width="240">
@@ -165,7 +169,7 @@ https://github.com/RavinduLa
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fad%2FScreenshot_20201017_085659_com.adeasy.advertise.jpg?alt=media&token=a3e7c04e-9bd3-4edf-abb6-4748b36e92fd" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fad%2FScreenshot_20201017_085703_com.adeasy.advertise.jpg?alt=media&token=699f7411-9e94-4746-8183-2c7ab3e814dc" width="240">
-
+<br>
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fad%2FScreenshot_20201017_085708_com.adeasy.advertise.jpg?alt=media&token=085aa916-04ad-4dd9-bc33-99018e04b219" width="240">
 
 </p>
@@ -179,13 +183,13 @@ https://github.com/RavinduLa
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085506_com.adeasy.advertise.jpg?alt=media&token=bc482363-7d6d-4a88-a0ad-8679a82953ac" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085511_com.adeasy.advertise.jpg?alt=media&token=5fccaa68-1c4b-462b-96ad-aeac7e5b5dbe" width="240">
-
+<br>
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085513_com.adeasy.advertise.jpg?alt=media&token=22f1a86d-5c15-424b-8ea3-8fa7e1b2c86e" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085523_com.adeasy.advertise.jpg?alt=media&token=b07affe4-f6e5-4ccf-8085-7b6a2a5d6281" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085555_com.adeasy.advertise.jpg?alt=media&token=8924f970-dcbb-4487-8456-0769392c9de6" width="240">
-
+<br>
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085602_com.adeasy.advertise.jpg?alt=media&token=b99c6708-5481-4f17-a0f7-26129a7798ec" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085611_com.adeasy.advertise.jpg?alt=media&token=8dafe8df-c2d0-48e8-8b47-5cf22bd17805" width="240">
@@ -201,13 +205,13 @@ https://github.com/RavinduLa
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Forder%2FScreenshot_20201017_085732_com.adeasy.advertise.jpg?alt=media&token=0ed573f8-cd27-453f-9570-6902124791fc" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Forder%2FScreenshot_20201017_085751_com.adeasy.advertise.jpg?alt=media&token=31f41213-a188-4316-bd9d-b65599434acf" width="240">
-
+<br>
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Forder%2FScreenshot_20201017_085756_com.adeasy.advertise.jpg?alt=media&token=d8c266df-675c-4369-ab60-537eecbf2065" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084239_com.adeasy.advertise.jpg?alt=media&token=4d1ab139-1b25-4ba0-aaf3-9561afdcd0eb" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Forder%2FScreenshot_20201017_094100_com.google.android.gm.jpg?alt=media&token=e7676489-b926-4a81-89cb-e92bbce70415" width="240">
-
+<br>
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Forder%2FScreenshot_20201017_094103_com.google.android.gm.jpg?alt=media&token=3bc5a3e7-0383-4721-a393-e5cbfaf30885" width="240">
 
 </p>
@@ -222,7 +226,7 @@ https://github.com/RavinduLa
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133631_com.adeasy.advertise.jpg?alt=media&token=c5290927-c01d-4899-9803-05af431dfe72" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133639_com.facebook.katana.jpg?alt=media&token=947572b6-a414-40f6-9f08-9a634855de1d" width="240">
-
+<br>
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133653_com.adeasy.advertise.jpg?alt=media&token=9791c1a8-a0ef-4dac-bd68-41875112f96d" width="240">
 
 </p>
@@ -236,13 +240,13 @@ https://github.com/RavinduLa
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133728_com.adeasy.advertise.jpg?alt=media&token=4f1e264f-71bc-41f6-a17b-399d814d72c5" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133729_com.adeasy.advertise.jpg?alt=media&token=22a311b4-8206-4f16-92f5-f0acc5311648" width="240">
-
+<br>
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133733_com.adeasy.advertise.jpg?alt=media&token=76c1a7ed-068d-4822-9a13-69265f39ec5e" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133737_com.adeasy.advertise.jpg?alt=media&token=32cb6d0b-1b28-47fc-b0ea-49118ac12b36" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133739_com.adeasy.advertise.jpg?alt=media&token=95fd2aee-763e-4eed-81de-6aeab51f1e69" width="240">
-
+<br>
 </p>
 
 ## My ads
@@ -254,13 +258,13 @@ https://github.com/RavinduLa
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133814_com.adeasy.advertise.jpg?alt=media&token=96e9676d-ee7b-4ecd-aea5-cf0c57240190" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133839_com.adeasy.advertise.jpg?alt=media&token=84e92f40-81bc-4c2e-bc44-bb852689edb2" width="240">
-
+<br>
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133846_com.adeasy.advertise.jpg?alt=media&token=b67d58c5-9c5a-4df6-b0b1-15cfe5ee2b98" width="240">
 
 </p>
 
 
-
+<br><br><br>
 # Bandara M.H.M.N.D.T
 
 ## Favourites
@@ -272,14 +276,14 @@ https://github.com/RavinduLa
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133909_com.adeasy.advertise.jpg?alt=media&token=5cebd4f7-ba81-4713-890c-7de22c436d8c" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133911_com.adeasy.advertise.jpg?alt=media&token=090deb2f-7962-4608-94ee-e167bd1cbd92" width="240">
-
+<br>
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133913_com.adeasy.advertise.jpg?alt=media&token=db52cd0c-d00c-40de-b6c0-477ca7e68c9c" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133916_com.adeasy.advertise.jpg?alt=media&token=ee490a71-e2c6-4b56-b79b-d2c1cb9ca831" width="240">
 
 </p>
 
-
+<br><br><br>
 # A.M.W.W.R.L. Wataketiya
 
 ## Get in touch
@@ -291,7 +295,7 @@ https://github.com/RavinduLa
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133948_com.adeasy.advertise.jpg?alt=media&token=1c943b75-71e2-4e52-8275-90876815518a" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133955_com.adeasy.advertise.jpg?alt=media&token=f5710b39-59c6-4144-ad42-90d2adaef6b9" width="240">
-
+<br>
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_133958_com.adeasy.advertise.jpg?alt=media&token=ecdc4d64-c91a-47b2-8ea4-a79297f66c79" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fads%20all%2FScreenshot_20201017_134002_com.adeasy.advertise.jpg?alt=media&token=08aa5a56-99fa-494c-8cf9-5bb898a95f2b" width="240">
