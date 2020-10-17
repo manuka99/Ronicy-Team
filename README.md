@@ -1,6 +1,10 @@
 # Ronicy-Team
 
-Date of submission :- 2020/10/17
+** Date of submission :- 2020/10/17 **
+
+Promo video url :- https://www.youtube.com/watch?v=fSZL-qJNUTo
+Support spring server :- https://ronicy.herokuapp.com/
+Support spring server repository :- https://github.com/manuka99/Ronicy_spring_boot_admin_support
 
 We are the second year undergraduates of sliit:
 
@@ -38,7 +42,7 @@ As it is mentioned above, even though this application was made as an assignment
 # Individual Contribution
 
 
-## Manuka yasas
+## 1) Manuka yasas
 
 ###### Components made
 
@@ -53,7 +57,7 @@ As it is mentioned above, even though this application was made as an assignment
 8)	Designing and developing the Admin’s Advertisement analytics.
 9)	Designing and developing the Admin’s Orders analytics.
 10) Designing and developing the Backend server for managing User levels(JWT), Promotions, Advertisements, Algolia indexing, Firebase cloud messaging and Firebase in app messeging 
-
+11)	Designing and developing the Firebase Admin’s SDK on Spring boot.
 
 ###### Other Technologies used:
 
@@ -67,25 +71,26 @@ As it is mentioned above, even though this application was made as an assignment
 8)	Strict following the Android developers guide(Google)
 9)	Using firebase Fire store/ Fire cloud as the database
 10)	Developing security constraints for databases
+10)	Integrating Google Admob
 
 **Spring server url**
 https://ronicy.herokuapp.com/
 
 
+<br><br><br>
 
 
-
-## Bandara M.H.M.N.D.T 
+## 2) Bandara M.H.M.N.D.T
 
 https://github.com/NethmiDivyaT
 
 1) Designing and developing the Customer Favourites component.
 
 
+<br><br><br>
 
 
-
-## A.M.W.W.R.L. Wataketiya
+## 3) A.M.W.W.R.L. Wataketiya
 
 https://github.com/RavinduLa
 
@@ -96,7 +101,7 @@ https://github.com/RavinduLa
 <br><br>
 # Screenshots
 
-# Manuka Yasas
+# 1) Manuka Yasas
 
 ## Public feed
 
@@ -339,8 +344,8 @@ https://github.com/RavinduLa
 
 </p>
 
-<br><br><br>
-# Bandara M.H.M.N.D.T
+<br><br><br><br><br><br>
+# 2) Bandara M.H.M.N.D.T
 
 ## Favourites
 
@@ -359,8 +364,8 @@ https://github.com/RavinduLa
 </p>
 
 
-<br><br><br>
-# A.M.W.W.R.L. Wataketiya
+<br><br><br><br><br><br>
+# 3) A.M.W.W.R.L. Wataketiya
 
 ## Get in touch
 
