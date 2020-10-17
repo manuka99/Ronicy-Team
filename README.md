@@ -40,6 +40,7 @@ As it is mentioned above, even though this application was made as an assignment
 
 ## Manuka yasas
 
+###### Components made
 
 1)	Designing and developing the home component of Ronicy.
 2)	Designing and developing the entire Security component of Ronicy.
@@ -54,7 +55,7 @@ As it is mentioned above, even though this application was made as an assignment
 10) Designing and developing the Backend server for managing User levels(JWT), Promotions, Advertisements, Algolia indexing, Firebase cloud messaging and Firebase in app messeging 
 
 
-Other Technologies used:
+###### Other Technologies used:
 
 1)	Following the MVC Architecture 
 2)	Integrating Firebase Auth provider
