@@ -72,12 +72,26 @@ As it is mentioned above, even though this application was made as an assignment
 https://ronicy.herokuapp.com/
 
 
-## Bandara M.H.M.N.D.T
+
+
+
+## Bandara M.H.M.N.D.T 
+
+https://github.com/NethmiDivyaT
 
 1) Designing and developing the Customer Favourites component.
 
 
 
+
+
+## A.M.W.W.R.L. Wataketiya
+
+https://github.com/RavinduLa
+
+1) Designing and developing the get in touch component.
+2) Designing and developing the bugs and suggestions report component.
+3) Designing and developing the administration related to bugs report component.
 
 
 
