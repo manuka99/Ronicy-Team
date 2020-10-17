@@ -8,13 +8,12 @@ Support spring server :- https://ronicy.herokuapp.com/
 <br>
 Support spring server repository :- https://github.com/manuka99/Ronicy_spring_boot_admin_support
 
-<br>
 We are the second year undergraduates of sliit:
-<br>
+
 Team - Weekend wariours
-<br>
+
 Team - members
-<br>
+
 1. Manuka yasas
 
 2. Bandara M.H.M.N.D.T
