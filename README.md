@@ -144,10 +144,6 @@ https://github.com/RavinduLa
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fnew%20post%2FScreenshot_20201017_084626_com.adeasy.advertise.jpg?alt=media&token=6ed31814-e647-440e-9d2b-bf40e3d0ad92" width="240">
 
-</p>
-
-<p align="center">
-
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fnew%20post%2FScreenshot_20201017_084727_com.adeasy.advertise.jpg?alt=media&token=c9f874a6-f4c8-469d-856d-add1b2e3213a" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fnew%20post%2FScreenshot_20201017_084729_com.adeasy.advertise.jpg?alt=media&token=f974c95e-a2de-4aaa-a66a-8720b5e1783a" width="240">
@@ -184,10 +180,6 @@ https://github.com/RavinduLa
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085513_com.adeasy.advertise.jpg?alt=media&token=22f1a86d-5c15-424b-8ea3-8fa7e1b2c86e" width="240">
 
-</p>
-
-<p align="center">
-
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085523_com.adeasy.advertise.jpg?alt=media&token=b07affe4-f6e5-4ccf-8085-7b6a2a5d6281" width="240">
 
 <img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fpromo%2FScreenshot_20201017_085555_com.adeasy.advertise.jpg?alt=media&token=8924f970-dcbb-4487-8456-0769392c9de6" width="240">
@@ -202,25 +194,19 @@ https://github.com/RavinduLa
 
 <p align="center">
   
-<img src="zxzadaadadadadadadadadadadadada" width="240">
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Forder%2FScreenshot_20201017_085714_com.adeasy.advertise.jpg?alt=media&token=1e26f3ec-050c-4919-84e1-98cebb614158" width="240">
 
-<img src="zxzadaadadadadadadadadadadadada" width="240">
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Forder%2FScreenshot_20201017_085732_com.adeasy.advertise.jpg?alt=media&token=0ed573f8-cd27-453f-9570-6902124791fc" width="240">
 
-<img src="zxzadaadadadadadadadadadadadada" width="240">
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Forder%2FScreenshot_20201017_085751_com.adeasy.advertise.jpg?alt=media&token=31f41213-a188-4316-bd9d-b65599434acf" width="240">
 
-<img src="zxzadaadadadadadadadadadadadada" width="240">
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Forder%2FScreenshot_20201017_085756_com.adeasy.advertise.jpg?alt=media&token=d8c266df-675c-4369-ab60-537eecbf2065" width="240">
 
-</p>
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Fhome%2FScreenshot_20201017_084239_com.adeasy.advertise.jpg?alt=media&token=4d1ab139-1b25-4ba0-aaf3-9561afdcd0eb" width="240">
 
-<p align="center">
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Forder%2FScreenshot_20201017_094100_com.google.android.gm.jpg?alt=media&token=e7676489-b926-4a81-89cb-e92bbce70415" width="240">
 
-<img src="zxzadaadadadadadadadadadadadada" width="240">
-
-<img src="zxzadaadadadadadadadadadadadada" width="240">
-
-<img src="zxzadaadadadadadadadadadadadada" width="240">
-
-<img src="zxzadaadadadadadadadadadadadada" width="240">
+<img src="https://firebasestorage.googleapis.com/v0/b/ad-easy.appspot.com/o/screenshots%2Forder%2FScreenshot_20201017_094103_com.google.android.gm.jpg?alt=media&token=3bc5a3e7-0383-4721-a393-e5cbfaf30885" width="240">
 
 </p>
 
