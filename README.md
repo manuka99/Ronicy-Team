@@ -96,6 +96,8 @@ https://github.com/RavinduLa
 
 #Screenshots
 
+# Manuka Yasas
+
 ## Public feed
 
 <p align="left">
@@ -239,6 +241,24 @@ https://github.com/RavinduLa
 
 </p>
 
+## My ads
+
+<p align="left">
+
+<img src="zxzadaadadadadadadadadadadadada" width="240">
+
+<img src="zxzadaadadadadadadadadadadadada" width="240">
+
+<img src="zxzadaadadadadadadadadadadadada" width="240">
+
+<img src="zxzadaadadadadadadadadadadadada" width="240">
+
+</p>
+
+
+
+# Bandara M.H.M.N.D.T
+
 ## Favourites
 
 <p align="left">
@@ -253,6 +273,8 @@ https://github.com/RavinduLa
 
 </p>
 
+
+# A.M.W.W.R.L. Wataketiya
 
 ## Get in touch
 
