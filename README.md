@@ -34,7 +34,9 @@ To host advertisements on Ronicy is absolutely free and easy, an authenticated u
 Public feed is available for all users, advertisements can be classified and searched with any combination. To improve the searching and filtration , technologies that effectively couple with firebase such as Algolia are used after multiple testings’ and validations. 
 Spring boot project and a Node JS project was made in order to support this component.
 
-Any user can promote a advertisement in ronicy and there are 5 types of promotions. Spotlight ads will appear on the top for all users, Top ads will appear in the top 2 slots in each page, Bundle ads - here the advertisement will appear top on the similar ads, urgent ads - an urgent watermark will be displayed here and last the daily boast ads - here the advertisement will be promoted and updated daily and will never go bellow in the public advertisement feed.
+Any user can promote a advertisement in ronicy and there are 5 types of promotions. Spotlight ads will appear on the top for all users, Top ads will appear in the top 2 slots in each page, Bundle ads - here the advertisement will appear top on the similar ads and also will be promoted as an urgent advertisement, urgent ads - an urgent watermark will be displayed here and last the daily boast ads - here the advertisement will be promoted and updated daily and will never go bellow in the public advertisement feed. By considering the drawbacks of the modern applications we have designed this feature therefore user can promote already promoted advertisement even. Promotion will be applied after we manually approve it.
+
+Firebase cloud messaging as well as in app messaging was integrated to improve the user experience when using Ronicy.
 
 An authenticated user can save an advertisement under their favorites collection also full control on this collection was given to the user after consider the drawbacks of modern applications in the industry. User may repeatedly ring the same person/owner of an advertisement and user might need to save important details that were discussed with the owner after contacting, therefore this component was designed and developed by considering all requirements of our customers.
 
@@ -75,7 +77,8 @@ As it is mentioned above, even though this application was made as an assignment
 8)	Strict following the Android developers guide(Google)
 9)	Using firebase Fire store/ Fire cloud as the database
 10)	Developing security constraints for databases
-10)	Integrating Google Admob
+11)	Integrating Google Admob
+12) Firebase cloud messaging as well as in app messaging was integrated.
 
 **Spring server url**
 https://ronicy.herokuapp.com/
