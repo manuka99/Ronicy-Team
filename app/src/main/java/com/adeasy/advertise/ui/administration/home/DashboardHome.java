@@ -105,17 +105,17 @@ public class DashboardHome extends AppCompatActivity implements CustomClaimsCall
             else if (view == orders && (customClaims.isOrder_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
                 startActivity(new Intent(this, OrdersMain.class));
             else if (view == users && (customClaims.isAdmin() || customClaims.isUser_manager() || customClaims.isGuest_admin()))
-                startActivity(new Intent(this, DashboardHome.class));
+                Toast.makeText(getApplicationContext(), "Sorry this component is not developed yet", Toast.LENGTH_SHORT).show();
             else if (view == otp && (customClaims.isAdmin() || customClaims.isUser_manager() || customClaims.isGuest_admin()))
-                startActivity(new Intent(this, DashboardHome.class));
+                Toast.makeText(getApplicationContext(), "Sorry this component is not developed yet", Toast.LENGTH_SHORT).show();
             else if (view == categories && (customClaims.isAdvertisement_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
-                startActivity(new Intent(this, DashboardHome.class));
+                startActivity(new Intent(this, AdvertisementMain.class));
             else if (view == favourite && (customClaims.isFavourite_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
-                startActivity(new Intent(this, DashboardHome.class));
+                Toast.makeText(getApplicationContext(), "Sorry this component is not developed yet", Toast.LENGTH_SHORT).show();
             else if (view == getInTouch && (customClaims.isContact_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
-                startActivity(new Intent(this, DashboardHome.class));
+                Toast.makeText(getApplicationContext(), "Sorry this component is not developed yet", Toast.LENGTH_SHORT).show();
             else if (view == chat && (customClaims.isChat_manager() || customClaims.isAdmin() || customClaims.isGuest_admin()))
-                startActivity(new Intent(this, DashboardHome.class));
+                Toast.makeText(getApplicationContext(), "Sorry this component is not developed yet", Toast.LENGTH_SHORT).show();
             else
                 customDialogs.showPermissionDeniedStorage();
         } else

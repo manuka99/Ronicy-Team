@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.adeasy.advertise.R;
 import com.adeasy.advertise.callback.CustomClaimsCallback;
@@ -58,6 +59,8 @@ import com.google.firebase.auth.UserInfo;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by Manuka yasas,
@@ -239,9 +242,9 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
         if (view == myads)
             startActivity(new Intent(getContext(), Myadds.class));
         if (view == myChats)
-            startActivity(new Intent(getContext(), AboutUsMainActivity.class));
+            Toast.makeText(getActivity(), "Sorry this component is not developed yet", Toast.LENGTH_SHORT).show();
         else if (view == donateUs)
-            startActivity(new Intent(getContext(), Donations.class));
+            Toast.makeText(getActivity(), "Sorry this component is not developed yet", Toast.LENGTH_SHORT).show();
         else if (view == logout)
             logoutDialog();
         else if (view == faq)
@@ -294,7 +297,7 @@ public class Account extends Fragment implements View.OnClickListener, FacebookA
     }
 
     private void displayDialogUnlinkFb() {
-       new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(getActivity())
 
                 .setMessage("Are you sure you want to unlink from facebook?")
 

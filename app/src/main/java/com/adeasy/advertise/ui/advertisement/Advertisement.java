@@ -422,7 +422,7 @@ public class Advertisement extends AppCompatActivity implements AdvertisementCal
     public void onClick(View view) {
 
         if (view == chatText) {
-
+            Toast.makeText(getApplicationContext(), "Sorry this component is not developed yet", Toast.LENGTH_SHORT).show();
         } else if (view == callText)
             callAdCustomer();
         else if (view == adBuyNow)
