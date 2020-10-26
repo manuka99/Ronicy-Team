@@ -2,9 +2,8 @@
 
 **Date of submission :- 2020/10/17**
 
-Released app download url :- https://drive.google.com/file/d/1al25KI_Nn-3_9zeDuTZtMgMobpHULVOb/view
-<br>
-<br>
+# Released app download (APKPURE) :- https://apkpure.com/p/com.adeasy.advertise
+
 Promo video url :- https://www.youtube.com/watch?v=fSZL-qJNUTo
 <br>
 Demo video url :- https://www.youtube.com/watch?v=GjDSRtdi8mg
