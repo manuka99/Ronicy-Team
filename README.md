@@ -2,7 +2,7 @@
 
 **Date of submission :- 2020/10/17**
 
-#### :gift_heart: Released app download (APKPURE) :- https://apkpure.com/p/com.adeasy.advertise
+### :gift_heart: Released app download (APKPURE) :- https://apkpure.com/p/com.adeasy.advertise
 
 Promo video url :- https://www.youtube.com/watch?v=fSZL-qJNUTo
 <br>
